@@ -1,0 +1,2823 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Brandon Toews">
+<meta name="dcterms.date" content="2022-12-22">
+<meta name="description" content="Project to compare different AI models and an exploration of how to improve their accuracy.">
+
+<title>portfolio - Intro to AI - Linear Regression, Classification, Clustering</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+<meta name="twitter:title" content="portfolio - Intro to AI - Linear Regression, Classification, Clustering">
+<meta name="twitter:description" content="Project to compare different AI models and an exploration of how to improve their accuracy.">
+<meta name="twitter:image" content="https://brandon-toews.github.io/portfolio/posts/intro-to-ai-assignment1/AI.jpeg">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">portfolio</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html" rel="" target="">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/brandon-toews" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <div class="quarto-title-block"><div><h1 class="title">Intro to AI - Linear Regression, Classification, Clustering</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button" data-quarto-source-url="https://github.com/brandon-toews/IntroToAI-Assigment1">View Source</a></li></ul></div></div>
+                  <div>
+        <div class="description">
+          Project to compare different AI models and an exploration of how to improve their accuracy.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">linear regression</div>
+                <div class="quarto-category">classification</div>
+                <div class="quarto-category">clustering</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Brandon Toews </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">December 22, 2022</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#project-overview" id="toc-project-overview" class="nav-link active" data-scroll-target="#project-overview"><span class="header-section-number">1</span> Project Overview</a>
+  <ul class="collapse">
+  <li><a href="#purpose-of-document" id="toc-purpose-of-document" class="nav-link" data-scroll-target="#purpose-of-document"><span class="header-section-number">1.1</span> Purpose of Document</a></li>
+  <li><a href="#scope" id="toc-scope" class="nav-link" data-scroll-target="#scope"><span class="header-section-number">1.2</span> Scope</a></li>
+  </ul></li>
+  <li><a href="#dataset-exploratory-analysis" id="toc-dataset-exploratory-analysis" class="nav-link" data-scroll-target="#dataset-exploratory-analysis"><span class="header-section-number">2</span> Dataset Exploratory Analysis</a>
+  <ul class="collapse">
+  <li><a href="#descriptive-analysis" id="toc-descriptive-analysis" class="nav-link" data-scroll-target="#descriptive-analysis"><span class="header-section-number">2.1</span> Descriptive Analysis</a></li>
+  <li><a href="#cleaning" id="toc-cleaning" class="nav-link" data-scroll-target="#cleaning"><span class="header-section-number">2.2</span> Cleaning</a></li>
+  <li><a href="#visualizations" id="toc-visualizations" class="nav-link" data-scroll-target="#visualizations"><span class="header-section-number">2.3</span> Visualizations</a></li>
+  </ul></li>
+  <li><a href="#linear-regression" id="toc-linear-regression" class="nav-link" data-scroll-target="#linear-regression"><span class="header-section-number">3</span> Linear Regression</a>
+  <ul class="collapse">
+  <li><a href="#univariate-models" id="toc-univariate-models" class="nav-link" data-scroll-target="#univariate-models"><span class="header-section-number">3.1</span> Univariate Models</a>
+  <ul class="collapse">
+  <li><a href="#car-length-vs-price" id="toc-car-length-vs-price" class="nav-link" data-scroll-target="#car-length-vs-price"><span class="header-section-number">3.1.1</span> Car Length vs Price</a></li>
+  <li><a href="#car-width-vs-price" id="toc-car-width-vs-price" class="nav-link" data-scroll-target="#car-width-vs-price"><span class="header-section-number">3.1.2</span> Car Width vs Price</a></li>
+  <li><a href="#curb-weight-vs-price" id="toc-curb-weight-vs-price" class="nav-link" data-scroll-target="#curb-weight-vs-price"><span class="header-section-number">3.1.3</span> Curb Weight vs Price</a></li>
+  <li><a href="#cylinder-number-vs-price" id="toc-cylinder-number-vs-price" class="nav-link" data-scroll-target="#cylinder-number-vs-price"><span class="header-section-number">3.1.4</span> Cylinder Number vs Price</a></li>
+  <li><a href="#engine-size-vs-price" id="toc-engine-size-vs-price" class="nav-link" data-scroll-target="#engine-size-vs-price"><span class="header-section-number">3.1.5</span> Engine Size vs Price</a></li>
+  <li><a href="#horsepower-vs-price" id="toc-horsepower-vs-price" class="nav-link" data-scroll-target="#horsepower-vs-price"><span class="header-section-number">3.1.6</span> Horsepower vs Price</a></li>
+  </ul></li>
+  <li><a href="#multivariate-models" id="toc-multivariate-models" class="nav-link" data-scroll-target="#multivariate-models"><span class="header-section-number">3.2</span> Multivariate Models</a>
+  <ul class="collapse">
+  <li><a href="#carlength-carwidth-curbweight-vs-price" id="toc-carlength-carwidth-curbweight-vs-price" class="nav-link" data-scroll-target="#carlength-carwidth-curbweight-vs-price"><span class="header-section-number">3.2.1</span> Carlength, Carwidth, Curbweight vs Price</a></li>
+  <li><a href="#cylinder-number-engine-size-horsepower-vs-price" id="toc-cylinder-number-engine-size-horsepower-vs-price" class="nav-link" data-scroll-target="#cylinder-number-engine-size-horsepower-vs-price"><span class="header-section-number">3.2.2</span> Cylinder Number, Engine Size, Horsepower vs Price</a></li>
+  <li><a href="#carlength-carwidth-curbweight-cylinder-number-engine-size-horsepower-vs-price" id="toc-carlength-carwidth-curbweight-cylinder-number-engine-size-horsepower-vs-price" class="nav-link" data-scroll-target="#carlength-carwidth-curbweight-cylinder-number-engine-size-horsepower-vs-price"><span class="header-section-number">3.2.3</span> Carlength, Carwidth, Curbweight, Cylinder Number, Engine Size, Horsepower vs Price</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#kneigbors-vs-decision-tree-classification" id="toc-kneigbors-vs-decision-tree-classification" class="nav-link" data-scroll-target="#kneigbors-vs-decision-tree-classification"><span class="header-section-number">4</span> KNeigbors vs Decision Tree Classification</a>
+  <ul class="collapse">
+  <li><a href="#no-scaling" id="toc-no-scaling" class="nav-link" data-scroll-target="#no-scaling"><span class="header-section-number">4.1</span> No Scaling</a></li>
+  <li><a href="#standardized-scaling" id="toc-standardized-scaling" class="nav-link" data-scroll-target="#standardized-scaling"><span class="header-section-number">4.2</span> Standardized Scaling</a></li>
+  <li><a href="#normalized-scaling" id="toc-normalized-scaling" class="nav-link" data-scroll-target="#normalized-scaling"><span class="header-section-number">4.3</span> Normalized Scaling</a></li>
+  </ul></li>
+  <li><a href="#clustering" id="toc-clustering" class="nav-link" data-scroll-target="#clustering"><span class="header-section-number">5</span> Clustering</a>
+  <ul class="collapse">
+  <li><a href="#kmeans-model" id="toc-kmeans-model" class="nav-link" data-scroll-target="#kmeans-model"><span class="header-section-number">5.1</span> KMeans Model</a></li>
+  <li><a href="#gaussian-mixture-model" id="toc-gaussian-mixture-model" class="nav-link" data-scroll-target="#gaussian-mixture-model"><span class="header-section-number">5.2</span> Gaussian Mixture Model</a></li>
+  <li><a href="#spectral-clustering-model" id="toc-spectral-clustering-model" class="nav-link" data-scroll-target="#spectral-clustering-model"><span class="header-section-number">5.3</span> Spectral Clustering Model</a></li>
+  </ul></li>
+  <li><a href="#appendix" id="toc-appendix" class="nav-link" data-scroll-target="#appendix">Appendix</a>
+  <ul class="collapse">
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="Assignment1BrandonToews.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
+
+
+
+
+<p><img src="AI.jpeg" class="img-fluid"></p>
+<section id="project-overview" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Project Overview</h1>
+<section id="purpose-of-document" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="purpose-of-document"><span class="header-section-number">1.1</span> Purpose of Document</h2>
+<p>The purpose of this document is to provide a comparison between different AI models for a given dataset to determine which models are most accurate. This document also explores what measures can be taken to improve accuracy in various AI models.</p>
+</section>
+<section id="scope" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="scope"><span class="header-section-number">1.2</span> Scope</h2>
+<p>The scope of the project involves an exploratory examination of a dataset to determine how best to sample and clean the data for AI training and testing purposes. Various data visualizations are needed to properly understand the dataset and how best to proceed with training models. Training of various models and algorithms are required to produce sufficient comparisons with the ultimate goal of improving accuracy.</p>
+</section>
+</section>
+<section id="dataset-exploratory-analysis" class="level1 page-columns page-full" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Dataset Exploratory Analysis</h1>
+<section id="descriptive-analysis" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="descriptive-analysis"><span class="header-section-number">2.1</span> Descriptive Analysis</h2>
+<p>The dataset used in this project consists of available independent variables for a variety of cars to ascertain how they affect the price. The chosen dataset contains <a href="#dataset-shape">26 columns and 205 rows of data</a> with <a href="#dataset-info">no null values</a>. It is a sufficient dataset in terms of size and types of data for use in training univariate &amp; multivariate linear regression, classification and clustering models.</p>
+<p><strong>The Columns</strong></p>
+<ul>
+<li>Car_ID : Unique id of each observation (Integer)</li>
+<li>Symboling : Its assigned insurance risk rating, A value of +3 - Indicates that the auto is risky, -3 that it is probably pretty safe.</li>
+<li>carCompany : Name of car company (Categorical)</li>
+<li>fueltype : Car fuel type i.e gas or diesel (Categorical)</li>
+<li>aspiration : Aspiration used in a car (Categorical)</li>
+<li>doornumber : Number of doors in a car (Categorical)</li>
+<li>carbody : Body of car (Categorical)</li>
+<li>drivewheel : Type of drive wheel (Categorical)</li>
+<li>enginelocation : Location of car engine (Categorical)</li>
+<li>wheelbase : Wheelbase of car (Numeric)</li>
+<li>carlength : Length of car (Numeric)</li>
+<li>carwidth : Width of car (Numeric)</li>
+<li>carheight : Height of car (Numeric)</li>
+<li>curbweight : The weight of a car without occupants or baggage. (Numeric)</li>
+<li>enginetype : Type of engine. (Categorical)</li>
+<li>cylindernumber : Cylinder placed in the car (Numeric)</li>
+<li>enginesize : Size of car (Numeric)</li>
+<li>fuelsystem : Fuel system of car (Categorical)</li>
+<li>boreratio : Boreratio of car (Numeric)</li>
+<li>stroke : Stroke or volume inside the engine (Numeric)</li>
+<li>compressionratio : Compression ratio of car (Numeric)</li>
+<li>horsepower : Horsepower (Numeric)</li>
+<li>peakrpm : Car peak rpm (Numeric)</li>
+<li>citympg : Mileage in city (Numeric)</li>
+<li>highwaympg : Mileage on highway (Numeric)</li>
+<li>price(Dependent variable) : Price of car (Numeric)</li>
+</ul>
+<div class="cell" data-execution_count="1">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import libraries for analysis and plotting</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>matplotlib inline</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Save data in Pandas dataframe</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>dataset <span class="op">=</span> pd.read_csv(<span class="st">"CarPrice_Assignment.csv"</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Print how many rows and columns are in dataset</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Dataset Shape:'</span>,dataset.shape)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Turn of max columns so that head() displays all columns in dataset</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">'display.max_columns'</span>, <span class="va">None</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">'display.max_rows'</span>, <span class="dv">5</span>)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Display 1st five entries of dataset</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>dataset.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Dataset Shape: (205, 26)</code></pre>
+</div>
+<div id="dataset-shape" class="cell-output cell-output-display" data-execution_count="1">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">car_ID</th>
+<th data-quarto-table-cell-role="th">symboling</th>
+<th data-quarto-table-cell-role="th">CarName</th>
+<th data-quarto-table-cell-role="th">fueltype</th>
+<th data-quarto-table-cell-role="th">aspiration</th>
+<th data-quarto-table-cell-role="th">doornumber</th>
+<th data-quarto-table-cell-role="th">carbody</th>
+<th data-quarto-table-cell-role="th">drivewheel</th>
+<th data-quarto-table-cell-role="th">enginelocation</th>
+<th data-quarto-table-cell-role="th">wheelbase</th>
+<th data-quarto-table-cell-role="th">carlength</th>
+<th data-quarto-table-cell-role="th">carwidth</th>
+<th data-quarto-table-cell-role="th">carheight</th>
+<th data-quarto-table-cell-role="th">curbweight</th>
+<th data-quarto-table-cell-role="th">enginetype</th>
+<th data-quarto-table-cell-role="th">cylindernumber</th>
+<th data-quarto-table-cell-role="th">enginesize</th>
+<th data-quarto-table-cell-role="th">fuelsystem</th>
+<th data-quarto-table-cell-role="th">boreratio</th>
+<th data-quarto-table-cell-role="th">stroke</th>
+<th data-quarto-table-cell-role="th">compressionratio</th>
+<th data-quarto-table-cell-role="th">horsepower</th>
+<th data-quarto-table-cell-role="th">peakrpm</th>
+<th data-quarto-table-cell-role="th">citympg</th>
+<th data-quarto-table-cell-role="th">highwaympg</th>
+<th data-quarto-table-cell-role="th">price</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1</td>
+<td>3</td>
+<td>alfa-romero giulia</td>
+<td>gas</td>
+<td>std</td>
+<td>two</td>
+<td>convertible</td>
+<td>rwd</td>
+<td>front</td>
+<td>88.6</td>
+<td>168.8</td>
+<td>64.1</td>
+<td>48.8</td>
+<td>2548</td>
+<td>dohc</td>
+<td>four</td>
+<td>130</td>
+<td>mpfi</td>
+<td>3.47</td>
+<td>2.68</td>
+<td>9.0</td>
+<td>111</td>
+<td>5000</td>
+<td>21</td>
+<td>27</td>
+<td>13495.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2</td>
+<td>3</td>
+<td>alfa-romero stelvio</td>
+<td>gas</td>
+<td>std</td>
+<td>two</td>
+<td>convertible</td>
+<td>rwd</td>
+<td>front</td>
+<td>88.6</td>
+<td>168.8</td>
+<td>64.1</td>
+<td>48.8</td>
+<td>2548</td>
+<td>dohc</td>
+<td>four</td>
+<td>130</td>
+<td>mpfi</td>
+<td>3.47</td>
+<td>2.68</td>
+<td>9.0</td>
+<td>111</td>
+<td>5000</td>
+<td>21</td>
+<td>27</td>
+<td>16500.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>3</td>
+<td>1</td>
+<td>alfa-romero Quadrifoglio</td>
+<td>gas</td>
+<td>std</td>
+<td>two</td>
+<td>hatchback</td>
+<td>rwd</td>
+<td>front</td>
+<td>94.5</td>
+<td>171.2</td>
+<td>65.5</td>
+<td>52.4</td>
+<td>2823</td>
+<td>ohcv</td>
+<td>six</td>
+<td>152</td>
+<td>mpfi</td>
+<td>2.68</td>
+<td>3.47</td>
+<td>9.0</td>
+<td>154</td>
+<td>5000</td>
+<td>19</td>
+<td>26</td>
+<td>16500.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>4</td>
+<td>2</td>
+<td>audi 100 ls</td>
+<td>gas</td>
+<td>std</td>
+<td>four</td>
+<td>sedan</td>
+<td>fwd</td>
+<td>front</td>
+<td>99.8</td>
+<td>176.6</td>
+<td>66.2</td>
+<td>54.3</td>
+<td>2337</td>
+<td>ohc</td>
+<td>four</td>
+<td>109</td>
+<td>mpfi</td>
+<td>3.19</td>
+<td>3.40</td>
+<td>10.0</td>
+<td>102</td>
+<td>5500</td>
+<td>24</td>
+<td>30</td>
+<td>13950.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>5</td>
+<td>2</td>
+<td>audi 100ls</td>
+<td>gas</td>
+<td>std</td>
+<td>four</td>
+<td>sedan</td>
+<td>4wd</td>
+<td>front</td>
+<td>99.4</td>
+<td>176.6</td>
+<td>66.4</td>
+<td>54.3</td>
+<td>2824</td>
+<td>ohc</td>
+<td>five</td>
+<td>136</td>
+<td>mpfi</td>
+<td>3.19</td>
+<td>3.40</td>
+<td>8.0</td>
+<td>115</td>
+<td>5500</td>
+<td>18</td>
+<td>22</td>
+<td>17450.0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="dataset-info" class="cell" data-scrolled="true" data-execution_count="32">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Print data types and how many null values are present</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>dataset.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 205 entries, 0 to 204
+Data columns (total 26 columns):
+ #   Column            Non-Null Count  Dtype  
+---  ------            --------------  -----  
+ 0   car_ID            205 non-null    int64  
+ 1   symboling         205 non-null    int64  
+ 2   CarName           205 non-null    object 
+ 3   fueltype          205 non-null    object 
+ 4   aspiration        205 non-null    object 
+ 5   doornumber        205 non-null    object 
+ 6   carbody           205 non-null    object 
+ 7   drivewheel        205 non-null    object 
+ 8   enginelocation    205 non-null    object 
+ 9   wheelbase         205 non-null    float64
+ 10  carlength         205 non-null    float64
+ 11  carwidth          205 non-null    float64
+ 12  carheight         205 non-null    float64
+ 13  curbweight        205 non-null    int64  
+ 14  enginetype        205 non-null    object 
+ 15  cylindernumber    205 non-null    object 
+ 16  enginesize        205 non-null    int64  
+ 17  fuelsystem        205 non-null    object 
+ 18  boreratio         205 non-null    float64
+ 19  stroke            205 non-null    float64
+ 20  compressionratio  205 non-null    float64
+ 21  horsepower        205 non-null    int64  
+ 22  peakrpm           205 non-null    int64  
+ 23  citympg           205 non-null    int64  
+ 24  highwaympg        205 non-null    int64  
+ 25  price             205 non-null    float64
+dtypes: float64(8), int64(8), object(10)
+memory usage: 41.8+ KB</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="120">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Display some descriptive statistics</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>dataset.describe().<span class="bu">round</span>(<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="120">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">car_ID</th>
+<th data-quarto-table-cell-role="th">symboling</th>
+<th data-quarto-table-cell-role="th">wheelbase</th>
+<th data-quarto-table-cell-role="th">carlength</th>
+<th data-quarto-table-cell-role="th">carwidth</th>
+<th data-quarto-table-cell-role="th">carheight</th>
+<th data-quarto-table-cell-role="th">curbweight</th>
+<th data-quarto-table-cell-role="th">enginesize</th>
+<th data-quarto-table-cell-role="th">boreratio</th>
+<th data-quarto-table-cell-role="th">stroke</th>
+<th data-quarto-table-cell-role="th">compressionratio</th>
+<th data-quarto-table-cell-role="th">horsepower</th>
+<th data-quarto-table-cell-role="th">peakrpm</th>
+<th data-quarto-table-cell-role="th">citympg</th>
+<th data-quarto-table-cell-role="th">highwaympg</th>
+<th data-quarto-table-cell-role="th">price</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">count</td>
+<td>205.00</td>
+<td>205.00</td>
+<td>205.00</td>
+<td>205.00</td>
+<td>205.00</td>
+<td>205.00</td>
+<td>205.00</td>
+<td>205.00</td>
+<td>205.00</td>
+<td>205.00</td>
+<td>205.00</td>
+<td>205.00</td>
+<td>205.00</td>
+<td>205.00</td>
+<td>205.00</td>
+<td>205.00</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">mean</td>
+<td>103.00</td>
+<td>0.83</td>
+<td>98.76</td>
+<td>174.05</td>
+<td>65.91</td>
+<td>53.72</td>
+<td>2555.57</td>
+<td>126.91</td>
+<td>3.33</td>
+<td>3.26</td>
+<td>10.14</td>
+<td>104.12</td>
+<td>5125.12</td>
+<td>25.22</td>
+<td>30.75</td>
+<td>13276.71</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">std</td>
+<td>59.32</td>
+<td>1.25</td>
+<td>6.02</td>
+<td>12.34</td>
+<td>2.15</td>
+<td>2.44</td>
+<td>520.68</td>
+<td>41.64</td>
+<td>0.27</td>
+<td>0.31</td>
+<td>3.97</td>
+<td>39.54</td>
+<td>476.99</td>
+<td>6.54</td>
+<td>6.89</td>
+<td>7988.85</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">min</td>
+<td>1.00</td>
+<td>-2.00</td>
+<td>86.60</td>
+<td>141.10</td>
+<td>60.30</td>
+<td>47.80</td>
+<td>1488.00</td>
+<td>61.00</td>
+<td>2.54</td>
+<td>2.07</td>
+<td>7.00</td>
+<td>48.00</td>
+<td>4150.00</td>
+<td>13.00</td>
+<td>16.00</td>
+<td>5118.00</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">25%</td>
+<td>52.00</td>
+<td>0.00</td>
+<td>94.50</td>
+<td>166.30</td>
+<td>64.10</td>
+<td>52.00</td>
+<td>2145.00</td>
+<td>97.00</td>
+<td>3.15</td>
+<td>3.11</td>
+<td>8.60</td>
+<td>70.00</td>
+<td>4800.00</td>
+<td>19.00</td>
+<td>25.00</td>
+<td>7788.00</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">50%</td>
+<td>103.00</td>
+<td>1.00</td>
+<td>97.00</td>
+<td>173.20</td>
+<td>65.50</td>
+<td>54.10</td>
+<td>2414.00</td>
+<td>120.00</td>
+<td>3.31</td>
+<td>3.29</td>
+<td>9.00</td>
+<td>95.00</td>
+<td>5200.00</td>
+<td>24.00</td>
+<td>30.00</td>
+<td>10295.00</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">75%</td>
+<td>154.00</td>
+<td>2.00</td>
+<td>102.40</td>
+<td>183.10</td>
+<td>66.90</td>
+<td>55.50</td>
+<td>2935.00</td>
+<td>141.00</td>
+<td>3.58</td>
+<td>3.41</td>
+<td>9.40</td>
+<td>116.00</td>
+<td>5500.00</td>
+<td>30.00</td>
+<td>34.00</td>
+<td>16503.00</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">max</td>
+<td>205.00</td>
+<td>3.00</td>
+<td>120.90</td>
+<td>208.10</td>
+<td>72.30</td>
+<td>59.80</td>
+<td>4066.00</td>
+<td>326.00</td>
+<td>3.94</td>
+<td>4.17</td>
+<td>23.00</td>
+<td>288.00</td>
+<td>6600.00</td>
+<td>49.00</td>
+<td>54.00</td>
+<td>45400.00</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="cleaning" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="cleaning"><span class="header-section-number">2.2</span> Cleaning</h2>
+<p>Multiple columns are <a href="#dataset-info">object data types</a> but for classification and clustering purposes they were <a href="#dataset-changetypes">converted to category types</a>. Column 16, “cylindernumber”, values were changed from <a href="#changed-types">strings to integers</a> to assist in training some of the linear regression models.</p>
+<div class="cell" data-execution_count="2">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert object data types to category types</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>dataset[<span class="st">'CarName'</span>] <span class="op">=</span> dataset[<span class="st">'CarName'</span>].astype(<span class="st">'category'</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>dataset[<span class="st">'fueltype'</span>] <span class="op">=</span> dataset[<span class="st">'fueltype'</span>].astype(<span class="st">'category'</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>dataset[<span class="st">'aspiration'</span>] <span class="op">=</span> dataset[<span class="st">'aspiration'</span>].astype(<span class="st">'category'</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>dataset[<span class="st">'doornumber'</span>] <span class="op">=</span> dataset[<span class="st">'doornumber'</span>].astype(<span class="st">'category'</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>dataset[<span class="st">'carbody'</span>] <span class="op">=</span> dataset[<span class="st">'carbody'</span>].astype(<span class="st">'category'</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>dataset[<span class="st">'drivewheel'</span>] <span class="op">=</span> dataset[<span class="st">'drivewheel'</span>].astype(<span class="st">'category'</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>dataset[<span class="st">'enginelocation'</span>] <span class="op">=</span> dataset[<span class="st">'enginelocation'</span>].astype(<span class="st">'category'</span>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>dataset[<span class="st">'enginetype'</span>] <span class="op">=</span> dataset[<span class="st">'enginetype'</span>].astype(<span class="st">'category'</span>)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>dataset[<span class="st">'fuelsystem'</span>] <span class="op">=</span> dataset[<span class="st">'fuelsystem'</span>].astype(<span class="st">'category'</span>)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>dataset[<span class="st">'curbweight'</span>] <span class="op">=</span> dataset[<span class="st">'curbweight'</span>].astype(<span class="st">'int'</span>)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert strings to integers in cylindernumber column to potentially use in the regression models</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>dataset[<span class="st">'cylindernumber'</span>] <span class="op">=</span> dataset[<span class="st">'cylindernumber'</span>].replace([<span class="st">'two'</span>], <span class="dv">2</span>).replace([<span class="st">'three'</span>], <span class="dv">3</span>)<span class="op">\</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>.replace([<span class="st">'four'</span>], <span class="dv">4</span>).replace([<span class="st">'five'</span>], <span class="dv">5</span>).replace([<span class="st">'six'</span>], <span class="dv">6</span>).replace([<span class="st">'eight'</span>], <span class="dv">8</span>).replace([<span class="st">'twelve'</span>], <span class="dv">12</span>)</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>dataset.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="dataset-changetypes" class="cell-output cell-output-display" data-execution_count="2">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">car_ID</th>
+<th data-quarto-table-cell-role="th">symboling</th>
+<th data-quarto-table-cell-role="th">CarName</th>
+<th data-quarto-table-cell-role="th">fueltype</th>
+<th data-quarto-table-cell-role="th">aspiration</th>
+<th data-quarto-table-cell-role="th">doornumber</th>
+<th data-quarto-table-cell-role="th">carbody</th>
+<th data-quarto-table-cell-role="th">drivewheel</th>
+<th data-quarto-table-cell-role="th">enginelocation</th>
+<th data-quarto-table-cell-role="th">wheelbase</th>
+<th data-quarto-table-cell-role="th">carlength</th>
+<th data-quarto-table-cell-role="th">carwidth</th>
+<th data-quarto-table-cell-role="th">carheight</th>
+<th data-quarto-table-cell-role="th">curbweight</th>
+<th data-quarto-table-cell-role="th">enginetype</th>
+<th data-quarto-table-cell-role="th">cylindernumber</th>
+<th data-quarto-table-cell-role="th">enginesize</th>
+<th data-quarto-table-cell-role="th">fuelsystem</th>
+<th data-quarto-table-cell-role="th">boreratio</th>
+<th data-quarto-table-cell-role="th">stroke</th>
+<th data-quarto-table-cell-role="th">compressionratio</th>
+<th data-quarto-table-cell-role="th">horsepower</th>
+<th data-quarto-table-cell-role="th">peakrpm</th>
+<th data-quarto-table-cell-role="th">citympg</th>
+<th data-quarto-table-cell-role="th">highwaympg</th>
+<th data-quarto-table-cell-role="th">price</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1</td>
+<td>3</td>
+<td>alfa-romero giulia</td>
+<td>gas</td>
+<td>std</td>
+<td>two</td>
+<td>convertible</td>
+<td>rwd</td>
+<td>front</td>
+<td>88.6</td>
+<td>168.8</td>
+<td>64.1</td>
+<td>48.8</td>
+<td>2548</td>
+<td>dohc</td>
+<td>4</td>
+<td>130</td>
+<td>mpfi</td>
+<td>3.47</td>
+<td>2.68</td>
+<td>9.0</td>
+<td>111</td>
+<td>5000</td>
+<td>21</td>
+<td>27</td>
+<td>13495.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2</td>
+<td>3</td>
+<td>alfa-romero stelvio</td>
+<td>gas</td>
+<td>std</td>
+<td>two</td>
+<td>convertible</td>
+<td>rwd</td>
+<td>front</td>
+<td>88.6</td>
+<td>168.8</td>
+<td>64.1</td>
+<td>48.8</td>
+<td>2548</td>
+<td>dohc</td>
+<td>4</td>
+<td>130</td>
+<td>mpfi</td>
+<td>3.47</td>
+<td>2.68</td>
+<td>9.0</td>
+<td>111</td>
+<td>5000</td>
+<td>21</td>
+<td>27</td>
+<td>16500.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>3</td>
+<td>1</td>
+<td>alfa-romero Quadrifoglio</td>
+<td>gas</td>
+<td>std</td>
+<td>two</td>
+<td>hatchback</td>
+<td>rwd</td>
+<td>front</td>
+<td>94.5</td>
+<td>171.2</td>
+<td>65.5</td>
+<td>52.4</td>
+<td>2823</td>
+<td>ohcv</td>
+<td>6</td>
+<td>152</td>
+<td>mpfi</td>
+<td>2.68</td>
+<td>3.47</td>
+<td>9.0</td>
+<td>154</td>
+<td>5000</td>
+<td>19</td>
+<td>26</td>
+<td>16500.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>4</td>
+<td>2</td>
+<td>audi 100 ls</td>
+<td>gas</td>
+<td>std</td>
+<td>four</td>
+<td>sedan</td>
+<td>fwd</td>
+<td>front</td>
+<td>99.8</td>
+<td>176.6</td>
+<td>66.2</td>
+<td>54.3</td>
+<td>2337</td>
+<td>ohc</td>
+<td>4</td>
+<td>109</td>
+<td>mpfi</td>
+<td>3.19</td>
+<td>3.40</td>
+<td>10.0</td>
+<td>102</td>
+<td>5500</td>
+<td>24</td>
+<td>30</td>
+<td>13950.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>5</td>
+<td>2</td>
+<td>audi 100ls</td>
+<td>gas</td>
+<td>std</td>
+<td>four</td>
+<td>sedan</td>
+<td>4wd</td>
+<td>front</td>
+<td>99.4</td>
+<td>176.6</td>
+<td>66.4</td>
+<td>54.3</td>
+<td>2824</td>
+<td>ohc</td>
+<td>5</td>
+<td>136</td>
+<td>mpfi</td>
+<td>3.19</td>
+<td>3.40</td>
+<td>8.0</td>
+<td>115</td>
+<td>5500</td>
+<td>18</td>
+<td>22</td>
+<td>17450.0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="changed-types" class="cell" data-execution_count="25">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Print new data types and how many null values are present</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>dataset.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 205 entries, 0 to 204
+Data columns (total 26 columns):
+ #   Column            Non-Null Count  Dtype   
+---  ------            --------------  -----   
+ 0   car_ID            205 non-null    int64   
+ 1   symboling         205 non-null    int64   
+ 2   CarName           205 non-null    category
+ 3   fueltype          205 non-null    category
+ 4   aspiration        205 non-null    category
+ 5   doornumber        205 non-null    category
+ 6   carbody           205 non-null    category
+ 7   drivewheel        205 non-null    category
+ 8   enginelocation    205 non-null    category
+ 9   wheelbase         205 non-null    float64 
+ 10  carlength         205 non-null    float64 
+ 11  carwidth          205 non-null    float64 
+ 12  carheight         205 non-null    float64 
+ 13  curbweight        205 non-null    int64   
+ 14  enginetype        205 non-null    category
+ 15  cylindernumber    205 non-null    int64   
+ 16  enginesize        205 non-null    int64   
+ 17  fuelsystem        205 non-null    category
+ 18  boreratio         205 non-null    float64 
+ 19  stroke            205 non-null    float64 
+ 20  compressionratio  205 non-null    float64 
+ 21  horsepower        205 non-null    int64   
+ 22  peakrpm           205 non-null    int64   
+ 23  citympg           205 non-null    int64   
+ 24  highwaympg        205 non-null    int64   
+ 25  price             205 non-null    float64 
+dtypes: category(9), float64(8), int64(9)
+memory usage: 36.1 KB</code></pre>
+</div>
+</div>
+</section>
+<section id="visualizations" class="level2 page-columns page-full" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="visualizations"><span class="header-section-number">2.3</span> Visualizations</h2>
+<p>A pairplot ( See <a href="#fig-pairplot">Figure 1</a> ) provides a quick overview of how the variables relate, showing some possibilities for training models. The ‘carbody’ ( See <a href="#fig-carbodypie">Figure 2</a> ) and ‘fueltype’ ( See <a href="#fig-fueltypepie">Figure 3</a> ) columns show promise for use with the classification and clustering models ( See <a href="#fig-plots-6">Figure 4 (f)</a> &amp; <a href="#fig-plots-7">Figure 4 (g)</a> ). Clear linear relationships exist between ‘carlength’, ‘carwidth’, ‘curbweight’, ‘enginesize’, ‘cylindernumber’ and ‘horsepower’ independent variables and the dependent variable ‘price’ ( See <a href="#fig-plots">Figure 4 (a) - (f)</a> ).</p>
+<div class="cell" data-execution_count="19">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Display a pairplot to quickly see how varaiables relate to one another with 'fueltype' hue</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>sns.pairplot(dataset, kind<span class="op">=</span> <span class="st">'scatter'</span>, hue<span class="op">=</span> <span class="st">'fueltype'</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-pairplot" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Assignment1BrandonToews_files/figure-html/fig-pairplot-output-1.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption"><strong>Figure</strong>&nbsp;1<strong>.</strong> Pairplot with Fuel Type Hue</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="19">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># display pie chart data for carbody</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>dataset[<span class="st">'carbody'</span>].value_counts().plot.pie(autopct<span class="op">=</span><span class="st">'</span><span class="sc">%1.3f%%</span><span class="st">'</span>)<span class="op">;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Display relationship between body style and price</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>dataset.groupby(<span class="st">'carbody'</span>)[<span class="st">'price'</span>].mean().<span class="bu">round</span>(<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-carbodypie" class="quarto-figure quarto-figure-left anchored">
+<figure class="figure">
+<p><img src="Assignment1BrandonToews_files/figure-html/fig-carbodypie-output-1.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption"><strong>Figure</strong>&nbsp;2<strong>.</strong> Carbody Pie Plot</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="23">
+<div class="cell-output cell-output-display" data-execution_count="23">
+<pre><code>carbody
+convertible    21890.50
+hardtop        22208.50
+hatchback      10376.65
+sedan          14344.27
+wagon          12371.96
+Name: price, dtype: float64</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="20">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># display pie chart data for fueltype</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>dataset[<span class="st">'fueltype'</span>].value_counts().plot.pie(autopct<span class="op">=</span><span class="st">'</span><span class="sc">%1.3f%%</span><span class="st">'</span>)<span class="op">;</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Display ralationship between body style and price</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>dataset.groupby(<span class="st">'fueltype'</span>)[<span class="st">'price'</span>].mean().<span class="bu">round</span>(<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-fueltypepie" class="quarto-figure quarto-figure-left anchored">
+<figure class="figure">
+<p><img src="Assignment1BrandonToews_files/figure-html/fig-fueltypepie-output-1.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption"><strong>Figure</strong>&nbsp;3<strong>.</strong> Fuel Type Pie Plot</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="126">
+<div class="cell-output cell-output-display" data-execution_count="126">
+<pre><code>fueltype
+diesel    15838.15
+gas       12999.80
+Name: price, dtype: float64</code></pre>
+</div>
+</div>
+<div class="page-columns page-full">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Carlength has moderate relationship to price</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">6</span>,<span class="dv">6</span>))<span class="op">;</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>sns.regplot(data<span class="op">=</span>dataset, x<span class="op">=</span><span class="st">"carlength"</span>, y<span class="op">=</span><span class="st">"price"</span>)<span class="op">;</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Carwidth has moderate relationship to price</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">6</span>,<span class="dv">6</span>))<span class="op">;</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>sns.regplot(data<span class="op">=</span>dataset, x<span class="op">=</span><span class="st">"carwidth"</span>, y<span class="op">=</span><span class="st">"price"</span>)<span class="op">;</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Carweight has moderate/strong relationship to price</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">6</span>,<span class="dv">6</span>))<span class="op">;</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>sns.regplot(data<span class="op">=</span>dataset, x<span class="op">=</span><span class="st">"curbweight"</span>, y<span class="op">=</span><span class="st">"price"</span>)<span class="op">;</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Engine size has strong relationship to price</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>sns.lmplot(data<span class="op">=</span>dataset, x<span class="op">=</span><span class="st">"enginesize"</span>, y<span class="op">=</span><span class="st">"price"</span>, hue<span class="op">=</span><span class="st">'fueltype'</span>, height<span class="op">=</span><span class="dv">6</span>)</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Horsepower has strong relationship to price for both fuel types</span></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>sns.lmplot(data<span class="op">=</span>dataset, x<span class="op">=</span><span class="st">"horsepower"</span>, y<span class="op">=</span><span class="st">"price"</span>, hue<span class="op">=</span><span class="st">'fueltype'</span>, height<span class="op">=</span><span class="dv">6</span>)</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Cylinder number has moderate/strong relationship to price</span></span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>sns.jointplot(data<span class="op">=</span>dataset, x<span class="op">=</span><span class="st">"cylindernumber"</span>, y<span class="op">=</span><span class="st">"price"</span>, kind<span class="op">=</span><span class="st">"reg"</span>)<span class="op">;</span></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Clear classification relationship between compressionratio and fueltype</span></span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>g <span class="op">=</span> sns.jointplot(data<span class="op">=</span>dataset, x<span class="op">=</span><span class="st">"compressionratio"</span>, y<span class="op">=</span><span class="st">"price"</span>, hue<span class="op">=</span><span class="st">'fueltype'</span>)<span class="op">;</span></span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>g.plot_joint(sns.kdeplot, hue<span class="op">=</span><span class="st">'fueltype'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="fig-plots" class="cell column-page quarto-layout-panel" data-execution_count="16">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-plots-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Assignment1BrandonToews_files/figure-html/fig-plots-output-1.png" class="img-fluid figure-img" data-ref-parent="fig-plots"></p>
+<figcaption class="figure-caption">(a) Car Length vs Price</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-plots-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Assignment1BrandonToews_files/figure-html/fig-plots-output-2.png" class="img-fluid figure-img" data-ref-parent="fig-plots"></p>
+<figcaption class="figure-caption">(b) Car Width vs Price</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-plots-3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Assignment1BrandonToews_files/figure-html/fig-plots-output-3.png" class="img-fluid figure-img" data-ref-parent="fig-plots"></p>
+<figcaption class="figure-caption">(c) Curb Weight vs Price</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-plots-4" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Assignment1BrandonToews_files/figure-html/fig-plots-output-4.png" class="img-fluid figure-img" data-ref-parent="fig-plots"></p>
+<figcaption class="figure-caption">(d) Engine Size vs Price</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-plots-5" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Assignment1BrandonToews_files/figure-html/fig-plots-output-5.png" class="img-fluid figure-img" data-ref-parent="fig-plots"></p>
+<figcaption class="figure-caption">(e) Horsepower vs Price</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-plots-6" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Assignment1BrandonToews_files/figure-html/fig-plots-output-6.png" class="img-fluid figure-img" data-ref-parent="fig-plots"></p>
+<figcaption class="figure-caption">(f) Cylinder Number vs Price</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-plots-7" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Assignment1BrandonToews_files/figure-html/fig-plots-output-7.png" class="img-fluid figure-img" data-ref-parent="fig-plots"></p>
+<figcaption class="figure-caption">(g) Compression Ratio vs Price</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption"><strong>Figure</strong>&nbsp;4<strong>.</strong> Plots for visualizing</figcaption><p></p>
+</figure>
+</div>
+</div>
+</section>
+</section>
+<section id="linear-regression" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Linear Regression</h1>
+<section id="univariate-models" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="univariate-models"><span class="header-section-number">3.1</span> Univariate Models</h2>
+<p>Multiple univariate models were trained for comparison using a <a href="#lst-linreg">custom Linear Regression training function</a>. Models were trained with ‘carlength’, ‘carwidth’, ‘curbweight’, ‘cylindernumber’, ‘enginesize’ and ‘horsepower’ independent variables. In most cases the model accuracy was the best with a 70% training and 30% testing split ( See <a href="#car-length-vs-price">Items 3.1.1 - 3.1.4</a> ). However, with engine size and horsepower models more accuracy was achieved with an 80% training and 20% testing split ( See <a href="#engine-size-vs-price">Items 3.1.5 - 3.1.6</a> ).</p>
+<div id="lst-linreg" class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15" data-caption="Custom Linear Regression Function"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import regression training libraries and packages</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn <span class="im">import</span> metrics</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Linear Regression training function that takes in X and Y arguments and displays results</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> myLinRegModel(x, y, testSize):</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># While loop to iterate every 10% from given test size</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> testSize<span class="op">&gt;</span><span class="dv">0</span>:</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Splitting data into training and testing variables using the values passed into function</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>        x_train, x_test, y_train, y_test <span class="op">=</span> train_test_split(x, y, test_size<span class="op">=</span>(testSize<span class="op">/</span><span class="dv">100</span>), random_state<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Training model with LinearRegression function and training data</span></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>        regressor <span class="op">=</span> LinearRegression()</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>        regressor.fit(x_train, y_train)</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Print test size of current iteration</span></span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">'Test Size:'</span>, testSize, <span class="st">'%</span><span class="ch">\n</span><span class="st">'</span>)</span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Print intercept and CoEfficient values of model</span></span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"a ="</span>, regressor.intercept_)</span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"b ="</span>, regressor.coef_)</span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Test the trained model with test data and store in variable</span></span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a>        y_pred <span class="op">=</span> regressor.predict(x_test)</span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Display predicted values next to actual values for comparison</span></span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a>        df <span class="op">=</span> pd.DataFrame({<span class="st">'Actual'</span>: y_test, <span class="st">'Predicted'</span>: y_pred})</span>
+<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(df)</span>
+<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Display accuracy of model predictions in the form of Mean Absolute Error, Mean Squared Error,</span></span>
+<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Root Mean Squared Error using the difference between actual and predicted values</span></span>
+<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">'Mean Absolute Error:'</span>, metrics.mean_absolute_error(y_test, y_pred))</span>
+<span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">'Mean Squared Error:'</span>, metrics.mean_squared_error(y_test, y_pred))</span>
+<span id="cb15-38"><a href="#cb15-38" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">'Root Mean Squared Error:'</span>, np.sqrt(metrics.mean_squared_error(y_test, y_pred)))</span>
+<span id="cb15-39"><a href="#cb15-39" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">'R2 Score: '</span>, metrics.r2_score(y_test,y_pred)<span class="op">*</span><span class="dv">100</span>, <span class="st">'%</span><span class="ch">\n</span><span class="st">'</span>, sep<span class="op">=</span><span class="st">''</span>)</span>
+<span id="cb15-40"><a href="#cb15-40" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb15-41"><a href="#cb15-41" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Decrease test size by 10</span></span>
+<span id="cb15-42"><a href="#cb15-42" aria-hidden="true" tabindex="-1"></a>        testSize <span class="op">-=</span> <span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<section id="car-length-vs-price" class="level3" data-number="3.1.1">
+<h3 data-number="3.1.1" class="anchored" data-anchor-id="car-length-vs-price"><span class="header-section-number">3.1.1</span> Car Length vs Price</h3>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Carlength Column</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>carLength <span class="op">=</span> dataset.iloc[:, <span class="dv">10</span>:<span class="op">-</span><span class="dv">15</span>].values</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Price Column</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>price <span class="op">=</span> dataset.iloc[:, <span class="dv">25</span>].values.<span class="bu">round</span>(<span class="dv">2</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Call custom regression model function with 30% test size</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>myLinRegModel(carLength, price, <span class="dv">30</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Test Size: 30 %
+
+a = -63541.11342037626
+b = [440.33603117]
+     Actual     Predicted
+0    6795.0   6516.349139
+1   15750.0  19153.993234
+..      ...           ...
+60   6479.0    131.476687
+61  15510.0  18625.589997
+
+[62 rows x 2 columns]
+Mean Absolute Error: 3981.584437549869
+Mean Squared Error: 32715085.38508641
+Root Mean Squared Error: 5719.71025359558
+R2 Score: 50.45973947401606%
+
+Test Size: 20 %
+
+a = -63738.09854118214
+b = [441.42013341]
+     Actual     Predicted
+0    6795.0   6491.844685
+1   15750.0  19160.602514
+..      ...           ...
+39  45400.0  24192.792035
+40   8916.5   5079.300258
+
+[41 rows x 2 columns]
+Mean Absolute Error: 4528.295484564718
+Mean Squared Error: 43469954.12056989
+Root Mean Squared Error: 6593.174813439266
+R2 Score: 43.84913586892223%
+
+Test Size: 10 %
+
+a = -66742.8631493445
+b = [459.19742348]
+     Actual     Predicted
+0    6795.0   6315.446927
+1   15750.0  19494.412981
+..      ...           ...
+19   6488.0   6131.767957
+20   9959.0  12698.291113
+
+[21 rows x 2 columns]
+Mean Absolute Error: 3945.9317457788898
+Mean Squared Error: 29396652.85426334
+Root Mean Squared Error: 5421.868022578873
+R2 Score: 26.410928631260454%
+</code></pre>
+</div>
+</div>
+</section>
+<section id="car-width-vs-price" class="level3" data-number="3.1.2">
+<h3 data-number="3.1.2" class="anchored" data-anchor-id="car-width-vs-price"><span class="header-section-number">3.1.2</span> Car Width vs Price</h3>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Carwidth Column</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>carWidth <span class="op">=</span> dataset.iloc[:, <span class="dv">11</span>:<span class="op">-</span><span class="dv">14</span>].values</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Price Column</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>price <span class="op">=</span> dataset.iloc[:, <span class="dv">25</span>].values.<span class="bu">round</span>(<span class="dv">2</span>)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Call custom regression model function with 30% test size</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>myLinRegModel(carWidth, price, <span class="dv">30</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Test Size: 30 %
+
+a = -172630.60948546475
+b = [2822.14912394]
+     Actual     Predicted
+0    6795.0   8551.364271
+1   15750.0  15042.307256
+..      ...           ...
+60   6479.0   7704.719534
+61  15510.0  15042.307256
+
+[62 rows x 2 columns]
+Mean Absolute Error: 3036.57768015824
+Mean Squared Error: 22710512.087679498
+Root Mean Squared Error: 4765.554751304354
+R2 Score: 65.60960571372881%
+
+Test Size: 20 %
+
+a = -172526.22359994025
+b = [2819.03318321]
+     Actual     Predicted
+0    6795.0   8455.706762
+1   15750.0  14939.483084
+..      ...           ...
+39  45400.0  30444.165591
+40   8916.5   6764.286852
+
+[41 rows x 2 columns]
+Mean Absolute Error: 3674.9155902799166
+Mean Squared Error: 31370813.470780104
+Root Mean Squared Error: 5600.965405247573
+R2 Score: 59.47779746918066%
+
+Test Size: 10 %
+
+a = -181627.87173597398
+b = [2957.89666431]
+     Actual     Predicted
+0    6795.0   8269.094113
+1   15750.0  15072.256441
+..      ...           ...
+19   6488.0   6494.356114
+20   9959.0  11818.570110
+
+[21 rows x 2 columns]
+Mean Absolute Error: 3197.214272696799
+Mean Squared Error: 19783555.22362383
+Root Mean Squared Error: 4447.87086409035
+R2 Score: 50.47553663690271%
+</code></pre>
+</div>
+</div>
+</section>
+<section id="curb-weight-vs-price" class="level3" data-number="3.1.3">
+<h3 data-number="3.1.3" class="anchored" data-anchor-id="curb-weight-vs-price"><span class="header-section-number">3.1.3</span> Curb Weight vs Price</h3>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Curbweight Column</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>carWeight <span class="op">=</span> dataset.iloc[:, <span class="dv">13</span>:<span class="op">-</span><span class="dv">12</span>].values</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Price Column</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>price <span class="op">=</span> dataset.iloc[:, <span class="dv">25</span>].values.<span class="bu">round</span>(<span class="dv">2</span>)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Call custom regression model function with 30% test size</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>myLinRegModel(carWeight, price, <span class="dv">30</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Test Size: 30 %
+
+a = -18679.037713196016
+b = [12.40359272]
+     Actual     Predicted
+0    6795.0   4949.806413
+1   15750.0  20404.682939
+..      ...           ...
+60   6479.0   2568.316611
+61  15510.0  15530.071001
+
+[62 rows x 2 columns]
+Mean Absolute Error: 2670.404540077829
+Mean Squared Error: 18443910.151758883
+Root Mean Squared Error: 4294.637371392244
+R2 Score: 72.0704958192619%
+
+Test Size: 20 %
+
+a = -18833.605447325583
+b = [12.47623193]
+     Actual     Predicted
+0    6795.0   4933.616372
+1   15750.0  20479.001353
+..      ...           ...
+39  45400.0  27515.596159
+40   8916.5   4546.853183
+
+[41 rows x 2 columns]
+Mean Absolute Error: 3256.3206631106873
+Mean Squared Error: 25249391.034916148
+Root Mean Squared Error: 5024.877215904499
+R2 Score: 67.3849408384091%
+
+Test Size: 10 %
+
+a = -19880.405624111718
+b = [12.9537027]
+     Actual     Predicted
+0    6795.0   4796.398026
+1   15750.0  20936.711595
+..      ...           ...
+19   6488.0   6221.305324
+20   9959.0  10819.869783
+
+[21 rows x 2 columns]
+Mean Absolute Error: 2695.197926817389
+Mean Squared Error: 11737364.677960433
+Root Mean Squared Error: 3425.9837533123873
+R2 Score: 70.61768320191304%
+</code></pre>
+</div>
+</div>
+</section>
+<section id="cylinder-number-vs-price" class="level3" data-number="3.1.4">
+<h3 data-number="3.1.4" class="anchored" data-anchor-id="cylinder-number-vs-price"><span class="header-section-number">3.1.4</span> Cylinder Number vs Price</h3>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cylinder Number Column</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>cylinderNumber <span class="op">=</span> dataset.iloc[:, <span class="dv">15</span>:<span class="op">-</span><span class="dv">10</span>].values</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Price Column</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>price <span class="op">=</span> dataset.iloc[:, <span class="dv">25</span>].values.<span class="bu">round</span>(<span class="dv">2</span>)</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Call custom regression model function with 30% test size</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>myLinRegModel(cylinderNumber, price, <span class="dv">30</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Test Size: 30 %
+
+a = -8750.74345729567
+b = [5045.13677503]
+     Actual     Predicted
+0    6795.0  11429.803643
+1   15750.0  21520.077193
+..      ...           ...
+60   6479.0  11429.803643
+61  15510.0  11429.803643
+
+[62 rows x 2 columns]
+Mean Absolute Error: 3944.3868255082953
+Mean Squared Error: 26684225.038138304
+Root Mean Squared Error: 5165.677597192676
+R2 Score: 59.59223566856468%
+
+Test Size: 20 %
+
+a = -9046.162097201766
+b = [5112.35112126]
+     Actual     Predicted
+0    6795.0  11403.242388
+1   15750.0  21627.944630
+..      ...           ...
+39  45400.0  31852.646873
+40   8916.5  11403.242388
+
+[41 rows x 2 columns]
+Mean Absolute Error: 4280.5628888250285
+Mean Squared Error: 32605207.611888204
+Root Mean Squared Error: 5710.096987958103
+R2 Score: 57.88330998687709%
+
+Test Size: 10 %
+
+a = -10564.254121382277
+b = [5479.84028365]
+     Actual     Predicted
+0    6795.0  11355.107013
+1   15750.0  22314.787580
+..      ...           ...
+19   6488.0  11355.107013
+20   9959.0  11355.107013
+
+[21 rows x 2 columns]
+Mean Absolute Error: 3464.088015146232
+Mean Squared Error: 18346836.560473613
+Root Mean Squared Error: 4283.32073985519
+R2 Score: 54.072095495610604%
+</code></pre>
+</div>
+</div>
+</section>
+<section id="engine-size-vs-price" class="level3" data-number="3.1.5">
+<h3 data-number="3.1.5" class="anchored" data-anchor-id="engine-size-vs-price"><span class="header-section-number">3.1.5</span> Engine Size vs Price</h3>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Engine Size Column</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>engineSize <span class="op">=</span> dataset[<span class="st">'enginesize'</span>].values.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Price Column</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>price <span class="op">=</span> dataset.iloc[:, <span class="dv">25</span>].values.<span class="bu">round</span>(<span class="dv">2</span>)</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Call custom regression model function with 30% test size</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>myLinRegModel(engineSize, price, <span class="dv">30</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Test Size: 30 %
+
+a = -7574.131488222356
+b = [163.29075344]
+     Actual     Predicted
+0    6795.0   7285.327074
+1   15750.0  18715.679815
+..      ...           ...
+60   6479.0   7448.617828
+61  15510.0  12184.049678
+
+[62 rows x 2 columns]
+Mean Absolute Error: 2898.9726929694702
+Mean Squared Error: 14541824.65222288
+Root Mean Squared Error: 3813.374444271488
+R2 Score: 77.97940083865093%
+
+Test Size: 20 %
+
+a = -7613.370926304753
+b = [164.31545176]
+     Actual     Predicted
+0    6795.0   7339.335184
+1   15750.0  18841.416808
+..      ...           ...
+39  45400.0  42338.526410
+40   8916.5   7175.019732
+
+[41 rows x 2 columns]
+Mean Absolute Error: 3195.031241401546
+Mean Squared Error: 16835544.028987687
+Root Mean Squared Error: 4103.113942969131
+R2 Score: 78.25324722629195%
+
+Test Size: 10 %
+
+a = -8207.420855494747
+b = [169.490971]
+     Actual     Predicted
+0    6795.0   7216.257505
+1   15750.0  19080.625475
+..      ...           ...
+19   6488.0   7385.748476
+20   9959.0  10436.585954
+
+[21 rows x 2 columns]
+Mean Absolute Error: 2877.111549011615
+Mean Squared Error: 12997474.409783443
+Root Mean Squared Error: 3605.2010221045157
+R2 Score: 67.46323206602058%
+</code></pre>
+</div>
+</div>
+</section>
+<section id="horsepower-vs-price" class="level3" data-number="3.1.6">
+<h3 data-number="3.1.6" class="anchored" data-anchor-id="horsepower-vs-price"><span class="header-section-number">3.1.6</span> Horsepower vs Price</h3>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Horsepower Column</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>horsepower <span class="op">=</span> dataset.iloc[:, <span class="dv">21</span>:<span class="op">-</span><span class="dv">4</span>].values</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Price Column</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>price <span class="op">=</span> dataset.iloc[:, <span class="dv">25</span>].values.<span class="bu">round</span>(<span class="dv">2</span>)</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Call custom regression model function with 30% test size</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>myLinRegModel(horsepower, price, <span class="dv">30</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Test Size: 30 %
+
+a = -4438.686268723588
+b = [170.53827527]
+     Actual     Predicted
+0    6795.0   7157.916450
+1   15750.0  22165.284674
+..      ...           ...
+60   6479.0   5452.533697
+61  15510.0  14320.524011
+
+[62 rows x 2 columns]
+Mean Absolute Error: 3518.2488303322393
+Mean Squared Error: 25821021.51495541
+Root Mean Squared Error: 5081.438921698795
+R2 Score: 60.89937966412712%
+
+Test Size: 20 %
+
+a = -4053.153036276188
+b = [166.64923709]
+     Actual     Predicted
+0    6795.0   7278.995086
+1   15750.0  21944.127950
+..      ...           ...
+39  45400.0  26610.306588
+40   8916.5   7612.293560
+
+[41 rows x 2 columns]
+Mean Absolute Error: 3733.6933754512147
+Mean Squared Error: 29626244.692692798
+Root Mean Squared Error: 5442.999604325983
+R2 Score: 61.73128603174041%
+
+Test Size: 10 %
+
+a = -4796.241165629246
+b = [174.95075436]
+     Actual     Predicted
+0    6795.0   7100.410131
+1   15750.0  22496.076514
+..      ...           ...
+19   6488.0   6050.705605
+20   9959.0  15498.046340
+
+[21 rows x 2 columns]
+Mean Absolute Error: 3839.1982159225827
+Mean Squared Error: 26172943.363739382
+Root Mean Squared Error: 5115.949898478227
+R2 Score: 34.48088778430891%
+</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="multivariate-models" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="multivariate-models"><span class="header-section-number">3.2</span> Multivariate Models</h2>
+<p>Multiple univariate models were trained for comparison using a <a href="#lst-linreg">custom Linear Regression training function</a>. Accuracy varies in each model with changes in training/test splits and would most likely would be benefitted with more rows of data ( See <a href="#carlength-carwidth-curbweight-vs-price">Items 3.2.1 - 3.2.3</a> ). The highest accurracy is seen with the model that takes in the most columns for the independent variables ( See <a href="#carlength-carwidth-curbweight-cylinder-number-engine-size-horsepower-vs-price">Items 3.2.3</a> ).</p>
+<section id="carlength-carwidth-curbweight-vs-price" class="level3" data-number="3.2.1">
+<h3 data-number="3.2.1" class="anchored" data-anchor-id="carlength-carwidth-curbweight-vs-price"><span class="header-section-number">3.2.1</span> Carlength, Carwidth, Curbweight vs Price</h3>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create copy of dataset and drop all columns not used for multivariate regression models</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>datasetCopy <span class="op">=</span> dataset</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>datasetCopy.drop([<span class="st">'carheight'</span>, <span class="st">'enginetype'</span>, <span class="st">'fuelsystem'</span>, <span class="st">'boreratio'</span>, <span class="st">'stroke'</span>, <span class="st">'compressionratio'</span>],<span class="op">\</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>inplace<span class="op">=</span><span class="va">True</span>, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Store carlength, carwidth &amp; curbweight columns in X</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>X1 <span class="op">=</span> datasetCopy.iloc[:, <span class="dv">10</span>:<span class="op">-</span><span class="dv">7</span>].values</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Call Regression Model Function with multiple x values &amp; 30% test size</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>myLinRegModel(X1, price, <span class="dv">30</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Test Size: 30 %
+
+a = -36739.21951780665
+b = [-208.48890057  764.98885537   13.97180015]
+     Actual     Predicted
+0    6795.0   5818.760203
+1   15750.0  19003.466111
+..      ...           ...
+60   6479.0   5929.766976
+61  15510.0  13762.735333
+
+[62 rows x 2 columns]
+Mean Absolute Error: 2458.5442776902337
+Mean Squared Error: 16492573.815910544
+Root Mean Squared Error: 4061.1049993703123
+R2 Score: 75.02539290462342%
+
+Test Size: 20 %
+
+a = -44634.67127094674
+b = [-188.42001434  856.204069     13.34802623]
+     Actual     Predicted
+0    6795.0   5783.995638
+1   15750.0  18977.251262
+..      ...           ...
+39  45400.0  29066.672270
+40   8916.5   5459.428429
+
+[41 rows x 2 columns]
+Mean Absolute Error: 2943.0381053387778
+Mean Squared Error: 22423198.502769
+Root Mean Squared Error: 4735.313981434494
+R2 Score: 71.03558082852051%
+
+Test Size: 10 %
+
+a = -51021.53652492876
+b = [-194.19115484  961.28023332   13.59661598]
+     Actual     Predicted
+0    6795.0   5698.395155
+1   15750.0  19277.437054
+..      ...           ...
+19   6488.0   6694.931234
+20   9959.0  10475.100811
+
+[21 rows x 2 columns]
+Mean Absolute Error: 2357.566870487648
+Mean Squared Error: 9101964.422986511
+Root Mean Squared Error: 3016.9462081691995
+R2 Score: 77.21491923452972%
+</code></pre>
+</div>
+</div>
+</section>
+<section id="cylinder-number-engine-size-horsepower-vs-price" class="level3" data-number="3.2.2">
+<h3 data-number="3.2.2" class="anchored" data-anchor-id="cylinder-number-engine-size-horsepower-vs-price"><span class="header-section-number">3.2.2</span> Cylinder Number, Engine Size, Horsepower vs Price</h3>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Store cylindernumber, enginesize &amp; horsepower columns in X</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>X2 <span class="op">=</span> datasetCopy.iloc[:, <span class="dv">13</span>:<span class="op">-</span><span class="dv">4</span>].values</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Call Regression Model Function with multiple x values &amp; 30% test size</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>myLinRegModel(X2, price, <span class="dv">30</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Test Size: 30 %
+
+a = -6717.131795698624
+b = [-875.82889691  133.38667558   65.31455209]
+     Actual     Predicted
+0    6795.0   6359.129636
+1   15750.0  19692.219717
+..      ...           ...
+60   6479.0   5839.370791
+61  15510.0  13103.941091
+
+[62 rows x 2 columns]
+Mean Absolute Error: 2681.2430726638395
+Mean Squared Error: 13246002.119140355
+Root Mean Squared Error: 3639.505752041114
+R2 Score: 79.941657245098%
+
+Test Size: 20 %
+
+a = -7307.824968281864
+b = [-522.31275964  128.16628088   63.17240963]
+     Actual     Predicted
+0    6795.0   6561.779408
+1   15750.0  20047.965597
+..      ...           ...
+39  45400.0  39099.945713
+40   8916.5   6559.957946
+
+[41 rows x 2 columns]
+Mean Absolute Error: 3028.44528450474
+Mean Squared Error: 15255724.671464592
+Root Mean Squared Error: 3905.8577382522003
+R2 Score: 80.29392621688581%
+
+Test Size: 10 %
+
+a = -7824.384102535303
+b = [-613.42877141  135.45474355   63.82356299]
+     Actual     Predicted
+0    6795.0   6388.284759
+1   15750.0  20259.732808
+..      ...           ...
+19   6488.0   6140.798124
+20   9959.0  12025.455910
+
+[21 rows x 2 columns]
+Mean Absolute Error: 2944.3040595022885
+Mean Squared Error: 12712894.325743863
+Root Mean Squared Error: 3565.5145948016907
+R2 Score: 68.17562555579416%
+</code></pre>
+</div>
+</div>
+</section>
+<section id="carlength-carwidth-curbweight-cylinder-number-engine-size-horsepower-vs-price" class="level3" data-number="3.2.3">
+<h3 data-number="3.2.3" class="anchored" data-anchor-id="carlength-carwidth-curbweight-cylinder-number-engine-size-horsepower-vs-price"><span class="header-section-number">3.2.3</span> Carlength, Carwidth, Curbweight, Cylinder Number, Engine Size, Horsepower vs Price</h3>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Store carlength, carwidth, curbweight, cylindernumber,</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="co"># enginesize &amp; horsepower columns in X</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>X3 <span class="op">=</span> datasetCopy.iloc[:, <span class="dv">10</span>:<span class="op">-</span><span class="dv">4</span>].values</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Call Regression Model Function with multiple x values &amp; 30% test size</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>myLinRegModel(X3, price, <span class="dv">30</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Test Size: 30 %
+
+a = -50133.27454870472
+b = [-62.20404054 772.47835707   3.18527494  18.99449375  65.77507898
+  64.33402142]
+     Actual     Predicted
+0    6795.0   6067.345502
+1   15750.0  20331.280734
+..      ...           ...
+60   6479.0   5548.422659
+61  15510.0  13525.755400
+
+[62 rows x 2 columns]
+Mean Absolute Error: 2536.7293535638096
+Mean Squared Error: 12555624.008739235
+Root Mean Squared Error: 3543.39159686581
+R2 Score: 80.98709273909488%
+
+Test Size: 20 %
+
+a = -54793.72590677004
+b = [-38.92156396 789.71920542   2.95208156 366.09875078  59.3369646
+  58.3182745 ]
+     Actual     Predicted
+0    6795.0   6167.243070
+1   15750.0  20562.635157
+..      ...           ...
+39  45400.0  36977.654082
+40   8916.5   5783.745608
+
+[41 rows x 2 columns]
+Mean Absolute Error: 2873.7239149228203
+Mean Squared Error: 16025434.859390952
+Root Mean Squared Error: 4003.178094887979
+R2 Score: 79.29967874050975%
+
+Test Size: 10 %
+
+a = -55531.82635570387
+b = [-30.01857827 784.53201154   2.29960226 213.59515415  74.83936968
+  58.2469381 ]
+     Actual     Predicted
+0    6795.0   6065.470340
+1   15750.0  20665.341927
+..      ...           ...
+19   6488.0   5585.072554
+20   9959.0  11876.766620
+
+[21 rows x 2 columns]
+Mean Absolute Error: 3020.6881171033187
+Mean Squared Error: 13605511.765351668
+Root Mean Squared Error: 3688.5650008304947
+R2 Score: 65.94112325398689%
+</code></pre>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="kneigbors-vs-decision-tree-classification" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> KNeigbors vs Decision Tree Classification</h1>
+<p>KNeigbors and Decision Tree models are trained side-by-side for comparison using a <a href="#lst-classfunc">custom Classification Model training function</a>. <a href="#no-scaling">Items 4.1 – 4.3</a> display model accurracy in conjuction with data scaling strategies. Accuracy in both models improves to 100% when normalizing or standardizing data (See Figures <a href="#fig-classifiersnoscale">5</a>, <a href="#fig-classifiersstandard">6</a> &amp; <a href="#fig-classifiersnormal">7</a>).</p>
+<div id="lst-classfunc" class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb34" data-caption="Custom Classification Model Training Function"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import classification training libraries and packages</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler, MinMaxScaler </span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.neighbors <span class="im">import</span> KNeighborsClassifier</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.tree <span class="im">import</span> DecisionTreeClassifier</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Packages for displaying classification accuracy</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> classification_report, confusion_matrix, ConfusionMatrixDisplay</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>np.set_printoptions(suppress<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Classification training function that takes in X values to classify according to Y values</span></span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a><span class="co"># and takes what scalar should be used</span></span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> myClassModel(X, y, scale):</span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Split dataset into random train and test subsets:</span></span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>    X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">0.20</span>) </span>
+<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Standardizes data if specified when calling function</span></span>
+<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> scale <span class="op">==</span> <span class="st">'Standardize'</span>:</span>
+<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Standardize features by removing mean and scaling to unit variance:</span></span>
+<span id="cb34-20"><a href="#cb34-20" aria-hidden="true" tabindex="-1"></a>        scaler <span class="op">=</span> StandardScaler()</span>
+<span id="cb34-21"><a href="#cb34-21" aria-hidden="true" tabindex="-1"></a>        scaler.fit(X_train)</span>
+<span id="cb34-22"><a href="#cb34-22" aria-hidden="true" tabindex="-1"></a>        X_train <span class="op">=</span> scaler.transform(X_train)</span>
+<span id="cb34-23"><a href="#cb34-23" aria-hidden="true" tabindex="-1"></a>        X_test <span class="op">=</span> scaler.transform(X_test)</span>
+<span id="cb34-24"><a href="#cb34-24" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb34-25"><a href="#cb34-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Normalizes data if specified when calling function</span></span>
+<span id="cb34-26"><a href="#cb34-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> scale <span class="op">==</span> <span class="st">"Normalize"</span>:</span>
+<span id="cb34-27"><a href="#cb34-27" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb34-28"><a href="#cb34-28" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Normalize features by shrinking data range between 0 &amp; 1:</span></span>
+<span id="cb34-29"><a href="#cb34-29" aria-hidden="true" tabindex="-1"></a>        scaler <span class="op">=</span> MinMaxScaler()</span>
+<span id="cb34-30"><a href="#cb34-30" aria-hidden="true" tabindex="-1"></a>        scaler.fit(X_train)</span>
+<span id="cb34-31"><a href="#cb34-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-32"><a href="#cb34-32" aria-hidden="true" tabindex="-1"></a>        X_train <span class="op">=</span> scaler.transform(X_train)</span>
+<span id="cb34-33"><a href="#cb34-33" aria-hidden="true" tabindex="-1"></a>        X_test <span class="op">=</span> scaler.transform(X_test)</span>
+<span id="cb34-34"><a href="#cb34-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-35"><a href="#cb34-35" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Use the KNN classifier to fit data:</span></span>
+<span id="cb34-36"><a href="#cb34-36" aria-hidden="true" tabindex="-1"></a>    knclassifier <span class="op">=</span> KNeighborsClassifier(n_neighbors<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb34-37"><a href="#cb34-37" aria-hidden="true" tabindex="-1"></a>    knclassifier.fit(X_train, y_train) </span>
+<span id="cb34-38"><a href="#cb34-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-39"><a href="#cb34-39" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Predict y data with KNN classifier: </span></span>
+<span id="cb34-40"><a href="#cb34-40" aria-hidden="true" tabindex="-1"></a>    y_predict <span class="op">=</span> knclassifier.predict(X_test)</span>
+<span id="cb34-41"><a href="#cb34-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-42"><a href="#cb34-42" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Print KNN classifier results:</span></span>
+<span id="cb34-43"><a href="#cb34-43" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"KNeigbors Classifier - Scaling:"</span>, scale)</span>
+<span id="cb34-44"><a href="#cb34-44" aria-hidden="true" tabindex="-1"></a>    cm <span class="op">=</span> confusion_matrix(y_test, y_predict, labels<span class="op">=</span>knclassifier.classes_)</span>
+<span id="cb34-45"><a href="#cb34-45" aria-hidden="true" tabindex="-1"></a>    disp <span class="op">=</span> ConfusionMatrixDisplay(confusion_matrix<span class="op">=</span>cm, display_labels<span class="op">=</span>knclassifier.classes_)</span>
+<span id="cb34-46"><a href="#cb34-46" aria-hidden="true" tabindex="-1"></a>    disp.plot()</span>
+<span id="cb34-47"><a href="#cb34-47" aria-hidden="true" tabindex="-1"></a>    plt.show()</span>
+<span id="cb34-48"><a href="#cb34-48" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(classification_report(y_test, y_predict))</span>
+<span id="cb34-49"><a href="#cb34-49" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb34-50"><a href="#cb34-50" aria-hidden="true" tabindex="-1"></a>     <span class="co"># Use the Decision Tree classifier to fit data:</span></span>
+<span id="cb34-51"><a href="#cb34-51" aria-hidden="true" tabindex="-1"></a>    dtclassifier <span class="op">=</span> DecisionTreeClassifier()</span>
+<span id="cb34-52"><a href="#cb34-52" aria-hidden="true" tabindex="-1"></a>    dtclassifier.fit(X_train, y_train) </span>
+<span id="cb34-53"><a href="#cb34-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-54"><a href="#cb34-54" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Predict y data with Decision Tree classifier: </span></span>
+<span id="cb34-55"><a href="#cb34-55" aria-hidden="true" tabindex="-1"></a>    y_predict <span class="op">=</span> dtclassifier.predict(X_test)</span>
+<span id="cb34-56"><a href="#cb34-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-57"><a href="#cb34-57" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Print Decision Tree classifier results:</span></span>
+<span id="cb34-58"><a href="#cb34-58" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Decision Tree Classifier - Scaling:"</span>, scale)</span>
+<span id="cb34-59"><a href="#cb34-59" aria-hidden="true" tabindex="-1"></a>    cm <span class="op">=</span> confusion_matrix(y_test, y_predict, labels<span class="op">=</span>dtclassifier.classes_)</span>
+<span id="cb34-60"><a href="#cb34-60" aria-hidden="true" tabindex="-1"></a>    disp <span class="op">=</span> ConfusionMatrixDisplay(confusion_matrix<span class="op">=</span>cm, display_labels<span class="op">=</span>dtclassifier.classes_)</span>
+<span id="cb34-61"><a href="#cb34-61" aria-hidden="true" tabindex="-1"></a>    disp.plot()</span>
+<span id="cb34-62"><a href="#cb34-62" aria-hidden="true" tabindex="-1"></a>    plt.show()</span>
+<span id="cb34-63"><a href="#cb34-63" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(classification_report(y_test, y_predict))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<section id="no-scaling" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="no-scaling"><span class="header-section-number">4.1</span> No Scaling</h2>
+<div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Store all numeric values in X</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> dataset[[<span class="st">'wheelbase'</span>, <span class="st">'carlength'</span>, <span class="st">'carwidth'</span>, <span class="st">'carheight'</span>,<span class="op">\</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>             <span class="st">'curbweight'</span>, <span class="st">'cylindernumber'</span>, <span class="st">'enginesize'</span>, <span class="st">'boreratio'</span>,<span class="op">\</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>             <span class="st">'stroke'</span>, <span class="st">'compressionratio'</span>, <span class="st">'horsepower'</span>, <span class="st">'peakrpm'</span>,<span class="op">\</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>             <span class="st">'citympg'</span>, <span class="st">'highwaympg'</span>, <span class="st">'price'</span>]].values</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Classify according to fuel type</span></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> dataset[<span class="st">'fueltype'</span>]</span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Call Classification Model Function with no scalar</span></span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>myClassModel(X, y, <span class="st">'None'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="fig-classifiersnoscale" class="cell quarto-layout-panel">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output cell-output-stdout quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
+<pre><code>KNeigbors Classifier - Scaling: None
+              precision    recall  f1-score   support
+
+      diesel       0.00      0.00      0.00         6
+         gas       0.85      0.94      0.89        35
+
+    accuracy                           0.80        41
+   macro avg       0.42      0.47      0.45        41
+weighted avg       0.72      0.80      0.76        41
+
+Decision Tree Classifier - Scaling: None
+              precision    recall  f1-score   support
+
+      diesel       1.00      1.00      1.00         6
+         gas       1.00      1.00      1.00        35
+
+    accuracy                           1.00        41
+   macro avg       1.00      1.00      1.00        41
+weighted avg       1.00      1.00      1.00        41
+</code></pre>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-classifiersnoscale-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Assignment1BrandonToews_files/figure-html/fig-classifiersnoscale-output-2.png" class="img-fluid figure-img" data-ref-parent="fig-classifiersnoscale"></p>
+<figcaption class="figure-caption">(a) KNeigbors Classifier</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-classifiersnoscale-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Assignment1BrandonToews_files/figure-html/fig-classifiersnoscale-output-3.png" class="img-fluid figure-img" data-ref-parent="fig-classifiersnoscale"></p>
+<figcaption class="figure-caption">(b) Decision Tree Classifier</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption"><strong>Figure</strong>&nbsp;5<strong>.</strong> Classifier Models Confusion Matrices - No Scaling</figcaption><p></p>
+</figure>
+</div>
+</div>
+</section>
+<section id="standardized-scaling" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="standardized-scaling"><span class="header-section-number">4.2</span> Standardized Scaling</h2>
+<div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Store all numeric values in X</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> dataset[[<span class="st">'wheelbase'</span>, <span class="st">'carlength'</span>, <span class="st">'carwidth'</span>, <span class="st">'carheight'</span>,<span class="op">\</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>             <span class="st">'curbweight'</span>, <span class="st">'cylindernumber'</span>, <span class="st">'enginesize'</span>, <span class="st">'boreratio'</span>,<span class="op">\</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>             <span class="st">'stroke'</span>, <span class="st">'compressionratio'</span>, <span class="st">'horsepower'</span>, <span class="st">'peakrpm'</span>,<span class="op">\</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>             <span class="st">'citympg'</span>, <span class="st">'highwaympg'</span>, <span class="st">'price'</span>]].values</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Classify according to fuel type</span></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> dataset[<span class="st">'fueltype'</span>]</span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Call Classification Model Function with no scalar</span></span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>myClassModel(X, y, <span class="st">'Standardize'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="fig-classifiersstandard" class="cell quarto-layout-panel">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output cell-output-stdout quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
+<pre><code>KNeigbors Classifier - Scaling: Standardize
+              precision    recall  f1-score   support
+
+      diesel       1.00      1.00      1.00         3
+         gas       1.00      1.00      1.00        38
+
+    accuracy                           1.00        41
+   macro avg       1.00      1.00      1.00        41
+weighted avg       1.00      1.00      1.00        41
+
+Decision Tree Classifier - Scaling: Standardize
+              precision    recall  f1-score   support
+
+      diesel       1.00      1.00      1.00         3
+         gas       1.00      1.00      1.00        38
+
+    accuracy                           1.00        41
+   macro avg       1.00      1.00      1.00        41
+weighted avg       1.00      1.00      1.00        41
+</code></pre>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-classifiersstandard-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Assignment1BrandonToews_files/figure-html/fig-classifiersstandard-output-2.png" class="img-fluid figure-img" data-ref-parent="fig-classifiersstandard"></p>
+<figcaption class="figure-caption">(a) KNeigbors Classifier</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-classifiersstandard-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Assignment1BrandonToews_files/figure-html/fig-classifiersstandard-output-3.png" class="img-fluid figure-img" data-ref-parent="fig-classifiersstandard"></p>
+<figcaption class="figure-caption">(b) Decision Tree Classifier</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption"><strong>Figure</strong>&nbsp;6<strong>.</strong> Classifier Models Confusion Matrices - Standard Scaling</figcaption><p></p>
+</figure>
+</div>
+</div>
+</section>
+<section id="normalized-scaling" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="normalized-scaling"><span class="header-section-number">4.3</span> Normalized Scaling</h2>
+<div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Store all numeric values in X</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> dataset[[<span class="st">'wheelbase'</span>, <span class="st">'carlength'</span>, <span class="st">'carwidth'</span>, <span class="st">'carheight'</span>,<span class="op">\</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>             <span class="st">'curbweight'</span>, <span class="st">'cylindernumber'</span>, <span class="st">'enginesize'</span>, <span class="st">'boreratio'</span>,<span class="op">\</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>             <span class="st">'stroke'</span>, <span class="st">'compressionratio'</span>, <span class="st">'horsepower'</span>, <span class="st">'peakrpm'</span>,<span class="op">\</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>             <span class="st">'citympg'</span>, <span class="st">'highwaympg'</span>, <span class="st">'price'</span>]].values</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Classify according to fuel type</span></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> dataset[<span class="st">'fueltype'</span>]</span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Call Classification Model Function with no scalar</span></span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>myClassModel(X, y, <span class="st">'Normalize'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="fig-classifiersnormal" class="cell quarto-layout-panel">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output cell-output-stdout quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
+<pre><code>KNeigbors Classifier - Scaling: Normalize
+              precision    recall  f1-score   support
+
+      diesel       1.00      1.00      1.00         3
+         gas       1.00      1.00      1.00        38
+
+    accuracy                           1.00        41
+   macro avg       1.00      1.00      1.00        41
+weighted avg       1.00      1.00      1.00        41
+
+Decision Tree Classifier - Scaling: Normalize
+              precision    recall  f1-score   support
+
+      diesel       1.00      1.00      1.00         3
+         gas       1.00      1.00      1.00        38
+
+    accuracy                           1.00        41
+   macro avg       1.00      1.00      1.00        41
+weighted avg       1.00      1.00      1.00        41
+</code></pre>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-classifiersnormal-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Assignment1BrandonToews_files/figure-html/fig-classifiersnormal-output-2.png" class="img-fluid figure-img" data-ref-parent="fig-classifiersnormal"></p>
+<figcaption class="figure-caption">(a) KNeigbors Classifier</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-classifiersnormal-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Assignment1BrandonToews_files/figure-html/fig-classifiersnormal-output-3.png" class="img-fluid figure-img" data-ref-parent="fig-classifiersnormal"></p>
+<figcaption class="figure-caption">(b) Decision Tree Classifier</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption"><strong>Figure</strong>&nbsp;7<strong>.</strong> Classifier Models Confusion Matrices - Normalized Scaling</figcaption><p></p>
+</figure>
+</div>
+</div>
+</section>
+</section>
+<section id="clustering" class="level1 page-columns page-full" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Clustering</h1>
+<p>Kmeans, Gaussian Mixture and Spectral clustering models are trained using a <a href="#lst-clusfunc">custom cluster model training function</a>. <a href="#kmeans-model">Items 5.1 – 5.3</a> display each model’s code and results when trained with unchanged data and normalized data. In all three (3) models, the “price” data heavily biased the results, which is corrected by normalizing the data providing more accuracy in each case. The spectral clustering model trained with normalized data performed marginally better than its counterparts ( See <a href="#kmeans-model">Items 5.1 – 5.3</a> ).</p>
+<div id="lst-clusfunc" class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb41" data-caption="Custom Cluster Model Training Function"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import clustering packages</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cluster <span class="im">import</span> KMeans</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.mixture <span class="im">import</span> GaussianMixture</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cluster <span class="im">import</span> SpectralClustering</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Cluster training function that takes in X values to cluster, along with</span></span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a><span class="co"># what model should be used and how many clusters should be created</span></span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> myClusterModel(X, model, num_clusters):</span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Store columns names of features</span></span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>    column_name <span class="op">=</span> <span class="bu">list</span>(X.columns)</span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Stores feature values fro use in some models</span></span>
+<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a>    features <span class="op">=</span> X.values</span>
+<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb41-15"><a href="#cb41-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Takes given features and creates dataframe for some models</span></span>
+<span id="cb41-16"><a href="#cb41-16" aria-hidden="true" tabindex="-1"></a>    X <span class="op">=</span> pd.DataFrame(X)</span>
+<span id="cb41-17"><a href="#cb41-17" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb41-18"><a href="#cb41-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Normalize features</span></span>
+<span id="cb41-19"><a href="#cb41-19" aria-hidden="true" tabindex="-1"></a>    scaler <span class="op">=</span> MinMaxScaler()</span>
+<span id="cb41-20"><a href="#cb41-20" aria-hidden="true" tabindex="-1"></a>    scaler.fit(features)</span>
+<span id="cb41-21"><a href="#cb41-21" aria-hidden="true" tabindex="-1"></a>    scaled <span class="op">=</span> scaler.transform(features)</span>
+<span id="cb41-22"><a href="#cb41-22" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb41-23"><a href="#cb41-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># For KMeans model</span></span>
+<span id="cb41-24"><a href="#cb41-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> model<span class="op">==</span><span class="st">'KM'</span>:</span>
+<span id="cb41-25"><a href="#cb41-25" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Initialize KMeans model with given number of clusters</span></span>
+<span id="cb41-26"><a href="#cb41-26" aria-hidden="true" tabindex="-1"></a>        kmeans <span class="op">=</span> KMeans(n_clusters<span class="op">=</span>num_clusters)</span>
+<span id="cb41-27"><a href="#cb41-27" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb41-28"><a href="#cb41-28" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Produce clusters with model and append cluster label info to DataFrame X</span></span>
+<span id="cb41-29"><a href="#cb41-29" aria-hidden="true" tabindex="-1"></a>        X[<span class="st">'cluster'</span>] <span class="op">=</span> kmeans.fit_predict(features)</span>
+<span id="cb41-30"><a href="#cb41-30" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb41-31"><a href="#cb41-31" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Set plot size</span></span>
+<span id="cb41-32"><a href="#cb41-32" aria-hidden="true" tabindex="-1"></a>        plt.figure(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">6</span>))</span>
+<span id="cb41-33"><a href="#cb41-33" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Plot data with given features</span></span>
+<span id="cb41-34"><a href="#cb41-34" aria-hidden="true" tabindex="-1"></a>        plt.scatter(X[column_name[<span class="dv">0</span>]], X[column_name[<span class="dv">1</span>]])</span>
+<span id="cb41-35"><a href="#cb41-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-36"><a href="#cb41-36" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Plot KMeans cluster centers</span></span>
+<span id="cb41-37"><a href="#cb41-37" aria-hidden="true" tabindex="-1"></a>        plt.scatter(kmeans.cluster_centers_[:, <span class="dv">0</span>], kmeans.cluster_centers_[:, <span class="dv">1</span>], s<span class="op">=</span><span class="dv">300</span>, c<span class="op">=</span><span class="st">'red'</span>)</span>
+<span id="cb41-38"><a href="#cb41-38" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Display plot</span></span>
+<span id="cb41-39"><a href="#cb41-39" aria-hidden="true" tabindex="-1"></a>        plt.xlabel(column_name[<span class="dv">0</span>])</span>
+<span id="cb41-40"><a href="#cb41-40" aria-hidden="true" tabindex="-1"></a>        plt.ylabel(column_name[<span class="dv">1</span>])</span>
+<span id="cb41-41"><a href="#cb41-41" aria-hidden="true" tabindex="-1"></a>        plt.xlim(<span class="dv">0</span>,<span class="dv">31</span>)</span>
+<span id="cb41-42"><a href="#cb41-42" aria-hidden="true" tabindex="-1"></a>        plt.ylim(<span class="dv">0</span>,<span class="dv">55000</span>)</span>
+<span id="cb41-43"><a href="#cb41-43" aria-hidden="true" tabindex="-1"></a>        plt.title(<span class="st">'KMeans Cluster Model - No Scaling'</span>)</span>
+<span id="cb41-44"><a href="#cb41-44" aria-hidden="true" tabindex="-1"></a>        plt.show()</span>
+<span id="cb41-45"><a href="#cb41-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-46"><a href="#cb41-46" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Display scatter plot with KDE to see compare how well</span></span>
+<span id="cb41-47"><a href="#cb41-47" aria-hidden="true" tabindex="-1"></a>        <span class="co"># model performed at creating relevant clusters</span></span>
+<span id="cb41-48"><a href="#cb41-48" aria-hidden="true" tabindex="-1"></a>        g <span class="op">=</span> sns.jointplot(data<span class="op">=</span>X, x<span class="op">=</span>column_name[<span class="dv">0</span>], y<span class="op">=</span>column_name[<span class="dv">1</span>], hue<span class="op">=</span><span class="st">'cluster'</span>)</span>
+<span id="cb41-49"><a href="#cb41-49" aria-hidden="true" tabindex="-1"></a>        g.fig.suptitle(<span class="st">"KMeans Cluster Model - No Scaling"</span>)</span>
+<span id="cb41-50"><a href="#cb41-50" aria-hidden="true" tabindex="-1"></a>        g.plot_joint(sns.kdeplot, levels<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb41-51"><a href="#cb41-51" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb41-52"><a href="#cb41-52" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Delete cluster column so we can add scaled cluster labels to plot </span></span>
+<span id="cb41-53"><a href="#cb41-53" aria-hidden="true" tabindex="-1"></a>        X.drop(<span class="st">'cluster'</span>, inplace<span class="op">=</span><span class="va">True</span>, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb41-54"><a href="#cb41-54" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb41-55"><a href="#cb41-55" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Appends new scaled cluster label info to DataFrame X</span></span>
+<span id="cb41-56"><a href="#cb41-56" aria-hidden="true" tabindex="-1"></a>        X[<span class="st">'cluster'</span>] <span class="op">=</span> kmeans.fit_predict(scaled)</span>
+<span id="cb41-57"><a href="#cb41-57" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb41-58"><a href="#cb41-58" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Display scatter plot with KDE to see compare how well</span></span>
+<span id="cb41-59"><a href="#cb41-59" aria-hidden="true" tabindex="-1"></a>        <span class="co"># model performed at creating relevant clusters with scaled data</span></span>
+<span id="cb41-60"><a href="#cb41-60" aria-hidden="true" tabindex="-1"></a>        g <span class="op">=</span> sns.jointplot(data<span class="op">=</span>X, x<span class="op">=</span>column_name[<span class="dv">0</span>], y<span class="op">=</span>column_name[<span class="dv">1</span>], hue<span class="op">=</span><span class="st">'cluster'</span>, xlim<span class="op">=</span>(<span class="dv">0</span>,<span class="dv">31</span>))</span>
+<span id="cb41-61"><a href="#cb41-61" aria-hidden="true" tabindex="-1"></a>        g.fig.suptitle(<span class="st">"KMeans Cluster Model - Normalized Features"</span>)</span>
+<span id="cb41-62"><a href="#cb41-62" aria-hidden="true" tabindex="-1"></a>        g.plot_joint(sns.kdeplot, levels<span class="op">=</span>num_clusters)</span>
+<span id="cb41-63"><a href="#cb41-63" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb41-64"><a href="#cb41-64" aria-hidden="true" tabindex="-1"></a>    <span class="co"># For Gaussian Mixture model    </span></span>
+<span id="cb41-65"><a href="#cb41-65" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> model<span class="op">==</span><span class="st">'GMM'</span>:</span>
+<span id="cb41-66"><a href="#cb41-66" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Initialize Gaussian Mixture with given number of clusters</span></span>
+<span id="cb41-67"><a href="#cb41-67" aria-hidden="true" tabindex="-1"></a>        gmm_model <span class="op">=</span> GaussianMixture(n_components<span class="op">=</span>num_clusters)</span>
+<span id="cb41-68"><a href="#cb41-68" aria-hidden="true" tabindex="-1"></a>        gmm_model.fit(features)</span>
+<span id="cb41-69"><a href="#cb41-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-70"><a href="#cb41-70" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Produce clusters with model and append cluster label info to DataFrame X</span></span>
+<span id="cb41-71"><a href="#cb41-71" aria-hidden="true" tabindex="-1"></a>        X[<span class="st">'cluster'</span>] <span class="op">=</span> gmm_model.predict(features)</span>
+<span id="cb41-72"><a href="#cb41-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-73"><a href="#cb41-73" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Display scatter plot with KDE to see compare how well</span></span>
+<span id="cb41-74"><a href="#cb41-74" aria-hidden="true" tabindex="-1"></a>        <span class="co"># model performed at creating relevant clusters</span></span>
+<span id="cb41-75"><a href="#cb41-75" aria-hidden="true" tabindex="-1"></a>        g <span class="op">=</span> sns.jointplot(data<span class="op">=</span>X, x<span class="op">=</span><span class="st">'compressionratio'</span>, y<span class="op">=</span><span class="st">'price'</span>, hue<span class="op">=</span><span class="st">"cluster"</span>)</span>
+<span id="cb41-76"><a href="#cb41-76" aria-hidden="true" tabindex="-1"></a>        g.fig.suptitle(<span class="st">"Gaussian Mixture Model - No Scaling"</span>)</span>
+<span id="cb41-77"><a href="#cb41-77" aria-hidden="true" tabindex="-1"></a>        g.plot_joint(sns.kdeplot, levels<span class="op">=</span>num_clusters, common_norm<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb41-78"><a href="#cb41-78" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb41-79"><a href="#cb41-79" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Feed scaled data into model</span></span>
+<span id="cb41-80"><a href="#cb41-80" aria-hidden="true" tabindex="-1"></a>        gmm_model.fit(scaled)</span>
+<span id="cb41-81"><a href="#cb41-81" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb41-82"><a href="#cb41-82" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Delete cluster column so we can add scaled cluster labels to plot</span></span>
+<span id="cb41-83"><a href="#cb41-83" aria-hidden="true" tabindex="-1"></a>        X.drop(<span class="st">'cluster'</span>, inplace<span class="op">=</span><span class="va">True</span>, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb41-84"><a href="#cb41-84" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb41-85"><a href="#cb41-85" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Appends new scaled cluster label info to DataFrame X</span></span>
+<span id="cb41-86"><a href="#cb41-86" aria-hidden="true" tabindex="-1"></a>        X[<span class="st">'cluster'</span>] <span class="op">=</span> gmm_model.predict(scaled)</span>
+<span id="cb41-87"><a href="#cb41-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-88"><a href="#cb41-88" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Display scatter plot with KDE to see compare how well</span></span>
+<span id="cb41-89"><a href="#cb41-89" aria-hidden="true" tabindex="-1"></a>        <span class="co"># model performed at creating relevant clusters with scaled data</span></span>
+<span id="cb41-90"><a href="#cb41-90" aria-hidden="true" tabindex="-1"></a>        g <span class="op">=</span> sns.jointplot(data<span class="op">=</span>X, x<span class="op">=</span><span class="st">'compressionratio'</span>, y<span class="op">=</span><span class="st">'price'</span>, hue<span class="op">=</span><span class="st">'cluster'</span>, xlim<span class="op">=</span>(<span class="dv">0</span>,<span class="dv">31</span>))</span>
+<span id="cb41-91"><a href="#cb41-91" aria-hidden="true" tabindex="-1"></a>        g.fig.suptitle(<span class="st">"Gaussian Mixture Model - Normalized Features"</span>)</span>
+<span id="cb41-92"><a href="#cb41-92" aria-hidden="true" tabindex="-1"></a>        g.plot_joint(sns.kdeplot, levels<span class="op">=</span>num_clusters)</span>
+<span id="cb41-93"><a href="#cb41-93" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb41-94"><a href="#cb41-94" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> model<span class="op">==</span><span class="st">'SC'</span>:</span>
+<span id="cb41-95"><a href="#cb41-95" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Initialize KMeans model with given number of clusters</span></span>
+<span id="cb41-96"><a href="#cb41-96" aria-hidden="true" tabindex="-1"></a>        sc <span class="op">=</span> SpectralClustering(n_clusters<span class="op">=</span>num_clusters, random_state<span class="op">=</span><span class="dv">25</span>, n_neighbors<span class="op">=</span><span class="dv">25</span>,<span class="op">\</span></span>
+<span id="cb41-97"><a href="#cb41-97" aria-hidden="true" tabindex="-1"></a>        affinity<span class="op">=</span><span class="st">'nearest_neighbors'</span>)</span>
+<span id="cb41-98"><a href="#cb41-98" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb41-99"><a href="#cb41-99" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Appends cluster label info to DataFrame X</span></span>
+<span id="cb41-100"><a href="#cb41-100" aria-hidden="true" tabindex="-1"></a>        X[<span class="st">'cluster'</span>] <span class="op">=</span> sc.fit_predict(X[[column_name[<span class="dv">0</span>], column_name[<span class="dv">1</span>]]])</span>
+<span id="cb41-101"><a href="#cb41-101" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb41-102"><a href="#cb41-102" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Display scatter plot with KDE to see compare how well</span></span>
+<span id="cb41-103"><a href="#cb41-103" aria-hidden="true" tabindex="-1"></a>        <span class="co"># model performed at creating relevant clusters</span></span>
+<span id="cb41-104"><a href="#cb41-104" aria-hidden="true" tabindex="-1"></a>        g <span class="op">=</span> sns.jointplot(data<span class="op">=</span>X, x<span class="op">=</span><span class="st">'compressionratio'</span>, y<span class="op">=</span><span class="st">'price'</span>, hue<span class="op">=</span><span class="st">"cluster"</span>)</span>
+<span id="cb41-105"><a href="#cb41-105" aria-hidden="true" tabindex="-1"></a>        g.fig.suptitle(<span class="st">"Spectral Clustering Model - No Scaling"</span>)</span>
+<span id="cb41-106"><a href="#cb41-106" aria-hidden="true" tabindex="-1"></a>        g.plot_joint(sns.kdeplot, levels<span class="op">=</span>num_clusters, common_norm<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb41-107"><a href="#cb41-107" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb41-108"><a href="#cb41-108" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Delete cluster column so we can add scaled cluster labels to plot</span></span>
+<span id="cb41-109"><a href="#cb41-109" aria-hidden="true" tabindex="-1"></a>        X.drop(<span class="st">'cluster'</span>, inplace<span class="op">=</span><span class="va">True</span>, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb41-110"><a href="#cb41-110" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb41-111"><a href="#cb41-111" aria-hidden="true" tabindex="-1"></a>        <span class="co"># convert scaled values to dataframe to be used by model</span></span>
+<span id="cb41-112"><a href="#cb41-112" aria-hidden="true" tabindex="-1"></a>        scaled <span class="op">=</span> pd.DataFrame(scaled)</span>
+<span id="cb41-113"><a href="#cb41-113" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb41-114"><a href="#cb41-114" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Appends new scaled cluster label info to DataFrame X</span></span>
+<span id="cb41-115"><a href="#cb41-115" aria-hidden="true" tabindex="-1"></a>        X[<span class="st">'cluster'</span>] <span class="op">=</span> sc.fit_predict(scaled[[<span class="dv">0</span>, <span class="dv">1</span>]])</span>
+<span id="cb41-116"><a href="#cb41-116" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb41-117"><a href="#cb41-117" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Display scatter plot with KDE to see compare how well</span></span>
+<span id="cb41-118"><a href="#cb41-118" aria-hidden="true" tabindex="-1"></a>        <span class="co"># model performed at creating relevant clusters with scaled data</span></span>
+<span id="cb41-119"><a href="#cb41-119" aria-hidden="true" tabindex="-1"></a>        g <span class="op">=</span> sns.jointplot(data<span class="op">=</span>X, x<span class="op">=</span><span class="st">'compressionratio'</span>, y<span class="op">=</span><span class="st">'price'</span>, hue<span class="op">=</span><span class="st">"cluster"</span>, xlim<span class="op">=</span>(<span class="dv">0</span>,<span class="dv">31</span>))</span>
+<span id="cb41-120"><a href="#cb41-120" aria-hidden="true" tabindex="-1"></a>        g.fig.suptitle(<span class="st">"Spectral Clustering Model - Normalized Features"</span>)</span>
+<span id="cb41-121"><a href="#cb41-121" aria-hidden="true" tabindex="-1"></a>        g.plot_joint(sns.kdeplot, levels<span class="op">=</span>num_clusters, common_norm<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<section id="kmeans-model" class="level2 page-columns page-full" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="kmeans-model"><span class="header-section-number">5.1</span> KMeans Model</h2>
+<div class="page-columns page-full">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Store all features in X</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> dataset[[<span class="st">'compressionratio'</span>, <span class="st">'price'</span>]]</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="co"># KMeans Cluster Model to be used</span></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> <span class="st">'KM'</span></span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of clusters to be created</span></span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>n_clusters <span class="op">=</span> <span class="dv">3</span></span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Call Clustering Model Function and pass in features</span></span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a><span class="co"># model &amp; number of clusters</span></span>
+<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>myClusterModel(X, model, n_clusters)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="fig-kmeanscluster" class="cell column-page quarto-layout-panel">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-kmeanscluster-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Assignment1BrandonToews_files/figure-html/fig-kmeanscluster-output-1.png" class="img-fluid figure-img" data-ref-parent="fig-kmeanscluster"></p>
+<figcaption class="figure-caption">(a) Scatter Plot - No Scaling</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-kmeanscluster-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Assignment1BrandonToews_files/figure-html/fig-kmeanscluster-output-2.png" class="img-fluid figure-img" data-ref-parent="fig-kmeanscluster"></p>
+<figcaption class="figure-caption">(b) Joint Plot - No Scaling</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-kmeanscluster-3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Assignment1BrandonToews_files/figure-html/fig-kmeanscluster-output-3.png" class="img-fluid figure-img" data-ref-parent="fig-kmeanscluster"></p>
+<figcaption class="figure-caption">(c) Joint Plot - Normalized Scaling</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption"><strong>Figure</strong>&nbsp;8<strong>.</strong> KMeans Cluster Model Visualizations</figcaption><p></p>
+</figure>
+</div>
+</div>
+</section>
+<section id="gaussian-mixture-model" class="level2 page-columns page-full" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="gaussian-mixture-model"><span class="header-section-number">5.2</span> Gaussian Mixture Model</h2>
+<div class="page-columns page-full">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Store all features in X</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> dataset[[<span class="st">'compressionratio'</span>, <span class="st">'price'</span>]]</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Gaussian Mixture Model to be used</span></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> <span class="st">'GMM'</span></span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of clusters to be created</span></span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>n_clusters <span class="op">=</span> <span class="dv">3</span></span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Call Clustering Model Function and pass in features</span></span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a><span class="co"># model &amp; number of clusters</span></span>
+<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a>myClusterModel(X, model, n_clusters)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="fig-gaussiancluster" class="cell column-page quarto-layout-panel">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-gaussiancluster-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Assignment1BrandonToews_files/figure-html/fig-gaussiancluster-output-1.png" class="img-fluid figure-img" data-ref-parent="fig-gaussiancluster"></p>
+<figcaption class="figure-caption">(a) Joint Plot - No Scaling</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-gaussiancluster-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Assignment1BrandonToews_files/figure-html/fig-gaussiancluster-output-2.png" class="img-fluid figure-img" data-ref-parent="fig-gaussiancluster"></p>
+<figcaption class="figure-caption">(b) Joint Plot - Normalized Scaling</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption"><strong>Figure</strong>&nbsp;9<strong>.</strong> Gaussian Mixture Cluster Model Visualizations</figcaption><p></p>
+</figure>
+</div>
+</div>
+</section>
+<section id="spectral-clustering-model" class="level2 page-columns page-full" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="spectral-clustering-model"><span class="header-section-number">5.3</span> Spectral Clustering Model</h2>
+<div class="page-columns page-full">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Store all features in X</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> dataset[[<span class="st">'compressionratio'</span>, <span class="st">'price'</span>]]</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Spectral Clustering Model to be used</span></span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> <span class="st">'SC'</span></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of clusters to be created</span></span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>n_clusters <span class="op">=</span> <span class="dv">3</span></span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Call Clustering Model Function and pass in features</span></span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a><span class="co"># model &amp; number of clusters</span></span>
+<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a>myClusterModel(X, model, n_clusters)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="fig-spectralcluster" class="cell column-page quarto-layout-panel">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-spectralcluster-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Assignment1BrandonToews_files/figure-html/fig-spectralcluster-output-1.png" class="img-fluid figure-img" data-ref-parent="fig-spectralcluster"></p>
+<figcaption class="figure-caption">(a) Joint Plot - No Scaling</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-spectralcluster-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Assignment1BrandonToews_files/figure-html/fig-spectralcluster-output-2.png" class="img-fluid figure-img" data-ref-parent="fig-spectralcluster"></p>
+<figcaption class="figure-caption">(b) Joint Plot - Normalized Scaling</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption"><strong>Figure</strong>&nbsp;10<strong>.</strong> Spectral Clustering Model Visualizations</figcaption><p></p>
+</figure>
+</div>
+</div>
+</section>
+</section>
+<section id="appendix" class="level1 unnumbered">
+<h1 class="unnumbered">Appendix</h1>
+<section id="references" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="references">References</h2>
+<p><strong>Dataset</strong><br>
+<a href="https://www.kaggle.com/datasets/hellbuoy/car-price-prediction?select=CarPrice_Assignment.csv">https://www.kaggle.com/datasets/hellbuoy/car-price-prediction?select=CarPrice_Assignment.csv</a></p>
+<p><strong>Data Cleaning</strong><br>
+<a href="https://datatofish.com/category/python/">https://datatofish.com/category/python/</a></p>
+<p><strong>Data Scaling</strong><br>
+<a href="https://dataakkadian.medium.com/standardization-vs-normalization-da7a3a308c64">https://dataakkadian.medium.com/standardization-vs-normalization-da7a3a308c64</a><br>
+<a href="https://medium.datadriveninvestor.com/data-pre-processing-with-scikit-learn-9896c561ef2f">https://medium.datadriveninvestor.com/data-pre-processing-with-scikit-learn-9896c561ef2f</a></p>
+<p><strong>Measuring Accuracy</strong><br>
+<a href="https://www.bmc.com/blogs/mean-squared-error-r2-and-variance-in-regression-analysis/">https://www.bmc.com/blogs/mean-squared-error-r2-and-variance-in-regression-analysis/</a></p>
+<p><strong>Visualizations</strong><br>
+<a href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.ConfusionMatrixDisplay.html">https://scikit-learn.org/stable/modules/generated/sklearn.metrics.ConfusionMatrixDisplay.html</a><br>
+<a href="https://seaborn.pydata.org/api.html">https://seaborn.pydata.org/api.html</a><br>
+<a href="https://matplotlib.org/stable/api/pyplot_summary.html">https://matplotlib.org/stable/api/pyplot_summary.html</a></p>
+<p><strong>Classification &amp; Clustering Models</strong><br>
+<a href="https://www.activestate.com/resources/quick-reads/how-to-classify-data-in-python/">https://www.activestate.com/resources/quick-reads/how-to-classify-data-in-python/</a><br>
+<a href="https://builtin.com/data-science/data-clustering-python">https://builtin.com/data-science/data-clustering-python</a><br>
+<a href="https://towardsdatascience.com/machine-learning-algorithms-part-9-k-means-example-in-python-f2ad05ed5203">https://towardsdatascience.com/machine-learning-algorithms-part-9-k-means-example-in-python-f2ad05ed5203</a></p>
+<p><strong>General Python</strong><br>
+<a href="https://stackoverflow.com">https://stackoverflow.com</a></p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

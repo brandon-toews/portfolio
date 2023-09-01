@@ -4,16 +4,17 @@ project:
 
 website:
   title: "portfolio"
+  site-url: "https://brandon-toews.github.io/portfolio/"
   navbar:
     right:
       - about.qmd
       - icon: github
-        href: https://github.com/
-      - icon: twitter
-        href: https://twitter.com
+        href: https://github.com/brandon-toews
 format:
   html:
-    theme: cosmo
+    theme:
+        light: [cosmo, theme.scss] 
+        dark: [cosmo, theme-dark.scss]
     css: styles.css
 
 editor: visual
