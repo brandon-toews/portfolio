@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Brandon Toews">
+<meta name="dcterms.date" content="2022-12-09">
+<meta name="description" content="Project to design a hotel booking system based on a mock system design case scenario.">
+
+<title>portfolio - Systems Design &amp; Development - Hotel Booking System</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+<meta name="twitter:title" content="portfolio - Systems Design &amp; Development - Hotel Booking System">
+<meta name="twitter:description" content="Project to design a hotel booking system based on a mock system design case scenario.">
+<meta name="twitter:image" content="https://brandon-toews.github.io/portfolio/posts/dev-design-assignment1/hotel-booking-system.jpeg">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">portfolio</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html" rel="" target="">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/brandon-toews" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Systems Design &amp; Development - Hotel Booking System</h1>
+                  <div>
+        <div class="description">
+          Project to design a hotel booking system based on a mock system design case scenario.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">design</div>
+                <div class="quarto-category">development</div>
+                <div class="quarto-category">methodologies</div>
+                <div class="quarto-category">entity-relationship diagram</div>
+                <div class="quarto-category">context diagram</div>
+                <div class="quarto-category">data flow diagram</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Brandon Toews </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">December 9, 2022</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#project-overview" id="toc-project-overview" class="nav-link active" data-scroll-target="#project-overview"><span class="header-section-number">1</span> Project Overview</a>
+  <ul class="collapse">
+  <li><a href="#purpose-of-document" id="toc-purpose-of-document" class="nav-link" data-scroll-target="#purpose-of-document"><span class="header-section-number">1.1</span> Purpose of Document</a></li>
+  <li><a href="#scope" id="toc-scope" class="nav-link" data-scroll-target="#scope"><span class="header-section-number">1.2</span> Scope</a></li>
+  </ul></li>
+  <li><a href="#software-development-methodologies" id="toc-software-development-methodologies" class="nav-link" data-scroll-target="#software-development-methodologies"><span class="header-section-number">2</span> Software Development Methodologies</a>
+  <ul class="collapse">
+  <li><a href="#waterfall" id="toc-waterfall" class="nav-link" data-scroll-target="#waterfall"><span class="header-section-number">2.1</span> Waterfall</a></li>
+  <li><a href="#agile" id="toc-agile" class="nav-link" data-scroll-target="#agile"><span class="header-section-number">2.2</span> Agile</a></li>
+  <li><a href="#preferred-software-development-methodology" id="toc-preferred-software-development-methodology" class="nav-link" data-scroll-target="#preferred-software-development-methodology"><span class="header-section-number">2.3</span> Preferred Software Development Methodology</a></li>
+  </ul></li>
+  <li><a href="#entity-relationship-diagrams" id="toc-entity-relationship-diagrams" class="nav-link" data-scroll-target="#entity-relationship-diagrams"><span class="header-section-number">3</span> Entity-Relationship Diagrams</a>
+  <ul class="collapse">
+  <li><a href="#logical-entity-relationship-diagram" id="toc-logical-entity-relationship-diagram" class="nav-link" data-scroll-target="#logical-entity-relationship-diagram"><span class="header-section-number">3.1</span> Logical Entity-Relationship Diagram</a></li>
+  <li><a href="#physical-entity-relationship-diagram" id="toc-physical-entity-relationship-diagram" class="nav-link" data-scroll-target="#physical-entity-relationship-diagram"><span class="header-section-number">3.2</span> Physical Entity-Relationship Diagram</a></li>
+  <li><a href="#data-fields-with-sample-data" id="toc-data-fields-with-sample-data" class="nav-link" data-scroll-target="#data-fields-with-sample-data"><span class="header-section-number">3.3</span> Data Fields with Sample Data</a></li>
+  </ul></li>
+  <li><a href="#data-flow-diagrams" id="toc-data-flow-diagrams" class="nav-link" data-scroll-target="#data-flow-diagrams"><span class="header-section-number">4</span> Data Flow Diagrams</a>
+  <ul class="collapse">
+  <li><a href="#context-diagram" id="toc-context-diagram" class="nav-link" data-scroll-target="#context-diagram"><span class="header-section-number">4.1</span> Context Diagram</a></li>
+  <li><a href="#level-1-dfd" id="toc-level-1-dfd" class="nav-link" data-scroll-target="#level-1-dfd"><span class="header-section-number">4.2</span> Level 1 DFD</a></li>
+  <li><a href="#level-2-dfd-booking-process-1" id="toc-level-2-dfd-booking-process-1" class="nav-link" data-scroll-target="#level-2-dfd-booking-process-1"><span class="header-section-number">4.3</span> Level 2 DFD – Booking Process 1</a></li>
+  <li><a href="#level-2-dfd-check-in-process-2" id="toc-level-2-dfd-check-in-process-2" class="nav-link" data-scroll-target="#level-2-dfd-check-in-process-2"><span class="header-section-number">4.4</span> Level 2 DFD – Check-In Process 2</a></li>
+  <li><a href="#level-2-dfd-check-out-process-3" id="toc-level-2-dfd-check-out-process-3" class="nav-link" data-scroll-target="#level-2-dfd-check-out-process-3"><span class="header-section-number">4.5</span> Level 2 DFD – Check-Out Process 3</a></li>
+  </ul></li>
+  <li><a href="#improvements" id="toc-improvements" class="nav-link" data-scroll-target="#improvements"><span class="header-section-number">5</span> Improvements</a>
+  <ul class="collapse">
+  <li><a href="#additional-review-process" id="toc-additional-review-process" class="nav-link" data-scroll-target="#additional-review-process"><span class="header-section-number">5.1</span> Additional Review Process</a></li>
+  <li><a href="#sentiment-intent-analysis" id="toc-sentiment-intent-analysis" class="nav-link" data-scroll-target="#sentiment-intent-analysis"><span class="header-section-number">5.2</span> Sentiment &amp; Intent Analysis</a></li>
+  </ul></li>
+  <li><a href="#appendix" id="toc-appendix" class="nav-link" data-scroll-target="#appendix">Appendix</a>
+  <ul class="collapse">
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a>
+  <ul class="collapse">
+  <li><a href="#waterfall-methodology" id="toc-waterfall-methodology" class="nav-link" data-scroll-target="#waterfall-methodology">Waterfall Methodology</a></li>
+  <li><a href="#agile-methodology" id="toc-agile-methodology" class="nav-link" data-scroll-target="#agile-methodology">Agile Methodology</a></li>
+  <li><a href="#sentiment-intent-analysis-1" id="toc-sentiment-intent-analysis-1" class="nav-link" data-scroll-target="#sentiment-intent-analysis-1">Sentiment &amp; Intent Analysis</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="design-dev-assignment1.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p><img src="hotel-booking-system.jpeg" class="img-fluid"></p>
+<section id="project-overview" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Project Overview</h1>
+<section id="purpose-of-document" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="purpose-of-document"><span class="header-section-number">1.1</span> Purpose of Document</h2>
+<p>The purpose of this document is to provide system designs to use in the development of the hotel booking system for City and Resort hotels.</p>
+</section>
+<section id="scope" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="scope"><span class="header-section-number">1.2</span> Scope</h2>
+<p>The scope of the project involves an examination of the business scenario to ascertain how best to design, develop, and improve upon the proposed hotel booking system. In addition, creation of system designs and implementation documentation must be produced to drive the development of the project. The proposed solutions must include detailed logical &amp; physical Entity-Relationship Diagrams, a Context Diagram, and up to Level 2 Data Flow Diagrams.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Expand To Learn About Business Scenario
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The purpose of the Hotel Booking System is to assist with room booking for two of the Hotels, the RESORT HOTEL and CITY HOTEL. Through the system, the Customers book the hotel with their choice of hotel and booking details such as arrival date, number of adults and children. The hotel can ask for any missing information such as meal choice, and country details the customer through email. The customer replies to the hotel with all the missing information. Both the hotel stores the customer details in their customer detail database. The hotel generates the bills on the arrival of the customer. While generating the RESORT HOTEL gives a 10% discount if the customer has stayed at RESORT HOTEL before and the CITY HOTEL gives a 12 % discount to any customer who has stayed at that hotel before. But, if any customer has a history of any cancellations in the past year then the RESORT HOTEL does not give any discount. All the payments are handled by ABC Bank. The bank generates the invoice of the payment and sends copies to the customer and the hotel. The system also communicates with a nearby Restaurant which looks after all the meal requests of the customer. The restaurant gets a notification about the food requirements of customers once the booking confirmation is generated. In addition, if any customer needs the car parking facility then the customer needs to notify while generating the booking details. The Car Parking Agency, co-partner of the hotel group handles the parking facility. The car parking invoice is generated separately and sent to the customer for payment at the time of departure.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="software-development-methodologies" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Software Development Methodologies</h1>
+<section id="waterfall" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="waterfall"><span class="header-section-number">2.1</span> Waterfall</h2>
+<p>The Waterfall methodology contains five phases that are as follows: Requirements, Design, Implementation, Verification and Maintenance. Each of these phases are present in most methodologies however with the Waterfall approach each phase is followed by the next in strict fashion. The team can only progress to the next phase when the current phase has been completed and you cannot revert back to a previous phase. This approach is useful when a high level of reliability is needed for a project.</p>
+</section>
+<section id="agile" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="agile"><span class="header-section-number">2.2</span> Agile</h2>
+<p>The Agile method is an iterative approach that allows for similar phases as Waterfall to be engaged simultaneously and in no specific order. The team is able to work in small increments allowing for customer input regularly. This methodology is far more flexible in terms of adapting to changes in customer wants and needs as they see the project develop.</p>
+</section>
+<section id="preferred-software-development-methodology" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="preferred-software-development-methodology"><span class="header-section-number">2.3</span> Preferred Software Development Methodology</h2>
+<p>The fact that there are two hotels that will be using this system in essence means that there two clients to consider in the development of this project. Each client has unique requirements that differ from one another and are subject to change. As the hospitality industry is fast paced and endeavours to adapt to ever changing customer opinions, the Agile methodology is best suited for this project. As stated above, Waterfall is great for certain projects but is highly inflexible while Agile allows for development teams to incorporate client input in small, digestible increments. This approach will translate to a product that provides more utility to the customer which in turn will result in higher customer satisfaction. ( See <a href="#appendix">Appendix</a> – <a href="#waterfall-methodology">Waterfall Methodology</a> &amp; <a href="#agile-methodology">Agile Methodology</a> )</p>
+</section>
+</section>
+<section id="entity-relationship-diagrams" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Entity-Relationship Diagrams</h1>
+<section id="logical-entity-relationship-diagram" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="logical-entity-relationship-diagram"><span class="header-section-number">3.1</span> Logical Entity-Relationship Diagram</h2>
+<p>The four entities in this diagram are as follows: Customer, City Reservation, Resort Reservation and Invoice. Each entity has a primary key that consists of a uniquely generated number. The system is purposefully designed with no weak entities and foreign keys as this is not advisable to create a robust system. The Customer can either book a reservation at the City or Resort hotel. There is a need to delineate the City and Resort hotel reservations because of their individual discount policies. Each hotel will only reward their customers with a discount when they have previously stayed at their specific location before. In addition, the Resort hotel will only provide a discount to customers who haven’t had any cancellations at their location in the past year. Therefore the Resort Reservation entity has an addition attribute labelled “Cancelled” that records whether any of the reservations have been cancelled. With the information supplied from the reservation entities the Invoice is populated. ( See <a href="#fig-logerd">Figure&nbsp;1</a> )</p>
+<div id="fig-logerd" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Log - ERD.JPG" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption"><strong>Figure</strong>&nbsp;1<strong>.</strong> Logical Entity-Relationship Diagram</figcaption>
+</figure>
+</div>
+</section>
+<section id="physical-entity-relationship-diagram" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="physical-entity-relationship-diagram"><span class="header-section-number">3.2</span> Physical Entity-Relationship Diagram</h2>
+<p>The invoice entity contains a composite and multivalued attribute labelled “Payment” that allows for storage of the date and amount for payments made towards the total. When payments are made the “Amount Owing” attribute on the entry is updated accordingly. ( See <a href="#fig-physerd">Figure&nbsp;2</a> )</p>
+<div id="fig-physerd" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Phys - ERD.JPG" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption"><strong>Figure</strong>&nbsp;2<strong>.</strong> Physical Entity-Relationship Diagram</figcaption>
+</figure>
+</div>
+</section>
+<section id="data-fields-with-sample-data" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="data-fields-with-sample-data"><span class="header-section-number">3.3</span> Data Fields with Sample Data</h2>
+<div id="fig-sampledata" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="sampledata.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption"><strong>Figure</strong>&nbsp;3<strong>.</strong> Data Fields with Sample Data</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="data-flow-diagrams" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Data Flow Diagrams</h1>
+<section id="context-diagram" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="context-diagram"><span class="header-section-number">4.1</span> Context Diagram</h2>
+<p>Six (6) entities: Customer, City Hotel, Resort Hotel, Car Parking Agency, Restaurant and ABC Bank interact with the system from a data flow perspective. A hotel only interacts with the system if the customer has chosen the specified hotel. Each entity’s interactions with the system will be described in further depth in the items to follow. ( See <a href="#fig-context">Figure&nbsp;4</a> )</p>
+<div id="fig-context" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Context.JPG" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption"><strong>Figure</strong>&nbsp;4<strong>.</strong> Context Diagram</figcaption>
+</figure>
+</div>
+</section>
+<section id="level-1-dfd" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="level-1-dfd"><span class="header-section-number">4.2</span> Level 1 DFD</h2>
+<p>There are three (3) processes depicted at level 1 that handle the flow of data for the system. <strong>Process 1</strong>, “Booking”, involves making a reservation, obtaining missing information for the reservation and cancelling the reservation. <strong>Process 2</strong>, “Check-In”, is where the customer checks into their room and makes an initial payment. <strong>Process 3</strong>, “Check-Out”, ends the customer’s interaction with the system by settling the remaining balance on the invoice and paying the parking invoice if the customer has opted for parking. ( See <a href="#fig-lev1dfd">Figure&nbsp;5</a> )</p>
+<div id="fig-lev1dfd" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Level 1 DFD.JPG" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption"><strong>Figure</strong>&nbsp;5<strong>.</strong> Level 1 Data Flow Diagram</figcaption>
+</figure>
+</div>
+</section>
+<section id="level-2-dfd-booking-process-1" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="level-2-dfd-booking-process-1"><span class="header-section-number">4.3</span> Level 2 DFD – Booking Process 1</h2>
+<p>There are five (5) sub-processes depicted at level 2 of “Booking” <strong>Process 1</strong>. In <strong>Process 1.1</strong> the customer submits their customer details which are then stored. <strong>Process 1.2</strong> generates room and date availability information by examining current reservations which is then used by the customer to submit their reservation preferences. In <strong>Process 1.3</strong> the reservation details are stored and the hotel sends the customer a reservation code and request, in the form of an email, to submit missing information. The only none mandatory fields that may be missing are “Food Requirements” and “Parking”. ( See <a href="#fig-logerd">Figure&nbsp;1</a>, <a href="#fig-physerd">Figure&nbsp;2</a> and <a href="#fig-sampledata">Figure&nbsp;3</a> ) <strong>Process 1.4</strong> gives the customer an opportunity to submit the missing information by clicking a link provided in the information request email and filling in the missing fields. This new information is then sent to the hotel, restaurant and parking agency along with being saved in the customer’s reservation entry. <strong>Process 1.5</strong> allows the customer to cancel the reservation if desired. When a cancellation is made the “Cancellation” field is updated if it is a Resort reservation entry or it deletes the entry in the case of a City reservation. All relevant parties are then informed of the cancellation. ( See <a href="#fig-lev2dfdbook">Figure&nbsp;6</a> )</p>
+<div id="fig-lev2dfdbook" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Level 2 DFD(1-Booking).JPG" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption"><strong>Figure</strong>&nbsp;6<strong>.</strong> Level 2 Data Flow Diagram Booking Process 1</figcaption>
+</figure>
+</div>
+</section>
+<section id="level-2-dfd-check-in-process-2" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="level-2-dfd-check-in-process-2"><span class="header-section-number">4.4</span> Level 2 DFD – Check-In Process 2</h2>
+<p>There are four (4) sub-processes depicted at level 2 of “Check-In” <strong>Process 2</strong>. In <strong>Process 2.1</strong> the customer submits their reservation code which is then used to extract the customer’s details and reservation. This information is used by the hotel to generate an invoice which is then stored and a copy is sent to the customer in <strong>Process 2.2</strong>. In <strong>Process 2.3</strong> the customer submits payment information which is then received by ABC bank along with the invoice. In <strong>Process 2.4</strong> the bank handles the payment, sends payment confirmation to all relevant parties and the invoice entry is updated with payment details. ( See <a href="#fig-lev2dfdchin">Figure&nbsp;7</a> )</p>
+<div id="fig-lev2dfdchin" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Level 2 DFD(2-ChIN).JPG" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption"><strong>Figure</strong>&nbsp;7<strong>.</strong> Level 2 Data Flow Diagram Check-In Process 2</figcaption>
+</figure>
+</div>
+</section>
+<section id="level-2-dfd-check-out-process-3" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="level-2-dfd-check-out-process-3"><span class="header-section-number">4.5</span> Level 2 DFD – Check-Out Process 3</h2>
+<p>There are three (3) sub-processes depicted at level 2 of “Check-Out” <strong>Process 3</strong>. In <strong>Process 3.1</strong> the customer submits their reservation code which is then used by the hotel to bring up the customer’s details, reservation and invoice. The customer details and reservation are also sent to the Car Parking Agency which uses <strong>Process 3.2</strong> to send the customer a parking invoice along with their hotel invoice. In <strong>Process 3.3</strong> the customer submits payment information for both invoices, which is then received by ABC bank along with both invoices. In <strong>Process 3.4</strong> the bank processes the payment and sends payment confirmation to all relevant parties and the hotel invoice entry is updated with payment details. ( See <a href="#fig-lev2dfdchout">Figure&nbsp;8</a> )</p>
+<div id="fig-lev2dfdchout" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Level 2 DFD(3-ChOUT).JPG" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption"><strong>Figure</strong>&nbsp;8<strong>.</strong> Level 2 Data Flow Diagram Check-Out Process 3</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="improvements" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Improvements</h1>
+<section id="additional-review-process" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="additional-review-process"><span class="header-section-number">5.1</span> Additional Review Process</h2>
+<p>An improvement upon the system could be achieved by adding a fourth process at level 1 to prompt the customer to provide a review. The review information could then be stored in an additional field in the reservation data stores. This review information could then be analyzed by AI technology to produce actionable suggestions on how to improve the customer’s experience.</p>
+</section>
+<section id="sentiment-intent-analysis" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="sentiment-intent-analysis"><span class="header-section-number">5.2</span> Sentiment &amp; Intent Analysis</h2>
+<p>Natural language processing could be employed to analyze thousands of reviews to identify recurring themes and topics reported on by customers. These can then be rated so that hotel staff can see how customers feel and why they feel that way. This would allow for staff to see where best to make improvements to their services thereby increasing customer satisfaction. ( See <a href="#appendix">Appendix</a> – <a href="#sentiment-intent-analysis-1">Sentiment &amp; Intent Analysis</a> )</p>
+</section>
+</section>
+<section id="appendix" class="level1 unnumbered">
+<h1 class="unnumbered">Appendix</h1>
+<section id="references" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="references">References</h2>
+<section id="waterfall-methodology" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="waterfall-methodology">Waterfall Methodology</h3>
+<p><a href="https://www.projectmanager.com/guides/waterfall-methodology/">https://www.projectmanager.com/guides/waterfall-methodology/</a></p>
+</section>
+<section id="agile-methodology" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="agile-methodology">Agile Methodology</h3>
+<p><a href="https://www.atlassian.com/agile">https://www.atlassian.com/agile</a><br>
+</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/GzzkpAOxHXs" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+</section>
+<section id="sentiment-intent-analysis-1" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="sentiment-intent-analysis-1">Sentiment &amp; Intent Analysis</h3>
+<p><a href="https://www.lexalytics.com/technology/sentiment-analysis/">https://www.lexalytics.com/technology/sentiment-analysis/</a><br>
+<a href="https://www.lexalytics.com/technology/intentions/">https://www.lexalytics.com/technology/intentions/</a></p>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
