@@ -1,31 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://brandon-toews.github.io/portfolio/JuptyerBookFiles/Assignment1BrandonToews.html</loc>
-    <lastmod>2023-09-02T14:00:56.481Z</lastmod>
+    <loc>https://brandon-toews.github.io/portfolio/about.html</loc>
+    <lastmod>2023-09-02T19:54:43.727Z</lastmod>
   </url>
   <url>
-    <loc>https://brandon-toews.github.io/portfolio/index.html</loc>
-    <lastmod>2023-09-02T14:00:53.725Z</lastmod>
-  </url>
-  <url>
-    <loc>https://brandon-toews.github.io/portfolio/posts/post-with-code/index.html</loc>
-    <lastmod>2023-09-02T14:00:49.789Z</lastmod>
-  </url>
-  <url>
-    <loc>https://brandon-toews.github.io/portfolio/posts/welcome/index.html</loc>
-    <lastmod>2023-09-02T14:00:48.005Z</lastmod>
+    <loc>https://brandon-toews.github.io/portfolio/posts/dev-design-assignment2/design-dev-assignment2.html</loc>
+    <lastmod>2023-09-02T19:54:41.639Z</lastmod>
   </url>
   <url>
     <loc>https://brandon-toews.github.io/portfolio/posts/dev-design-assignment1/design-dev-assignment1.html</loc>
-    <lastmod>2023-09-02T14:02:44.051Z</lastmod>
+    <lastmod>2023-09-02T19:54:35.195Z</lastmod>
   </url>
   <url>
     <loc>https://brandon-toews.github.io/portfolio/posts/intro-to-ai-assignment1/Assignment1BrandonToews.html</loc>
-    <lastmod>2023-09-02T14:00:52.709Z</lastmod>
+    <lastmod>2023-09-02T19:54:39.895Z</lastmod>
   </url>
   <url>
-    <loc>https://brandon-toews.github.io/portfolio/about.html</loc>
-    <lastmod>2023-09-02T14:00:54.149Z</lastmod>
+    <loc>https://brandon-toews.github.io/portfolio/index.html</loc>
+    <lastmod>2023-09-02T19:54:43.079Z</lastmod>
   </url>
 </urlset>
