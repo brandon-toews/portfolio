@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/intro-to-ai-fastai/intro-to-ai-fastai.html",
       "/posts/dev-design-assignment2/design-dev-assignment2.html",
       "/posts/intro-to-ai-assignment1/Assignment1BrandonToews.html",
       "/posts/dev-design-assignment1/design-dev-assignment1.html"

@@ -1,5 +1,5 @@
 ---
-title: "Mock Hotel Booking System"
+title: "Hotel Booking System Mock Design"
 format:
   html: default
   pdf: default
@@ -16,7 +16,7 @@ date: "2022-12-09"
 description: Project to design a hotel booking system based on a mock system design case scenario.
 toc: true
 number-sections: true
-image: hotel-booking-system.jpeg
+image: post-pic.png
 twitter-card: true
 card-style: summary
 crossref:

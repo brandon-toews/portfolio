@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Brandon Toews">
+<meta name="dcterms.date" content="2023-06-09">
+<meta name="description" content="Project to train a deep learning model to correctly identify a wasp or a bee using transfer learning with the fastai library.">
+
+<title>portfolio - Deep Learning FastAI Model</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+<meta name="twitter:title" content="portfolio - Deep Learning FastAI Model">
+<meta name="twitter:description" content="Project to train a deep learning model to correctly identify a wasp or a bee using transfer learning with the fastai library.">
+<meta name="twitter:image" content="https://brandon-toews.github.io/portfolio/posts/intro-to-ai-fastai/firstresnet34.png">
+<meta name="twitter:image-height" content="812">
+<meta name="twitter:image-width" content="1340">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">portfolio</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html" rel="" target="">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/brandon-toews" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Deep Learning FastAI Model</h1>
+                  <div>
+        <div class="description">
+          Project to train a deep learning model to correctly identify a wasp or a bee using transfer learning with the fastai library.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">deep learning</div>
+                <div class="quarto-category">neural network</div>
+                <div class="quarto-category">fastai</div>
+                <div class="quarto-category">kaggle</div>
+                <div class="quarto-category">colab</div>
+                <div class="quarto-category">vision</div>
+                <div class="quarto-category">hyperparameter</div>
+                <div class="quarto-category">optimization</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Brandon Toews </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">June 9, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#project-overview" id="toc-project-overview" class="nav-link active" data-scroll-target="#project-overview"><span class="header-section-number">1</span> Project Overview</a>
+  <ul class="collapse">
+  <li><a href="#purpose-of-document" id="toc-purpose-of-document" class="nav-link" data-scroll-target="#purpose-of-document"><span class="header-section-number">1.1</span> Purpose of Document</a></li>
+  </ul></li>
+  <li><a href="#dataset" id="toc-dataset" class="nav-link" data-scroll-target="#dataset"><span class="header-section-number">2</span> Dataset</a>
+  <ul class="collapse">
+  <li><a href="#bee-vs-wasp" id="toc-bee-vs-wasp" class="nav-link" data-scroll-target="#bee-vs-wasp"><span class="header-section-number">2.1</span> Bee vs Wasp</a></li>
+  </ul></li>
+  <li><a href="#experimenting" id="toc-experimenting" class="nav-link" data-scroll-target="#experimenting"><span class="header-section-number">3</span> Experimenting</a>
+  <ul class="collapse">
+  <li><a href="#trial-and-error" id="toc-trial-and-error" class="nav-link" data-scroll-target="#trial-and-error"><span class="header-section-number">3.1</span> Trial and Error</a></li>
+  <li><a href="#automating-hyperparameter-tuning" id="toc-automating-hyperparameter-tuning" class="nav-link" data-scroll-target="#automating-hyperparameter-tuning"><span class="header-section-number">3.2</span> Automating Hyperparameter Tuning</a></li>
+  <li><a href="#automate-testing-different-models" id="toc-automate-testing-different-models" class="nav-link" data-scroll-target="#automate-testing-different-models"><span class="header-section-number">3.3</span> Automate Testing Different Models</a></li>
+  <li><a href="#data-augmentation" id="toc-data-augmentation" class="nav-link" data-scroll-target="#data-augmentation"><span class="header-section-number">3.4</span> Data Augmentation</a></li>
+  </ul></li>
+  <li><a href="#kernels" id="toc-kernels" class="nav-link" data-scroll-target="#kernels"><span class="header-section-number">4</span> Kernels</a>
+  <ul class="collapse">
+  <li><a href="#usage-limits" id="toc-usage-limits" class="nav-link" data-scroll-target="#usage-limits"><span class="header-section-number">4.1</span> Usage Limits</a></li>
+  <li><a href="#google-colab" id="toc-google-colab" class="nav-link" data-scroll-target="#google-colab"><span class="header-section-number">4.2</span> Google Colab</a></li>
+  <li><a href="#kaggle" id="toc-kaggle" class="nav-link" data-scroll-target="#kaggle"><span class="header-section-number">4.3</span> Kaggle</a></li>
+  </ul></li>
+  <li><a href="#performance" id="toc-performance" class="nav-link" data-scroll-target="#performance"><span class="header-section-number">5</span> Performance</a>
+  <ul class="collapse">
+  <li><a href="#worst-performance" id="toc-worst-performance" class="nav-link" data-scroll-target="#worst-performance"><span class="header-section-number">5.1</span> Worst Performance</a></li>
+  <li><a href="#best-performance" id="toc-best-performance" class="nav-link" data-scroll-target="#best-performance"><span class="header-section-number">5.2</span> Best Performance</a></li>
+  </ul></li>
+  <li><a href="#appendix" id="toc-appendix" class="nav-link" data-scroll-target="#appendix">Appendix</a>
+  <ul class="collapse">
+  <li><a href="#model-training-video-walkthrough" id="toc-model-training-video-walkthrough" class="nav-link" data-scroll-target="#model-training-video-walkthrough">Model Training Video Walkthrough</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a>
+  <ul class="collapse">
+  <li><a href="#optimization-library" id="toc-optimization-library" class="nav-link" data-scroll-target="#optimization-library">Optimization Library</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="intro-to-ai-fastai.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div><div class="quarto-alternate-notebooks"><h2>Notebooks</h2><ul><li><a href="https://colab.research.google.com/drive/1yeosl7vmtW30dD0OBt96jLhi_p4ViRjI"><i class="bi bi-journal-code"></i>Google Colab Notebook</a></li><li><a href="https://www.kaggle.com/code/brandontoews/fastaiassignment2-part2"><i class="bi bi-journal-code"></i>Kaggle Notebook</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p><img src="firstresnet34.png" class="img-fluid"></p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Video Walkthrough
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>View model training <a href="#video-walkthrough">video walkthrough</a></p>
+</div>
+</div>
+<section id="project-overview" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Project Overview</h1>
+<section id="purpose-of-document" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="purpose-of-document"><span class="header-section-number">1.1</span> Purpose of Document</h2>
+<p>The purpose of this document is to detail the building of deep learning models using a convolutional neural network architecture. The different techniques, models and methods used to improve performance will be discussed.</p>
+</section>
+</section>
+<section id="dataset" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Dataset</h1>
+<section id="bee-vs-wasp" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="bee-vs-wasp"><span class="header-section-number">2.1</span> Bee vs Wasp</h2>
+<p>For this project I chose a Bee vs Wasp dataset found on Kaggle. I imported the dataset and created a new folder called images that I then put subfolders bee1, bee2, wasp1, wasp2, other_insect and other_noinsect into. The data loader in my custom <a href="#custom-trainmodels">train_models</a> function then creates classes based on the folder structure and feeds that to the model. The data set itself isn’t the cleanest as it seems that some images have not been placed in the correct folder which will sometimes give the model wrong information. No doubt this will affect the accuracy that can be attained with this dataset.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Dataset
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>View <a href="https://www.kaggle.com/datasets/jerzydziewierz/bee-vs-wasp">Bee vs Wasp</a> dataset on Kaggle.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="experimenting" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Experimenting</h1>
+<section id="trial-and-error" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="trial-and-error"><span class="header-section-number">3.1</span> Trial and Error</h2>
+<p>To begin with I created a custom function named <a href="#custom-trainmodels">train_models</a> that I could use to conduct my tests a little faster. With a trial and error approach, I began manually trying different learning rates, model types and image sizes, along with training models with unfrozen weights ( See <a href="#fig-firstresnet34">Figure&nbsp;1</a>, <a href="#tbl-firstresnet34results">Table&nbsp;1</a>, <a href="#fig-firstresnet50">Figure&nbsp;2</a> &amp; <a href="#tbl-firstresnet50results">Table&nbsp;2</a> ). Eventually I thought I should start trying to automate some of these tuning methods and, by doing so, hopefully optimize the outcomes.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>View full details of the trial and error testing in the <a href="https://colab.research.google.com/drive/1yeosl7vmtW30dD0OBt96jLhi_p4ViRjI#scrollTo=hEA2iUvtsu6E">Experimenting</a> section on the Google Colab Notebook.</p>
+</div>
+</div>
+<div class="quarto-embed-nb-cell">
+<div id="custom-trainmodels" class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Function to train models more easily</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> train_models(image_size, batch_size, images_path, test_size, model_type):</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">#instructions for preparing data batches, size of images</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">#and normalize data</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    batch_tfms <span class="op">=</span> [<span class="op">*</span>aug_transforms(size<span class="op">=</span>image_size),Normalize.from_stats(<span class="op">*</span>imagenet_stats)]</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">#function for creating batches with specified parameters</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> ImageDataLoaders.from_folder(images_path,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>                                        valid_pct<span class="op">=</span>test_size,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>                                        ds_tfms<span class="op">=</span>batch_tfms,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>                                        item_tfms<span class="op">=</span>Resize(<span class="dv">460</span>),</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>                                        bs<span class="op">=</span>batch_size)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># test whether batch function is working with parameters</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    data.show_batch(max_n<span class="op">=</span><span class="dv">9</span>, figsize<span class="op">=</span>(<span class="dv">20</span>,<span class="dv">10</span>))</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="co">#return the trained model</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> vision_learner(data, model_type, metrics<span class="op">=</span>error_rate).to_fp16()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<a class="quarto-notebook-link" id="nblink-1" href="https://colab.research.google.com/drive/1yeosl7vmtW30dD0OBt96jLhi_p4ViRjI#custom-trainmodels">Source: Google Colab Notebook</a></div>
+<p><br>
+</p>
+<div class="quarto-embed-nb-cell">
+<div class="cell" data-outputid="f491393a-ff21-4a86-f687-b4d868fe34bc">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#image size</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>image_size <span class="op">=</span> <span class="dv">224</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#batch size, number of images to transfer to GPU to train at one time</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>batch_size <span class="op">=</span> <span class="dv">64</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#Image path</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>images_path <span class="op">=</span> <span class="st">"kaggle_bee_vs_wasp/images"</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">#test size</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>test_size <span class="op">=</span> <span class="fl">0.2</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#CNN model</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>model_type <span class="op">=</span> resnet34</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co">#Create model with dataset and parameters</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>learn_resnet34 <span class="op">=</span> train_models(image_size, batch_size, images_path, test_size, model_type)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-firstresnet34" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="intro-to-ai-fastai_files/figure-html/fig-firstresnet34-output-1.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption"><strong>Figure</strong>&nbsp;1<strong>.</strong> First resnet34 model test</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<a class="quarto-notebook-link" id="nblink-2" href="https://colab.research.google.com/drive/1yeosl7vmtW30dD0OBt96jLhi_p4ViRjI">Source: Google Colab Notebook</a></div>
+<p><br>
+</p>
+<div class="quarto-embed-nb-cell">
+<div class="cell" data-outputid="1e68b821-eb3e-49b1-ccf0-6bf63b6d6fb1">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#train with discovered learning</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#rates and train two more epochs... may improve accuracy</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>learn_resnet34.fit_one_cycle(<span class="dv">2</span>, lr_max<span class="op">=</span><span class="bu">slice</span>(<span class="fl">1e-6</span>,<span class="fl">1e-3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+</div>
+<div class="cell-output cell-output-display">
+<div id="tbl-firstresnet34results" class="anchored">
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<caption><strong>Table</strong>&nbsp;1<strong>.</strong> First resnet34 best training results</caption>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">epoch</th>
+<th data-quarto-table-cell-role="th">train_loss</th>
+<th data-quarto-table-cell-role="th">valid_loss</th>
+<th data-quarto-table-cell-role="th">error_rate</th>
+<th data-quarto-table-cell-role="th">time</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>0.179072</td>
+<td>0.169389</td>
+<td>0.055166</td>
+<td>02:12</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>0.105617</td>
+<td>0.161333</td>
+<td>0.046848</td>
+<td>02:08</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<a class="quarto-notebook-link" id="nblink-3" href="https://colab.research.google.com/drive/1yeosl7vmtW30dD0OBt96jLhi_p4ViRjI">Source: Google Colab Notebook</a></div>
+<p><br>
+</p>
+<div class="quarto-embed-nb-cell">
+<div class="cell" data-outputid="c0affad8-2a3c-4b8f-d1df-d5721bc28307">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#image size</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>image_size <span class="op">=</span> <span class="dv">224</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#batch size, number of images to transfer to GPU to train at one time</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>batch_size <span class="op">=</span> <span class="dv">64</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#Image path</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>images_path <span class="op">=</span> <span class="st">"kaggle_bee_vs_wasp/images"</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">#test size</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>test_size <span class="op">=</span> <span class="fl">0.2</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">#CNN model</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>model_type <span class="op">=</span> resnet50</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">#Try resnet50 with same image size as first resnet34 tests</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>learn_resnet50 <span class="op">=</span> train_models(image_size, batch_size, images_path, test_size, model_type)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-firstresnet50" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="intro-to-ai-fastai_files/figure-html/fig-firstresnet50-output-1.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption"><strong>Figure</strong>&nbsp;2<strong>.</strong> First resnet50 model test</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<a class="quarto-notebook-link" id="nblink-4" href="https://colab.research.google.com/drive/1yeosl7vmtW30dD0OBt96jLhi_p4ViRjI">Source: Google Colab Notebook</a></div>
+<p><br>
+</p>
+<div class="quarto-embed-nb-cell">
+<div class="cell" data-outputid="cfa5d151-fe17-4bf3-e649-0c5e0515c6cd">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#save where the model is currently at</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>learn_resnet50.save(<span class="st">'stage_2'</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># freeze most of the weights again and train two more epochs</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>learn_resnet50.freeze()</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>learn_resnet50.fit_one_cycle(<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+</div>
+<div class="cell-output cell-output-display">
+<div id="tbl-firstresnet50results" class="anchored">
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<caption><strong>Table</strong>&nbsp;2<strong>.</strong> First resnet50 best training results</caption>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">epoch</th>
+<th data-quarto-table-cell-role="th">train_loss</th>
+<th data-quarto-table-cell-role="th">valid_loss</th>
+<th data-quarto-table-cell-role="th">error_rate</th>
+<th data-quarto-table-cell-role="th">time</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>0.152754</td>
+<td>0.199921</td>
+<td>0.056918</td>
+<td>04:58</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>0.082319</td>
+<td>0.159553</td>
+<td>0.042907</td>
+<td>04:59</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<a class="quarto-notebook-link" id="nblink-5" href="https://colab.research.google.com/drive/1yeosl7vmtW30dD0OBt96jLhi_p4ViRjI">Source: Google Colab Notebook</a></div>
+</section>
+<section id="automating-hyperparameter-tuning" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="automating-hyperparameter-tuning"><span class="header-section-number">3.2</span> Automating Hyperparameter Tuning</h2>
+<p>In research I found a Python library called <a href="#optimization-library">Optuna</a> that could be used to automate hyperparameter tuning. <a href="#optimization-library">Optuna</a> does this by creating a “study” that runs a user specified amount of trials and uses an objective function to suggest user specified parameters to optimize for a certain metric. So in this case, I created a custom objective function named <a href="#custom-tunehyperpar">tune_hyperparameters</a> that takes in learning rate, batch size, and weight decay parameters and returns the error rate of the model trained with those parameters. The <a href="#optimization-library">Optuna</a> optimize function then suggests hyperparameters that should start lowering the error rate of successive trials. I then wrote another custom function called <a href="#custom-optstudy">optimization_study</a> that ran the <a href="#optimization-library">Optuna</a> study using the <a href="#custom-tunehyperpar">tune_hyperparameters</a> function. The <a href="#custom-optstudy">optimization_study</a> function also selects the trial that did the best and proceeds to unfreeze all of the weights and train the model again with the best found hyperparameters. Some of my initial tests with this automated hyperparameter tuning proved promising as I was able to get the error rate lower than I had previously gotten it.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>View full details of the automation testing in the <a href="https://colab.research.google.com/drive/1yeosl7vmtW30dD0OBt96jLhi_p4ViRjI#scrollTo=HShUwuqwuFad">Automate Hyperparameter Tuning</a> section on the Google Colab Notebook.</p>
+</div>
+</div>
+<div class="quarto-embed-nb-cell">
+<div id="custom-tunehyperpar" class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#import library for automating hyperparameter tuning</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> optuna</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#function to tune automate tuning</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> tune_hyperparameters(trial, image_size, images_path, test_size, model_type):</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Define the hyperparameters to tune</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    learning_rate <span class="op">=</span> trial.suggest_loguniform(<span class="st">"learning_rate"</span>, <span class="fl">1e-5</span>, <span class="fl">1e-1</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    batch_size <span class="op">=</span> trial.suggest_categorical(<span class="st">"batch_size"</span>, [<span class="dv">16</span>, <span class="dv">32</span>, <span class="dv">64</span>])</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    weight_decay <span class="op">=</span> trial.suggest_loguniform(<span class="st">"weight_decay"</span>, <span class="fl">1e-5</span>, <span class="fl">1e-3</span>)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Create model with dataset and parameters</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    learn <span class="op">=</span> train_models(image_size, batch_size, images_path, test_size, model_type)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Define the hyperparameters of the fastai learner</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    learn.lr_find()</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Fit the model with the hyperparameters</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    learn.fine_tune(<span class="dv">4</span>, base_lr<span class="op">=</span>learning_rate, wd<span class="op">=</span>weight_decay)</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Evaluate the model on the validation set</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    error_rate <span class="op">=</span> <span class="fl">1.0</span> <span class="op">-</span> learn.validate()[<span class="dv">1</span>]</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> error_rate</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<a class="quarto-notebook-link" id="nblink-6" href="https://colab.research.google.com/drive/1yeosl7vmtW30dD0OBt96jLhi_p4ViRjI#custom-tunehyperpar">Source: Google Colab Notebook</a></div>
+<p><br>
+</p>
+<div class="quarto-embed-nb-cell">
+<div id="custom-optstudy" class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Custom function to choose the best trial and unfreeze weights to train further</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> optimization_study(selected_model):</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create an Optuna study and optimize the objective function</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    study <span class="op">=</span> optuna.create_study(direction<span class="op">=</span><span class="st">"minimize"</span>) <span class="co"># Minimize the error rate</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    study.optimize(<span class="kw">lambda</span> trial: tune_hyperparameters(trial, image_size, images_path, test_size, selected_model), n_trials<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Print the best hyperparameters and the corresponding accuracy</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    best_params <span class="op">=</span> study.best_params</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    best_error_rate <span class="op">=</span> study.best_value</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Best Hyperparameters:"</span>, best_params)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Best Accuracy:"</span>, best_error_rate)</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="co">#retrieve best model's state dict file</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    best_state_dict_file <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>selected_model<span class="sc">}</span><span class="ss">_state_dict_trial_</span><span class="sc">{</span>study<span class="sc">.</span>best_trial<span class="sc">.</span>number<span class="sc">}</span><span class="ss">.pth"</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get the best trial from the study</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    best_trial <span class="op">=</span> study.trials[study.best_trial.number]</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Retrieve the hyperparameters of the best trial</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    hyperparameters <span class="op">=</span> best_trial.params</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Access individual hyperparameters</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>    learning_rate <span class="op">=</span> hyperparameters[<span class="st">"learning_rate"</span>]</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>    batch_size <span class="op">=</span> hyperparameters[<span class="st">"batch_size"</span>]</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>    weight_decay <span class="op">=</span> hyperparameters[<span class="st">"weight_decay"</span>]</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Create model with the same architecture as the best trial and load dict file into it</span></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>    best_trial_learn <span class="op">=</span> train_models(image_size, batch_size, images_path, test_size, selected_model)</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>    best_trial_learn.model.load_state_dict(torch.load(best_state_dict_file))</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>    <span class="co">#unfreeze all weights to train with optimal hyperparameters</span></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>    best_trial_learn.unfreeze()</span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Fit the model with the best trial's hyperparameters</span></span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>    best_trial_learn.fine_tune(<span class="dv">4</span>, base_lr<span class="op">=</span>learning_rate, wd<span class="op">=</span>weight_decay)</span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>    <span class="co">#close it back up</span></span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>    best_trial_learn.freeze()</span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>    <span class="co">#return the model with all of the best results</span></span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> best_trial_learn</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<a class="quarto-notebook-link" id="nblink-7" href="https://colab.research.google.com/drive/1yeosl7vmtW30dD0OBt96jLhi_p4ViRjI#custom-optstudy">Source: Google Colab Notebook</a></div>
+</section>
+<section id="automate-testing-different-models" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="automate-testing-different-models"><span class="header-section-number">3.3</span> Automate Testing Different Models</h2>
+<p>As I started to achieve some good results with my automations I decided to go even further. I wrote another custom function called <a href="#custom-trymodels">try_models</a> that loops through a list of different models, runs an Optuna study on it and saves the model state from the best trial from that particular study on that particular model. Once the <a href="#custom-trymodels">try_models</a> function has finished looping through the list of models it selects the model that achieved the lowest error rate, creates a learner from that model and loads the model state of the best trial from that model. It then proceeds to unfreeze all of the weights and train the model again with hyperparameters from that particular model’s best trail. After training is complete the function freezes the weights again, displays the results, and returns the model. I found some success using this new function as long as I kept the trial size relatively low as when I increased the trial size it exponentially increases compute time and quickly reaches the limits of free tier kernels.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>View full details of the try_models function automation testing in the <a href="https://www.kaggle.com/code/brandontoews/fastaiassignment2-part2#Automate-testing-different-models">Automate testing different models</a> section on the Kaggle Notebook.</p>
+</div>
+</div>
+<div class="quarto-embed-nb-cell">
+<div id="custom-trymodels" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2023-06-08T12:18:05.575210Z&quot;,&quot;iopub.status.busy&quot;:&quot;2023-06-08T12:18:05.574736Z&quot;,&quot;iopub.status.idle&quot;:&quot;2023-06-08T12:18:05.592466Z&quot;,&quot;shell.execute_reply&quot;:&quot;2023-06-08T12:18:05.591463Z&quot;,&quot;shell.execute_reply.started&quot;:&quot;2023-06-08T12:18:05.575172Z&quot;}" data-trusted="true" data-execution_count="56">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Custom function to try different models with the other automation functions</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> try_models(image_size, images_path, test_size, models, trial_size):</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    best_trials <span class="op">=</span> {}</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> model <span class="kw">in</span> models:</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>        best_trials[model.<span class="va">__name__</span>] <span class="op">=</span> optimization_study(image_size, images_path, test_size, model, trial_size)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    best_overall <span class="op">=</span> <span class="bu">min</span>(best_trials,  key<span class="op">=</span><span class="kw">lambda</span> x: best_trials[x].value)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    lowest_model <span class="op">=</span> best_trials[best_overall]</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"</span><span class="ch">\n\n</span><span class="st">Best Overall Model:"</span>, lowest_model.user_attrs[<span class="st">'model'</span>].<span class="va">__name__</span>)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Error Rate:"</span>, lowest_model.value)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Load Model's state and retrain with best hyperparameters"</span>)</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    <span class="co">#retrieve best model's state dict file</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    best_state_dict_file <span class="op">=</span> <span class="ss">f"/kaggle/working/</span><span class="sc">{</span>lowest_model<span class="sc">.</span>user_attrs[<span class="st">'model'</span>]<span class="sc">.</span><span class="va">__name__</span><span class="sc">}</span><span class="ss">_state_dict_trial_</span><span class="sc">{</span>lowest_model<span class="sc">.</span>number<span class="sc">}</span><span class="ss">.pth"</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Retrieve the hyperparameters of the best trial</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>    hyperparameters <span class="op">=</span> lowest_model.params</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Access individual hyperparameters</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>    learning_rate <span class="op">=</span> hyperparameters[<span class="st">"learning_rate"</span>]</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>    batch_size <span class="op">=</span> hyperparameters[<span class="st">"batch_size"</span>]</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>    weight_decay <span class="op">=</span> hyperparameters[<span class="st">"weight_decay"</span>]</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Create model with the same architecture as the best trial and load dict file into it</span></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>    best_model_learn <span class="op">=</span> train_models(image_size, batch_size, images_path, test_size, lowest_model.user_attrs[<span class="st">"model"</span>])</span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>    best_model_learn.model.load_state_dict(torch.load(best_state_dict_file))</span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>    <span class="co">#unfreeze all weights to train with optimal hyperparameters</span></span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>    best_model_learn.unfreeze()</span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Fit the model with the best trial's hyperparameters</span></span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>    best_model_learn.fine_tune(<span class="dv">1</span>, base_lr<span class="op">=</span>learning_rate, wd<span class="op">=</span>weight_decay)</span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>    <span class="co">#close it back up</span></span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>    best_model_learn.freeze()</span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Evaluate the model on the validation set</span></span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>    best_error_rate <span class="op">=</span> best_model_learn.validate()[<span class="dv">1</span>]</span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n\n</span><span class="ss">Final result after training model "</span><span class="op">+</span>lowest_model.user_attrs[<span class="st">'model'</span>].<span class="va">__name__</span><span class="op">+</span><span class="st">" with:"</span>)</span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Hyperparameters:"</span>, hyperparameters)</span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Error Rate:"</span>, best_error_rate)</span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a>    <span class="co">#return the model with all of the best results</span></span>
+<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> best_model_learn</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<a class="quarto-notebook-link" id="nblink-8" href="https://www.kaggle.com/code/brandontoews/fastaiassignment2-part2#custom-trymodels">Source: Kaggle Notebook</a></div>
+</section>
+<section id="data-augmentation" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="data-augmentation"><span class="header-section-number">3.4</span> Data Augmentation</h2>
+<p>I also briefly experimented with some data augmentation, namely randomly cropping to a 224x224 image size and introducing a random horizontal flip to the images. Tests with this didn’t seem to yield any improved results, in fact it seems it may have adversely affected model performance in training. I theorize that this didn’t have much effect because the dataset already possesses a great deal of randomness so injecting more isn’t advantageous.</p>
+</section>
+</section>
+<section id="kernels" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Kernels</h1>
+<section id="usage-limits" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="usage-limits"><span class="header-section-number">4.1</span> Usage Limits</h2>
+<p>Very early on it was clear that usage limits of free tier kernels would significantly limit the ability to experiment, test and iterate. For this reason, the approach was taken to use more than one kernel so that when one reached its limit the other could be used to continue with the project. Google Colab and Kaggle were both used to complete this project and in the following two items ( <a href="#google-colab">4.2 Google Colab</a> &amp; <a href="#kaggle">4.3 Kaggle</a> ) in this section I detail what each kernel was primarily used for. A notebook from each kernel is provided in this project submission, with <a href="https://colab.research.google.com/drive/1yeosl7vmtW30dD0OBt96jLhi_p4ViRjI">Part 1</a> and <a href="https://colab.research.google.com/drive/1yeosl7vmtW30dD0OBt96jLhi_p4ViRjI#scrollTo=KaiXfoJTJrKa">Part 3</a> being included in the Google Colab notebook and <a href="https://www.kaggle.com/code/brandontoews/fastaiassignment2-part2">Part 2</a> being included in the Kaggle notebook.</p>
+</section>
+<section id="google-colab" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="google-colab"><span class="header-section-number">4.2</span> Google Colab</h2>
+<p>I started my initial experimentation in Google Colab and that is why it starts with the heading <a href="https://colab.research.google.com/drive/1yeosl7vmtW30dD0OBt96jLhi_p4ViRjI">Part 1</a>. Part way through the refinement of my custom automation functions I reached my limit with Google Colab so <a href="https://www.kaggle.com/code/brandontoews/fastaiassignment2-part2">Part 2</a> of my code is found in the Kaggle notebook. The final part of my testing and code can be found under <a href="https://colab.research.google.com/drive/1yeosl7vmtW30dD0OBt96jLhi_p4ViRjI#scrollTo=KaiXfoJTJrKa">Part 3</a> of the Google Colab notebook. In <a href="https://colab.research.google.com/drive/1yeosl7vmtW30dD0OBt96jLhi_p4ViRjI#scrollTo=KaiXfoJTJrKa">Part 3</a> I decided to purchase some Pay-As-You_Go compute so that I could continue the rest of my project without further delays.</p>
+</section>
+<section id="kaggle" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="kaggle"><span class="header-section-number">4.3</span> Kaggle</h2>
+<p>The Kaggle notebook starts with the heading of <a href="https://www.kaggle.com/code/brandontoews/fastaiassignment2-part2">Part 2</a> as it is the point where I switched from Google Colab. The Kaggle notebook only includes one part and it is where most of the refinements on my custom functions can be found. I was able to make some fairly large tests at the end of the Kaggle notebook but then reached my limit. At this point I switched back to finish things off in my Google Colab notebook under <a href="https://colab.research.google.com/drive/1yeosl7vmtW30dD0OBt96jLhi_p4ViRjI#scrollTo=KaiXfoJTJrKa">Part 3</a>.</p>
+</section>
+</section>
+<section id="performance" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Performance</h1>
+<p>To improve performance SqueezeNet, EfficientNet, Resnet and VGG models were tested along with various batch sizes, learning rates and weight decays. Two (2) different image sizes were tested: (1) 224x224 and (2) 896x896. The parameters that yielded the worst ( See <a href="#worst-performance">Item 5.1</a> ) and best ( See <a href="#best-performance">Item 5.2</a> ) results are detailed in the items below.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>View full details of testing all of the custom automated optimization functions altogether in <a href="https://colab.research.google.com/drive/1yeosl7vmtW30dD0OBt96jLhi_p4ViRjI#scrollTo=KaiXfoJTJrKa">Part 3</a> of the Google Colab Notebook.</p>
+</div>
+</div>
+<section id="worst-performance" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="worst-performance"><span class="header-section-number">5.1</span> Worst Performance</h2>
+<p>I wasn’t able to test VGG16 to long before I ran into limit restrictions on the kernel but it wasn’t performing all that well from what was seen. Further investigation would be required to confirm that VGG16 is not a good model for this dataset. SqueezeNet models did not perform as well as the other models which is not surprising giving the size and architecture of SqueezeNet models ( See <a href="#fig-worst">Figure&nbsp;3</a> ). The 896x896 image size did not seem to yield better results and neither did batch sizes 16 and 64. Learning rate range 1e-5 - 1e-1 did not yield good results as well as weight decay range 1e-5 – 1e-3.</p>
+<div id="fig-worst" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="squeezenetresults.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption"><strong>Figure</strong>&nbsp;3<strong>.</strong> Best SqueezeNet model results after optimization automations were the worst results.</figcaption>
+</figure>
+</div>
+</section>
+<section id="best-performance" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="best-performance"><span class="header-section-number">5.2</span> Best Performance</h2>
+<p>After studying some of the tests I started to isolate that a batch size of 32 did consistently well. Along with training only with a 32 batch size I narrowed the learning rate range to 1e-3 – 1e-2 and the weight decay range to 1e-5 -1e-4 as these ranges seems to provide the best results. In the end of all my testing the best performance I achieved was from a Resnet32 model trained with a 224 image size, 32 batch size, a learning rate of 3.102551277095900e-3 and a weight decay of 7.49113519525403e-05. This yielded a model with a training loss of 0.022758, valid loss of 0.065226, and error rate of 0.015762. These results show that the model is slightly overfitted but performing quite well. ( See <a href="#fig-best">Figure&nbsp;4</a> )</p>
+<div id="fig-best" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="resnetbestresults.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption"><strong>Figure</strong>&nbsp;4<strong>.</strong> Best Resnet model results after optimization automations were the best performance.</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="appendix" class="level1 unnumbered">
+<h1 class="unnumbered">Appendix</h1>
+<section id="model-training-video-walkthrough" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="model-training-video-walkthrough">Model Training Video Walkthrough</h2>
+<p><video src="VideoPresentation.mp4" id="video-walkthrough" class="img-fluid" controls=""><a href="VideoPresentation.mp4">Video</a></video></p>
+</section>
+<section id="references" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="references">References</h2>
+<section id="optimization-library" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="optimization-library">Optimization Library</h3>
+<p><a href="https://optuna.org/">https://optuna.org/</a></p>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

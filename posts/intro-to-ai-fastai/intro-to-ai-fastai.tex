@@ -1,0 +1,799 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+  letterpaper,
+  DIV=11,
+  numbers=noendperiod]{scrartcl}
+
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else  
+    % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\setcounter{secnumdepth}{5}
+% Make \paragraph and \subparagraph free-standing
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{241,243,245}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.40,0.45,0.13}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\ExtensionTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.28,0.35,0.67}{#1}}
+\newcommand{\ImportTok}[1]{\textcolor[rgb]{0.00,0.46,0.62}{#1}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\NormalTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.07,0.07,0.07}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
+\KOMAoption{captions}{tableheading}
+\makeatletter
+\@ifpackageloaded{tcolorbox}{}{\usepackage[skins,breakable]{tcolorbox}}
+\@ifpackageloaded{fontawesome5}{}{\usepackage{fontawesome5}}
+\definecolor{quarto-callout-color}{HTML}{909090}
+\definecolor{quarto-callout-note-color}{HTML}{0758E5}
+\definecolor{quarto-callout-important-color}{HTML}{CC1914}
+\definecolor{quarto-callout-warning-color}{HTML}{EB9113}
+\definecolor{quarto-callout-tip-color}{HTML}{00A047}
+\definecolor{quarto-callout-caution-color}{HTML}{FC5300}
+\definecolor{quarto-callout-color-frame}{HTML}{acacac}
+\definecolor{quarto-callout-note-color-frame}{HTML}{4582ec}
+\definecolor{quarto-callout-important-color-frame}{HTML}{d9534f}
+\definecolor{quarto-callout-warning-color-frame}{HTML}{f0ad4e}
+\definecolor{quarto-callout-tip-color-frame}{HTML}{02b875}
+\definecolor{quarto-callout-caution-color-frame}{HTML}{fd7e14}
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Table of contents}
+\else
+  \newcommand\contentsname{Table of contents}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{List of Figures}
+\else
+  \newcommand\listfigurename{List of Figures}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{List of Tables}
+\else
+  \newcommand\listtablename{List of Tables}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Figure}
+\else
+  \newcommand\figurename{Figure}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Table}
+\else
+  \newcommand\tablename{Table}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Listing}
+\newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+\makeatletter
+\@ifpackageloaded{tcolorbox}{}{\usepackage[skins,breakable]{tcolorbox}}
+\makeatother
+\makeatletter
+\@ifundefined{shadecolor}{\definecolor{shadecolor}{rgb}{.97, .97, .97}}
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\makeatother
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={Deep Learning FastAI Model},
+  pdfauthor={Brandon Toews},
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Deep Learning FastAI Model}
+\author{Brandon Toews}
+\date{2023-06-09}
+
+\begin{document}
+\maketitle
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, boxrule=0pt, interior hidden, sharp corners, enhanced, breakable, borderline west={3pt}{0pt}{shadecolor}]}{\end{tcolorbox}}\fi
+
+\renewcommand*\contentsname{Table of contents}
+{
+\hypersetup{linkcolor=}
+\setcounter{tocdepth}{3}
+\tableofcontents
+}
+\includegraphics{firstresnet34.png}
+
+\begin{tcolorbox}[enhanced jigsaw, opacityback=0, toprule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, opacitybacktitle=0.6, leftrule=.75mm, colback=white, breakable, bottomtitle=1mm, arc=.35mm, toptitle=1mm, left=2mm, colframe=quarto-callout-tip-color-frame, titlerule=0mm, coltitle=black, rightrule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Video Walkthrough}, bottomrule=.15mm]
+
+View model training \protect\hyperlink{video-walkthrough}{video
+walkthrough}
+
+\end{tcolorbox}
+
+\hypertarget{project-overview}{%
+\section{Project Overview}\label{project-overview}}
+
+\hypertarget{purpose-of-document}{%
+\subsection{Purpose of Document}\label{purpose-of-document}}
+
+The purpose of this document is to detail the building of deep learning
+models using a convolutional neural network architecture. The different
+techniques, models and methods used to improve performance will be
+discussed.
+
+\hypertarget{dataset}{%
+\section{Dataset}\label{dataset}}
+
+\hypertarget{bee-vs-wasp}{%
+\subsection{Bee vs Wasp}\label{bee-vs-wasp}}
+
+For this project I chose a Bee vs Wasp dataset found on Kaggle. I
+imported the dataset and created a new folder called images that I then
+put subfolders bee1, bee2, wasp1, wasp2, other\_insect and
+other\_noinsect into. The data loader in my custom
+\protect\hyperlink{custom-trainmodels}{train\_models} function then
+creates classes based on the folder structure and feeds that to the
+model. The data set itself isn't the cleanest as it seems that some
+images have not been placed in the correct folder which will sometimes
+give the model wrong information. No doubt this will affect the accuracy
+that can be attained with this dataset.
+
+\begin{tcolorbox}[enhanced jigsaw, opacityback=0, toprule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, opacitybacktitle=0.6, leftrule=.75mm, colback=white, breakable, bottomtitle=1mm, arc=.35mm, toptitle=1mm, left=2mm, colframe=quarto-callout-tip-color-frame, titlerule=0mm, coltitle=black, rightrule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Dataset}, bottomrule=.15mm]
+
+View
+\href{https://www.kaggle.com/datasets/jerzydziewierz/bee-vs-wasp}{Bee vs
+Wasp} dataset on Kaggle.
+
+\end{tcolorbox}
+
+\hypertarget{experimenting}{%
+\section{Experimenting}\label{experimenting}}
+
+\hypertarget{trial-and-error}{%
+\subsection{Trial and Error}\label{trial-and-error}}
+
+To begin with I created a custom function named
+\protect\hyperlink{custom-trainmodels}{train\_models} that I could use
+to conduct my tests a little faster. With a trial and error approach, I
+began manually trying different learning rates, model types and image
+sizes, along with training models with unfrozen weights ( See
+Figure~\ref{fig-firstresnet34}, Table~\ref{tbl-firstresnet34results},
+Figure~\ref{fig-firstresnet50} \& Table~\ref{tbl-firstresnet50results}
+). Eventually I thought I should start trying to automate some of these
+tuning methods and, by doing so, hopefully optimize the outcomes.
+
+\begin{tcolorbox}[enhanced jigsaw, opacityback=0, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white, opacitybacktitle=0.6, leftrule=.75mm, colback=white, breakable, bottomtitle=1mm, arc=.35mm, toptitle=1mm, left=2mm, colframe=quarto-callout-note-color-frame, titlerule=0mm, coltitle=black, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, bottomrule=.15mm]
+
+View full details of the trial and error testing in the
+\href{https://colab.research.google.com/drive/1yeosl7vmtW30dD0OBt96jLhi_p4ViRjI\#scrollTo=hEA2iUvtsu6E}{Experimenting}
+section on the Google Colab Notebook.
+
+\end{tcolorbox}
+
+\hypertarget{custom-trainmodels}{}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Function to train models more easily}
+\KeywordTok{def}\NormalTok{ train\_models(image\_size, batch\_size, images\_path, test\_size, model\_type):}
+    \CommentTok{\#instructions for preparing data batches, size of images}
+    \CommentTok{\#and normalize data}
+\NormalTok{    batch\_tfms }\OperatorTok{=}\NormalTok{ [}\OperatorTok{*}\NormalTok{aug\_transforms(size}\OperatorTok{=}\NormalTok{image\_size),Normalize.from\_stats(}\OperatorTok{*}\NormalTok{imagenet\_stats)]}
+
+    \CommentTok{\#function for creating batches with specified parameters}
+\NormalTok{    data }\OperatorTok{=}\NormalTok{ ImageDataLoaders.from\_folder(images\_path,}
+\NormalTok{                                        valid\_pct}\OperatorTok{=}\NormalTok{test\_size,}
+\NormalTok{                                        ds\_tfms}\OperatorTok{=}\NormalTok{batch\_tfms,}
+\NormalTok{                                        item\_tfms}\OperatorTok{=}\NormalTok{Resize(}\DecValTok{460}\NormalTok{),}
+\NormalTok{                                        bs}\OperatorTok{=}\NormalTok{batch\_size)}
+    
+    \CommentTok{\# test whether batch function is working with parameters}
+\NormalTok{    data.show\_batch(max\_n}\OperatorTok{=}\DecValTok{9}\NormalTok{, figsize}\OperatorTok{=}\NormalTok{(}\DecValTok{20}\NormalTok{,}\DecValTok{10}\NormalTok{))}
+
+    \CommentTok{\#return the trained model}
+    \ControlFlowTok{return}\NormalTok{ vision\_learner(data, model\_type, metrics}\OperatorTok{=}\NormalTok{error\_rate).to\_fp16()}
+\end{Highlighting}
+\end{Shaded}
+
+\hfill\break
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#image size}
+\NormalTok{image\_size }\OperatorTok{=} \DecValTok{224}
+
+\CommentTok{\#batch size, number of images to transfer to GPU to train at one time}
+\NormalTok{batch\_size }\OperatorTok{=} \DecValTok{64}
+
+\CommentTok{\#Image path}
+\NormalTok{images\_path }\OperatorTok{=} \StringTok{"kaggle\_bee\_vs\_wasp/images"}
+
+\CommentTok{\#test size}
+\NormalTok{test\_size }\OperatorTok{=} \FloatTok{0.2}
+
+\CommentTok{\#CNN model}
+\NormalTok{model\_type }\OperatorTok{=}\NormalTok{ resnet34}
+
+\CommentTok{\#Create model with dataset and parameters}
+\NormalTok{learn\_resnet34 }\OperatorTok{=}\NormalTok{ train\_models(image\_size, batch\_size, images\_path, test\_size, model\_type)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[H]
+
+{\centering \includegraphics{intro-to-ai-fastai_files/figure-latex/fig-firstresnet34-output-1.png}
+
+}
+
+\caption{\label{fig-firstresnet34}First resnet34 model test}
+
+\end{figure}
+
+\hfill\break
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#train with discovered learning}
+\CommentTok{\#rates and train two more epochs... may improve accuracy}
+\NormalTok{learn\_resnet34.fit\_one\_cycle(}\DecValTok{2}\NormalTok{, lr\_max}\OperatorTok{=}\BuiltInTok{slice}\NormalTok{(}\FloatTok{1e{-}6}\NormalTok{,}\FloatTok{1e{-}3}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+<IPython.core.display.HTML object>
+\end{verbatim}
+
+\hypertarget{tbl-firstresnet34results}{}
+\begin{longtable}[]{@{}lllll@{}}
+\caption{\label{tbl-firstresnet34results}First resnet34 best training
+results}\tabularnewline
+\toprule\noalign{}
+epoch & train\_loss & valid\_loss & error\_rate & time \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+epoch & train\_loss & valid\_loss & error\_rate & time \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+0 & 0.179072 & 0.169389 & 0.055166 & 02:12 \\
+1 & 0.105617 & 0.161333 & 0.046848 & 02:08 \\
+\end{longtable}
+
+\hfill\break
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#image size}
+\NormalTok{image\_size }\OperatorTok{=} \DecValTok{224}
+
+\CommentTok{\#batch size, number of images to transfer to GPU to train at one time}
+\NormalTok{batch\_size }\OperatorTok{=} \DecValTok{64}
+
+\CommentTok{\#Image path}
+\NormalTok{images\_path }\OperatorTok{=} \StringTok{"kaggle\_bee\_vs\_wasp/images"}
+
+\CommentTok{\#test size}
+\NormalTok{test\_size }\OperatorTok{=} \FloatTok{0.2}
+
+\CommentTok{\#CNN model}
+\NormalTok{model\_type }\OperatorTok{=}\NormalTok{ resnet50}
+
+\CommentTok{\#Try resnet50 with same image size as first resnet34 tests}
+\NormalTok{learn\_resnet50 }\OperatorTok{=}\NormalTok{ train\_models(image\_size, batch\_size, images\_path, test\_size, model\_type)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[H]
+
+{\centering \includegraphics{intro-to-ai-fastai_files/figure-latex/fig-firstresnet50-output-1.png}
+
+}
+
+\caption{\label{fig-firstresnet50}First resnet50 model test}
+
+\end{figure}
+
+\hfill\break
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#save where the model is currently at}
+\NormalTok{learn\_resnet50.save(}\StringTok{\textquotesingle{}stage\_2\textquotesingle{}}\NormalTok{)}
+\CommentTok{\# freeze most of the weights again and train two more epochs}
+\NormalTok{learn\_resnet50.freeze()}
+\NormalTok{learn\_resnet50.fit\_one\_cycle(}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+<IPython.core.display.HTML object>
+\end{verbatim}
+
+\hypertarget{tbl-firstresnet50results}{}
+\begin{longtable}[]{@{}lllll@{}}
+\caption{\label{tbl-firstresnet50results}First resnet50 best training
+results}\tabularnewline
+\toprule\noalign{}
+epoch & train\_loss & valid\_loss & error\_rate & time \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+epoch & train\_loss & valid\_loss & error\_rate & time \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+0 & 0.152754 & 0.199921 & 0.056918 & 04:58 \\
+1 & 0.082319 & 0.159553 & 0.042907 & 04:59 \\
+\end{longtable}
+
+\hypertarget{automating-hyperparameter-tuning}{%
+\subsection{Automating Hyperparameter
+Tuning}\label{automating-hyperparameter-tuning}}
+
+In research I found a Python library called
+\protect\hyperlink{optimization-library}{Optuna} that could be used to
+automate hyperparameter tuning.
+\protect\hyperlink{optimization-library}{Optuna} does this by creating a
+``study'' that runs a user specified amount of trials and uses an
+objective function to suggest user specified parameters to optimize for
+a certain metric. So in this case, I created a custom objective function
+named \protect\hyperlink{custom-tunehyperpar}{tune\_hyperparameters}
+that takes in learning rate, batch size, and weight decay parameters and
+returns the error rate of the model trained with those parameters. The
+\protect\hyperlink{optimization-library}{Optuna} optimize function then
+suggests hyperparameters that should start lowering the error rate of
+successive trials. I then wrote another custom function called
+\protect\hyperlink{custom-optstudy}{optimization\_study} that ran the
+\protect\hyperlink{optimization-library}{Optuna} study using the
+\protect\hyperlink{custom-tunehyperpar}{tune\_hyperparameters} function.
+The \protect\hyperlink{custom-optstudy}{optimization\_study} function
+also selects the trial that did the best and proceeds to unfreeze all of
+the weights and train the model again with the best found
+hyperparameters. Some of my initial tests with this automated
+hyperparameter tuning proved promising as I was able to get the error
+rate lower than I had previously gotten it.
+
+\begin{tcolorbox}[enhanced jigsaw, opacityback=0, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white, opacitybacktitle=0.6, leftrule=.75mm, colback=white, breakable, bottomtitle=1mm, arc=.35mm, toptitle=1mm, left=2mm, colframe=quarto-callout-note-color-frame, titlerule=0mm, coltitle=black, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, bottomrule=.15mm]
+
+View full details of the automation testing in the
+\href{https://colab.research.google.com/drive/1yeosl7vmtW30dD0OBt96jLhi_p4ViRjI\#scrollTo=HShUwuqwuFad}{Automate
+Hyperparameter Tuning} section on the Google Colab Notebook.
+
+\end{tcolorbox}
+
+\hypertarget{custom-tunehyperpar}{}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#import library for automating hyperparameter tuning}
+\ImportTok{import}\NormalTok{ optuna}
+
+\CommentTok{\#function to tune automate tuning}
+\KeywordTok{def}\NormalTok{ tune\_hyperparameters(trial, image\_size, images\_path, test\_size, model\_type):}
+    \CommentTok{\# Define the hyperparameters to tune}
+\NormalTok{    learning\_rate }\OperatorTok{=}\NormalTok{ trial.suggest\_loguniform(}\StringTok{"learning\_rate"}\NormalTok{, }\FloatTok{1e{-}5}\NormalTok{, }\FloatTok{1e{-}1}\NormalTok{)}
+\NormalTok{    batch\_size }\OperatorTok{=}\NormalTok{ trial.suggest\_categorical(}\StringTok{"batch\_size"}\NormalTok{, [}\DecValTok{16}\NormalTok{, }\DecValTok{32}\NormalTok{, }\DecValTok{64}\NormalTok{])}
+\NormalTok{    weight\_decay }\OperatorTok{=}\NormalTok{ trial.suggest\_loguniform(}\StringTok{"weight\_decay"}\NormalTok{, }\FloatTok{1e{-}5}\NormalTok{, }\FloatTok{1e{-}3}\NormalTok{)}
+
+    \CommentTok{\#Create model with dataset and parameters}
+\NormalTok{    learn }\OperatorTok{=}\NormalTok{ train\_models(image\_size, batch\_size, images\_path, test\_size, model\_type)}
+
+    \CommentTok{\# Define the hyperparameters of the fastai learner}
+\NormalTok{    learn.lr\_find()}
+
+    \CommentTok{\# Fit the model with the hyperparameters}
+\NormalTok{    learn.fine\_tune(}\DecValTok{4}\NormalTok{, base\_lr}\OperatorTok{=}\NormalTok{learning\_rate, wd}\OperatorTok{=}\NormalTok{weight\_decay)}
+
+    \CommentTok{\# Evaluate the model on the validation set}
+\NormalTok{    error\_rate }\OperatorTok{=} \FloatTok{1.0} \OperatorTok{{-}}\NormalTok{ learn.validate()[}\DecValTok{1}\NormalTok{]}
+    \ControlFlowTok{return}\NormalTok{ error\_rate}
+\end{Highlighting}
+\end{Shaded}
+
+\hfill\break
+
+\hypertarget{custom-optstudy}{}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Custom function to choose the best trial and unfreeze weights to train further}
+\KeywordTok{def}\NormalTok{ optimization\_study(selected\_model):}
+
+    \CommentTok{\# Create an Optuna study and optimize the objective function}
+\NormalTok{    study }\OperatorTok{=}\NormalTok{ optuna.create\_study(direction}\OperatorTok{=}\StringTok{"minimize"}\NormalTok{) }\CommentTok{\# Minimize the error rate}
+\NormalTok{    study.optimize(}\KeywordTok{lambda}\NormalTok{ trial: tune\_hyperparameters(trial, image\_size, images\_path, test\_size, selected\_model), n\_trials}\OperatorTok{=}\DecValTok{3}\NormalTok{)}
+
+    \CommentTok{\# Print the best hyperparameters and the corresponding accuracy}
+\NormalTok{    best\_params }\OperatorTok{=}\NormalTok{ study.best\_params}
+\NormalTok{    best\_error\_rate }\OperatorTok{=}\NormalTok{ study.best\_value}
+    \BuiltInTok{print}\NormalTok{(}\StringTok{"Best Hyperparameters:"}\NormalTok{, best\_params)}
+    \BuiltInTok{print}\NormalTok{(}\StringTok{"Best Accuracy:"}\NormalTok{, best\_error\_rate)}
+
+    \CommentTok{\#retrieve best model\textquotesingle{}s state dict file}
+\NormalTok{    best\_state\_dict\_file }\OperatorTok{=} \SpecialStringTok{f"}\SpecialCharTok{\{}\NormalTok{selected\_model}\SpecialCharTok{\}}\SpecialStringTok{\_state\_dict\_trial\_}\SpecialCharTok{\{}\NormalTok{study}\SpecialCharTok{.}\NormalTok{best\_trial}\SpecialCharTok{.}\NormalTok{number}\SpecialCharTok{\}}\SpecialStringTok{.pth"}
+
+    \CommentTok{\# Get the best trial from the study}
+\NormalTok{    best\_trial }\OperatorTok{=}\NormalTok{ study.trials[study.best\_trial.number]}
+
+    \CommentTok{\# Retrieve the hyperparameters of the best trial}
+\NormalTok{    hyperparameters }\OperatorTok{=}\NormalTok{ best\_trial.params}
+
+    \CommentTok{\# Access individual hyperparameters}
+\NormalTok{    learning\_rate }\OperatorTok{=}\NormalTok{ hyperparameters[}\StringTok{"learning\_rate"}\NormalTok{]}
+\NormalTok{    batch\_size }\OperatorTok{=}\NormalTok{ hyperparameters[}\StringTok{"batch\_size"}\NormalTok{]}
+\NormalTok{    weight\_decay }\OperatorTok{=}\NormalTok{ hyperparameters[}\StringTok{"weight\_decay"}\NormalTok{]}
+
+    \CommentTok{\#Create model with the same architecture as the best trial and load dict file into it}
+\NormalTok{    best\_trial\_learn }\OperatorTok{=}\NormalTok{ train\_models(image\_size, batch\_size, images\_path, test\_size, selected\_model)}
+\NormalTok{    best\_trial\_learn.model.load\_state\_dict(torch.load(best\_state\_dict\_file))}
+
+    \CommentTok{\#unfreeze all weights to train with optimal hyperparameters}
+\NormalTok{    best\_trial\_learn.unfreeze()}
+    \CommentTok{\# Fit the model with the best trial\textquotesingle{}s hyperparameters}
+\NormalTok{    best\_trial\_learn.fine\_tune(}\DecValTok{4}\NormalTok{, base\_lr}\OperatorTok{=}\NormalTok{learning\_rate, wd}\OperatorTok{=}\NormalTok{weight\_decay)}
+
+    \CommentTok{\#close it back up}
+\NormalTok{    best\_trial\_learn.freeze()}
+
+    \CommentTok{\#return the model with all of the best results}
+    \ControlFlowTok{return}\NormalTok{ best\_trial\_learn}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{automate-testing-different-models}{%
+\subsection{Automate Testing Different
+Models}\label{automate-testing-different-models}}
+
+As I started to achieve some good results with my automations I decided
+to go even further. I wrote another custom function called
+\protect\hyperlink{custom-trymodels}{try\_models} that loops through a
+list of different models, runs an Optuna study on it and saves the model
+state from the best trial from that particular study on that particular
+model. Once the \protect\hyperlink{custom-trymodels}{try\_models}
+function has finished looping through the list of models it selects the
+model that achieved the lowest error rate, creates a learner from that
+model and loads the model state of the best trial from that model. It
+then proceeds to unfreeze all of the weights and train the model again
+with hyperparameters from that particular model's best trail. After
+training is complete the function freezes the weights again, displays
+the results, and returns the model. I found some success using this new
+function as long as I kept the trial size relatively low as when I
+increased the trial size it exponentially increases compute time and
+quickly reaches the limits of free tier kernels.
+
+\begin{tcolorbox}[enhanced jigsaw, opacityback=0, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white, opacitybacktitle=0.6, leftrule=.75mm, colback=white, breakable, bottomtitle=1mm, arc=.35mm, toptitle=1mm, left=2mm, colframe=quarto-callout-note-color-frame, titlerule=0mm, coltitle=black, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, bottomrule=.15mm]
+
+View full details of the try\_models function automation testing in the
+\href{https://www.kaggle.com/code/brandontoews/fastaiassignment2-part2\#Automate-testing-different-models}{Automate
+testing different models} section on the Kaggle Notebook.
+
+\end{tcolorbox}
+
+\hypertarget{custom-trymodels}{}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Custom function to try different models with the other automation functions}
+\KeywordTok{def}\NormalTok{ try\_models(image\_size, images\_path, test\_size, models, trial\_size):}
+\NormalTok{    best\_trials }\OperatorTok{=}\NormalTok{ \{\}}
+    \ControlFlowTok{for}\NormalTok{ model }\KeywordTok{in}\NormalTok{ models:}
+\NormalTok{        best\_trials[model.}\VariableTok{\_\_name\_\_}\NormalTok{] }\OperatorTok{=}\NormalTok{ optimization\_study(image\_size, images\_path, test\_size, model, trial\_size)}
+        
+\NormalTok{    best\_overall }\OperatorTok{=} \BuiltInTok{min}\NormalTok{(best\_trials,  key}\OperatorTok{=}\KeywordTok{lambda}\NormalTok{ x: best\_trials[x].value)}
+\NormalTok{    lowest\_model }\OperatorTok{=}\NormalTok{ best\_trials[best\_overall]}
+    \BuiltInTok{print}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}n\textbackslash{}n}\StringTok{Best Overall Model:"}\NormalTok{, lowest\_model.user\_attrs[}\StringTok{\textquotesingle{}model\textquotesingle{}}\NormalTok{].}\VariableTok{\_\_name\_\_}\NormalTok{)}
+    \BuiltInTok{print}\NormalTok{(}\StringTok{"Error Rate:"}\NormalTok{, lowest\_model.value)}
+    \BuiltInTok{print}\NormalTok{(}\StringTok{"Load Model\textquotesingle{}s state and retrain with best hyperparameters"}\NormalTok{)}
+    
+    
+    \CommentTok{\#retrieve best model\textquotesingle{}s state dict file}
+\NormalTok{    best\_state\_dict\_file }\OperatorTok{=} \SpecialStringTok{f"/kaggle/working/}\SpecialCharTok{\{}\NormalTok{lowest\_model}\SpecialCharTok{.}\NormalTok{user\_attrs[}\StringTok{\textquotesingle{}model\textquotesingle{}}\NormalTok{]}\SpecialCharTok{.}\VariableTok{\_\_name\_\_}\SpecialCharTok{\}}\SpecialStringTok{\_state\_dict\_trial\_}\SpecialCharTok{\{}\NormalTok{lowest\_model}\SpecialCharTok{.}\NormalTok{number}\SpecialCharTok{\}}\SpecialStringTok{.pth"}
+
+    
+    \CommentTok{\# Retrieve the hyperparameters of the best trial}
+\NormalTok{    hyperparameters }\OperatorTok{=}\NormalTok{ lowest\_model.params}
+
+    \CommentTok{\# Access individual hyperparameters}
+\NormalTok{    learning\_rate }\OperatorTok{=}\NormalTok{ hyperparameters[}\StringTok{"learning\_rate"}\NormalTok{]}
+\NormalTok{    batch\_size }\OperatorTok{=}\NormalTok{ hyperparameters[}\StringTok{"batch\_size"}\NormalTok{]}
+\NormalTok{    weight\_decay }\OperatorTok{=}\NormalTok{ hyperparameters[}\StringTok{"weight\_decay"}\NormalTok{]}
+
+    \CommentTok{\#Create model with the same architecture as the best trial and load dict file into it}
+\NormalTok{    best\_model\_learn }\OperatorTok{=}\NormalTok{ train\_models(image\_size, batch\_size, images\_path, test\_size, lowest\_model.user\_attrs[}\StringTok{"model"}\NormalTok{])}
+\NormalTok{    best\_model\_learn.model.load\_state\_dict(torch.load(best\_state\_dict\_file))}
+
+    \CommentTok{\#unfreeze all weights to train with optimal hyperparameters}
+\NormalTok{    best\_model\_learn.unfreeze()}
+    \CommentTok{\# Fit the model with the best trial\textquotesingle{}s hyperparameters}
+\NormalTok{    best\_model\_learn.fine\_tune(}\DecValTok{1}\NormalTok{, base\_lr}\OperatorTok{=}\NormalTok{learning\_rate, wd}\OperatorTok{=}\NormalTok{weight\_decay)}
+
+    \CommentTok{\#close it back up}
+\NormalTok{    best\_model\_learn.freeze()}
+    
+    \CommentTok{\# Evaluate the model on the validation set}
+\NormalTok{    best\_error\_rate }\OperatorTok{=}\NormalTok{ best\_model\_learn.validate()[}\DecValTok{1}\NormalTok{]}
+    
+    \BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"}\CharTok{\textbackslash{}n\textbackslash{}n}\SpecialStringTok{Final result after training model "}\OperatorTok{+}\NormalTok{lowest\_model.user\_attrs[}\StringTok{\textquotesingle{}model\textquotesingle{}}\NormalTok{].}\VariableTok{\_\_name\_\_}\OperatorTok{+}\StringTok{" with:"}\NormalTok{)}
+    \BuiltInTok{print}\NormalTok{(}\StringTok{"Hyperparameters:"}\NormalTok{, hyperparameters)}
+    \BuiltInTok{print}\NormalTok{(}\StringTok{"Error Rate:"}\NormalTok{, best\_error\_rate)}
+
+    
+    \CommentTok{\#return the model with all of the best results}
+    \ControlFlowTok{return}\NormalTok{ best\_model\_learn}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{data-augmentation}{%
+\subsection{Data Augmentation}\label{data-augmentation}}
+
+I also briefly experimented with some data augmentation, namely randomly
+cropping to a 224x224 image size and introducing a random horizontal
+flip to the images. Tests with this didn't seem to yield any improved
+results, in fact it seems it may have adversely affected model
+performance in training. I theorize that this didn't have much effect
+because the dataset already possesses a great deal of randomness so
+injecting more isn't advantageous.
+
+\hypertarget{kernels}{%
+\section{Kernels}\label{kernels}}
+
+\hypertarget{usage-limits}{%
+\subsection{Usage Limits}\label{usage-limits}}
+
+Very early on it was clear that usage limits of free tier kernels would
+significantly limit the ability to experiment, test and iterate. For
+this reason, the approach was taken to use more than one kernel so that
+when one reached its limit the other could be used to continue with the
+project. Google Colab and Kaggle were both used to complete this project
+and in the following two items ( \protect\hyperlink{google-colab}{4.2
+Google Colab} \& \protect\hyperlink{kaggle}{4.3 Kaggle} ) in this
+section I detail what each kernel was primarily used for. A notebook
+from each kernel is provided in this project submission, with
+\href{https://colab.research.google.com/drive/1yeosl7vmtW30dD0OBt96jLhi_p4ViRjI}{Part
+1} and
+\href{https://colab.research.google.com/drive/1yeosl7vmtW30dD0OBt96jLhi_p4ViRjI\#scrollTo=KaiXfoJTJrKa}{Part
+3} being included in the Google Colab notebook and
+\href{https://www.kaggle.com/code/brandontoews/fastaiassignment2-part2}{Part
+2} being included in the Kaggle notebook.
+
+\hypertarget{google-colab}{%
+\subsection{Google Colab}\label{google-colab}}
+
+I started my initial experimentation in Google Colab and that is why it
+starts with the heading
+\href{https://colab.research.google.com/drive/1yeosl7vmtW30dD0OBt96jLhi_p4ViRjI}{Part
+1}. Part way through the refinement of my custom automation functions I
+reached my limit with Google Colab so
+\href{https://www.kaggle.com/code/brandontoews/fastaiassignment2-part2}{Part
+2} of my code is found in the Kaggle notebook. The final part of my
+testing and code can be found under
+\href{https://colab.research.google.com/drive/1yeosl7vmtW30dD0OBt96jLhi_p4ViRjI\#scrollTo=KaiXfoJTJrKa}{Part
+3} of the Google Colab notebook. In
+\href{https://colab.research.google.com/drive/1yeosl7vmtW30dD0OBt96jLhi_p4ViRjI\#scrollTo=KaiXfoJTJrKa}{Part
+3} I decided to purchase some Pay-As-You\_Go compute so that I could
+continue the rest of my project without further delays.
+
+\hypertarget{kaggle}{%
+\subsection{Kaggle}\label{kaggle}}
+
+The Kaggle notebook starts with the heading of
+\href{https://www.kaggle.com/code/brandontoews/fastaiassignment2-part2}{Part
+2} as it is the point where I switched from Google Colab. The Kaggle
+notebook only includes one part and it is where most of the refinements
+on my custom functions can be found. I was able to make some fairly
+large tests at the end of the Kaggle notebook but then reached my limit.
+At this point I switched back to finish things off in my Google Colab
+notebook under
+\href{https://colab.research.google.com/drive/1yeosl7vmtW30dD0OBt96jLhi_p4ViRjI\#scrollTo=KaiXfoJTJrKa}{Part
+3}.
+
+\hypertarget{performance}{%
+\section{Performance}\label{performance}}
+
+To improve performance SqueezeNet, EfficientNet, Resnet and VGG models
+were tested along with various batch sizes, learning rates and weight
+decays. Two (2) different image sizes were tested: (1) 224x224 and (2)
+896x896. The parameters that yielded the worst ( See
+\protect\hyperlink{worst-performance}{Item 5.1} ) and best ( See
+\protect\hyperlink{best-performance}{Item 5.2} ) results are detailed in
+the items below.
+
+\begin{tcolorbox}[enhanced jigsaw, opacityback=0, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white, opacitybacktitle=0.6, leftrule=.75mm, colback=white, breakable, bottomtitle=1mm, arc=.35mm, toptitle=1mm, left=2mm, colframe=quarto-callout-note-color-frame, titlerule=0mm, coltitle=black, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, bottomrule=.15mm]
+
+View full details of testing all of the custom automated optimization
+functions altogether in
+\href{https://colab.research.google.com/drive/1yeosl7vmtW30dD0OBt96jLhi_p4ViRjI\#scrollTo=KaiXfoJTJrKa}{Part
+3} of the Google Colab Notebook.
+
+\end{tcolorbox}
+
+\hypertarget{worst-performance}{%
+\subsection{Worst Performance}\label{worst-performance}}
+
+I wasn't able to test VGG16 to long before I ran into limit restrictions
+on the kernel but it wasn't performing all that well from what was seen.
+Further investigation would be required to confirm that VGG16 is not a
+good model for this dataset. SqueezeNet models did not perform as well
+as the other models which is not surprising giving the size and
+architecture of SqueezeNet models ( See Figure~\ref{fig-worst} ). The
+896x896 image size did not seem to yield better results and neither did
+batch sizes 16 and 64. Learning rate range 1e-5 - 1e-1 did not yield
+good results as well as weight decay range 1e-5 -- 1e-3.
+
+\begin{figure}
+
+{\centering \includegraphics{squeezenetresults.png}
+
+}
+
+\caption{\label{fig-worst}Best SqueezeNet model results after
+optimization automations were the worst results.}
+
+\end{figure}
+
+\hypertarget{best-performance}{%
+\subsection{Best Performance}\label{best-performance}}
+
+After studying some of the tests I started to isolate that a batch size
+of 32 did consistently well. Along with training only with a 32 batch
+size I narrowed the learning rate range to 1e-3 -- 1e-2 and the weight
+decay range to 1e-5 -1e-4 as these ranges seems to provide the best
+results. In the end of all my testing the best performance I achieved
+was from a Resnet32 model trained with a 224 image size, 32 batch size,
+a learning rate of 3.102551277095900e-3 and a weight decay of
+7.49113519525403e-05. This yielded a model with a training loss of
+0.022758, valid loss of 0.065226, and error rate of 0.015762. These
+results show that the model is slightly overfitted but performing quite
+well. ( See Figure~\ref{fig-best} )
+
+\begin{figure}
+
+{\centering \includegraphics{resnetbestresults.png}
+
+}
+
+\caption{\label{fig-best}Best Resnet model results after optimization
+automations were the best performance.}
+
+\end{figure}
+
+\hypertarget{appendix}{%
+\section*{Appendix}\label{appendix}}
+\addcontentsline{toc}{section}{Appendix}
+
+\hypertarget{model-training-video-walkthrough}{%
+\subsection*{Model Training Video
+Walkthrough}\label{model-training-video-walkthrough}}
+\addcontentsline{toc}{subsection}{Model Training Video Walkthrough}
+
+\includegraphics{VideoPresentation.mp4}
+
+\hypertarget{references}{%
+\subsection*{References}\label{references}}
+\addcontentsline{toc}{subsection}{References}
+
+\hypertarget{optimization-library}{%
+\subsubsection*{Optimization Library}\label{optimization-library}}
+\addcontentsline{toc}{subsubsection}{Optimization Library}
+
+\url{https://optuna.org/}
+
+
+
+\end{document}

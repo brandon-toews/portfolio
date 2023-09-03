@@ -25,7 +25,7 @@
     "href": "posts/dev-design-assignment2/design-dev-assignment2.html#background",
     "title": "Tkinter Machine Learning Prototype Software",
     "section": "2.1 Background",
-    "text": "2.1 Background\nACME Inc is increasingly accumulating data on the customers that interact with the company. As the company grows, profits have not been increasing in proportion to the rising costs of larger infrastructure to support growth. At the same time marketing is struggling to identify where their efforts are most effective as the customer base widens along with product lines. The proposed project provides a solution to these problems by making use of the ever growing asset the company possesses, customer data. (See “Section 5 – Preliminary Findings” of this document to investigate some of the initial insights that the prototype software has been able to uncover)"
+    "text": "2.1 Background\nACME Inc is increasingly accumulating data on the customers that interact with the company. As the company grows, profits have not been increasing in proportion to the rising costs of larger infrastructure to support growth. At the same time marketing is struggling to identify where their efforts are most effective as the customer base widens along with product lines. The proposed project provides a solution to these problems by making use of the ever growing asset the company possesses, customer data.\n\n\n\n\n\n\nNote\n\n\n\nSee 5 Preliminary Findings of this document to investigate some of the initial insights that the prototype software has been able to uncover."
   },
   {
     "objectID": "posts/dev-design-assignment2/design-dev-assignment2.html#objectives",
@@ -112,116 +112,214 @@
     "text": "5.4 Relationship Between Gold & Wine\nUsing a Gaussian Mixture clustering model trained on normalized company data, customers habits can be established between gold and wine. As seen in Figure 4 it seems that customers who purchase less gold products tend to buy more wine but not the other way around. Knowing this, marketing on wine products should not be emphasized for customers that already purchase high amounts of gold products. ( See Figure 4 )\n\n\n\nFigure 4. Relationship Between Gold & Wine"
   },
   {
+    "objectID": "posts/dev-design-assignment2/design-dev-assignment2.html#software-video-walkthrough",
+    "href": "posts/dev-design-assignment2/design-dev-assignment2.html#software-video-walkthrough",
+    "title": "Tkinter Machine Learning Prototype Software",
+    "section": "Software Video Walkthrough",
+    "text": "Software Video Walkthrough\nVideo"
+  },
+  {
     "objectID": "posts/dev-design-assignment1/design-dev-assignment1.html#purpose-of-document",
     "href": "posts/dev-design-assignment1/design-dev-assignment1.html#purpose-of-document",
-    "title": "Mock Hotel Booking System",
+    "title": "Hotel Booking System Mock Design",
     "section": "1.1 Purpose of Document",
     "text": "1.1 Purpose of Document\nThe purpose of this document is to provide system designs to use in the development of the hotel booking system for City and Resort hotels."
   },
   {
     "objectID": "posts/dev-design-assignment1/design-dev-assignment1.html#scope",
     "href": "posts/dev-design-assignment1/design-dev-assignment1.html#scope",
-    "title": "Mock Hotel Booking System",
+    "title": "Hotel Booking System Mock Design",
     "section": "1.2 Scope",
     "text": "1.2 Scope\nThe scope of the project involves an examination of the business scenario to ascertain how best to design, develop, and improve upon the proposed hotel booking system. In addition, creation of system designs and implementation documentation must be produced to drive the development of the project. The proposed solutions must include detailed logical & physical Entity-Relationship Diagrams, a Context Diagram, and up to Level 2 Data Flow Diagrams.\n\n\n\n\n\n\nExpand To Learn About Business Scenario\n\n\n\n\n\nThe purpose of the Hotel Booking System is to assist with room booking for two of the Hotels, the RESORT HOTEL and CITY HOTEL. Through the system, the Customers book the hotel with their choice of hotel and booking details such as arrival date, number of adults and children. The hotel can ask for any missing information such as meal choice, and country details the customer through email. The customer replies to the hotel with all the missing information. Both the hotel stores the customer details in their customer detail database. The hotel generates the bills on the arrival of the customer. While generating the RESORT HOTEL gives a 10% discount if the customer has stayed at RESORT HOTEL before and the CITY HOTEL gives a 12 % discount to any customer who has stayed at that hotel before. But, if any customer has a history of any cancellations in the past year then the RESORT HOTEL does not give any discount. All the payments are handled by ABC Bank. The bank generates the invoice of the payment and sends copies to the customer and the hotel. The system also communicates with a nearby Restaurant which looks after all the meal requests of the customer. The restaurant gets a notification about the food requirements of customers once the booking confirmation is generated. In addition, if any customer needs the car parking facility then the customer needs to notify while generating the booking details. The Car Parking Agency, co-partner of the hotel group handles the parking facility. The car parking invoice is generated separately and sent to the customer for payment at the time of departure."
   },
   {
     "objectID": "posts/dev-design-assignment1/design-dev-assignment1.html#waterfall",
     "href": "posts/dev-design-assignment1/design-dev-assignment1.html#waterfall",
-    "title": "Mock Hotel Booking System",
+    "title": "Hotel Booking System Mock Design",
     "section": "2.1 Waterfall",
     "text": "2.1 Waterfall\nThe Waterfall methodology contains five phases that are as follows: Requirements, Design, Implementation, Verification and Maintenance. Each of these phases are present in most methodologies however with the Waterfall approach each phase is followed by the next in strict fashion. The team can only progress to the next phase when the current phase has been completed and you cannot revert back to a previous phase. This approach is useful when a high level of reliability is needed for a project."
   },
   {
     "objectID": "posts/dev-design-assignment1/design-dev-assignment1.html#agile",
     "href": "posts/dev-design-assignment1/design-dev-assignment1.html#agile",
-    "title": "Mock Hotel Booking System",
+    "title": "Hotel Booking System Mock Design",
     "section": "2.2 Agile",
     "text": "2.2 Agile\nThe Agile method is an iterative approach that allows for similar phases as Waterfall to be engaged simultaneously and in no specific order. The team is able to work in small increments allowing for customer input regularly. This methodology is far more flexible in terms of adapting to changes in customer wants and needs as they see the project develop."
   },
   {
     "objectID": "posts/dev-design-assignment1/design-dev-assignment1.html#preferred-software-development-methodology",
     "href": "posts/dev-design-assignment1/design-dev-assignment1.html#preferred-software-development-methodology",
-    "title": "Mock Hotel Booking System",
+    "title": "Hotel Booking System Mock Design",
     "section": "2.3 Preferred Software Development Methodology",
     "text": "2.3 Preferred Software Development Methodology\nThe fact that there are two hotels that will be using this system in essence means that there two clients to consider in the development of this project. Each client has unique requirements that differ from one another and are subject to change. As the hospitality industry is fast paced and endeavours to adapt to ever changing customer opinions, the Agile methodology is best suited for this project. As stated above, Waterfall is great for certain projects but is highly inflexible while Agile allows for development teams to incorporate client input in small, digestible increments. This approach will translate to a product that provides more utility to the customer which in turn will result in higher customer satisfaction. ( See Appendix – Waterfall Methodology & Agile Methodology )"
   },
   {
     "objectID": "posts/dev-design-assignment1/design-dev-assignment1.html#logical-entity-relationship-diagram",
     "href": "posts/dev-design-assignment1/design-dev-assignment1.html#logical-entity-relationship-diagram",
-    "title": "Mock Hotel Booking System",
+    "title": "Hotel Booking System Mock Design",
     "section": "3.1 Logical Entity-Relationship Diagram",
     "text": "3.1 Logical Entity-Relationship Diagram\nThe four entities in this diagram are as follows: Customer, City Reservation, Resort Reservation and Invoice. Each entity has a primary key that consists of a uniquely generated number. The system is purposefully designed with no weak entities and foreign keys as this is not advisable to create a robust system. The Customer can either book a reservation at the City or Resort hotel. There is a need to delineate the City and Resort hotel reservations because of their individual discount policies. Each hotel will only reward their customers with a discount when they have previously stayed at their specific location before. In addition, the Resort hotel will only provide a discount to customers who haven’t had any cancellations at their location in the past year. Therefore the Resort Reservation entity has an addition attribute labelled “Cancelled” that records whether any of the reservations have been cancelled. With the information supplied from the reservation entities the Invoice is populated. ( See Figure 1 )\n\n\n\nFigure 1. Logical Entity-Relationship Diagram"
   },
   {
     "objectID": "posts/dev-design-assignment1/design-dev-assignment1.html#physical-entity-relationship-diagram",
     "href": "posts/dev-design-assignment1/design-dev-assignment1.html#physical-entity-relationship-diagram",
-    "title": "Mock Hotel Booking System",
+    "title": "Hotel Booking System Mock Design",
     "section": "3.2 Physical Entity-Relationship Diagram",
     "text": "3.2 Physical Entity-Relationship Diagram\nThe invoice entity contains a composite and multivalued attribute labelled “Payment” that allows for storage of the date and amount for payments made towards the total. When payments are made the “Amount Owing” attribute on the entry is updated accordingly. ( See Figure 2 )\n\n\n\nFigure 2. Physical Entity-Relationship Diagram"
   },
   {
     "objectID": "posts/dev-design-assignment1/design-dev-assignment1.html#data-fields-with-sample-data",
     "href": "posts/dev-design-assignment1/design-dev-assignment1.html#data-fields-with-sample-data",
-    "title": "Mock Hotel Booking System",
+    "title": "Hotel Booking System Mock Design",
     "section": "3.3 Data Fields with Sample Data",
     "text": "3.3 Data Fields with Sample Data\n\n\n\nFigure 3. Data Fields with Sample Data"
   },
   {
     "objectID": "posts/dev-design-assignment1/design-dev-assignment1.html#context-diagram",
     "href": "posts/dev-design-assignment1/design-dev-assignment1.html#context-diagram",
-    "title": "Mock Hotel Booking System",
+    "title": "Hotel Booking System Mock Design",
     "section": "4.1 Context Diagram",
     "text": "4.1 Context Diagram\nSix (6) entities: Customer, City Hotel, Resort Hotel, Car Parking Agency, Restaurant and ABC Bank interact with the system from a data flow perspective. A hotel only interacts with the system if the customer has chosen the specified hotel. Each entity’s interactions with the system will be described in further depth in the items to follow. ( See Figure 4 )\n\n\n\nFigure 4. Context Diagram"
   },
   {
     "objectID": "posts/dev-design-assignment1/design-dev-assignment1.html#level-1-dfd",
     "href": "posts/dev-design-assignment1/design-dev-assignment1.html#level-1-dfd",
-    "title": "Mock Hotel Booking System",
+    "title": "Hotel Booking System Mock Design",
     "section": "4.2 Level 1 DFD",
     "text": "4.2 Level 1 DFD\nThere are three (3) processes depicted at level 1 that handle the flow of data for the system. Process 1, “Booking”, involves making a reservation, obtaining missing information for the reservation and cancelling the reservation. Process 2, “Check-In”, is where the customer checks into their room and makes an initial payment. Process 3, “Check-Out”, ends the customer’s interaction with the system by settling the remaining balance on the invoice and paying the parking invoice if the customer has opted for parking. ( See Figure 5 )\n\n\n\nFigure 5. Level 1 Data Flow Diagram"
   },
   {
     "objectID": "posts/dev-design-assignment1/design-dev-assignment1.html#level-2-dfd-booking-process-1",
     "href": "posts/dev-design-assignment1/design-dev-assignment1.html#level-2-dfd-booking-process-1",
-    "title": "Mock Hotel Booking System",
+    "title": "Hotel Booking System Mock Design",
     "section": "4.3 Level 2 DFD – Booking Process 1",
     "text": "4.3 Level 2 DFD – Booking Process 1\nThere are five (5) sub-processes depicted at level 2 of “Booking” Process 1. In Process 1.1 the customer submits their customer details which are then stored. Process 1.2 generates room and date availability information by examining current reservations which is then used by the customer to submit their reservation preferences. In Process 1.3 the reservation details are stored and the hotel sends the customer a reservation code and request, in the form of an email, to submit missing information. The only none mandatory fields that may be missing are “Food Requirements” and “Parking”. ( See Figure 1, Figure 2 and Figure 3 ) Process 1.4 gives the customer an opportunity to submit the missing information by clicking a link provided in the information request email and filling in the missing fields. This new information is then sent to the hotel, restaurant and parking agency along with being saved in the customer’s reservation entry. Process 1.5 allows the customer to cancel the reservation if desired. When a cancellation is made the “Cancellation” field is updated if it is a Resort reservation entry or it deletes the entry in the case of a City reservation. All relevant parties are then informed of the cancellation. ( See Figure 6 )\n\n\n\nFigure 6. Level 2 Data Flow Diagram Booking Process 1"
   },
   {
     "objectID": "posts/dev-design-assignment1/design-dev-assignment1.html#level-2-dfd-check-in-process-2",
     "href": "posts/dev-design-assignment1/design-dev-assignment1.html#level-2-dfd-check-in-process-2",
-    "title": "Mock Hotel Booking System",
+    "title": "Hotel Booking System Mock Design",
     "section": "4.4 Level 2 DFD – Check-In Process 2",
     "text": "4.4 Level 2 DFD – Check-In Process 2\nThere are four (4) sub-processes depicted at level 2 of “Check-In” Process 2. In Process 2.1 the customer submits their reservation code which is then used to extract the customer’s details and reservation. This information is used by the hotel to generate an invoice which is then stored and a copy is sent to the customer in Process 2.2. In Process 2.3 the customer submits payment information which is then received by ABC bank along with the invoice. In Process 2.4 the bank handles the payment, sends payment confirmation to all relevant parties and the invoice entry is updated with payment details. ( See Figure 7 )\n\n\n\nFigure 7. Level 2 Data Flow Diagram Check-In Process 2"
   },
   {
     "objectID": "posts/dev-design-assignment1/design-dev-assignment1.html#level-2-dfd-check-out-process-3",
     "href": "posts/dev-design-assignment1/design-dev-assignment1.html#level-2-dfd-check-out-process-3",
-    "title": "Mock Hotel Booking System",
+    "title": "Hotel Booking System Mock Design",
     "section": "4.5 Level 2 DFD – Check-Out Process 3",
     "text": "4.5 Level 2 DFD – Check-Out Process 3\nThere are three (3) sub-processes depicted at level 2 of “Check-Out” Process 3. In Process 3.1 the customer submits their reservation code which is then used by the hotel to bring up the customer’s details, reservation and invoice. The customer details and reservation are also sent to the Car Parking Agency which uses Process 3.2 to send the customer a parking invoice along with their hotel invoice. In Process 3.3 the customer submits payment information for both invoices, which is then received by ABC bank along with both invoices. In Process 3.4 the bank processes the payment and sends payment confirmation to all relevant parties and the hotel invoice entry is updated with payment details. ( See Figure 8 )\n\n\n\nFigure 8. Level 2 Data Flow Diagram Check-Out Process 3"
   },
   {
     "objectID": "posts/dev-design-assignment1/design-dev-assignment1.html#additional-review-process",
     "href": "posts/dev-design-assignment1/design-dev-assignment1.html#additional-review-process",
-    "title": "Mock Hotel Booking System",
+    "title": "Hotel Booking System Mock Design",
     "section": "5.1 Additional Review Process",
     "text": "5.1 Additional Review Process\nAn improvement upon the system could be achieved by adding a fourth process at level 1 to prompt the customer to provide a review. The review information could then be stored in an additional field in the reservation data stores. This review information could then be analyzed by AI technology to produce actionable suggestions on how to improve the customer’s experience."
   },
   {
     "objectID": "posts/dev-design-assignment1/design-dev-assignment1.html#sentiment-intent-analysis",
     "href": "posts/dev-design-assignment1/design-dev-assignment1.html#sentiment-intent-analysis",
-    "title": "Mock Hotel Booking System",
+    "title": "Hotel Booking System Mock Design",
     "section": "5.2 Sentiment & Intent Analysis",
     "text": "5.2 Sentiment & Intent Analysis\nNatural language processing could be employed to analyze thousands of reviews to identify recurring themes and topics reported on by customers. These can then be rated so that hotel staff can see how customers feel and why they feel that way. This would allow for staff to see where best to make improvements to their services thereby increasing customer satisfaction. ( See Appendix – Sentiment & Intent Analysis )"
   },
   {
     "objectID": "posts/dev-design-assignment1/design-dev-assignment1.html#references",
     "href": "posts/dev-design-assignment1/design-dev-assignment1.html#references",
-    "title": "Mock Hotel Booking System",
+    "title": "Hotel Booking System Mock Design",
     "section": "References",
     "text": "References\n\nWaterfall Methodology\nhttps://www.projectmanager.com/guides/waterfall-methodology/\n\n\nAgile Methodology\nhttps://www.atlassian.com/agile\n\n\n\n\nSentiment & Intent Analysis\nhttps://www.lexalytics.com/technology/sentiment-analysis/\nhttps://www.lexalytics.com/technology/intentions/"
+  },
+  {
+    "objectID": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#purpose-of-document",
+    "href": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#purpose-of-document",
+    "title": "Deep Learning FastAI Model",
+    "section": "1.1 Purpose of Document",
+    "text": "1.1 Purpose of Document\nThe purpose of this document is to detail the building of deep learning models using a convolutional neural network architecture. The different techniques, models and methods used to improve performance will be discussed."
+  },
+  {
+    "objectID": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#bee-vs-wasp",
+    "href": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#bee-vs-wasp",
+    "title": "Deep Learning FastAI Model",
+    "section": "2.1 Bee vs Wasp",
+    "text": "2.1 Bee vs Wasp\nFor this project I chose a Bee vs Wasp dataset found on Kaggle. I imported the dataset and created a new folder called images that I then put subfolders bee1, bee2, wasp1, wasp2, other_insect and other_noinsect into. The data loader in my custom train_models function then creates classes based on the folder structure and feeds that to the model. The data set itself isn’t the cleanest as it seems that some images have not been placed in the correct folder which will sometimes give the model wrong information. No doubt this will affect the accuracy that can be attained with this dataset.\n\n\n\n\n\n\nDataset\n\n\n\nView Bee vs Wasp dataset on Kaggle."
+  },
+  {
+    "objectID": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#trial-and-error",
+    "href": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#trial-and-error",
+    "title": "Deep Learning FastAI Model",
+    "section": "3.1 Trial and Error",
+    "text": "3.1 Trial and Error\nTo begin with I created a custom function named train_models that I could use to conduct my tests a little faster. With a trial and error approach, I began manually trying different learning rates, model types and image sizes, along with training models with unfrozen weights ( See Figure 1, Table 1, Figure 2 & Table 2 ). Eventually I thought I should start trying to automate some of these tuning methods and, by doing so, hopefully optimize the outcomes.\n\n\n\n\n\n\nNote\n\n\n\nView full details of the trial and error testing in the Experimenting section on the Google Colab Notebook.\n\n\n\n\n#Function to train models more easily\ndef train_models(image_size, batch_size, images_path, test_size, model_type):\n    #instructions for preparing data batches, size of images\n    #and normalize data\n    batch_tfms = [*aug_transforms(size=image_size),Normalize.from_stats(*imagenet_stats)]\n\n    #function for creating batches with specified parameters\n    data = ImageDataLoaders.from_folder(images_path,\n                                        valid_pct=test_size,\n                                        ds_tfms=batch_tfms,\n                                        item_tfms=Resize(460),\n                                        bs=batch_size)\n    \n    # test whether batch function is working with parameters\n    data.show_batch(max_n=9, figsize=(20,10))\n\n    #return the trained model\n    return vision_learner(data, model_type, metrics=error_rate).to_fp16()\n\nSource: Google Colab Notebook\n\n\n\n\n\nCode\n#image size\nimage_size = 224\n\n#batch size, number of images to transfer to GPU to train at one time\nbatch_size = 64\n\n#Image path\nimages_path = \"kaggle_bee_vs_wasp/images\"\n\n#test size\ntest_size = 0.2\n\n#CNN model\nmodel_type = resnet34\n\n#Create model with dataset and parameters\nlearn_resnet34 = train_models(image_size, batch_size, images_path, test_size, model_type)\n\n\n\n\n\nFigure 1. First resnet34 model test\n\n\n\n\nSource: Google Colab Notebook\n\n\n\n\n\nCode\n#train with discovered learning\n#rates and train two more epochs... may improve accuracy\nlearn_resnet34.fit_one_cycle(2, lr_max=slice(1e-6,1e-3))\n\n\n\n\n\n\n\n\nTable 1. First resnet34 best training results\n\n\nepoch\ntrain_loss\nvalid_loss\nerror_rate\ntime\n\n\n\n\n0\n0.179072\n0.169389\n0.055166\n02:12\n\n\n1\n0.105617\n0.161333\n0.046848\n02:08\n\n\n\n\n\n\nSource: Google Colab Notebook\n\n\n\n\n\nCode\n#image size\nimage_size = 224\n\n#batch size, number of images to transfer to GPU to train at one time\nbatch_size = 64\n\n#Image path\nimages_path = \"kaggle_bee_vs_wasp/images\"\n\n#test size\ntest_size = 0.2\n\n#CNN model\nmodel_type = resnet50\n\n#Try resnet50 with same image size as first resnet34 tests\nlearn_resnet50 = train_models(image_size, batch_size, images_path, test_size, model_type)\n\n\n\n\n\nFigure 2. First resnet50 model test\n\n\n\n\nSource: Google Colab Notebook\n\n\n\n\n\nCode\n#save where the model is currently at\nlearn_resnet50.save('stage_2')\n# freeze most of the weights again and train two more epochs\nlearn_resnet50.freeze()\nlearn_resnet50.fit_one_cycle(2)\n\n\n\n\n\n\n\n\nTable 2. First resnet50 best training results\n\n\nepoch\ntrain_loss\nvalid_loss\nerror_rate\ntime\n\n\n\n\n0\n0.152754\n0.199921\n0.056918\n04:58\n\n\n1\n0.082319\n0.159553\n0.042907\n04:59\n\n\n\n\n\n\nSource: Google Colab Notebook"
+  },
+  {
+    "objectID": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#automating-hyperparameter-tuning",
+    "href": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#automating-hyperparameter-tuning",
+    "title": "Deep Learning FastAI Model",
+    "section": "3.2 Automating Hyperparameter Tuning",
+    "text": "3.2 Automating Hyperparameter Tuning\nIn research I found a Python library called Optuna that could be used to automate hyperparameter tuning. Optuna does this by creating a “study” that runs a user specified amount of trials and uses an objective function to suggest user specified parameters to optimize for a certain metric. So in this case, I created a custom objective function named tune_hyperparameters that takes in learning rate, batch size, and weight decay parameters and returns the error rate of the model trained with those parameters. The Optuna optimize function then suggests hyperparameters that should start lowering the error rate of successive trials. I then wrote another custom function called optimization_study that ran the Optuna study using the tune_hyperparameters function. The optimization_study function also selects the trial that did the best and proceeds to unfreeze all of the weights and train the model again with the best found hyperparameters. Some of my initial tests with this automated hyperparameter tuning proved promising as I was able to get the error rate lower than I had previously gotten it.\n\n\n\n\n\n\nNote\n\n\n\nView full details of the automation testing in the Automate Hyperparameter Tuning section on the Google Colab Notebook.\n\n\n\n\n#import library for automating hyperparameter tuning\nimport optuna\n\n#function to tune automate tuning\ndef tune_hyperparameters(trial, image_size, images_path, test_size, model_type):\n    # Define the hyperparameters to tune\n    learning_rate = trial.suggest_loguniform(\"learning_rate\", 1e-5, 1e-1)\n    batch_size = trial.suggest_categorical(\"batch_size\", [16, 32, 64])\n    weight_decay = trial.suggest_loguniform(\"weight_decay\", 1e-5, 1e-3)\n\n    #Create model with dataset and parameters\n    learn = train_models(image_size, batch_size, images_path, test_size, model_type)\n\n    # Define the hyperparameters of the fastai learner\n    learn.lr_find()\n\n    # Fit the model with the hyperparameters\n    learn.fine_tune(4, base_lr=learning_rate, wd=weight_decay)\n\n    # Evaluate the model on the validation set\n    error_rate = 1.0 - learn.validate()[1]\n    return error_rate\n\nSource: Google Colab Notebook\n\n\n\n\n# Custom function to choose the best trial and unfreeze weights to train further\ndef optimization_study(selected_model):\n\n    # Create an Optuna study and optimize the objective function\n    study = optuna.create_study(direction=\"minimize\") # Minimize the error rate\n    study.optimize(lambda trial: tune_hyperparameters(trial, image_size, images_path, test_size, selected_model), n_trials=3)\n\n    # Print the best hyperparameters and the corresponding accuracy\n    best_params = study.best_params\n    best_error_rate = study.best_value\n    print(\"Best Hyperparameters:\", best_params)\n    print(\"Best Accuracy:\", best_error_rate)\n\n    #retrieve best model's state dict file\n    best_state_dict_file = f\"{selected_model}_state_dict_trial_{study.best_trial.number}.pth\"\n\n    # Get the best trial from the study\n    best_trial = study.trials[study.best_trial.number]\n\n    # Retrieve the hyperparameters of the best trial\n    hyperparameters = best_trial.params\n\n    # Access individual hyperparameters\n    learning_rate = hyperparameters[\"learning_rate\"]\n    batch_size = hyperparameters[\"batch_size\"]\n    weight_decay = hyperparameters[\"weight_decay\"]\n\n    #Create model with the same architecture as the best trial and load dict file into it\n    best_trial_learn = train_models(image_size, batch_size, images_path, test_size, selected_model)\n    best_trial_learn.model.load_state_dict(torch.load(best_state_dict_file))\n\n    #unfreeze all weights to train with optimal hyperparameters\n    best_trial_learn.unfreeze()\n    # Fit the model with the best trial's hyperparameters\n    best_trial_learn.fine_tune(4, base_lr=learning_rate, wd=weight_decay)\n\n    #close it back up\n    best_trial_learn.freeze()\n\n    #return the model with all of the best results\n    return best_trial_learn\n\nSource: Google Colab Notebook"
+  },
+  {
+    "objectID": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#automate-testing-different-models",
+    "href": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#automate-testing-different-models",
+    "title": "Deep Learning FastAI Model",
+    "section": "3.3 Automate Testing Different Models",
+    "text": "3.3 Automate Testing Different Models\nAs I started to achieve some good results with my automations I decided to go even further. I wrote another custom function called try_models that loops through a list of different models, runs an Optuna study on it and saves the model state from the best trial from that particular study on that particular model. Once the try_models function has finished looping through the list of models it selects the model that achieved the lowest error rate, creates a learner from that model and loads the model state of the best trial from that model. It then proceeds to unfreeze all of the weights and train the model again with hyperparameters from that particular model’s best trail. After training is complete the function freezes the weights again, displays the results, and returns the model. I found some success using this new function as long as I kept the trial size relatively low as when I increased the trial size it exponentially increases compute time and quickly reaches the limits of free tier kernels.\n\n\n\n\n\n\nNote\n\n\n\nView full details of the try_models function automation testing in the Automate testing different models section on the Kaggle Notebook.\n\n\n\n\n# Custom function to try different models with the other automation functions\ndef try_models(image_size, images_path, test_size, models, trial_size):\n    best_trials = {}\n    for model in models:\n        best_trials[model.__name__] = optimization_study(image_size, images_path, test_size, model, trial_size)\n        \n    best_overall = min(best_trials,  key=lambda x: best_trials[x].value)\n    lowest_model = best_trials[best_overall]\n    print(\"\\n\\nBest Overall Model:\", lowest_model.user_attrs['model'].__name__)\n    print(\"Error Rate:\", lowest_model.value)\n    print(\"Load Model's state and retrain with best hyperparameters\")\n    \n    \n    #retrieve best model's state dict file\n    best_state_dict_file = f\"/kaggle/working/{lowest_model.user_attrs['model'].__name__}_state_dict_trial_{lowest_model.number}.pth\"\n\n    \n    # Retrieve the hyperparameters of the best trial\n    hyperparameters = lowest_model.params\n\n    # Access individual hyperparameters\n    learning_rate = hyperparameters[\"learning_rate\"]\n    batch_size = hyperparameters[\"batch_size\"]\n    weight_decay = hyperparameters[\"weight_decay\"]\n\n    #Create model with the same architecture as the best trial and load dict file into it\n    best_model_learn = train_models(image_size, batch_size, images_path, test_size, lowest_model.user_attrs[\"model\"])\n    best_model_learn.model.load_state_dict(torch.load(best_state_dict_file))\n\n    #unfreeze all weights to train with optimal hyperparameters\n    best_model_learn.unfreeze()\n    # Fit the model with the best trial's hyperparameters\n    best_model_learn.fine_tune(1, base_lr=learning_rate, wd=weight_decay)\n\n    #close it back up\n    best_model_learn.freeze()\n    \n    # Evaluate the model on the validation set\n    best_error_rate = best_model_learn.validate()[1]\n    \n    print(f\"\\n\\nFinal result after training model \"+lowest_model.user_attrs['model'].__name__+\" with:\")\n    print(\"Hyperparameters:\", hyperparameters)\n    print(\"Error Rate:\", best_error_rate)\n\n    \n    #return the model with all of the best results\n    return best_model_learn\n\nSource: Kaggle Notebook"
+  },
+  {
+    "objectID": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#data-augmentation",
+    "href": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#data-augmentation",
+    "title": "Deep Learning FastAI Model",
+    "section": "3.4 Data Augmentation",
+    "text": "3.4 Data Augmentation\nI also briefly experimented with some data augmentation, namely randomly cropping to a 224x224 image size and introducing a random horizontal flip to the images. Tests with this didn’t seem to yield any improved results, in fact it seems it may have adversely affected model performance in training. I theorize that this didn’t have much effect because the dataset already possesses a great deal of randomness so injecting more isn’t advantageous."
+  },
+  {
+    "objectID": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#usage-limits",
+    "href": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#usage-limits",
+    "title": "Deep Learning FastAI Model",
+    "section": "4.1 Usage Limits",
+    "text": "4.1 Usage Limits\nVery early on it was clear that usage limits of free tier kernels would significantly limit the ability to experiment, test and iterate. For this reason, the approach was taken to use more than one kernel so that when one reached its limit the other could be used to continue with the project. Google Colab and Kaggle were both used to complete this project and in the following two items ( 4.2 Google Colab & 4.3 Kaggle ) in this section I detail what each kernel was primarily used for. A notebook from each kernel is provided in this project submission, with Part 1 and Part 3 being included in the Google Colab notebook and Part 2 being included in the Kaggle notebook."
+  },
+  {
+    "objectID": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#google-colab",
+    "href": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#google-colab",
+    "title": "Deep Learning FastAI Model",
+    "section": "4.2 Google Colab",
+    "text": "4.2 Google Colab\nI started my initial experimentation in Google Colab and that is why it starts with the heading Part 1. Part way through the refinement of my custom automation functions I reached my limit with Google Colab so Part 2 of my code is found in the Kaggle notebook. The final part of my testing and code can be found under Part 3 of the Google Colab notebook. In Part 3 I decided to purchase some Pay-As-You_Go compute so that I could continue the rest of my project without further delays."
+  },
+  {
+    "objectID": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#kaggle",
+    "href": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#kaggle",
+    "title": "Deep Learning FastAI Model",
+    "section": "4.3 Kaggle",
+    "text": "4.3 Kaggle\nThe Kaggle notebook starts with the heading of Part 2 as it is the point where I switched from Google Colab. The Kaggle notebook only includes one part and it is where most of the refinements on my custom functions can be found. I was able to make some fairly large tests at the end of the Kaggle notebook but then reached my limit. At this point I switched back to finish things off in my Google Colab notebook under Part 3."
+  },
+  {
+    "objectID": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#worst-performance",
+    "href": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#worst-performance",
+    "title": "Deep Learning FastAI Model",
+    "section": "5.1 Worst Performance",
+    "text": "5.1 Worst Performance\nI wasn’t able to test VGG16 to long before I ran into limit restrictions on the kernel but it wasn’t performing all that well from what was seen. Further investigation would be required to confirm that VGG16 is not a good model for this dataset. SqueezeNet models did not perform as well as the other models which is not surprising giving the size and architecture of SqueezeNet models ( See Figure 3 ). The 896x896 image size did not seem to yield better results and neither did batch sizes 16 and 64. Learning rate range 1e-5 - 1e-1 did not yield good results as well as weight decay range 1e-5 – 1e-3.\n\n\n\nFigure 3. Best SqueezeNet model results after optimization automations were the worst results."
+  },
+  {
+    "objectID": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#best-performance",
+    "href": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#best-performance",
+    "title": "Deep Learning FastAI Model",
+    "section": "5.2 Best Performance",
+    "text": "5.2 Best Performance\nAfter studying some of the tests I started to isolate that a batch size of 32 did consistently well. Along with training only with a 32 batch size I narrowed the learning rate range to 1e-3 – 1e-2 and the weight decay range to 1e-5 -1e-4 as these ranges seems to provide the best results. In the end of all my testing the best performance I achieved was from a Resnet32 model trained with a 224 image size, 32 batch size, a learning rate of 3.102551277095900e-3 and a weight decay of 7.49113519525403e-05. This yielded a model with a training loss of 0.022758, valid loss of 0.065226, and error rate of 0.015762. These results show that the model is slightly overfitted but performing quite well. ( See Figure 4 )\n\n\n\nFigure 4. Best Resnet model results after optimization automations were the best performance."
+  },
+  {
+    "objectID": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#model-training-video-walkthrough",
+    "href": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#model-training-video-walkthrough",
+    "title": "Deep Learning FastAI Model",
+    "section": "Model Training Video Walkthrough",
+    "text": "Model Training Video Walkthrough\nVideo"
+  },
+  {
+    "objectID": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#references",
+    "href": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#references",
+    "title": "Deep Learning FastAI Model",
+    "section": "References",
+    "text": "References\n\nOptimization Library\nhttps://optuna.org/"
   },
   {
     "objectID": "posts/intro-to-ai-assignment1/Assignment1BrandonToews.html#purpose-of-document",
@@ -326,6 +424,6 @@
     "href": "index.html",
     "title": "portfolio",
     "section": "",
-    "text": "Tkinter Machine Learning Prototype Software\n\n\n\n\n\n\n\ndesign\n\n\ndevelopment\n\n\nbusiness\n\n\nproject management\n\n\nmachine learning\n\n\ntkinter\n\n\nsoftware\n\n\nui\n\n\ndatabase\n\n\n\n\nProject to design and develop a prototype software with UI to import, transform and save data to and from a cloud database. Software built to apply machine learning algorithms to explore interesting findings from dataset and use to propose a business case for the design.\n\n\n\n\n\n\nJun 5, 2023\n\n\nBrandon Toews\n\n\n\n\n\n\n  \n\n\n\n\nLinear Regression, Classification, Clustering\n\n\n\n\n\n\n\nlinear regression\n\n\nclassification\n\n\nclustering\n\n\n\n\nProject to compare different AI models and an exploration of how to improve their accuracy.\n\n\n\n\n\n\nDec 22, 2022\n\n\nBrandon Toews\n\n\n\n\n\n\n  \n\n\n\n\nMock Hotel Booking System\n\n\n\n\n\n\n\ndesign\n\n\ndevelopment\n\n\nmethodologies\n\n\nentity-relationship diagram\n\n\ncontext diagram\n\n\ndata flow diagram\n\n\n\n\nProject to design a hotel booking system based on a mock system design case scenario.\n\n\n\n\n\n\nDec 9, 2022\n\n\nBrandon Toews\n\n\n\n\n\n\nNo matching items"
+    "text": "Deep Learning FastAI Model\n\n\n\n\n\n\n\ndeep learning\n\n\nneural network\n\n\nfastai\n\n\nkaggle\n\n\ncolab\n\n\nvision\n\n\nhyperparameter\n\n\noptimization\n\n\n\n\nProject to train a deep learning model to correctly identify a wasp or a bee using transfer learning with the fastai library.\n\n\n\n\n\n\nJun 9, 2023\n\n\nBrandon Toews\n\n\n\n\n\n\n  \n\n\n\n\nTkinter Machine Learning Prototype Software\n\n\n\n\n\n\n\ndesign\n\n\ndevelopment\n\n\nbusiness\n\n\nproject management\n\n\nmachine learning\n\n\ntkinter\n\n\nsoftware\n\n\nui\n\n\ndatabase\n\n\n\n\nProject to design and develop a prototype software with UI to import, transform and save data to and from a cloud database. Software built to apply machine learning algorithms to explore interesting findings from dataset and use to propose a business case for the design.\n\n\n\n\n\n\nJun 5, 2023\n\n\nBrandon Toews\n\n\n\n\n\n\n  \n\n\n\n\nLinear Regression, Classification, Clustering\n\n\n\n\n\n\n\nlinear regression\n\n\nclassification\n\n\nclustering\n\n\nmachine learning\n\n\n\n\nProject to compare different AI algorithms and an exploration of how to improve their accuracy.\n\n\n\n\n\n\nDec 22, 2022\n\n\nBrandon Toews\n\n\n\n\n\n\n  \n\n\n\n\nHotel Booking System Mock Design\n\n\n\n\n\n\n\ndesign\n\n\ndevelopment\n\n\nmethodologies\n\n\nentity-relationship diagram\n\n\ncontext diagram\n\n\ndata flow diagram\n\n\n\n\nProject to design a hotel booking system based on a mock system design case scenario.\n\n\n\n\n\n\nDec 9, 2022\n\n\nBrandon Toews\n\n\n\n\n\n\nNo matching items"
   }
 ]

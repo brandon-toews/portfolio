@@ -33,9 +33,9 @@ crossref:
 ![](MeatSweetsClustering.png)
 
 ::: callout-tip 
-## Software Video Walkthrough
+## Video Walkthrough
 
-To watch the software video walkthrough see the [Appendix](#appendix)
+View software [video walkthrough](#video-walkthrough)
 :::
 
 # Project Overview
@@ -52,7 +52,11 @@ Scope can be split into three parts: (1) development of machine learning softwar
 
 ## Background
 
-ACME Inc is increasingly accumulating data on the customers that interact with the company. As the company grows, profits have not been increasing in proportion to the rising costs of larger infrastructure to support growth. At the same time marketing is struggling to identify where their efforts are most effective as the customer base widens along with product lines. The proposed project provides a solution to these problems by making use of the ever growing asset the company possesses, customer data. (See "Section 5 -- Preliminary Findings" of this document to investigate some of the initial insights that the prototype software has been able to uncover)
+ACME Inc is increasingly accumulating data on the customers that interact with the company. As the company grows, profits have not been increasing in proportion to the rising costs of larger infrastructure to support growth. At the same time marketing is struggling to identify where their efforts are most effective as the customer base widens along with product lines. The proposed project provides a solution to these problems by making use of the ever growing asset the company possesses, customer data.
+
+::: callout-note 
+See [5 Preliminary Findings](#preliminary-findings) of this document to investigate some of the initial insights that the prototype software has been able to uncover.
+:::
 
 ## Objectives
 
@@ -146,5 +150,5 @@ Using a Gaussian Mixture clustering model trained on normalized company data, cu
 The prototype software has already unearthed some intriguing lines of investigation and it it still extremely limited in what algorithms and methods it has available. With proper development of a full fledged machine learning software solution there is no doubt that ACME Inc will be able to derive considerable value from its existing and future data. Having a much better understanding of its data, ACME Inc. will be in a much better position to make decisions that affect its future.
 
 # Appendix {#appendix .unnumbered}
-
-![Software Walkthrough](PrototypeSoftwareWalkthrough.mp4)
+## Software Video Walkthrough {.unnumbered}
+![](PrototypeSoftwareWalkthrough.mp4){#video-walkthrough}
