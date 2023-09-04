@@ -533,79 +533,53 @@ Note
 <p>View full details of the automation testing in the <a href="https://colab.research.google.com/drive/1yeosl7vmtW30dD0OBt96jLhi_p4ViRjI#scrollTo=HShUwuqwuFad">Automate Hyperparameter Tuning</a> section on the Google Colab Notebook.</p>
 </div>
 </div>
-<div class="quarto-embed-nb-cell">
-<div id="custom-tunehyperpar" class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#import library for automating hyperparameter tuning</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> optuna</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#function to tune automate tuning</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> tune_hyperparameters(trial, image_size, images_path, test_size, model_type):</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Define the hyperparameters to tune</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    learning_rate <span class="op">=</span> trial.suggest_loguniform(<span class="st">"learning_rate"</span>, <span class="fl">1e-5</span>, <span class="fl">1e-1</span>)</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    batch_size <span class="op">=</span> trial.suggest_categorical(<span class="st">"batch_size"</span>, [<span class="dv">16</span>, <span class="dv">32</span>, <span class="dv">64</span>])</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    weight_decay <span class="op">=</span> trial.suggest_loguniform(<span class="st">"weight_decay"</span>, <span class="fl">1e-5</span>, <span class="fl">1e-3</span>)</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Create model with dataset and parameters</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    learn <span class="op">=</span> train_models(image_size, batch_size, images_path, test_size, model_type)</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Define the hyperparameters of the fastai learner</span></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    learn.lr_find()</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Fit the model with the hyperparameters</span></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    learn.fine_tune(<span class="dv">4</span>, base_lr<span class="op">=</span>learning_rate, wd<span class="op">=</span>weight_decay)</span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Evaluate the model on the validation set</span></span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    error_rate <span class="op">=</span> <span class="fl">1.0</span> <span class="op">-</span> learn.validate()[<span class="dv">1</span>]</span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> error_rate</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<a class="quarto-notebook-link" id="nblink-6" href="https://colab.research.google.com/drive/1yeosl7vmtW30dD0OBt96jLhi_p4ViRjI#custom-tunehyperpar">Source: Google Colab Notebook</a></div>
 <p><br>
 </p>
 <div class="quarto-embed-nb-cell">
 <div id="custom-optstudy" class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Custom function to choose the best trial and unfreeze weights to train further</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> optimization_study(selected_model):</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create an Optuna study and optimize the objective function</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    study <span class="op">=</span> optuna.create_study(direction<span class="op">=</span><span class="st">"minimize"</span>) <span class="co"># Minimize the error rate</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    study.optimize(<span class="kw">lambda</span> trial: tune_hyperparameters(trial, image_size, images_path, test_size, selected_model), n_trials<span class="op">=</span><span class="dv">3</span>)</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Print the best hyperparameters and the corresponding accuracy</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    best_params <span class="op">=</span> study.best_params</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    best_error_rate <span class="op">=</span> study.best_value</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Best Hyperparameters:"</span>, best_params)</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Best Accuracy:"</span>, best_error_rate)</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="co">#retrieve best model's state dict file</span></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    best_state_dict_file <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>selected_model<span class="sc">}</span><span class="ss">_state_dict_trial_</span><span class="sc">{</span>study<span class="sc">.</span>best_trial<span class="sc">.</span>number<span class="sc">}</span><span class="ss">.pth"</span></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get the best trial from the study</span></span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    best_trial <span class="op">=</span> study.trials[study.best_trial.number]</span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Retrieve the hyperparameters of the best trial</span></span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    hyperparameters <span class="op">=</span> best_trial.params</span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Access individual hyperparameters</span></span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>    learning_rate <span class="op">=</span> hyperparameters[<span class="st">"learning_rate"</span>]</span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>    batch_size <span class="op">=</span> hyperparameters[<span class="st">"batch_size"</span>]</span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>    weight_decay <span class="op">=</span> hyperparameters[<span class="st">"weight_decay"</span>]</span>
-<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Create model with the same architecture as the best trial and load dict file into it</span></span>
-<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>    best_trial_learn <span class="op">=</span> train_models(image_size, batch_size, images_path, test_size, selected_model)</span>
-<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>    best_trial_learn.model.load_state_dict(torch.load(best_state_dict_file))</span>
-<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>    <span class="co">#unfreeze all weights to train with optimal hyperparameters</span></span>
-<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>    best_trial_learn.unfreeze()</span>
-<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Fit the model with the best trial's hyperparameters</span></span>
-<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>    best_trial_learn.fine_tune(<span class="dv">4</span>, base_lr<span class="op">=</span>learning_rate, wd<span class="op">=</span>weight_decay)</span>
-<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>    <span class="co">#close it back up</span></span>
-<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>    best_trial_learn.freeze()</span>
-<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>    <span class="co">#return the model with all of the best results</span></span>
-<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> best_trial_learn</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Custom function to choose the best trial and unfreeze weights to train further</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> optimization_study(selected_model):</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create an Optuna study and optimize the objective function</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    study <span class="op">=</span> optuna.create_study(direction<span class="op">=</span><span class="st">"minimize"</span>) <span class="co"># Minimize the error rate</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    study.optimize(<span class="kw">lambda</span> trial: tune_hyperparameters(trial, image_size, images_path, test_size, selected_model), n_trials<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Print the best hyperparameters and the corresponding accuracy</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    best_params <span class="op">=</span> study.best_params</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    best_error_rate <span class="op">=</span> study.best_value</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Best Hyperparameters:"</span>, best_params)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Best Accuracy:"</span>, best_error_rate)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="co">#retrieve best model's state dict file</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    best_state_dict_file <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>selected_model<span class="sc">}</span><span class="ss">_state_dict_trial_</span><span class="sc">{</span>study<span class="sc">.</span>best_trial<span class="sc">.</span>number<span class="sc">}</span><span class="ss">.pth"</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get the best trial from the study</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    best_trial <span class="op">=</span> study.trials[study.best_trial.number]</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Retrieve the hyperparameters of the best trial</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    hyperparameters <span class="op">=</span> best_trial.params</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Access individual hyperparameters</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    learning_rate <span class="op">=</span> hyperparameters[<span class="st">"learning_rate"</span>]</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>    batch_size <span class="op">=</span> hyperparameters[<span class="st">"batch_size"</span>]</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>    weight_decay <span class="op">=</span> hyperparameters[<span class="st">"weight_decay"</span>]</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Create model with the same architecture as the best trial and load dict file into it</span></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>    best_trial_learn <span class="op">=</span> train_models(image_size, batch_size, images_path, test_size, selected_model)</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>    best_trial_learn.model.load_state_dict(torch.load(best_state_dict_file))</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>    <span class="co">#unfreeze all weights to train with optimal hyperparameters</span></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>    best_trial_learn.unfreeze()</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Fit the model with the best trial's hyperparameters</span></span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>    best_trial_learn.fine_tune(<span class="dv">4</span>, base_lr<span class="op">=</span>learning_rate, wd<span class="op">=</span>weight_decay)</span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>    <span class="co">#close it back up</span></span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>    best_trial_learn.freeze()</span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>    <span class="co">#return the model with all of the best results</span></span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> best_trial_learn</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<a class="quarto-notebook-link" id="nblink-7" href="https://colab.research.google.com/drive/1yeosl7vmtW30dD0OBt96jLhi_p4ViRjI#custom-optstudy">Source: Google Colab Notebook</a></div>
+<a class="quarto-notebook-link" id="nblink-6" href="https://colab.research.google.com/drive/1yeosl7vmtW30dD0OBt96jLhi_p4ViRjI#custom-optstudy">Source: Google Colab Notebook</a></div>
 </section>
 <section id="automate-testing-different-models" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="automate-testing-different-models"><span class="header-section-number">3.3</span> Automate Testing Different Models</h2>
@@ -625,55 +599,55 @@ Note
 </div>
 <div class="quarto-embed-nb-cell">
 <div id="custom-trymodels" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2023-06-08T12:18:05.575210Z&quot;,&quot;iopub.status.busy&quot;:&quot;2023-06-08T12:18:05.574736Z&quot;,&quot;iopub.status.idle&quot;:&quot;2023-06-08T12:18:05.592466Z&quot;,&quot;shell.execute_reply&quot;:&quot;2023-06-08T12:18:05.591463Z&quot;,&quot;shell.execute_reply.started&quot;:&quot;2023-06-08T12:18:05.575172Z&quot;}" data-trusted="true" data-execution_count="56">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Custom function to try different models with the other automation functions</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> try_models(image_size, images_path, test_size, models, trial_size):</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    best_trials <span class="op">=</span> {}</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> model <span class="kw">in</span> models:</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>        best_trials[model.<span class="va">__name__</span>] <span class="op">=</span> optimization_study(image_size, images_path, test_size, model, trial_size)</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    best_overall <span class="op">=</span> <span class="bu">min</span>(best_trials,  key<span class="op">=</span><span class="kw">lambda</span> x: best_trials[x].value)</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    lowest_model <span class="op">=</span> best_trials[best_overall]</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"</span><span class="ch">\n\n</span><span class="st">Best Overall Model:"</span>, lowest_model.user_attrs[<span class="st">'model'</span>].<span class="va">__name__</span>)</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Error Rate:"</span>, lowest_model.value)</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Load Model's state and retrain with best hyperparameters"</span>)</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    <span class="co">#retrieve best model's state dict file</span></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    best_state_dict_file <span class="op">=</span> <span class="ss">f"/kaggle/working/</span><span class="sc">{</span>lowest_model<span class="sc">.</span>user_attrs[<span class="st">'model'</span>]<span class="sc">.</span><span class="va">__name__</span><span class="sc">}</span><span class="ss">_state_dict_trial_</span><span class="sc">{</span>lowest_model<span class="sc">.</span>number<span class="sc">}</span><span class="ss">.pth"</span></span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Retrieve the hyperparameters of the best trial</span></span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>    hyperparameters <span class="op">=</span> lowest_model.params</span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Access individual hyperparameters</span></span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>    learning_rate <span class="op">=</span> hyperparameters[<span class="st">"learning_rate"</span>]</span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>    batch_size <span class="op">=</span> hyperparameters[<span class="st">"batch_size"</span>]</span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>    weight_decay <span class="op">=</span> hyperparameters[<span class="st">"weight_decay"</span>]</span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Create model with the same architecture as the best trial and load dict file into it</span></span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>    best_model_learn <span class="op">=</span> train_models(image_size, batch_size, images_path, test_size, lowest_model.user_attrs[<span class="st">"model"</span>])</span>
-<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>    best_model_learn.model.load_state_dict(torch.load(best_state_dict_file))</span>
-<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>    <span class="co">#unfreeze all weights to train with optimal hyperparameters</span></span>
-<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>    best_model_learn.unfreeze()</span>
-<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Fit the model with the best trial's hyperparameters</span></span>
-<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>    best_model_learn.fine_tune(<span class="dv">1</span>, base_lr<span class="op">=</span>learning_rate, wd<span class="op">=</span>weight_decay)</span>
-<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>    <span class="co">#close it back up</span></span>
-<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>    best_model_learn.freeze()</span>
-<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Evaluate the model on the validation set</span></span>
-<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>    best_error_rate <span class="op">=</span> best_model_learn.validate()[<span class="dv">1</span>]</span>
-<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n\n</span><span class="ss">Final result after training model "</span><span class="op">+</span>lowest_model.user_attrs[<span class="st">'model'</span>].<span class="va">__name__</span><span class="op">+</span><span class="st">" with:"</span>)</span>
-<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Hyperparameters:"</span>, hyperparameters)</span>
-<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Error Rate:"</span>, best_error_rate)</span>
-<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a>    <span class="co">#return the model with all of the best results</span></span>
-<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> best_model_learn</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Custom function to try different models with the other automation functions</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> try_models(image_size, images_path, test_size, models, trial_size):</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    best_trials <span class="op">=</span> {}</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> model <span class="kw">in</span> models:</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>        best_trials[model.<span class="va">__name__</span>] <span class="op">=</span> optimization_study(image_size, images_path, test_size, model, trial_size)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    best_overall <span class="op">=</span> <span class="bu">min</span>(best_trials,  key<span class="op">=</span><span class="kw">lambda</span> x: best_trials[x].value)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    lowest_model <span class="op">=</span> best_trials[best_overall]</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"</span><span class="ch">\n\n</span><span class="st">Best Overall Model:"</span>, lowest_model.user_attrs[<span class="st">'model'</span>].<span class="va">__name__</span>)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Error Rate:"</span>, lowest_model.value)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Load Model's state and retrain with best hyperparameters"</span>)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="co">#retrieve best model's state dict file</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    best_state_dict_file <span class="op">=</span> <span class="ss">f"/kaggle/working/</span><span class="sc">{</span>lowest_model<span class="sc">.</span>user_attrs[<span class="st">'model'</span>]<span class="sc">.</span><span class="va">__name__</span><span class="sc">}</span><span class="ss">_state_dict_trial_</span><span class="sc">{</span>lowest_model<span class="sc">.</span>number<span class="sc">}</span><span class="ss">.pth"</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Retrieve the hyperparameters of the best trial</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    hyperparameters <span class="op">=</span> lowest_model.params</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Access individual hyperparameters</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>    learning_rate <span class="op">=</span> hyperparameters[<span class="st">"learning_rate"</span>]</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>    batch_size <span class="op">=</span> hyperparameters[<span class="st">"batch_size"</span>]</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>    weight_decay <span class="op">=</span> hyperparameters[<span class="st">"weight_decay"</span>]</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Create model with the same architecture as the best trial and load dict file into it</span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>    best_model_learn <span class="op">=</span> train_models(image_size, batch_size, images_path, test_size, lowest_model.user_attrs[<span class="st">"model"</span>])</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>    best_model_learn.model.load_state_dict(torch.load(best_state_dict_file))</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>    <span class="co">#unfreeze all weights to train with optimal hyperparameters</span></span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>    best_model_learn.unfreeze()</span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Fit the model with the best trial's hyperparameters</span></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>    best_model_learn.fine_tune(<span class="dv">1</span>, base_lr<span class="op">=</span>learning_rate, wd<span class="op">=</span>weight_decay)</span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>    <span class="co">#close it back up</span></span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>    best_model_learn.freeze()</span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Evaluate the model on the validation set</span></span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>    best_error_rate <span class="op">=</span> best_model_learn.validate()[<span class="dv">1</span>]</span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n\n</span><span class="ss">Final result after training model "</span><span class="op">+</span>lowest_model.user_attrs[<span class="st">'model'</span>].<span class="va">__name__</span><span class="op">+</span><span class="st">" with:"</span>)</span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Hyperparameters:"</span>, hyperparameters)</span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Error Rate:"</span>, best_error_rate)</span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a>    <span class="co">#return the model with all of the best results</span></span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> best_model_learn</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<a class="quarto-notebook-link" id="nblink-8" href="https://www.kaggle.com/code/brandontoews/fastaiassignment2-part2#custom-trymodels">Source: Kaggle Notebook</a></div>
+<a class="quarto-notebook-link" id="nblink-7" href="https://www.kaggle.com/code/brandontoews/fastaiassignment2-part2#custom-trymodels">Source: Kaggle Notebook</a></div>
 </section>
 <section id="data-augmentation" class="level2" data-number="3.4">
 <h2 data-number="3.4" class="anchored" data-anchor-id="data-augmentation"><span class="header-section-number">3.4</span> Data Augmentation</h2>
@@ -742,7 +716,7 @@ Note
 <h2 class="unnumbered anchored" data-anchor-id="references">References</h2>
 <section id="optimization-library" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="optimization-library">Optimization Library</h3>
-<p><a href="https://optuna.org/">https://optuna.org/</a></p>
+<p><a href="https://optuna.org/" class="uri">https://optuna.org/</a></p>
 
 
 </section>

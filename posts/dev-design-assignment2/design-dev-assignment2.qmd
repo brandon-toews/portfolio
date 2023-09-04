@@ -32,7 +32,7 @@ crossref:
 
 ![](MeatSweetsClustering.png)
 
-::: callout-tip 
+::: callout-tip
 ## Video Walkthrough
 
 View software [video walkthrough](#video-walkthrough)
@@ -54,7 +54,7 @@ Scope can be split into three parts: (1) development of machine learning softwar
 
 ACME Inc is increasingly accumulating data on the customers that interact with the company. As the company grows, profits have not been increasing in proportion to the rising costs of larger infrastructure to support growth. At the same time marketing is struggling to identify where their efforts are most effective as the customer base widens along with product lines. The proposed project provides a solution to these problems by making use of the ever growing asset the company possesses, customer data.
 
-::: callout-note 
+::: callout-note
 See [5 Preliminary Findings](#preliminary-findings) of this document to investigate some of the initial insights that the prototype software has been able to uncover.
 :::
 
@@ -87,13 +87,13 @@ A centralized database server will need to be securely setup for data to be load
 
 ## Cost of Running
 
-|           |                                          |                   |
-|----------:|------------------------------------------|------------------:|
-| **3.3.1** | One (1) manager -- 3 months              |     £100,000/year |
-| **3.3.2** | One (1) database admin - retainer        |      £10,000/year |
-| **3.3.3** | One (1) developer                        |      £60,000/year |
-| **3.3.4** | One (1) machine learning engineer        |      £90,000/year |
-|           | **TOTAL**                                | **£260,000/year** |
+|           |                                   |                   |
+|----------:|-----------------------------------|------------------:|
+| **3.3.1** | One (1) manager -- 3 months       |     £100,000/year |
+| **3.3.2** | One (1) database admin - retainer |      £10,000/year |
+| **3.3.3** | One (1) developer                 |      £60,000/year |
+| **3.3.4** | One (1) machine learning engineer |      £90,000/year |
+|           | **TOTAL**                         | **£260,000/year** |
 
 ::: callout-important
 ## Totals are estimated based on current market costs as of June 2023 and are subject to change.
@@ -117,7 +117,7 @@ Once a user has selected a table using the "Training Manager" toolbar, the table
 
 Once a user has selected a table using the "Training Manager" toolbar, they can then select columns that they want to use to train models by using the arrow buttons. The user can select whether they want to train a linear regression, classification or clustering model using the "Algorithm" combobox. If either classification or clustering options are chosen they the user can further choose the method for training whether it be: (1) KNeighbors or Decision Tree for classification, or (2) KMeans, Gaussian Mixture, or Spectral Clustering for clustering. User is able to Standardize or Normalize the data for training by making a selection using the "Scaling" combobox. Linear regression or classification models train starting at the test size selected by the user and decrement down by 10 until a test size of 10 has finally been trained. Clustering models train classify clusters based on how many clusters are set by the "Cluster" slider. All training results are displayed for the user in the view window.
 
-# Preliminary Findings
+# Preliminary Findings {#preliminary-findings}
 
 Using the prototype software developed to demonstrate the benefits of this project, customer data has been explored. Some preliminary findings have been discovered and are detailed in the items below...
 
@@ -150,5 +150,7 @@ Using a Gaussian Mixture clustering model trained on normalized company data, cu
 The prototype software has already unearthed some intriguing lines of investigation and it it still extremely limited in what algorithms and methods it has available. With proper development of a full fledged machine learning software solution there is no doubt that ACME Inc will be able to derive considerable value from its existing and future data. Having a much better understanding of its data, ACME Inc. will be in a much better position to make decisions that affect its future.
 
 # Appendix {#appendix .unnumbered}
+
 ## Software Video Walkthrough {.unnumbered}
+
 ![](PrototypeSoftwareWalkthrough.mp4){#video-walkthrough}
