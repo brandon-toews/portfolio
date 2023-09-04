@@ -1,0 +1,83 @@
+---
+title: "Programming Design Patterns"
+format:
+  html:
+    code-tools:
+      source: https://github.com/brandon-toews/unreal-design-patterns
+author: "Brandon Toews"
+badges: true
+categories:
+- algorithms
+- c++
+- games
+- unreal
+- programming
+- patterns
+date: "2023-05-19"
+description: Mechanics sandbox game to demonstrate programming design patterns using Unreal Engine. Implemented command, state machine, object pool & prototype design patterns using C++ and Unreal's Blueprints Visual Scripting system. 
+toc: true
+number-sections: true
+image: unreal-design-patterns.png
+twitter-card: true
+card-style: summary
+crossref:
+  fig-title: '**Figure**'
+  fig-labels: arabic
+  title-delim: "**.**"
+---
+
+![](unreal-design-patterns.png)
+
+::: {.callout-tip collapse="true"}
+## Play Demo
+
+|                    |       |                 |                    |
+|-------------------:|-------|----------------:|--------------------|
+|        **Forward** | `W`   | **Look Around** | Mouse              |
+|       **Backward** | `S`   |        **Jump** | `Space`            |
+|    **Strafe Left** | `A`   |         **Run** | Left/Right `Shift` |
+|   **Strafe Right** | `D`   |        **Fire** | Left Mouse `Button`|
+| **Escape Program** | `Esc` |                 |                    |
+
+: **Player Controls**{tbl-colwidths="\[30,20,20,30\]"}
+
+
+### 🚀 Play [Demo](https://brandon-toews.github.io/prog-design-patterns.app/) {.unnumbered}
+*(Had to compile demo to WASM using Unreal Engine 4.28 built from source so the shaders didn't turn out right)*
+:::
+
+::: callout-tip
+## Video Walkthrough
+
+View sandbox game [video walkthrough](#video-walkthrough)
+:::
+
+# Programming Design Patterns
+Mechanics sandbox game to demonstrate programming design patterns using Unreal Engine. Employing object oriented programming, two(2) programming design pattern mechanics were created in C++ and two(2) were created in Unreal's Blueprints Visual Scripting system. For more detail on each design pattern see [Game Mechanics](#game-mechanics) section.
+
+::: callout-note
+## Source Code
+
+View source code on Github [repository](https://github.com/brandon-toews/unreal-design-patterns).
+:::
+
+# Game Mechanics
+## Command Design Pattern (C++)
+Created C++ classes that inherit from UObject class. Three command child classes(Jump, Run and Fire) inherit from a base command class. Command objects   are created by the level blueprint based on keyboard and mouse inputs. These command objects then go on to execute the specific command they were designed for.
+
+## State Machine Design Pattern (C++)
+Created C++ state classes are that inherit from UObject class and are managed by a StateManager class that inherits from Actor component class. The StateManager actor component object is created and attached to the enemy character class. The StateManager component then creates the three different state objects, switches the current state based on certain conditions and runs the current state.
+
+## Object Pool Design Pattern (Blueprints)
+Created Blueprint BulletPool class actor component that attaches to actors and created a set number of bullets from the blueprint bullet class. The bulletpool than attaches the created bullets to the character and when the chsaracter's fire method is invoked it uses the bullets from the bullet pool. If the bullet pool becomes empty then the player must wait for it to refill before firing more bullets.
+
+## Prototype Design Pattern (Blueprints)
+Created Blueprint spawn classes that spawn different enemy characters from blueprint child enemy character classes.
+
+One type of spawn class has a public variable that can be set in the unreal inspector for each instance that stores a specific enemy character class.  It then spawns a character based on the saved enemy character class and saves it and continues to invoke that intial spawned character's Clone method to spawn more characters of that class. This spawner creates and stores only one prototype of one type of enemy to spawn further enemies from.
+
+The other type of spawn class stores all of the different enemy classes. It randomly selects an enemy class from the list of enemy classes, spawns an instance of this class, runs the Clone method of that instance to spawn an enemy, and finally destroys the initial instance of the enemy. So  this spawner type can spawn any type of enemy by creating and using a prototype of that enemy.
+
+# Video Walkthrough
+
+![](UnrealWalkthrough.mp4){#video-walkthrough}

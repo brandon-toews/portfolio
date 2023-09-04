@@ -31,11 +31,11 @@ crossref:
 
 |                    |                      |                 |     |
 |-------------------:|----------------------|----------------:|-----|
-|        **Forward** | `Up Arrow` or `W`    |       **Down:** | `Q` |
-|      **Backward:** | `Down Arrow` or `S`  |  **Look Left:** | `Z` |
-|   **Strafe Left:** | `Left Arrow` or `A`  | **Look Right:** | `X` |
-|  **Strafe Right:** | `Right Arrow` or `D` |     **Look Up** | `R` |
-|            **Up:** | `E`                  |   **Look Down** | `F` |
+|        **Forward** | `Up Arrow` or `W`    |        **Down** | `Q` |
+|       **Backward** | `Down Arrow` or `S`  |   **Look Left** | `Z` |
+|    **Strafe Left** | `Left Arrow` or `A`  |  **Look Right** | `X` |
+|   **Strafe Right** | `Right Arrow` or `D` |     **Look Up** | `R` |
+|             **Up** | `E`                  |   **Look Down** | `F` |
 | **Escape Program** | `Esc`                |                 |     |
 
 : **Camera Keyboard Controls**{tbl-colwidths="\[30,20,20,30\]"}
@@ -50,7 +50,7 @@ When an object is clicked on it is selected then the object canvas is enabled al
 :::
 
 # Modes of Motion
-Project to develop a scene to demonstrate various methods of movement within the Unity Games Engine, making use of my own linear interpolation (lerp) libraries and scripts using Unity physics. This scene employs mathematical techniques like projectile formulas and equations that have been developed over the course of the module.
+Project to demonstrate various methods of movement within the Unity Games Engine, making use of my own linear interpolation (lerp) libraries and scripts using Unity physics all written in C#. This scene employs mathematical techniques like projectile formulas and equations that have been developed over the course of the module.
 
 ::: callout-note
 ## Source Code
