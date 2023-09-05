@@ -12,7 +12,7 @@ about:
       href: https://github.com/brandon-toews
 ---
 
-I am currently into my 2nd year of an Artificial Intelligence BSc program. I am particularly fascinated in deep learning and how to deploy it in the most easily consumable way. I am thoroughly enjoying the education and journey along the way.
+Currently in my 2nd year of an Artificial Intelligence BSc program. I am particularly fascinated with Deep Learning and how to deploy it in the most easily consumable way. I'm thoroughly enjoying the education and journey along the way.
 
 ### Affiliations
 
