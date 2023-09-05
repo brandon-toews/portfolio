@@ -1,5 +1,5 @@
 ---
-title: "portfolio"
+title: "Brandon Toews: Artificial Intelligence BSc Student<br>My projects portfolio."
 listing:
   contents: posts
   sort: "date desc"

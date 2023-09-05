@@ -1,0 +1,56 @@
+---
+title: "Retro C++ Game LaserMan"
+format:
+  html:
+    code-tools:
+      source: https://github.com/brandon-toews/retrogame-assignment
+author: "Brandon Toews"
+badges: true
+categories:
+- algorithms
+- c++
+- games
+- programming
+- playbuffer
+date: "2023-01-13"
+description: Retro game written in C++ using a beginner's game-development framework called Playbuffer
+toc: true
+image: laserman-pic.png
+twitter-card: true
+card-style: summary
+crossref:
+  fig-title: '**Figure**'
+  fig-labels: arabic
+  title-delim: "**.**"
+---
+
+![](laserman-play.png)
+
+::: {.callout-tip collapse="true"}
+## Play Game
+
+|                    |              |                 |         |
+|-------------------:|--------------|----------------:|---------|
+|           **Move** | `Arrow Keys` | **Select**      | `Enter` |
+| **Escape Program** |        `Esc` |                 |         |
+
+: **Player Keyboard Controls**{tbl-colwidths="\[30,20,20,30\]"}
+
+
+### 🚀 Play Game {.unnumbered}
+[Download](LaserMan.zip), unzip and open **LaserMan.exe** (Only runs on Windows)
+:::
+
+# Retro Game
+
+Project to create a retro game using a beginner's game-development framework called [Playbuffer](https://github.com/sumo-digital-academy/playbuffer) all written in C++ strictly for Windows. Programming algorithms and techniques such as state machines and object oriented programming were developed in the game loop.
+
+::: callout-note
+## Source Code
+
+View source code on Github [repository](https://github.com/brandon-toews/retrogame-assignment).
+:::
+
+# Video Walkthrough
+
+![](LaserMan_Walkthrough.mp4){#video-walkthrough}

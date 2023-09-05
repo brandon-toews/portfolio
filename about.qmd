@@ -1,19 +1,21 @@
 ---
 title: "About"
-image: profile.jpg
+image: profile-pic.jpeg
 about:
   template: jolla
   links:
-    - icon: twitter
-      text: Twitter
-      href: https://twitter.com
     - icon: linkedin
       text: LinkedIn
-      href: https://linkedin.com
+      href: https://linkedin.com/in/toews-brandon
     - icon: github
       text: Github
-      href: https://github.com
-
+      href: https://github.com/brandon-toews
 ---
 
-About this blog
+I am currently into my 2nd year of an Artificial Intelligence BSc program. I am particularly fascinated in deep learning and how to deploy it in the most easily consumable way. I am thoroughly enjoying the education and journey along the way.
+
+### Affiliations
+
+Current Student: [Artificial Intelligence](https://www.glos.ac.uk/courses/course/ari-bsc-artificial-intelligence/) BSC, [University of Gloucestershire](https://www.glos.ac.uk/)
+
+Previous Student: [Network Administrator Specialist](https://digitalartschool.com/programs/network-administrator-specialist) Diploma, [Centre for Arts & Technology](https://digitalartschool.com/)

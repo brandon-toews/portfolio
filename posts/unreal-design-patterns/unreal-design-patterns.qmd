@@ -53,7 +53,7 @@ View sandbox game [video walkthrough](#video-walkthrough)
 :::
 
 # Programming Design Patterns
-Mechanics sandbox game to demonstrate programming design patterns using Unreal Engine. Employing object oriented programming, two(2) programming design pattern mechanics were created in C++ and two(2) were created in Unreal's Blueprints Visual Scripting system. For more detail on each design pattern see [Game Mechanics](#game-mechanics) section.
+Mechanics sandbox game to demonstrate programming design patterns using Unreal Engine. Employing object oriented programming and inheritance, two(2) programming design pattern mechanics were created in C++ and two(2) were created in Unreal's Blueprints Visual Scripting system. For more detail on each design pattern see [Game Mechanics](#game-mechanics) section.
 
 ::: callout-note
 ## Source Code
