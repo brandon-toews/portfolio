@@ -193,7 +193,7 @@
     "href": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#google-colab",
     "title": "Deep Learning FastAI Model",
     "section": "4.2 Google Colab",
-    "text": "4.2 Google Colab\nI started my initial experimentation in Google Colab and that is why it starts with the heading Part 1. Part way through the refinement of my custom automation functions I reached my limit with Google Colab so Part 2 of my code is found in the Kaggle notebook. The final part of my testing and code can be found under Part 3 of the Google Colab notebook. In Part 3 I decided to purchase some Pay-As-You_Go compute so that I could continue the rest of my project without further delays."
+    "text": "4.2 Google Colab\nI started my initial experimentation in Google Colab and that is why it starts with the heading Part 1. Part way through the refinement of my custom automation functions I reached my limit with Google Colab so Part 2 of my code is found in the Kaggle notebook. The final part of my testing and code can be found under Part 3 of the Google Colab notebook. In Part 3, I decided to purchase some Pay-As-You-Go compute so that I could continue the rest of my project without further delays."
   },
   {
     "objectID": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#kaggle",
