@@ -15,7 +15,7 @@ categories:
 - hyperparameter
 - optimization
 date: "2023-06-09"
-description: Project to train a deep learning model to correctly identify a wasp or a bee using transfer learning with the fastai library.
+description: Project to train a deep learning model to correctly classify an image of a wasp or a bee using transfer learning with the fastai library.
 toc: true
 number-sections: true
 image: firstresnet34.png
@@ -37,6 +37,22 @@ notebook-view:
 ---
 
 ![](firstresnet34.png)
+
+::: {.callout-tip collapse="true"}
+## Play Demo
+
+<script
+	type="module"
+	src="https://gradio.s3-us-west-2.amazonaws.com/3.43.2/gradio.js"
+></script>
+
+<gradio-app src="https://btoews-bee-vs-wasp.hf.space"></gradio-app>
+
+**Select one of the example photos or upload your own photo to test how the model classifies the image.**
+
+For more information on model deployments see [Deployment](#deployment) section of [Appendix](#appendix).
+
+:::
 
 ::: callout-tip
 ## Video Walkthrough {#video-walkthrough}
@@ -84,7 +100,7 @@ View full details of the trial and error testing in the [Experimenting](https://
 
 ## Automating Hyperparameter Tuning
 
-In research, I found a Python library called [Optuna](#optimization-library) that could be used to automate hyperparameter tuning. [Optuna](#optimization-library) does this by creating a "study" that runs a user specified amount of trials and uses an objective function to suggest user specified parameters to optimize for a certain metric. So in this case, I created a custom objective function named [tune_hyperparameters](#custom-tunehyperpar) that takes in learning rate, batch size, and weight decay parameters and returns the error rate of the model trained with those parameters. The [Optuna](#optimization-library) optimize function then suggests hyperparameters that should start lowering the error rate of successive trials. I then wrote another custom function called [optimization_study](#custom-optstudy) that ran the [Optuna](#optimization-library) study using the [tune_hyperparameters](#custom-tunehyperpar) function. The [optimization_study](#custom-optstudy) function also selects the trial that did the best and proceeds to unfreeze all of the weights and train the model again with the best found hyperparameters. Some of my initial tests with this automated hyperparameter tuning proved promising as I was able to get the error rate lower than I had previously gotten it.
+In research, I found a Python library called [Optuna](#references) that could be used to automate hyperparameter tuning. [Optuna](#references) does this by creating a "study" that runs a user specified amount of trials and uses an objective function to suggest user specified parameters to optimize for a certain metric. So in this case, I created a custom objective function named [tune_hyperparameters](#custom-tunehyperpar) that takes in learning rate, batch size, and weight decay parameters and returns the error rate of the model trained with those parameters. The [Optuna](#references) optimize function then suggests hyperparameters that should start lowering the error rate of successive trials. I then wrote another custom function called [optimization_study](#custom-optstudy) that ran the [Optuna](#references) study using the [tune_hyperparameters](#custom-tunehyperpar) function. The [optimization_study](#custom-optstudy) function also selects the trial that did the best and proceeds to unfreeze all of the weights and train the model again with the best found hyperparameters. Some of my initial tests with this automated hyperparameter tuning proved promising as I was able to get the error rate lower than I had previously gotten it.
 
 ::: callout-note
 View full details of the automation testing in the [Automate Hyperparameter Tuning](https://colab.research.google.com/drive/1yeosl7vmtW30dD0OBt96jLhi_p4ViRjI#scrollTo=HShUwuqwuFad) section on the Google Colab Notebook.
@@ -149,6 +165,22 @@ After studying some of the tests I started to isolate that a batch size of 32 di
 
 ## References {.unnumbered}
 
-### Optimization Library {#optimization-library .unnumbered}
-
+**Optimization Library**\
 <https://optuna.org/>
+
+## Deployment {.unnumbered}
+
+#### Deployment Source Code {.unnumbered}
+View the source code for the model deployment on HuggingFace [repository](https://huggingface.co/spaces/btoews/bee-vs-wasp/tree/main).
+
+#### Gradio App {.unnumbered}
+View [Gradio app](https://btoews-bee-vs-wasp.hf.space) for model deployment hosted on HuggingFace.
+
+#### Deployment Resources {.unnumbered}
+**Hugging Face** - AI community & place to host ML deployments\
+[https://huggingface.co/](https://huggingface.co/)
+
+**Gradio** - Open-source Python library used to build machine learning/data science demos & web applications\
+[https://www.gradio.app/](https://www.gradio.app/)
+
+

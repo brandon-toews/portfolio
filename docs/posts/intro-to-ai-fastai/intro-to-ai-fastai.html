@@ -8,7 +8,7 @@
 
 <meta name="author" content="Brandon Toews">
 <meta name="dcterms.date" content="2023-06-09">
-<meta name="description" content="Project to train a deep learning model to correctly identify a wasp or a bee using transfer learning with the fastai library.">
+<meta name="description" content="Project to train a deep learning model to correctly classify an image of a wasp or a bee using transfer learning with the fastai library.">
 
 <title>portfolio - Deep Learning FastAI Model</title>
 <style>
@@ -105,7 +105,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <link rel="stylesheet" href="../../styles.css">
 <meta name="twitter:title" content="portfolio - Deep Learning FastAI Model">
-<meta name="twitter:description" content="Project to train a deep learning model to correctly identify a wasp or a bee using transfer learning with the fastai library.">
+<meta name="twitter:description" content="Project to train a deep learning model to correctly classify an image of a wasp or a bee using transfer learning with the fastai library.">
 <meta name="twitter:image" content="https://brandon-toews.github.io/portfolio/posts/intro-to-ai-fastai/firstresnet34.png">
 <meta name="twitter:image-height" content="812">
 <meta name="twitter:image-width" content="1340">
@@ -153,7 +153,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <h1 class="title">Deep Learning FastAI Model</h1>
                   <div>
         <div class="description">
-          Project to train a deep learning model to correctly identify a wasp or a bee using transfer learning with the fastai library.
+          Project to train a deep learning model to correctly classify an image of a wasp or a bee using transfer learning with the fastai library.
         </div>
       </div>
                           <div class="quarto-categories">
@@ -227,10 +227,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#appendix" id="toc-appendix" class="nav-link" data-scroll-target="#appendix">Appendix</a>
   <ul class="collapse">
   <li><a href="#model-training-video-walkthrough" id="toc-model-training-video-walkthrough" class="nav-link" data-scroll-target="#model-training-video-walkthrough">Model Training Video Walkthrough</a></li>
-  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a>
-  <ul class="collapse">
-  <li><a href="#optimization-library" id="toc-optimization-library" class="nav-link" data-scroll-target="#optimization-library">Optimization Library</a></li>
-  </ul></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  <li><a href="#deployment" id="toc-deployment" class="nav-link" data-scroll-target="#deployment">Deployment</a></li>
   </ul></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="intro-to-ai-fastai.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div><div class="quarto-alternate-notebooks"><h2>Notebooks</h2><ul><li><a href="https://colab.research.google.com/drive/1yeosl7vmtW30dD0OBt96jLhi_p4ViRjI"><i class="bi bi-journal-code"></i>Google Colab Notebook</a></li><li><a href="https://www.kaggle.com/code/brandontoews/fastaiassignment2-part2"><i class="bi bi-journal-code"></i>Kaggle Notebook</a></li></ul></div></nav>
@@ -242,6 +240,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p><img src="firstresnet34.png" class="img-fluid"></p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Play Demo
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<script type="module" src="https://gradio.s3-us-west-2.amazonaws.com/3.43.2/gradio.js"></script>
+<p><gradio-app src="https://btoews-bee-vs-wasp.hf.space"></gradio-app></p>
+<p><strong>Select one of the example photos or upload your own photo to test how the model classifies the image.</strong></p>
+<p>For more information on model deployments see <a href="#deployment">Deployment</a> section of <a href="#appendix">Appendix</a>.</p>
+</div>
+</div>
+</div>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -519,7 +536,7 @@ Note
 </section>
 <section id="automating-hyperparameter-tuning" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="automating-hyperparameter-tuning"><span class="header-section-number">3.2</span> Automating Hyperparameter Tuning</h2>
-<p>In research, I found a Python library called <a href="#optimization-library">Optuna</a> that could be used to automate hyperparameter tuning. <a href="#optimization-library">Optuna</a> does this by creating a “study” that runs a user specified amount of trials and uses an objective function to suggest user specified parameters to optimize for a certain metric. So in this case, I created a custom objective function named <a href="#custom-tunehyperpar">tune_hyperparameters</a> that takes in learning rate, batch size, and weight decay parameters and returns the error rate of the model trained with those parameters. The <a href="#optimization-library">Optuna</a> optimize function then suggests hyperparameters that should start lowering the error rate of successive trials. I then wrote another custom function called <a href="#custom-optstudy">optimization_study</a> that ran the <a href="#optimization-library">Optuna</a> study using the <a href="#custom-tunehyperpar">tune_hyperparameters</a> function. The <a href="#custom-optstudy">optimization_study</a> function also selects the trial that did the best and proceeds to unfreeze all of the weights and train the model again with the best found hyperparameters. Some of my initial tests with this automated hyperparameter tuning proved promising as I was able to get the error rate lower than I had previously gotten it.</p>
+<p>In research, I found a Python library called <a href="#references">Optuna</a> that could be used to automate hyperparameter tuning. <a href="#references">Optuna</a> does this by creating a “study” that runs a user specified amount of trials and uses an objective function to suggest user specified parameters to optimize for a certain metric. So in this case, I created a custom objective function named <a href="#custom-tunehyperpar">tune_hyperparameters</a> that takes in learning rate, batch size, and weight decay parameters and returns the error rate of the model trained with those parameters. The <a href="#references">Optuna</a> optimize function then suggests hyperparameters that should start lowering the error rate of successive trials. I then wrote another custom function called <a href="#custom-optstudy">optimization_study</a> that ran the <a href="#references">Optuna</a> study using the <a href="#custom-tunehyperpar">tune_hyperparameters</a> function. The <a href="#custom-optstudy">optimization_study</a> function also selects the trial that did the best and proceeds to unfreeze all of the weights and train the model again with the best found hyperparameters. Some of my initial tests with this automated hyperparameter tuning proved promising as I was able to get the error rate lower than I had previously gotten it.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -714,9 +731,25 @@ Note
 </section>
 <section id="references" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="references">References</h2>
-<section id="optimization-library" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="optimization-library">Optimization Library</h3>
-<p><a href="https://optuna.org/" class="uri">https://optuna.org/</a></p>
+<p><strong>Optimization Library</strong><br>
+<a href="https://optuna.org/" class="uri">https://optuna.org/</a></p>
+</section>
+<section id="deployment" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="deployment">Deployment</h2>
+<section id="deployment-source-code" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="deployment-source-code">Deployment Source Code</h4>
+<p>View the source code for the model deployment on HuggingFace <a href="https://huggingface.co/spaces/btoews/bee-vs-wasp/tree/main">repository</a>.</p>
+</section>
+<section id="gradio-app" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="gradio-app">Gradio App</h4>
+<p>View <a href="https://btoews-bee-vs-wasp.hf.space">Gradio app</a> for model deployment hosted on HuggingFace.</p>
+</section>
+<section id="deployment-resources" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="deployment-resources">Deployment Resources</h4>
+<p><strong>Hugging Face</strong> - AI community &amp; place to host ML deployments<br>
+<a href="https://huggingface.co/">https://huggingface.co/</a></p>
+<p><strong>Gradio</strong> - Open-source Python library used to build machine learning/data science demos &amp; web applications<br>
+<a href="https://www.gradio.app/">https://www.gradio.app/</a></p>
 
 
 </section>
