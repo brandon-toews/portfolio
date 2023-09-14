@@ -1,0 +1,66 @@
+---
+title: "OpenStack Virtualization"
+format:
+  html: default
+author: "Brandon Toews"
+badges: true
+categories:
+- openstack
+- networking
+- virtualization
+- cloud computing
+date: "2022-03-17"
+description: Created an OpenStack environment by manually installing and configuring services.
+toc: true
+number-sections: true
+image: openstack_architecture.png
+twitter-card: true
+card-style: summary
+crossref:
+  fig-title: '**Figure**'
+  fig-labels: arabic
+  title-delim: "**.**"
+---
+
+![](openstack_architecture.png)
+
+# OpenStack Environment {.unnumbered}
+
+Created an OpenStack environment with a controller node and compute node on VMware. Manually installed and configured RabbitMQ, Keystone, Glance, Nova, Neutron, and Horizon services. See verification screenshots for project below.
+
+# Installations
+
+## Keystone Identity Service
+
+![Keystone - OpenRC Script](Admin openrc script - Brandon Toews.png){#fig-key}
+
+## Glance Image Service
+
+![Glance - Verification Operation](Image_Service__Verify_Operation___Brandon_Toews.png){#fig-glance}
+
+## Nova Compute Service
+
+![Nova - Verification Operation Part 1](Compute_Setup__Part_1___Brandon_Toews.png){#fig-nova1}
+
+![Nova - Verification Operation Part 2](Compute_Setup__Part_2___Brandon_Toews.png){#fig-nova2}
+
+
+## Neutron Networking Service
+
+![Neutron - Verification Operation](OpenStack_Networking_Service_Part_3___Brandon_Toews.png){#fig-neut}
+
+## Horizon Dashboard
+
+![Horizon - Dashboard](OpenStack_Dashboard_Setup.png){#fig-hor}
+
+# Launch Instance
+
+::: {#fig-launch}
+
+![Launch Instance](Launch_Instance_Server_List.png){#fig-list}
+
+![SSH into instance](Launch_Instance_SSH.png){#fig-ssh}
+
+Launch Instance
+:::
+
