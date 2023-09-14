@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Brandon Toews">
+<meta name="dcterms.date" content="2021-12-14">
+<meta name="description" content="Designed and constructed a fictional network with five (5) departments in two (2) locations using GNS3 simulation software.">
+
+<title>portfolio - Networking with Cisco Technologies</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+<meta name="twitter:title" content="portfolio - Networking with Cisco Technologies">
+<meta name="twitter:description" content="Designed and constructed a fictional network with five (5) departments in two (2) locations using GNS3 simulation software.">
+<meta name="twitter:image" content="https://brandon-toews.github.io/portfolio/posts/networking-cisco/network.png">
+<meta name="twitter:image-height" content="522">
+<meta name="twitter:image-width" content="725">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">portfolio</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html" rel="" target="">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/brandon-toews" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Networking with Cisco Technologies</h1>
+                  <div>
+        <div class="description">
+          Designed and constructed a fictional network with five (5) departments in two (2) locations using GNS3 simulation software.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">networking</div>
+                <div class="quarto-category">cisco</div>
+                <div class="quarto-category">VMware</div>
+                <div class="quarto-category">subnetting</div>
+                <div class="quarto-category">routing</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Brandon Toews </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">December 14, 2021</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#networking-with-cisco-technologies" id="toc-networking-with-cisco-technologies" class="nav-link active" data-scroll-target="#networking-with-cisco-technologies">Networking with Cisco Technologies</a>
+  <ul class="collapse">
+  <li><a href="#network-diagram" id="toc-network-diagram" class="nav-link" data-scroll-target="#network-diagram">Network Diagram</a></li>
+  <li><a href="#ip-address-scheme" id="toc-ip-address-scheme" class="nav-link" data-scroll-target="#ip-address-scheme">IP Address Scheme</a></li>
+  <li><a href="#access-control-lists" id="toc-access-control-lists" class="nav-link" data-scroll-target="#access-control-lists">Access Control Lists</a></li>
+  <li><a href="#router-access-credentials" id="toc-router-access-credentials" class="nav-link" data-scroll-target="#router-access-credentials">Router Access Credentials</a></li>
+  <li><a href="#router-configurations" id="toc-router-configurations" class="nav-link" data-scroll-target="#router-configurations">Router Configurations</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="networking-with-cisco-technologies" class="level1">
+<h1>Networking with Cisco Technologies</h1>
+<p>Designed and constructed a fictional network with five (5) departments in two (2) locations using GNS3 simulation software. All departments were represented by Windows 10 VMs run on VMware and were configured to communicate with each other thru GNS3. Variable length subnetting from an address space of 172.16.16.0/20 was used to create department subnets. Routing protocol OSPF along with ACLs were used to allow departments to communicate with each other while at the same time preventing certain ones from reaching others. See figures below for full documentation of the project.</p>
+<section id="network-diagram" class="level2">
+<h2 class="anchored" data-anchor-id="network-diagram">Network Diagram</h2>
+<div id="fig-net" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="network.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption"><strong>Figure</strong>&nbsp;1<strong>.</strong> Network Diagram</figcaption>
+</figure>
+</div>
+</section>
+<section id="ip-address-scheme" class="level2">
+<h2 class="anchored" data-anchor-id="ip-address-scheme">IP Address Scheme</h2>
+<div id="fig-ipscheme" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="IPAdressScheme.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption"><strong>Figure</strong>&nbsp;2<strong>.</strong> IP Address Scheme</figcaption>
+</figure>
+</div>
+</section>
+<section id="access-control-lists" class="level2">
+<h2 class="anchored" data-anchor-id="access-control-lists">Access Control Lists</h2>
+<div id="fig-acl" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="ACLs.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption"><strong>Figure</strong>&nbsp;3<strong>.</strong> Access Control Lists</figcaption>
+</figure>
+</div>
+</section>
+<section id="router-access-credentials" class="level2">
+<h2 class="anchored" data-anchor-id="router-access-credentials">Router Access Credentials</h2>
+<div id="fig-creds" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="RouterCreds.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption"><strong>Figure</strong>&nbsp;4<strong>.</strong> Router Access Credentials</figcaption>
+</figure>
+</div>
+</section>
+<section id="router-configurations" class="level2">
+<h2 class="anchored" data-anchor-id="router-configurations">Router Configurations</h2>
+<div id="lst-van" class="listing">
+<p>Listing&nbsp;1<strong>.</strong> Vancouver Router Configuration</p>
+<div class="sourceCode" id="lst-van" data-lst-cap="Vancouver Router Configuration"><pre class="sourceCode tcl code-with-copy"><code class="sourceCode tcl"><span id="lst-van-1"><a href="#lst-van-1" aria-hidden="true" tabindex="-1"></a>!</span>
+<span id="lst-van-2"><a href="#lst-van-2" aria-hidden="true" tabindex="-1"></a>!</span>
+<span id="lst-van-3"><a href="#lst-van-3" aria-hidden="true" tabindex="-1"></a>version <span class="fl">12.4</span></span>
+<span id="lst-van-4"><a href="#lst-van-4" aria-hidden="true" tabindex="-1"></a>service timestamps <span class="ot">debug</span> datetime msec</span>
+<span id="lst-van-5"><a href="#lst-van-5" aria-hidden="true" tabindex="-1"></a>service timestamps log datetime msec</span>
+<span id="lst-van-6"><a href="#lst-van-6" aria-hidden="true" tabindex="-1"></a>no service password-encryption</span>
+<span id="lst-van-7"><a href="#lst-van-7" aria-hidden="true" tabindex="-1"></a>!</span>
+<span id="lst-van-8"><a href="#lst-van-8" aria-hidden="true" tabindex="-1"></a><span class="ot">hostname</span> Vancouver</span>
+<span id="lst-van-9"><a href="#lst-van-9" aria-hidden="true" tabindex="-1"></a>!</span>
+<span id="lst-van-10"><a href="#lst-van-10" aria-hidden="true" tabindex="-1"></a>boot-start-marker</span>
+<span id="lst-van-11"><a href="#lst-van-11" aria-hidden="true" tabindex="-1"></a>boot-end-marker</span>
+<span id="lst-van-12"><a href="#lst-van-12" aria-hidden="true" tabindex="-1"></a>!</span>
+<span id="lst-van-13"><a href="#lst-van-13" aria-hidden="true" tabindex="-1"></a>enable secret <span class="dv">5</span> <span class="dt">$1$rCPC$Q34x6NTdMojTQHgQQwDe7</span>/</span>
+<span id="lst-van-14"><a href="#lst-van-14" aria-hidden="true" tabindex="-1"></a>!</span>
+<span id="lst-van-15"><a href="#lst-van-15" aria-hidden="true" tabindex="-1"></a>no aaa new-model</span>
+<span id="lst-van-16"><a href="#lst-van-16" aria-hidden="true" tabindex="-1"></a>memory-<span class="ot">size</span> iomem <span class="dv">5</span></span>
+<span id="lst-van-17"><a href="#lst-van-17" aria-hidden="true" tabindex="-1"></a>no ip icmp rate-limit unreachable</span>
+<span id="lst-van-18"><a href="#lst-van-18" aria-hidden="true" tabindex="-1"></a>!</span>
+<span id="lst-van-19"><a href="#lst-van-19" aria-hidden="true" tabindex="-1"></a>!</span>
+<span id="lst-van-20"><a href="#lst-van-20" aria-hidden="true" tabindex="-1"></a>ip cef</span>
+<span id="lst-van-21"><a href="#lst-van-21" aria-hidden="true" tabindex="-1"></a>no ip domain lookup</span>
+<span id="lst-van-22"><a href="#lst-van-22" aria-hidden="true" tabindex="-1"></a>!</span>
+<span id="lst-van-23"><a href="#lst-van-23" aria-hidden="true" tabindex="-1"></a>!</span>
+<span id="lst-van-24"><a href="#lst-van-24" aria-hidden="true" tabindex="-1"></a>!</span>
+<span id="lst-van-25"><a href="#lst-van-25" aria-hidden="true" tabindex="-1"></a>!</span>
+<span id="lst-van-26"><a href="#lst-van-26" aria-hidden="true" tabindex="-1"></a>!</span>
+<span id="lst-van-27"><a href="#lst-van-27" aria-hidden="true" tabindex="-1"></a>ip tcp synwait-<span class="kw">time</span> <span class="dv">5</span></span>
+<span id="lst-van-28"><a href="#lst-van-28" aria-hidden="true" tabindex="-1"></a>!</span>
+<span id="lst-van-29"><a href="#lst-van-29" aria-hidden="true" tabindex="-1"></a>!</span>
+<span id="lst-van-30"><a href="#lst-van-30" aria-hidden="true" tabindex="-1"></a>interface Ethernet0/<span class="dv">0</span></span>
+<span id="lst-van-31"><a href="#lst-van-31" aria-hidden="true" tabindex="-1"></a>  description Router Network</span>
+<span id="lst-van-32"><a href="#lst-van-32" aria-hidden="true" tabindex="-1"></a>  ip address <span class="dv">172</span>.<span class="dv">16</span>.<span class="fl">16.153</span> <span class="dv">255</span>.<span class="dv">255</span>.<span class="fl">255.252</span></span>
+<span id="lst-van-33"><a href="#lst-van-33" aria-hidden="true" tabindex="-1"></a>  half-duplex</span>
+<span id="lst-van-34"><a href="#lst-van-34" aria-hidden="true" tabindex="-1"></a>!</span>
+<span id="lst-van-35"><a href="#lst-van-35" aria-hidden="true" tabindex="-1"></a>interface Ethernet0/<span class="dv">1</span></span>
+<span id="lst-van-36"><a href="#lst-van-36" aria-hidden="true" tabindex="-1"></a>  description HR Network</span>
+<span id="lst-van-37"><a href="#lst-van-37" aria-hidden="true" tabindex="-1"></a>  ip address <span class="dv">172</span>.<span class="dv">16</span>.<span class="fl">16.148</span> <span class="dv">255</span>.<span class="dv">255</span>.<span class="fl">255.248</span></span>
+<span id="lst-van-38"><a href="#lst-van-38" aria-hidden="true" tabindex="-1"></a>  ip access-<span class="ot">group</span> <span class="dv">3</span> out</span>
+<span id="lst-van-39"><a href="#lst-van-39" aria-hidden="true" tabindex="-1"></a>  half-duplex</span>
+<span id="lst-van-40"><a href="#lst-van-40" aria-hidden="true" tabindex="-1"></a>!</span>
+<span id="lst-van-41"><a href="#lst-van-41" aria-hidden="true" tabindex="-1"></a>interface Ethernet0/<span class="dv">2</span></span>
+<span id="lst-van-42"><a href="#lst-van-42" aria-hidden="true" tabindex="-1"></a>  description Admin &amp; SMTP/WebServer Network</span>
+<span id="lst-van-43"><a href="#lst-van-43" aria-hidden="true" tabindex="-1"></a>  ip address <span class="dv">172</span>.<span class="dv">16</span>.<span class="fl">16.84</span> <span class="dv">255</span>.<span class="dv">255</span>.<span class="fl">255.224</span></span>
+<span id="lst-van-44"><a href="#lst-van-44" aria-hidden="true" tabindex="-1"></a>  ip access-<span class="ot">group</span> <span class="dv">110</span> out</span>
+<span id="lst-van-45"><a href="#lst-van-45" aria-hidden="true" tabindex="-1"></a>  half-duplex</span>
+<span id="lst-van-46"><a href="#lst-van-46" aria-hidden="true" tabindex="-1"></a>!</span>
+<span id="lst-van-47"><a href="#lst-van-47" aria-hidden="true" tabindex="-1"></a>interface Ethernet0/<span class="dv">3</span></span>
+<span id="lst-van-48"><a href="#lst-van-48" aria-hidden="true" tabindex="-1"></a>  description Accounting Network</span>
+<span id="lst-van-49"><a href="#lst-van-49" aria-hidden="true" tabindex="-1"></a>  ip address <span class="dv">172</span>.<span class="dv">16</span>.<span class="fl">16.139</span> <span class="dv">255</span>.<span class="dv">255</span>.<span class="fl">255.240</span></span>
+<span id="lst-van-50"><a href="#lst-van-50" aria-hidden="true" tabindex="-1"></a>  ip access-<span class="ot">group</span> <span class="dv">2</span> out</span>
+<span id="lst-van-51"><a href="#lst-van-51" aria-hidden="true" tabindex="-1"></a>  half-duplex</span>
+<span id="lst-van-52"><a href="#lst-van-52" aria-hidden="true" tabindex="-1"></a>!</span>
+<span id="lst-van-53"><a href="#lst-van-53" aria-hidden="true" tabindex="-1"></a>router ospf <span class="dv">1</span></span>
+<span id="lst-van-54"><a href="#lst-van-54" aria-hidden="true" tabindex="-1"></a>  log-adjacency-changes</span>
+<span id="lst-van-55"><a href="#lst-van-55" aria-hidden="true" tabindex="-1"></a>  network <span class="dv">172</span>.<span class="dv">16</span>.<span class="fl">16.64</span> <span class="dv">0</span>.<span class="dv">0</span>.<span class="fl">0.31</span> area <span class="dv">0</span></span>
+<span id="lst-van-56"><a href="#lst-van-56" aria-hidden="true" tabindex="-1"></a>  network <span class="dv">172</span>.<span class="dv">16</span>.<span class="fl">16.128</span> <span class="dv">0</span>.<span class="dv">0</span>.<span class="fl">0.15</span> area <span class="dv">0</span></span>
+<span id="lst-van-57"><a href="#lst-van-57" aria-hidden="true" tabindex="-1"></a>  network <span class="dv">172</span>.<span class="dv">16</span>.<span class="fl">16.144</span> <span class="dv">0</span>.<span class="dv">0</span>.<span class="fl">0.7</span> area <span class="dv">0</span></span>
+<span id="lst-van-58"><a href="#lst-van-58" aria-hidden="true" tabindex="-1"></a>  network <span class="dv">172</span>.<span class="dv">16</span>.<span class="fl">16.152</span> <span class="dv">0</span>.<span class="dv">0</span>.<span class="fl">0.3</span> area <span class="dv">0</span></span>
+<span id="lst-van-59"><a href="#lst-van-59" aria-hidden="true" tabindex="-1"></a>!</span>
+<span id="lst-van-60"><a href="#lst-van-60" aria-hidden="true" tabindex="-1"></a>no ip http <span class="ot">server</span></span>
+<span id="lst-van-61"><a href="#lst-van-61" aria-hidden="true" tabindex="-1"></a>!</span>
+<span id="lst-van-62"><a href="#lst-van-62" aria-hidden="true" tabindex="-1"></a>ip forward-<span class="ot">protocol</span> nd</span>
+<span id="lst-van-63"><a href="#lst-van-63" aria-hidden="true" tabindex="-1"></a>!</span>
+<span id="lst-van-64"><a href="#lst-van-64" aria-hidden="true" tabindex="-1"></a>!</span>
+<span id="lst-van-65"><a href="#lst-van-65" aria-hidden="true" tabindex="-1"></a>access-<span class="kw">list</span> <span class="dv">2</span> deny   <span class="dv">172</span>.<span class="dv">16</span>.<span class="fl">16.96</span> <span class="dv">0</span>.<span class="dv">0</span>.<span class="fl">0.31</span></span>
+<span id="lst-van-66"><a href="#lst-van-66" aria-hidden="true" tabindex="-1"></a>access-<span class="kw">list</span> <span class="dv">2</span> deny   <span class="dv">172</span>.<span class="dv">16</span>.<span class="fl">16.0</span> <span class="dv">0</span>.<span class="dv">0</span>.<span class="fl">0.63</span></span>
+<span id="lst-van-67"><a href="#lst-van-67" aria-hidden="true" tabindex="-1"></a>access-<span class="kw">list</span> <span class="dv">2</span> permit any</span>
+<span id="lst-van-68"><a href="#lst-van-68" aria-hidden="true" tabindex="-1"></a>access-<span class="kw">list</span> <span class="dv">3</span> deny   <span class="dv">172</span>.<span class="dv">16</span>.<span class="fl">16.0</span> <span class="dv">0</span>.<span class="dv">0</span>.<span class="fl">0.63</span></span>
+<span id="lst-van-69"><a href="#lst-van-69" aria-hidden="true" tabindex="-1"></a>access-<span class="kw">list</span> <span class="dv">3</span> permit any</span>
+<span id="lst-van-70"><a href="#lst-van-70" aria-hidden="true" tabindex="-1"></a>access-<span class="kw">list</span> <span class="dv">110</span> deny   tcp <span class="dv">172</span>.<span class="dv">16</span>.<span class="fl">16.128</span> <span class="dv">0</span>.<span class="dv">0</span>.<span class="fl">0.15</span> host <span class="dv">172</span>.<span class="dv">16</span>.<span class="fl">16.66</span> eq</span>
+<span id="lst-van-71"><a href="#lst-van-71" aria-hidden="true" tabindex="-1"></a>www</span>
+<span id="lst-van-72"><a href="#lst-van-72" aria-hidden="true" tabindex="-1"></a>access-<span class="kw">list</span> <span class="dv">110</span> deny   tcp <span class="dv">172</span>.<span class="dv">16</span>.<span class="fl">16.144</span> <span class="dv">0</span>.<span class="dv">0</span>.<span class="fl">0.7</span> host <span class="dv">172</span>.<span class="dv">16</span>.<span class="fl">16.66</span> eq</span>
+<span id="lst-van-73"><a href="#lst-van-73" aria-hidden="true" tabindex="-1"></a>www</span>
+<span id="lst-van-74"><a href="#lst-van-74" aria-hidden="true" tabindex="-1"></a>access-<span class="kw">list</span> <span class="dv">110</span> deny   tcp <span class="dv">172</span>.<span class="dv">16</span>.<span class="fl">16.0</span> <span class="dv">0</span>.<span class="dv">0</span>.<span class="fl">0.63</span> host <span class="dv">172</span>.<span class="dv">16</span>.<span class="fl">16.66</span> eq</span>
+<span id="lst-van-75"><a href="#lst-van-75" aria-hidden="true" tabindex="-1"></a>smtp</span>
+<span id="lst-van-76"><a href="#lst-van-76" aria-hidden="true" tabindex="-1"></a>access-<span class="kw">list</span> <span class="dv">110</span> deny   tcp <span class="dv">172</span>.<span class="dv">16</span>.<span class="fl">16.96</span> <span class="dv">0</span>.<span class="dv">0</span>.<span class="fl">0.31</span> host <span class="dv">172</span>.<span class="dv">16</span>.<span class="fl">16.66</span> eq</span>
+<span id="lst-van-77"><a href="#lst-van-77" aria-hidden="true" tabindex="-1"></a>smtp</span>
+<span id="lst-van-78"><a href="#lst-van-78" aria-hidden="true" tabindex="-1"></a>access-<span class="kw">list</span> <span class="dv">110</span> permit ip any any</span>
+<span id="lst-van-79"><a href="#lst-van-79" aria-hidden="true" tabindex="-1"></a>no cdp log mismatch duplex</span>
+<span id="lst-van-80"><a href="#lst-van-80" aria-hidden="true" tabindex="-1"></a>!</span>
+<span id="lst-van-81"><a href="#lst-van-81" aria-hidden="true" tabindex="-1"></a>control-plane</span>
+<span id="lst-van-82"><a href="#lst-van-82" aria-hidden="true" tabindex="-1"></a>!</span>
+<span id="lst-van-83"><a href="#lst-van-83" aria-hidden="true" tabindex="-1"></a>banner motd</span>
+<span id="lst-van-84"><a href="#lst-van-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst-van-85"><a href="#lst-van-85" aria-hidden="true" tabindex="-1"></a>Welcome to Vancouver</span>
+<span id="lst-van-86"><a href="#lst-van-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst-van-87"><a href="#lst-van-87" aria-hidden="true" tabindex="-1"></a>!</span>
+<span id="lst-van-88"><a href="#lst-van-88" aria-hidden="true" tabindex="-1"></a>line con <span class="dv">0</span></span>
+<span id="lst-van-89"><a href="#lst-van-89" aria-hidden="true" tabindex="-1"></a>  <span class="kw">exec</span>-timeout <span class="dv">0</span> <span class="dv">0</span></span>
+<span id="lst-van-90"><a href="#lst-van-90" aria-hidden="true" tabindex="-1"></a>  privilege <span class="ot">level</span> <span class="dv">15</span></span>
+<span id="lst-van-91"><a href="#lst-van-91" aria-hidden="true" tabindex="-1"></a>  logging synchronous</span>
+<span id="lst-van-92"><a href="#lst-van-92" aria-hidden="true" tabindex="-1"></a>line aux <span class="dv">0</span></span>
+<span id="lst-van-93"><a href="#lst-van-93" aria-hidden="true" tabindex="-1"></a>  <span class="kw">exec</span>-timeout <span class="dv">0</span> <span class="dv">0</span></span>
+<span id="lst-van-94"><a href="#lst-van-94" aria-hidden="true" tabindex="-1"></a>  privilege <span class="ot">level</span> <span class="dv">15</span></span>
+<span id="lst-van-95"><a href="#lst-van-95" aria-hidden="true" tabindex="-1"></a>  logging synchronous</span>
+<span id="lst-van-96"><a href="#lst-van-96" aria-hidden="true" tabindex="-1"></a>line vty <span class="dv">0</span> <span class="dv">4</span></span>
+<span id="lst-van-97"><a href="#lst-van-97" aria-hidden="true" tabindex="-1"></a>  password <span class="dv">1234</span></span>
+<span id="lst-van-98"><a href="#lst-van-98" aria-hidden="true" tabindex="-1"></a>  login</span>
+<span id="lst-van-99"><a href="#lst-van-99" aria-hidden="true" tabindex="-1"></a>!</span>
+<span id="lst-van-100"><a href="#lst-van-100" aria-hidden="true" tabindex="-1"></a>!</span>
+<span id="lst-van-101"><a href="#lst-van-101" aria-hidden="true" tabindex="-1"></a>end</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="lst-kel" class="listing">
+<p>Listing&nbsp;2<strong>.</strong> Kelowna Router Configuration</p>
+<div class="sourceCode" id="lst-kel" data-lst-cap="Kelowna Router Configuration"><pre class="sourceCode tcl code-with-copy"><code class="sourceCode tcl"><span id="lst-kel-1"><a href="#lst-kel-1" aria-hidden="true" tabindex="-1"></a>!</span>
+<span id="lst-kel-2"><a href="#lst-kel-2" aria-hidden="true" tabindex="-1"></a>!</span>
+<span id="lst-kel-3"><a href="#lst-kel-3" aria-hidden="true" tabindex="-1"></a>version <span class="fl">12.4</span></span>
+<span id="lst-kel-4"><a href="#lst-kel-4" aria-hidden="true" tabindex="-1"></a>service timestamps <span class="ot">debug</span> datetime msec</span>
+<span id="lst-kel-5"><a href="#lst-kel-5" aria-hidden="true" tabindex="-1"></a>service timestamps log datetime msec</span>
+<span id="lst-kel-6"><a href="#lst-kel-6" aria-hidden="true" tabindex="-1"></a>no service password-encryption</span>
+<span id="lst-kel-7"><a href="#lst-kel-7" aria-hidden="true" tabindex="-1"></a>!</span>
+<span id="lst-kel-8"><a href="#lst-kel-8" aria-hidden="true" tabindex="-1"></a><span class="ot">hostname</span> Kelowna</span>
+<span id="lst-kel-9"><a href="#lst-kel-9" aria-hidden="true" tabindex="-1"></a>!</span>
+<span id="lst-kel-10"><a href="#lst-kel-10" aria-hidden="true" tabindex="-1"></a>boot-start-marker</span>
+<span id="lst-kel-11"><a href="#lst-kel-11" aria-hidden="true" tabindex="-1"></a>boot-end-marker</span>
+<span id="lst-kel-12"><a href="#lst-kel-12" aria-hidden="true" tabindex="-1"></a>!</span>
+<span id="lst-kel-13"><a href="#lst-kel-13" aria-hidden="true" tabindex="-1"></a>enable secret <span class="dv">5</span> <span class="dt">$1$dGub$MNu5a6gEp0IcO1T14Qlg4</span>/</span>
+<span id="lst-kel-14"><a href="#lst-kel-14" aria-hidden="true" tabindex="-1"></a>!</span>
+<span id="lst-kel-15"><a href="#lst-kel-15" aria-hidden="true" tabindex="-1"></a>no aaa new-model</span>
+<span id="lst-kel-16"><a href="#lst-kel-16" aria-hidden="true" tabindex="-1"></a>memory-<span class="ot">size</span> iomem <span class="dv">5</span></span>
+<span id="lst-kel-17"><a href="#lst-kel-17" aria-hidden="true" tabindex="-1"></a>no ip icmp rate-limit unreachable</span>
+<span id="lst-kel-18"><a href="#lst-kel-18" aria-hidden="true" tabindex="-1"></a>!</span>
+<span id="lst-kel-19"><a href="#lst-kel-19" aria-hidden="true" tabindex="-1"></a>!</span>
+<span id="lst-kel-20"><a href="#lst-kel-20" aria-hidden="true" tabindex="-1"></a>ip cef</span>
+<span id="lst-kel-21"><a href="#lst-kel-21" aria-hidden="true" tabindex="-1"></a>no ip domain lookup</span>
+<span id="lst-kel-22"><a href="#lst-kel-22" aria-hidden="true" tabindex="-1"></a>!</span>
+<span id="lst-kel-23"><a href="#lst-kel-23" aria-hidden="true" tabindex="-1"></a>!</span>
+<span id="lst-kel-24"><a href="#lst-kel-24" aria-hidden="true" tabindex="-1"></a>!</span>
+<span id="lst-kel-25"><a href="#lst-kel-25" aria-hidden="true" tabindex="-1"></a>!</span>
+<span id="lst-kel-26"><a href="#lst-kel-26" aria-hidden="true" tabindex="-1"></a>!</span>
+<span id="lst-kel-27"><a href="#lst-kel-27" aria-hidden="true" tabindex="-1"></a>ip tcp synwait-<span class="kw">time</span> <span class="dv">5</span></span>
+<span id="lst-kel-28"><a href="#lst-kel-28" aria-hidden="true" tabindex="-1"></a>!</span>
+<span id="lst-kel-29"><a href="#lst-kel-29" aria-hidden="true" tabindex="-1"></a>!</span>
+<span id="lst-kel-30"><a href="#lst-kel-30" aria-hidden="true" tabindex="-1"></a>interface Ethernet0/<span class="dv">0</span></span>
+<span id="lst-kel-31"><a href="#lst-kel-31" aria-hidden="true" tabindex="-1"></a>  description Router Network</span>
+<span id="lst-kel-32"><a href="#lst-kel-32" aria-hidden="true" tabindex="-1"></a>  ip address <span class="dv">172</span>.<span class="dv">16</span>.<span class="fl">16.154</span> <span class="dv">255</span>.<span class="dv">255</span>.<span class="fl">255.252</span></span>
+<span id="lst-kel-33"><a href="#lst-kel-33" aria-hidden="true" tabindex="-1"></a>  half-duplex</span>
+<span id="lst-kel-34"><a href="#lst-kel-34" aria-hidden="true" tabindex="-1"></a>!</span>
+<span id="lst-kel-35"><a href="#lst-kel-35" aria-hidden="true" tabindex="-1"></a>interface Ethernet0/<span class="dv">1</span></span>
+<span id="lst-kel-36"><a href="#lst-kel-36" aria-hidden="true" tabindex="-1"></a>  description Sales Network</span>
+<span id="lst-kel-37"><a href="#lst-kel-37" aria-hidden="true" tabindex="-1"></a>  ip address <span class="dv">172</span>.<span class="dv">16</span>.<span class="fl">16.46</span> <span class="dv">255</span>.<span class="dv">255</span>.<span class="fl">255.192</span></span>
+<span id="lst-kel-38"><a href="#lst-kel-38" aria-hidden="true" tabindex="-1"></a>  ip access-<span class="ot">group</span> <span class="dv">1</span> out</span>
+<span id="lst-kel-39"><a href="#lst-kel-39" aria-hidden="true" tabindex="-1"></a>  half-duplex</span>
+<span id="lst-kel-40"><a href="#lst-kel-40" aria-hidden="true" tabindex="-1"></a>!</span>
+<span id="lst-kel-41"><a href="#lst-kel-41" aria-hidden="true" tabindex="-1"></a>interface Ethernet0/<span class="dv">2</span></span>
+<span id="lst-kel-42"><a href="#lst-kel-42" aria-hidden="true" tabindex="-1"></a>  description Marketing Network</span>
+<span id="lst-kel-43"><a href="#lst-kel-43" aria-hidden="true" tabindex="-1"></a>  ip address <span class="dv">172</span>.<span class="dv">16</span>.<span class="fl">16.113</span> <span class="dv">255</span>.<span class="dv">255</span>.<span class="fl">255.224</span></span>
+<span id="lst-kel-44"><a href="#lst-kel-44" aria-hidden="true" tabindex="-1"></a>  ip access-<span class="ot">group</span> <span class="dv">4</span> out</span>
+<span id="lst-kel-45"><a href="#lst-kel-45" aria-hidden="true" tabindex="-1"></a>  half-duplex</span>
+<span id="lst-kel-46"><a href="#lst-kel-46" aria-hidden="true" tabindex="-1"></a>!</span>
+<span id="lst-kel-47"><a href="#lst-kel-47" aria-hidden="true" tabindex="-1"></a>interface Ethernet0/<span class="dv">3</span></span>
+<span id="lst-kel-48"><a href="#lst-kel-48" aria-hidden="true" tabindex="-1"></a>  description Nothing</span>
+<span id="lst-kel-49"><a href="#lst-kel-49" aria-hidden="true" tabindex="-1"></a>  no ip address</span>
+<span id="lst-kel-50"><a href="#lst-kel-50" aria-hidden="true" tabindex="-1"></a>  shutdown</span>
+<span id="lst-kel-51"><a href="#lst-kel-51" aria-hidden="true" tabindex="-1"></a>  half-duplex</span>
+<span id="lst-kel-52"><a href="#lst-kel-52" aria-hidden="true" tabindex="-1"></a>!</span>
+<span id="lst-kel-53"><a href="#lst-kel-53" aria-hidden="true" tabindex="-1"></a>router ospf <span class="dv">1</span></span>
+<span id="lst-kel-54"><a href="#lst-kel-54" aria-hidden="true" tabindex="-1"></a>  log-adjacency-changes</span>
+<span id="lst-kel-55"><a href="#lst-kel-55" aria-hidden="true" tabindex="-1"></a>  network <span class="dv">172</span>.<span class="dv">16</span>.<span class="fl">16.0</span> <span class="dv">0</span>.<span class="dv">0</span>.<span class="fl">0.63</span> area <span class="dv">0</span></span>
+<span id="lst-kel-56"><a href="#lst-kel-56" aria-hidden="true" tabindex="-1"></a>  network <span class="dv">172</span>.<span class="dv">16</span>.<span class="fl">16.96</span> <span class="dv">0</span>.<span class="dv">0</span>.<span class="fl">0.31</span> area <span class="dv">0</span></span>
+<span id="lst-kel-57"><a href="#lst-kel-57" aria-hidden="true" tabindex="-1"></a>  network <span class="dv">172</span>.<span class="dv">16</span>.<span class="fl">16.152</span> <span class="dv">0</span>.<span class="dv">0</span>.<span class="fl">0.3</span> area <span class="dv">0</span></span>
+<span id="lst-kel-58"><a href="#lst-kel-58" aria-hidden="true" tabindex="-1"></a>!</span>
+<span id="lst-kel-59"><a href="#lst-kel-59" aria-hidden="true" tabindex="-1"></a>no ip http <span class="ot">server</span></span>
+<span id="lst-kel-60"><a href="#lst-kel-60" aria-hidden="true" tabindex="-1"></a>!</span>
+<span id="lst-kel-61"><a href="#lst-kel-61" aria-hidden="true" tabindex="-1"></a>ip forward-<span class="ot">protocol</span> nd</span>
+<span id="lst-kel-62"><a href="#lst-kel-62" aria-hidden="true" tabindex="-1"></a>!</span>
+<span id="lst-kel-63"><a href="#lst-kel-63" aria-hidden="true" tabindex="-1"></a>!</span>
+<span id="lst-kel-64"><a href="#lst-kel-64" aria-hidden="true" tabindex="-1"></a>access-<span class="kw">list</span> <span class="dv">1</span> deny   <span class="dv">172</span>.<span class="dv">16</span>.<span class="fl">16.128</span> <span class="dv">0</span>.<span class="dv">0</span>.<span class="fl">0.15</span></span>
+<span id="lst-kel-65"><a href="#lst-kel-65" aria-hidden="true" tabindex="-1"></a>access-<span class="kw">list</span> <span class="dv">1</span> deny   <span class="dv">172</span>.<span class="dv">16</span>.<span class="fl">16.96</span> <span class="dv">0</span>.<span class="dv">0</span>.<span class="fl">0.31</span></span>
+<span id="lst-kel-66"><a href="#lst-kel-66" aria-hidden="true" tabindex="-1"></a>access-<span class="kw">list</span> <span class="dv">1</span> permit any</span>
+<span id="lst-kel-67"><a href="#lst-kel-67" aria-hidden="true" tabindex="-1"></a>access-<span class="kw">list</span> <span class="dv">4</span> deny   <span class="dv">172</span>.<span class="dv">16</span>.<span class="fl">16.0</span> <span class="dv">0</span>.<span class="dv">0</span>.<span class="fl">0.63</span></span>
+<span id="lst-kel-68"><a href="#lst-kel-68" aria-hidden="true" tabindex="-1"></a>access-<span class="kw">list</span> <span class="dv">4</span> permit any</span>
+<span id="lst-kel-69"><a href="#lst-kel-69" aria-hidden="true" tabindex="-1"></a>no cdp log mismatch duplex</span>
+<span id="lst-kel-70"><a href="#lst-kel-70" aria-hidden="true" tabindex="-1"></a>!</span>
+<span id="lst-kel-71"><a href="#lst-kel-71" aria-hidden="true" tabindex="-1"></a>control-plane</span>
+<span id="lst-kel-72"><a href="#lst-kel-72" aria-hidden="true" tabindex="-1"></a>!</span>
+<span id="lst-kel-73"><a href="#lst-kel-73" aria-hidden="true" tabindex="-1"></a>banner motd</span>
+<span id="lst-kel-74"><a href="#lst-kel-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst-kel-75"><a href="#lst-kel-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst-kel-76"><a href="#lst-kel-76" aria-hidden="true" tabindex="-1"></a>Welcome to Kelowna</span>
+<span id="lst-kel-77"><a href="#lst-kel-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst-kel-78"><a href="#lst-kel-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst-kel-79"><a href="#lst-kel-79" aria-hidden="true" tabindex="-1"></a>!</span>
+<span id="lst-kel-80"><a href="#lst-kel-80" aria-hidden="true" tabindex="-1"></a>line con <span class="dv">0</span></span>
+<span id="lst-kel-81"><a href="#lst-kel-81" aria-hidden="true" tabindex="-1"></a>  <span class="kw">exec</span>-timeout <span class="dv">0</span> <span class="dv">0</span></span>
+<span id="lst-kel-82"><a href="#lst-kel-82" aria-hidden="true" tabindex="-1"></a>  privilege <span class="ot">level</span> <span class="dv">15</span></span>
+<span id="lst-kel-83"><a href="#lst-kel-83" aria-hidden="true" tabindex="-1"></a>  logging synchronous</span>
+<span id="lst-kel-84"><a href="#lst-kel-84" aria-hidden="true" tabindex="-1"></a>line aux <span class="dv">0</span></span>
+<span id="lst-kel-85"><a href="#lst-kel-85" aria-hidden="true" tabindex="-1"></a>  <span class="kw">exec</span>-timeout <span class="dv">0</span> <span class="dv">0</span></span>
+<span id="lst-kel-86"><a href="#lst-kel-86" aria-hidden="true" tabindex="-1"></a>  privilege <span class="ot">level</span> <span class="dv">15</span></span>
+<span id="lst-kel-87"><a href="#lst-kel-87" aria-hidden="true" tabindex="-1"></a>  logging synchronous</span>
+<span id="lst-kel-88"><a href="#lst-kel-88" aria-hidden="true" tabindex="-1"></a>line vty <span class="dv">0</span> <span class="dv">4</span></span>
+<span id="lst-kel-89"><a href="#lst-kel-89" aria-hidden="true" tabindex="-1"></a>  password <span class="dv">1234</span></span>
+<span id="lst-kel-90"><a href="#lst-kel-90" aria-hidden="true" tabindex="-1"></a>  login</span>
+<span id="lst-kel-91"><a href="#lst-kel-91" aria-hidden="true" tabindex="-1"></a>!</span>
+<span id="lst-kel-92"><a href="#lst-kel-92" aria-hidden="true" tabindex="-1"></a>!</span>
+<span id="lst-kel-93"><a href="#lst-kel-93" aria-hidden="true" tabindex="-1"></a>end</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

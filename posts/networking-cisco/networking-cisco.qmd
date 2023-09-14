@@ -1,0 +1,240 @@
+---
+title: "Networking with Cisco Technologies"
+format:
+  html: default
+author: "Brandon Toews"
+badges: true
+categories:
+- networking
+- cisco
+- VMware
+- subnetting
+- routing
+date: "2021-12-14"
+description: Designed and constructed a fictional network with five (5) departments in two (2) locations using GNS3 simulation software.
+toc: true
+image: network.png
+twitter-card: true
+card-style: summary
+crossref:
+  fig-title: '**Figure**'
+  fig-labels: arabic
+  title-delim: "**.**"
+---
+
+# Networking with Cisco Technologies
+
+Designed and constructed a fictional network with five (5) departments in two (2) locations using GNS3 simulation software. All departments were represented by Windows 10 VMs run on VMware and were configured to communicate with each other thru GNS3. Variable length subnetting from an address space of 172.16.16.0/20 was used to create department subnets. Routing protocol OSPF along with ACLs were used to allow departments to communicate with each other while at the same time preventing certain ones from reaching others. See figures below for full documentation of the project.
+
+## Network Diagram
+![Network Diagram](network.png){#fig-net}
+
+## IP Address Scheme
+![IP Address Scheme](IPAdressScheme.png){#fig-ipscheme}
+
+## Access Control Lists
+![Access Control Lists](ACLs.png){#fig-acl}
+
+## Router Access Credentials
+![Router Access Credentials](RouterCreds.png){#fig-creds}
+
+## Router Configurations
+```{#lst-van .tcl lst-cap="Vancouver Router Configuration"}
+!
+!
+version 12.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname Vancouver
+!
+boot-start-marker
+boot-end-marker
+!
+enable secret 5 $1$rCPC$Q34x6NTdMojTQHgQQwDe7/
+!
+no aaa new-model
+memory-size iomem 5
+no ip icmp rate-limit unreachable
+!
+!
+ip cef
+no ip domain lookup
+!
+!
+!
+!
+!
+ip tcp synwait-time 5
+!
+!
+interface Ethernet0/0
+  description Router Network
+  ip address 172.16.16.153 255.255.255.252
+  half-duplex
+!
+interface Ethernet0/1
+  description HR Network
+  ip address 172.16.16.148 255.255.255.248
+  ip access-group 3 out
+  half-duplex
+!
+interface Ethernet0/2
+  description Admin & SMTP/WebServer Network
+  ip address 172.16.16.84 255.255.255.224
+  ip access-group 110 out
+  half-duplex
+!
+interface Ethernet0/3
+  description Accounting Network
+  ip address 172.16.16.139 255.255.255.240
+  ip access-group 2 out
+  half-duplex
+!
+router ospf 1
+  log-adjacency-changes
+  network 172.16.16.64 0.0.0.31 area 0
+  network 172.16.16.128 0.0.0.15 area 0
+  network 172.16.16.144 0.0.0.7 area 0
+  network 172.16.16.152 0.0.0.3 area 0
+!
+no ip http server
+!
+ip forward-protocol nd
+!
+!
+access-list 2 deny   172.16.16.96 0.0.0.31
+access-list 2 deny   172.16.16.0 0.0.0.63
+access-list 2 permit any
+access-list 3 deny   172.16.16.0 0.0.0.63
+access-list 3 permit any
+access-list 110 deny   tcp 172.16.16.128 0.0.0.15 host 172.16.16.66 eq
+www
+access-list 110 deny   tcp 172.16.16.144 0.0.0.7 host 172.16.16.66 eq
+www
+access-list 110 deny   tcp 172.16.16.0 0.0.0.63 host 172.16.16.66 eq
+smtp
+access-list 110 deny   tcp 172.16.16.96 0.0.0.31 host 172.16.16.66 eq
+smtp
+access-list 110 permit ip any any
+no cdp log mismatch duplex
+!
+control-plane
+!
+banner motd
+
+Welcome to Vancouver
+
+!
+line con 0
+  exec-timeout 0 0
+  privilege level 15
+  logging synchronous
+line aux 0
+  exec-timeout 0 0
+  privilege level 15
+  logging synchronous
+line vty 0 4
+  password 1234
+  login
+!
+!
+end
+```
+
+```{#lst-kel .tcl lst-cap="Kelowna Router Configuration"}
+!
+!
+version 12.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname Kelowna
+!
+boot-start-marker
+boot-end-marker
+!
+enable secret 5 $1$dGub$MNu5a6gEp0IcO1T14Qlg4/
+!
+no aaa new-model
+memory-size iomem 5
+no ip icmp rate-limit unreachable
+!
+!
+ip cef
+no ip domain lookup
+!
+!
+!
+!
+!
+ip tcp synwait-time 5
+!
+!
+interface Ethernet0/0
+  description Router Network
+  ip address 172.16.16.154 255.255.255.252
+  half-duplex
+!
+interface Ethernet0/1
+  description Sales Network
+  ip address 172.16.16.46 255.255.255.192
+  ip access-group 1 out
+  half-duplex
+!
+interface Ethernet0/2
+  description Marketing Network
+  ip address 172.16.16.113 255.255.255.224
+  ip access-group 4 out
+  half-duplex
+!
+interface Ethernet0/3
+  description Nothing
+  no ip address
+  shutdown
+  half-duplex
+!
+router ospf 1
+  log-adjacency-changes
+  network 172.16.16.0 0.0.0.63 area 0
+  network 172.16.16.96 0.0.0.31 area 0
+  network 172.16.16.152 0.0.0.3 area 0
+!
+no ip http server
+!
+ip forward-protocol nd
+!
+!
+access-list 1 deny   172.16.16.128 0.0.0.15
+access-list 1 deny   172.16.16.96 0.0.0.31
+access-list 1 permit any
+access-list 4 deny   172.16.16.0 0.0.0.63
+access-list 4 permit any
+no cdp log mismatch duplex
+!
+control-plane
+!
+banner motd
+
+
+Welcome to Kelowna
+
+
+!
+line con 0
+  exec-timeout 0 0
+  privilege level 15
+  logging synchronous
+line aux 0
+  exec-timeout 0 0
+  privilege level 15
+  logging synchronous
+line vty 0 4
+  password 1234
+  login
+!
+!
+end
+```
