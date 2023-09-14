@@ -1,0 +1,39 @@
+---
+title: "Wireless Technology Networking"
+format:
+  html: default
+author: "Brandon Toews"
+badges: true
+categories:
+- networking
+- wireless
+- wlan
+date: "2021-12-19"
+description: Designed a mock solution for a P2P network with wifi coverage. Produced documentation to propose hardware, along with instructions for installation and configuration.
+image: wireless-pic.png
+twitter-card: true
+card-style: summary
+crossref:
+  fig-title: '**Figure**'
+  fig-labels: arabic
+  title-delim: "**.**"
+---
+
+# Wireless Technology Network Project
+
+Designed a mock solution for a P2P network with wifi coverage. In this proposal, hardware was sourced along with instructions for installation and configuration. See project documentation below.
+
+::: {.callout-note collapse="true"}
+## Expand To Learn About Project Scenario
+
+Acme Corp. is a company located on the 6th floor of the Landmark 2 building in Kelowna, BC. Acme has entered into a memorandum of understanding with the Centre for Arts and Technology, located in the Landmark 3 building, for the shared use of some of CAT’s facilities during night-time hours when the facilities are otherwise unused.
+
+Acme has requested that you design the technology infrastructure required to connect Landmark 2 and Landmark 3 with a point-to-point WLAN connection, as well as provide WLAN coverage for CAT’s space on the ground floor of Landmark 3.
+
+In order to demonstrate your design, you are required to provide mock-ups of certain aspects of your design as outlined. In addition to the mock-ups, you are required to provide a full planning document outlining the results of your research and details of your proposed solution.
+:::
+
+
+<object data="wireless-net-project.pdf" type="application/pdf" width="100%" height="600px">
+      <p>Unable to display PDF file. <a href="wireless-net-project.pdf">Download</a> instead.</p>
+</object>

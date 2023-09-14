@@ -16,6 +16,7 @@ format:
         light: [cosmo, theme.scss] 
         dark: [cosmo, theme-dark.scss]
     css: styles.css
+    smooth-scroll: true
 
 editor: visual
 

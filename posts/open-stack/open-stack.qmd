@@ -5,8 +5,8 @@ format:
 author: "Brandon Toews"
 badges: true
 categories:
-- openstack
 - networking
+- openstack
 - virtualization
 - cloud computing
 date: "2022-03-17"
@@ -32,7 +32,7 @@ Created an OpenStack environment with a controller node and compute node on VMwa
 
 ## Keystone Identity Service
 
-![Keystone - OpenRC Script](Admin openrc script - Brandon Toews.png){#fig-key}
+![Keystone - OpenRC Script](Admin%20openrc%20script%20-%20Brandon%20Toews.png){#fig-key}
 
 ## Glance Image Service
 
@@ -43,7 +43,6 @@ Created an OpenStack environment with a controller node and compute node on VMwa
 ![Nova - Verification Operation Part 1](Compute_Setup__Part_1___Brandon_Toews.png){#fig-nova1}
 
 ![Nova - Verification Operation Part 2](Compute_Setup__Part_2___Brandon_Toews.png){#fig-nova2}
-
 
 ## Neutron Networking Service
 
@@ -56,11 +55,9 @@ Created an OpenStack environment with a controller node and compute node on VMwa
 # Launch Instance
 
 ::: {#fig-launch}
-
 ![Launch Instance](Launch_Instance_Server_List.png){#fig-list}
 
 ![SSH into instance](Launch_Instance_SSH.png){#fig-ssh}
 
 Launch Instance
 :::
-

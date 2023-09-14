@@ -35,19 +35,24 @@ The branch office is located in Kelowna and has two departments. These departmen
 :::
 
 ## Network Diagram
+
 ![Network Diagram](network.png){#fig-net}
 
 ## IP Address Scheme
+
 ![IP Address Scheme](IPAdressScheme.png){#fig-ipscheme}
 
 ## Access Control Lists
+
 ![Access Control Lists](ACLs.png){#fig-acl}
 
 ## Router Access Credentials
+
 ![Router Access Credentials](RouterCreds.png){#fig-creds}
 
 ## Router Configurations
-```{#lst-van .tcl lst-cap="Vancouver Router Configuration"}
+
+``` {#lst-van .tcl lst-cap="Vancouver Router Configuration"}
 !
 !
 version 12.4
@@ -151,7 +156,7 @@ line vty 0 4
 end
 ```
 
-```{#lst-kel .tcl lst-cap="Kelowna Router Configuration"}
+``` {#lst-kel .tcl lst-cap="Kelowna Router Configuration"}
 !
 !
 version 12.4
