@@ -11,7 +11,7 @@ categories:
 - subnetting
 - routing
 date: "2021-12-14"
-description: Designed and constructed a fictional network with five (5) departments in two (2) locations using GNS3 simulation software.
+description: Designed and constructed a fictional network using GNS3 simulation software and VMs running on VMware.
 toc: true
 image: network.png
 twitter-card: true
@@ -25,6 +25,14 @@ crossref:
 # Networking with Cisco Technologies
 
 Designed and constructed a fictional network with five (5) departments in two (2) locations using GNS3 simulation software. All departments were represented by Windows 10 VMs run on VMware and were configured to communicate with each other thru GNS3. Variable length subnetting from an address space of 172.16.16.0/20 was used to create department subnets. Routing protocol OSPF along with ACLs were used to allow departments to communicate with each other while at the same time preventing certain ones from reaching others. See figures below for full documentation of the project.
+
+::: {.callout-note collapse="true"}
+## Expand To Learn About Project Scenario
+
+The head office is located in Vancouver and has three departments. These departments are Accounting, Administration, and Human Resources. The Accounting department uses 10 computers, Administration uses 19 computers, and Human Resources uses 3 computers.
+
+The branch office is located in Kelowna and has two departments. These departments are Marketing and Sales. The Marketing department uses 16 computers, and the Sales department uses 45 computers.
+:::
 
 ## Network Diagram
 ![Network Diagram](network.png){#fig-net}

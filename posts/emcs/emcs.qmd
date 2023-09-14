@@ -1,0 +1,56 @@
+---
+title: "Microsoft Exchange Server Network"
+format:
+  html: default
+author: "Brandon Toews"
+badges: true
+categories:
+- networking
+- microsoft
+- exchange server
+- active directory
+date: "2022-03-03"
+description: Deployed an Exchange server environment using Microsoft Exchange Server 2016.
+toc: true
+image: ICA_8___Brandon_Toews.png
+twitter-card: true
+card-style: summary
+crossref:
+  fig-title: '**Figure**'
+  fig-labels: arabic
+  title-delim: "**.**"
+---
+
+# Microsoft Exchange Server Environment
+
+Deployed an Exchange server environment using Microsoft Exchange Server 2016. Created three (3) domain controllers, two (2) mailbox servers, and one (1) edge transport server on VMware. One (1) of the domain controllers was running Server Core. Formatted disks with different file systems and created simple, spanned, stripped, mirrored, and RAID-5 volumes. Installed and configured Active Directory including creating and managing OU structure, users, and groups. Created an Active Directory backup and restored from backup. Installed and upgraded Exchange Server 2016. Created mailbox databases in a DAG. Configured namespaces, SSL certificates, and mail flow. Spent extensive time using PowerShell and Exchange Management Shell for installs and configuration. See project screenshots below.
+
+## Domain Controller Configurations
+
+![Domain Controller 1 - IP Configurations](DC1__BGInfo__IP_Configuration.png){#fig-dc1}
+
+![Domain Controller 3 (Server Core) - IP Configurations](DC3___IP_Address_Configuration.png){#fig-dc3ip}
+
+![Domain Controller 3 (Server Core) - Firewall Configurations](DC3___Firewall_Rules_Enabled.png){#fig-dc3firewall}
+
+## File Systems
+
+![Domain Controller 2 - Raid Volumes](DC2___All_Disks_Created.png){#fig-raid}
+
+## Active Directory
+
+![Active Directory Installation](AD_Installation_ICA_4___Brandon_Toews.png){#fig-adinstall}
+
+![Active Directory - OUs & Users](ICA_6___Capture_2_1_splissken_restore___Brandon_Toews.png){#fig-adous}
+
+## Exhange Server
+
+![Exchange Server Install](ICA_8___Brandon_Toews.png){#fig-exchinstall}
+
+![Mailbox Databases](ICA_9__Part_2___Brandon_Toews.png){#fig-maildb}
+
+![Recipients](ICA_12__Part_1_Recipients___Brandon_Toews.png){#fig-rec}
+
+![Resource Mailboxes & Distribution Groups ](ICA_12__Part_2_Disto_Group_Members___Brandon_Toews.png){#fig-distros}
+
+

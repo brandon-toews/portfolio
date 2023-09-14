@@ -8,7 +8,7 @@
 
 <meta name="author" content="Brandon Toews">
 <meta name="dcterms.date" content="2021-12-14">
-<meta name="description" content="Designed and constructed a fictional network with five (5) departments in two (2) locations using GNS3 simulation software.">
+<meta name="description" content="Designed and constructed a fictional network using GNS3 simulation software and VMs running on VMware.">
 
 <title>portfolio - Networking with Cisco Technologies</title>
 <style>
@@ -102,7 +102,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <link rel="stylesheet" href="../../styles.css">
 <meta name="twitter:title" content="portfolio - Networking with Cisco Technologies">
-<meta name="twitter:description" content="Designed and constructed a fictional network with five (5) departments in two (2) locations using GNS3 simulation software.">
+<meta name="twitter:description" content="Designed and constructed a fictional network using GNS3 simulation software and VMs running on VMware.">
 <meta name="twitter:image" content="https://brandon-toews.github.io/portfolio/posts/networking-cisco/network.png">
 <meta name="twitter:image-height" content="522">
 <meta name="twitter:image-width" content="725">
@@ -150,7 +150,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <h1 class="title">Networking with Cisco Technologies</h1>
                   <div>
         <div class="description">
-          Designed and constructed a fictional network with five (5) departments in two (2) locations using GNS3 simulation software.
+          Designed and constructed a fictional network using GNS3 simulation software and VMs running on VMware.
         </div>
       </div>
                           <div class="quarto-categories">
@@ -212,6 +212,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="networking-with-cisco-technologies" class="level1">
 <h1>Networking with Cisco Technologies</h1>
 <p>Designed and constructed a fictional network with five (5) departments in two (2) locations using GNS3 simulation software. All departments were represented by Windows 10 VMs run on VMware and were configured to communicate with each other thru GNS3. Variable length subnetting from an address space of 172.16.16.0/20 was used to create department subnets. Routing protocol OSPF along with ACLs were used to allow departments to communicate with each other while at the same time preventing certain ones from reaching others. See figures below for full documentation of the project.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Expand To Learn About Project Scenario
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The head office is located in Vancouver and has three departments. These departments are Accounting, Administration, and Human Resources. The Accounting department uses 10 computers, Administration uses 19 computers, and Human Resources uses 3 computers.</p>
+<p>The branch office is located in Kelowna and has two departments. These departments are Marketing and Sales. The Marketing department uses 16 computers, and the Sales department uses 45 computers.</p>
+</div>
+</div>
+</div>
 <section id="network-diagram" class="level2">
 <h2 class="anchored" data-anchor-id="network-diagram">Network Diagram</h2>
 <div id="fig-net" class="quarto-figure quarto-figure-center anchored">
