@@ -7,7 +7,7 @@ badges: true
 categories:
 - networking
 - cisco
-- VMware
+- vmware
 - subnetting
 - routing
 date: "2021-12-14"

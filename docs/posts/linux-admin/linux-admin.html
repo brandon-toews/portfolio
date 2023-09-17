@@ -1,0 +1,1600 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Brandon Toews">
+<meta name="dcterms.date" content="2022-06-17">
+<meta name="description" content="Project to design and setup a prototype network using headless CentOS 7.0 servers and to produce documentation along with it.">
+
+<title>portfolio - Linux Administration Project</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+<link rel="stylesheet" href="../../styles.css">
+<meta name="twitter:title" content="portfolio - Linux Administration Project">
+<meta name="twitter:description" content="Project to design and setup a prototype network using headless CentOS 7.0 servers and to produce documentation along with it.">
+<meta name="twitter:image" content="https://brandon-toews.github.io/portfolio/posts/linux-admin/Linux.jpeg">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">portfolio</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html" rel="" target="">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/brandon-toews" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Linux Administration Project</h1>
+                  <div>
+        <div class="description">
+          Project to design and setup a prototype network using headless CentOS 7.0 servers and to produce documentation along with it.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">networking</div>
+                <div class="quarto-category">linux</div>
+                <div class="quarto-category">ldap</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Brandon Toews </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">June 17, 2022</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#project-overview" id="toc-project-overview" class="nav-link active" data-scroll-target="#project-overview"><span class="header-section-number">1</span> Project Overview</a>
+  <ul class="collapse">
+  <li><a href="#purpose-of-document" id="toc-purpose-of-document" class="nav-link" data-scroll-target="#purpose-of-document"><span class="header-section-number">1.1</span> Purpose of Document</a></li>
+  <li><a href="#scope" id="toc-scope" class="nav-link" data-scroll-target="#scope"><span class="header-section-number">1.2</span> Scope</a></li>
+  </ul></li>
+  <li><a href="#network-topology" id="toc-network-topology" class="nav-link" data-scroll-target="#network-topology"><span class="header-section-number">2</span> Network Topology</a>
+  <ul class="collapse">
+  <li><a href="#existing-network-design" id="toc-existing-network-design" class="nav-link" data-scroll-target="#existing-network-design"><span class="header-section-number">2.1</span> Existing Network Design</a></li>
+  <li><a href="#proposed-network-topology" id="toc-proposed-network-topology" class="nav-link" data-scroll-target="#proposed-network-topology"><span class="header-section-number">2.2</span> Proposed Network Topology</a></li>
+  </ul></li>
+  <li><a href="#upgrades" id="toc-upgrades" class="nav-link" data-scroll-target="#upgrades"><span class="header-section-number">3</span> Upgrades</a>
+  <ul class="collapse">
+  <li><a href="#server-os-upgrade" id="toc-server-os-upgrade" class="nav-link" data-scroll-target="#server-os-upgrade"><span class="header-section-number">3.1</span> Server OS Upgrade</a></li>
+  <li><a href="#firewall-addition" id="toc-firewall-addition" class="nav-link" data-scroll-target="#firewall-addition"><span class="header-section-number">3.2</span> Firewall Addition</a></li>
+  <li><a href="#samba-share-server" id="toc-samba-share-server" class="nav-link" data-scroll-target="#samba-share-server"><span class="header-section-number">3.3</span> Samba Share Server</a></li>
+  <li><a href="#telnet-ftp" id="toc-telnet-ftp" class="nav-link" data-scroll-target="#telnet-ftp"><span class="header-section-number">3.4</span> Telnet &amp; FTP</a></li>
+  </ul></li>
+  <li><a href="#configurations" id="toc-configurations" class="nav-link" data-scroll-target="#configurations"><span class="header-section-number">4</span> Configurations</a>
+  <ul class="collapse">
+  <li><a href="#ldap-configuration" id="toc-ldap-configuration" class="nav-link" data-scroll-target="#ldap-configuration"><span class="header-section-number">4.1</span> LDAP Configuration</a></li>
+  <li><a href="#ldap-client-configuration" id="toc-ldap-client-configuration" class="nav-link" data-scroll-target="#ldap-client-configuration"><span class="header-section-number">4.2</span> LDAP Client Configuration</a></li>
+  <li><a href="#firewall-configuration" id="toc-firewall-configuration" class="nav-link" data-scroll-target="#firewall-configuration"><span class="header-section-number">4.3</span> Firewall Configuration</a></li>
+  <li><a href="#dns-master-server-configuration" id="toc-dns-master-server-configuration" class="nav-link" data-scroll-target="#dns-master-server-configuration"><span class="header-section-number">4.4</span> DNS Master Server Configuration</a></li>
+  <li><a href="#dns-slave-server-configuration" id="toc-dns-slave-server-configuration" class="nav-link" data-scroll-target="#dns-slave-server-configuration"><span class="header-section-number">4.5</span> DNS Slave Server Configuration</a></li>
+  <li><a href="#dhcp-server-configuration" id="toc-dhcp-server-configuration" class="nav-link" data-scroll-target="#dhcp-server-configuration"><span class="header-section-number">4.6</span> DHCP Server Configuration</a></li>
+  <li><a href="#nfs-server-configuration" id="toc-nfs-server-configuration" class="nav-link" data-scroll-target="#nfs-server-configuration"><span class="header-section-number">4.7</span> NFS Server Configuration</a></li>
+  <li><a href="#samba-server-configuration" id="toc-samba-server-configuration" class="nav-link" data-scroll-target="#samba-server-configuration"><span class="header-section-number">4.8</span> Samba Server Configuration</a></li>
+  <li><a href="#email-server-configuration" id="toc-email-server-configuration" class="nav-link" data-scroll-target="#email-server-configuration"><span class="header-section-number">4.9</span> Email Server Configuration</a></li>
+  </ul></li>
+  <li><a href="#network-administrators-utilities" id="toc-network-administrators-utilities" class="nav-link" data-scroll-target="#network-administrators-utilities"><span class="header-section-number">5</span> Network Administrator’s Utilities</a>
+  <ul class="collapse">
+  <li><a href="#password-generator-script" id="toc-password-generator-script" class="nav-link" data-scroll-target="#password-generator-script"><span class="header-section-number">5.1</span> Password Generator Script</a></li>
+  <li><a href="#ip-address-script" id="toc-ip-address-script" class="nav-link" data-scroll-target="#ip-address-script"><span class="header-section-number">5.2</span> IP Address Script</a></li>
+  </ul></li>
+  <li><a href="#security" id="toc-security" class="nav-link" data-scroll-target="#security"><span class="header-section-number">6</span> Security</a>
+  <ul class="collapse">
+  <li><a href="#firewalld-selinux" id="toc-firewalld-selinux" class="nav-link" data-scroll-target="#firewalld-selinux"><span class="header-section-number">6.1</span> Firewalld &amp; SELinux</a></li>
+  </ul></li>
+  <li><a href="#appendix" id="toc-appendix" class="nav-link" data-scroll-target="#appendix">Appendix</a>
+  <ul class="collapse">
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a>
+  <ul class="collapse">
+  <li><a href="#nfs" id="toc-nfs" class="nav-link" data-scroll-target="#nfs">NFS</a></li>
+  <li><a href="#nfs---windows" id="toc-nfs---windows" class="nav-link" data-scroll-target="#nfs---windows">NFS - Windows</a></li>
+  <li><a href="#ldap" id="toc-ldap" class="nav-link" data-scroll-target="#ldap">LDAP</a></li>
+  <li><a href="#ldap-local-user-migration" id="toc-ldap-local-user-migration" class="nav-link" data-scroll-target="#ldap-local-user-migration">LDAP Local User Migration</a></li>
+  <li><a href="#ldap-automount-home-directories" id="toc-ldap-automount-home-directories" class="nav-link" data-scroll-target="#ldap-automount-home-directories">LDAP Automount Home Directories</a></li>
+  <li><a href="#ldap-tls" id="toc-ldap-tls" class="nav-link" data-scroll-target="#ldap-tls">LDAP TLS</a></li>
+  <li><a href="#samba" id="toc-samba" class="nav-link" data-scroll-target="#samba">Samba</a></li>
+  <li><a href="#postfix-server" id="toc-postfix-server" class="nav-link" data-scroll-target="#postfix-server">Postfix Server</a></li>
+  <li><a href="#dovcote-server" id="toc-dovcote-server" class="nav-link" data-scroll-target="#dovcote-server">Dovcote Server</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="linux-admin.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p><img src="Linux.jpeg" class="img-fluid"></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Expand To Learn About Project Scenario
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>You are required to add/replace/remove services from the current network. Company president has asked to explain the need of major updates and upgrades to the network. In order to get approval of major upgrades to the network you have been tasked to setup a prototype network by senior admin. You need to come up with the following prototype network along with technical documentation and a rationale for your suggestions:</p>
+<ul>
+<li>Setup a prototype network with NIS as your central authentication server.</li>
+<li>Configure a Firewall to protect internal network. Explain if there are some other methods to enhance the security of your network.</li>
+<li>Setup a network share for internal users.</li>
+<li>Configure a master and a slave name server for your internal network.</li>
+<li>Configure a DHCP server for your internal network.</li>
+<li>With the exception of your firewall, NIS, DHCP server etc., all client machines must obtain their network configuration via DHCP. Any additional servers must obtain static IP addresses via DHCP.</li>
+<li>All employee users must be able to authenticate on any client machines using NIS and all users’ home directories must be automounted under /home.</li>
+<li>Find services which are vulnerable and replace them with protected services.</li>
+<li>Setup an FTP server, so that users may be able to upload the data as needed, exhibit the functionality with a simple method.</li>
+<li>Users must be able to send and receive local email (that is, email addressed to users within the company’s domain) from the client machines.</li>
+</ul>
+<p>Develop network administrator’s utilities:</p>
+<ul>
+<li>Create a script that generates secure random password suggestions for internal users. Ask for details.</li>
+<li>In a Bash script, ask user to provide an IP address, also ask how many bits is the subnet mask. Now provide the following output:
+<ul>
+<li>What class the IP address belongs to?</li>
+<li>Print subnet mask in decimal number system
+<ul>
+<li>IP: 192.168.0.0</li>
+<li>SM: 255.255.255.0</li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+<section id="project-overview" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Project Overview</h1>
+<section id="purpose-of-document" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="purpose-of-document"><span class="header-section-number">1.1</span> Purpose of Document</h2>
+<p>The purpose of this document is to provide suggestions, solutions, and configurations for a major upgrade that will improve the current network.</p>
+</section>
+<section id="scope" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="scope"><span class="header-section-number">1.2</span> Scope</h2>
+<p>The scope of the project involves an examination of the current network to ascertain where it can be improved. In addition, design and implemention of a prototype network to demonstrate what it could look like after the proposed upgrades. The proposed solutions must include detailed configurations and address potential growth of the business in the future.</p>
+</section>
+</section>
+<section id="network-topology" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Network Topology</h1>
+<section id="existing-network-design" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="existing-network-design"><span class="header-section-number">2.1</span> Existing Network Design</h2>
+<p>The existing network utilizes 11 servers comprised of one (1) NIS authentication server, two (2) NFS file share servers, one (1) Telnet server, two (2) database servers, two (2) app servers, two (2) web servers, and one (1) backup server. ( See <a href="#fig-curnet">Figure&nbsp;1</a> )</p>
+<div id="fig-curnet" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="current-net.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption"><strong>Figure</strong>&nbsp;1<strong>.</strong> Existing Network Topology</figcaption>
+</figure>
+</div>
+</section>
+<section id="proposed-network-topology" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="proposed-network-topology"><span class="header-section-number">2.2</span> Proposed Network Topology</h2>
+<p>The proposed network utilizes 11 servers comprised of one (1) LDAP authentication server, one (1) Samba file share server, one (1) NFS file share server, two (2) database servers, two (2) app servers, two (2) web servers, one (1) backup server, and one (1) Firewall. ( See <a href="#fig-propnet">Figure&nbsp;2</a> )</p>
+<div id="fig-propnet" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="prop-net.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption"><strong>Figure</strong>&nbsp;2<strong>.</strong> Proposed Network Topology</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="upgrades" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Upgrades</h1>
+<section id="server-os-upgrade" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="server-os-upgrade"><span class="header-section-number">3.1</span> Server OS Upgrade</h2>
+<p>The existing servers are all running CentOS 5.0 currently which is starting to become old and losing community support. All servers should be upgraded to CentOS 7.0 as this will provide the most support while maintaining stronger stability that newer releases.3.2 LDAP Centralized Authentication Current network athentication is managed by a NIS server which only functions for Linux operating systems and passes sensitive information in plain text. The prototype network runs an LDAP server instead for many reasons. Eventually the Windows clients can be looped into the system to authenticate making it so that the total Linux and Windows structures would all be managed from the same place. In addition LDAP touts improved security as it utilizes TLS certifications to establish connections and pass information. The LDAP server can be used to authenticate against for all of the other services that the network contains.</p>
+</section>
+<section id="firewall-addition" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="firewall-addition"><span class="header-section-number">3.2</span> Firewall Addition</h2>
+<p>No firewall is present with the existing network which places the system at significantly more risk. With the addition of a pfSense firewall in place all internal traffic is protected and blocked from the external. All traffic that accesses anything outside of the LAN, including and especially the internet, is routed through firewall so as to keep as small of an attack surface as possible.</p>
+</section>
+<section id="samba-share-server" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="samba-share-server"><span class="header-section-number">3.3</span> Samba Share Server</h2>
+<p>While the two (2) NFS share servers are useful they are overkill and could be downsized to make room for something that may grow better with the company in the future. One (1) of the NFS servers has been replaced in the prototype network for a Samba server. At the moment the Samba server is just acting as a share but the possibilities for it to be so much more are endless. In the future it could be utilized alongside the LDAP server to provide authentication for both Windows and Linux clients. All users could sign in on whatever device they prefer while the Samba server acts as an NT4 primary domain server or even an Active Directory domain controller, all with an LDAP backend. This would all for a possibility to add a secondary domain server to add redundancy to the system and provide stability as the business grows.</p>
+</section>
+<section id="telnet-ftp" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="telnet-ftp"><span class="header-section-number">3.4</span> Telnet &amp; FTP</h2>
+<p>The current system utilizes Telnet for communications among servers which has been long recognized as very insecure and should not be used in production. Hence all Telnet services have been replaced with SSH servers so as to secure and encrypted communications. Having SSH servers allows us to take advantage of Secure Copy Protocol which will also replace the very insecure File Transfer Protocol servers the occupy the system now. Neither Telnet nor FTP servers should be used as long as we have better options like SSH and SCP available to us.</p>
+</section>
+</section>
+<section id="configurations" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Configurations</h1>
+<section id="ldap-configuration" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="ldap-configuration"><span class="header-section-number">4.1</span> LDAP Configuration</h2>
+<p>The LDAP server has an NFS server running on it to export the home directories to the client servers so that they can automount them when they login to various users. The LDAP structure has been generated on the LDAP server using the following ldif files and ens33 file… <a href="#dbfile">db.ldif</a>, <a href="#monitorfile">monitor.ldif</a>, <a href="#basefile">base.ldif</a>, <a href="#usersfile">users.ldif</a>, <a href="#groupsfile">groups.ldif</a>, <a href="#ens33file">ens33</a>.</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>db.ldif</strong></pre>
+</div>
+<div class="sourceCode" id="dbfile"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="dbfile-1"><a href="#dbfile-1" aria-hidden="true" tabindex="-1"></a>dn: olcDatabase={2}hdb,cn=config</span>
+<span id="dbfile-2"><a href="#dbfile-2" aria-hidden="true" tabindex="-1"></a>changetype: modify</span>
+<span id="dbfile-3"><a href="#dbfile-3" aria-hidden="true" tabindex="-1"></a>replace: olcSuffix</span>
+<span id="dbfile-4"><a href="#dbfile-4" aria-hidden="true" tabindex="-1"></a>olcSuffix: dc=azuretech,dc=local</span>
+<span id="dbfile-5"><a href="#dbfile-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="dbfile-6"><a href="#dbfile-6" aria-hidden="true" tabindex="-1"></a>dn: olcDatabase={2}hdb,cn=config</span>
+<span id="dbfile-7"><a href="#dbfile-7" aria-hidden="true" tabindex="-1"></a>changetype: modify</span>
+<span id="dbfile-8"><a href="#dbfile-8" aria-hidden="true" tabindex="-1"></a>replace: olcRootDN</span>
+<span id="dbfile-9"><a href="#dbfile-9" aria-hidden="true" tabindex="-1"></a>olcRootDN: cn=ldapadm,dc=azuretech,dc=local</span>
+<span id="dbfile-10"><a href="#dbfile-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="dbfile-11"><a href="#dbfile-11" aria-hidden="true" tabindex="-1"></a>dn: olcDatabase={2}hdb,cn=config</span>
+<span id="dbfile-12"><a href="#dbfile-12" aria-hidden="true" tabindex="-1"></a>changetype: modify</span>
+<span id="dbfile-13"><a href="#dbfile-13" aria-hidden="true" tabindex="-1"></a>replace: olcRootPW</span>
+<span id="dbfile-14"><a href="#dbfile-14" aria-hidden="true" tabindex="-1"></a>olcRootPW: {SSHA}GBlGYcFck5dRl6+FwVlArdlJywiCsCfK</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>monitor.ldif</strong></pre>
+</div>
+<div class="sourceCode" id="monitorfile"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="monitorfile-1"><a href="#monitorfile-1" aria-hidden="true" tabindex="-1"></a>dn: olcDatabase={1}monitor,cn=config</span>
+<span id="monitorfile-2"><a href="#monitorfile-2" aria-hidden="true" tabindex="-1"></a>changetype: modify</span>
+<span id="monitorfile-3"><a href="#monitorfile-3" aria-hidden="true" tabindex="-1"></a>replace: olcAccess</span>
+<span id="monitorfile-4"><a href="#monitorfile-4" aria-hidden="true" tabindex="-1"></a>olcAccess: {0}to * by dn.base="gidNumber=0+uidNumber=0,cn=peercred,cn=external,</span>
+<span id="monitorfile-5"><a href="#monitorfile-5" aria-hidden="true" tabindex="-1"></a>cn=auth" read by dn.base="cn=ldapadm,dc=azuretech,dc=local" read by * none</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>base.ldif</strong></pre>
+</div>
+<div class="sourceCode" id="basefile"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="basefile-1"><a href="#basefile-1" aria-hidden="true" tabindex="-1"></a>dn: dc=azuretech,dc=local</span>
+<span id="basefile-2"><a href="#basefile-2" aria-hidden="true" tabindex="-1"></a>dc: azuretech</span>
+<span id="basefile-3"><a href="#basefile-3" aria-hidden="true" tabindex="-1"></a>objectClass: top</span>
+<span id="basefile-4"><a href="#basefile-4" aria-hidden="true" tabindex="-1"></a>objectClass: domain</span>
+<span id="basefile-5"><a href="#basefile-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="basefile-6"><a href="#basefile-6" aria-hidden="true" tabindex="-1"></a>dn: cn=ldapadm,dc=azuretech,dc=local</span>
+<span id="basefile-7"><a href="#basefile-7" aria-hidden="true" tabindex="-1"></a>objectClass: organizationalRole</span>
+<span id="basefile-8"><a href="#basefile-8" aria-hidden="true" tabindex="-1"></a>cn: ldapadm</span>
+<span id="basefile-9"><a href="#basefile-9" aria-hidden="true" tabindex="-1"></a>description: LDAP Manager</span>
+<span id="basefile-10"><a href="#basefile-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="basefile-11"><a href="#basefile-11" aria-hidden="true" tabindex="-1"></a>dn: ou=People,dc=azuretech,dc=local</span>
+<span id="basefile-12"><a href="#basefile-12" aria-hidden="true" tabindex="-1"></a>objectClass: organizationalUnit</span>
+<span id="basefile-13"><a href="#basefile-13" aria-hidden="true" tabindex="-1"></a>ou: People</span>
+<span id="basefile-14"><a href="#basefile-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="basefile-15"><a href="#basefile-15" aria-hidden="true" tabindex="-1"></a>dn: ou=Group,dc=azuretech,dc=local</span>
+<span id="basefile-16"><a href="#basefile-16" aria-hidden="true" tabindex="-1"></a>objectClass: organizationalUnit</span>
+<span id="basefile-17"><a href="#basefile-17" aria-hidden="true" tabindex="-1"></a>ou: Group</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>users.ldif</strong></pre>
+</div>
+<div class="sourceCode" id="usersfile"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="usersfile-1"><a href="#usersfile-1" aria-hidden="true" tabindex="-1"></a>dn: uid=ldapuser1,ou=People,dc=azuretech,dc=local</span>
+<span id="usersfile-2"><a href="#usersfile-2" aria-hidden="true" tabindex="-1"></a>uid: ldapuser1</span>
+<span id="usersfile-3"><a href="#usersfile-3" aria-hidden="true" tabindex="-1"></a>cn: ldapuser1</span>
+<span id="usersfile-4"><a href="#usersfile-4" aria-hidden="true" tabindex="-1"></a>sn: ldapuser1</span>
+<span id="usersfile-5"><a href="#usersfile-5" aria-hidden="true" tabindex="-1"></a>mail: ldapuser1@azuretech.local</span>
+<span id="usersfile-6"><a href="#usersfile-6" aria-hidden="true" tabindex="-1"></a>objectClass: person</span>
+<span id="usersfile-7"><a href="#usersfile-7" aria-hidden="true" tabindex="-1"></a>objectClass: organizationalPerson</span>
+<span id="usersfile-8"><a href="#usersfile-8" aria-hidden="true" tabindex="-1"></a>objectClass: inetOrgPerson</span>
+<span id="usersfile-9"><a href="#usersfile-9" aria-hidden="true" tabindex="-1"></a>objectClass: posixAccount</span>
+<span id="usersfile-10"><a href="#usersfile-10" aria-hidden="true" tabindex="-1"></a>objectClass: topobjectClass: shadowAccount</span>
+<span id="usersfile-11"><a href="#usersfile-11" aria-hidden="true" tabindex="-1"></a>userPassword:</span>
+<span id="usersfile-12"><a href="#usersfile-12" aria-hidden="true" tabindex="-1"></a>{crypt}</span>
+<span id="usersfile-13"><a href="#usersfile-13" aria-hidden="true" tabindex="-1"></a>$6$SCUZRM.D$B4l.n2hipD4IvghGaaJiQtLkiOF62YS7PhDy30EpVd81noq4KkDU2EqORUW.</span>
+<span id="usersfile-14"><a href="#usersfile-14" aria-hidden="true" tabindex="-1"></a>8Dq4k5GhPkChklxZIYiKMvcFx1</span>
+<span id="usersfile-15"><a href="#usersfile-15" aria-hidden="true" tabindex="-1"></a>shadowLastChange: 19159</span>
+<span id="usersfile-16"><a href="#usersfile-16" aria-hidden="true" tabindex="-1"></a>shadowMin: 0</span>
+<span id="usersfile-17"><a href="#usersfile-17" aria-hidden="true" tabindex="-1"></a>shadowMax: 99999</span>
+<span id="usersfile-18"><a href="#usersfile-18" aria-hidden="true" tabindex="-1"></a>shadowWarning: 7</span>
+<span id="usersfile-19"><a href="#usersfile-19" aria-hidden="true" tabindex="-1"></a>loginShell: /bin/bash</span>
+<span id="usersfile-20"><a href="#usersfile-20" aria-hidden="true" tabindex="-1"></a>uidNumber: 1000</span>
+<span id="usersfile-21"><a href="#usersfile-21" aria-hidden="true" tabindex="-1"></a>gidNumber: 1000</span>
+<span id="usersfile-22"><a href="#usersfile-22" aria-hidden="true" tabindex="-1"></a>homeDirectory: /home/ldapuser1</span>
+<span id="usersfile-23"><a href="#usersfile-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="usersfile-24"><a href="#usersfile-24" aria-hidden="true" tabindex="-1"></a>dn: uid=ldapuser2,ou=People,dc=azuretech,dc=local</span>
+<span id="usersfile-25"><a href="#usersfile-25" aria-hidden="true" tabindex="-1"></a>uid: ldapuser2</span>
+<span id="usersfile-26"><a href="#usersfile-26" aria-hidden="true" tabindex="-1"></a>cn: ldapuser2</span>
+<span id="usersfile-27"><a href="#usersfile-27" aria-hidden="true" tabindex="-1"></a>sn: ldapuser2</span>
+<span id="usersfile-28"><a href="#usersfile-28" aria-hidden="true" tabindex="-1"></a>mail: ldapuser2@azuretech.local</span>
+<span id="usersfile-29"><a href="#usersfile-29" aria-hidden="true" tabindex="-1"></a>objectClass: person</span>
+<span id="usersfile-30"><a href="#usersfile-30" aria-hidden="true" tabindex="-1"></a>objectClass: organizationalPerson</span>
+<span id="usersfile-31"><a href="#usersfile-31" aria-hidden="true" tabindex="-1"></a>objectClass: inetOrgPerson</span>
+<span id="usersfile-32"><a href="#usersfile-32" aria-hidden="true" tabindex="-1"></a>objectClass: posixAccount</span>
+<span id="usersfile-33"><a href="#usersfile-33" aria-hidden="true" tabindex="-1"></a>objectClass: top</span>
+<span id="usersfile-34"><a href="#usersfile-34" aria-hidden="true" tabindex="-1"></a>objectClass: shadowAccount</span>
+<span id="usersfile-35"><a href="#usersfile-35" aria-hidden="true" tabindex="-1"></a>userPassword:</span>
+<span id="usersfile-36"><a href="#usersfile-36" aria-hidden="true" tabindex="-1"></a>{crypt}</span>
+<span id="usersfile-37"><a href="#usersfile-37" aria-hidden="true" tabindex="-1"></a>$6$CbncYy5y$JlNL4899lmlZAgqnLYersesFTLkFJNY6DQdNvwOFU8LyHNXPMMrfCaUo7Br</span>
+<span id="usersfile-38"><a href="#usersfile-38" aria-hidden="true" tabindex="-1"></a>SdYw/KFlDOubpyn2b242re1Zea/</span>
+<span id="usersfile-39"><a href="#usersfile-39" aria-hidden="true" tabindex="-1"></a>shadowLastChange: 19159</span>
+<span id="usersfile-40"><a href="#usersfile-40" aria-hidden="true" tabindex="-1"></a>shadowMin: 0</span>
+<span id="usersfile-41"><a href="#usersfile-41" aria-hidden="true" tabindex="-1"></a>shadowMax: 99999</span>
+<span id="usersfile-42"><a href="#usersfile-42" aria-hidden="true" tabindex="-1"></a>shadowWarning: 7</span>
+<span id="usersfile-43"><a href="#usersfile-43" aria-hidden="true" tabindex="-1"></a>loginShell: /bin/bash</span>
+<span id="usersfile-44"><a href="#usersfile-44" aria-hidden="true" tabindex="-1"></a>uidNumber: 1001gidNumber: 1001</span>
+<span id="usersfile-45"><a href="#usersfile-45" aria-hidden="true" tabindex="-1"></a>homeDirectory: /home/ldapuser2</span>
+<span id="usersfile-46"><a href="#usersfile-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="usersfile-47"><a href="#usersfile-47" aria-hidden="true" tabindex="-1"></a>dn: uid=ldapuser3,ou=People,dc=azuretech,dc=local</span>
+<span id="usersfile-48"><a href="#usersfile-48" aria-hidden="true" tabindex="-1"></a>uid: ldapuser3</span>
+<span id="usersfile-49"><a href="#usersfile-49" aria-hidden="true" tabindex="-1"></a>cn: ldapuser3</span>
+<span id="usersfile-50"><a href="#usersfile-50" aria-hidden="true" tabindex="-1"></a>sn: ldapuser3</span>
+<span id="usersfile-51"><a href="#usersfile-51" aria-hidden="true" tabindex="-1"></a>mail: ldapuser3@azuretech.local</span>
+<span id="usersfile-52"><a href="#usersfile-52" aria-hidden="true" tabindex="-1"></a>objectClass: person</span>
+<span id="usersfile-53"><a href="#usersfile-53" aria-hidden="true" tabindex="-1"></a>objectClass: organizationalPerson</span>
+<span id="usersfile-54"><a href="#usersfile-54" aria-hidden="true" tabindex="-1"></a>objectClass: inetOrgPerson</span>
+<span id="usersfile-55"><a href="#usersfile-55" aria-hidden="true" tabindex="-1"></a>objectClass: posixAccount</span>
+<span id="usersfile-56"><a href="#usersfile-56" aria-hidden="true" tabindex="-1"></a>objectClass: top</span>
+<span id="usersfile-57"><a href="#usersfile-57" aria-hidden="true" tabindex="-1"></a>objectClass: shadowAccount</span>
+<span id="usersfile-58"><a href="#usersfile-58" aria-hidden="true" tabindex="-1"></a>userPassword:</span>
+<span id="usersfile-59"><a href="#usersfile-59" aria-hidden="true" tabindex="-1"></a>{crypt}</span>
+<span id="usersfile-60"><a href="#usersfile-60" aria-hidden="true" tabindex="-1"></a>$6$J5mrmTYw$bKruVOsucaiHJFS3S6MKG4jyC.o/P62DeLW/R.YVpktFaYlpHzjjjxIGW5HpA</span>
+<span id="usersfile-61"><a href="#usersfile-61" aria-hidden="true" tabindex="-1"></a>msf5OCN9dId5s/F33HptMfvG0</span>
+<span id="usersfile-62"><a href="#usersfile-62" aria-hidden="true" tabindex="-1"></a>shadowLastChange: 19159</span>
+<span id="usersfile-63"><a href="#usersfile-63" aria-hidden="true" tabindex="-1"></a>shadowMin: 0</span>
+<span id="usersfile-64"><a href="#usersfile-64" aria-hidden="true" tabindex="-1"></a>shadowMax: 99999</span>
+<span id="usersfile-65"><a href="#usersfile-65" aria-hidden="true" tabindex="-1"></a>shadowWarning: 7</span>
+<span id="usersfile-66"><a href="#usersfile-66" aria-hidden="true" tabindex="-1"></a>loginShell: /bin/bash</span>
+<span id="usersfile-67"><a href="#usersfile-67" aria-hidden="true" tabindex="-1"></a>uidNumber: 1002</span>
+<span id="usersfile-68"><a href="#usersfile-68" aria-hidden="true" tabindex="-1"></a>gidNumber: 1002</span>
+<span id="usersfile-69"><a href="#usersfile-69" aria-hidden="true" tabindex="-1"></a>homeDirectory: /home/ldapuser3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>groups.ldif</strong></pre>
+</div>
+<div class="sourceCode" id="groupsfile"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="groupsfile-1"><a href="#groupsfile-1" aria-hidden="true" tabindex="-1"></a>dn: cn=ldapuser1,ou=Group,dc=azuretech,dc=local</span>
+<span id="groupsfile-2"><a href="#groupsfile-2" aria-hidden="true" tabindex="-1"></a>objectClass: posixGroup</span>
+<span id="groupsfile-3"><a href="#groupsfile-3" aria-hidden="true" tabindex="-1"></a>objectClass: top</span>
+<span id="groupsfile-4"><a href="#groupsfile-4" aria-hidden="true" tabindex="-1"></a>cn: ldapuser1</span>
+<span id="groupsfile-5"><a href="#groupsfile-5" aria-hidden="true" tabindex="-1"></a>userPassword: {crypt}x</span>
+<span id="groupsfile-6"><a href="#groupsfile-6" aria-hidden="true" tabindex="-1"></a>gidNumber: 1000</span>
+<span id="groupsfile-7"><a href="#groupsfile-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="groupsfile-8"><a href="#groupsfile-8" aria-hidden="true" tabindex="-1"></a>dn: cn=ldapuser2,ou=Group,dc=azuretech,dc=local</span>
+<span id="groupsfile-9"><a href="#groupsfile-9" aria-hidden="true" tabindex="-1"></a>objectClass: posixGroup</span>
+<span id="groupsfile-10"><a href="#groupsfile-10" aria-hidden="true" tabindex="-1"></a>objectClass: top</span>
+<span id="groupsfile-11"><a href="#groupsfile-11" aria-hidden="true" tabindex="-1"></a>cn: ldapuser2</span>
+<span id="groupsfile-12"><a href="#groupsfile-12" aria-hidden="true" tabindex="-1"></a>userPassword: {crypt}x</span>
+<span id="groupsfile-13"><a href="#groupsfile-13" aria-hidden="true" tabindex="-1"></a>gidNumber: 1001</span>
+<span id="groupsfile-14"><a href="#groupsfile-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="groupsfile-15"><a href="#groupsfile-15" aria-hidden="true" tabindex="-1"></a>dn: cn=ldapuser3,ou=Group,dc=azuretech,dc=local</span>
+<span id="groupsfile-16"><a href="#groupsfile-16" aria-hidden="true" tabindex="-1"></a>objectClass: posixGroup</span>
+<span id="groupsfile-17"><a href="#groupsfile-17" aria-hidden="true" tabindex="-1"></a>objectClass: top</span>
+<span id="groupsfile-18"><a href="#groupsfile-18" aria-hidden="true" tabindex="-1"></a>cn: ldapuser3</span>
+<span id="groupsfile-19"><a href="#groupsfile-19" aria-hidden="true" tabindex="-1"></a>userPassword: {crypt}x</span>
+<span id="groupsfile-20"><a href="#groupsfile-20" aria-hidden="true" tabindex="-1"></a>gidNumber: 1002</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>/etc/sysconfig/network-scripts/ifcfg-ens33</strong></pre>
+</div>
+<div class="sourceCode" id="ens33file"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="ens33file-1"><a href="#ens33file-1" aria-hidden="true" tabindex="-1"></a><span class="va">TYPE</span><span class="op">=</span><span class="st">"Ethernet"</span></span>
+<span id="ens33file-2"><a href="#ens33file-2" aria-hidden="true" tabindex="-1"></a><span class="va">PROXY_METHOD</span><span class="op">=</span><span class="st">"none"</span></span>
+<span id="ens33file-3"><a href="#ens33file-3" aria-hidden="true" tabindex="-1"></a><span class="va">BROWSER_ONLY</span><span class="op">=</span><span class="st">"no"</span></span>
+<span id="ens33file-4"><a href="#ens33file-4" aria-hidden="true" tabindex="-1"></a><span class="va">BOOTPROTO</span><span class="op">=</span><span class="st">"none"</span></span>
+<span id="ens33file-5"><a href="#ens33file-5" aria-hidden="true" tabindex="-1"></a><span class="va">DEFROUTE</span><span class="op">=</span><span class="st">"yes"</span></span>
+<span id="ens33file-6"><a href="#ens33file-6" aria-hidden="true" tabindex="-1"></a><span class="va">IPV4_FAILURE_FATAL</span><span class="op">=</span><span class="st">"no"</span></span>
+<span id="ens33file-7"><a href="#ens33file-7" aria-hidden="true" tabindex="-1"></a><span class="va">IPV6INIT</span><span class="op">=</span><span class="st">"no"</span></span>
+<span id="ens33file-8"><a href="#ens33file-8" aria-hidden="true" tabindex="-1"></a><span class="co">#IPV6_AUTOCONF="yes"</span></span>
+<span id="ens33file-9"><a href="#ens33file-9" aria-hidden="true" tabindex="-1"></a><span class="co">#IPV6_DEFROUTE="yes"</span></span>
+<span id="ens33file-10"><a href="#ens33file-10" aria-hidden="true" tabindex="-1"></a><span class="co">#IPV6_FAILURE_FATAL="no"</span></span>
+<span id="ens33file-11"><a href="#ens33file-11" aria-hidden="true" tabindex="-1"></a><span class="co">#IPV6_ADDR_GEN_MODE="stable-privacy"</span></span>
+<span id="ens33file-12"><a href="#ens33file-12" aria-hidden="true" tabindex="-1"></a><span class="va">NAME</span><span class="op">=</span><span class="st">"ens33"</span></span>
+<span id="ens33file-13"><a href="#ens33file-13" aria-hidden="true" tabindex="-1"></a><span class="va">UUID</span><span class="op">=</span><span class="st">"93f56d12-8057-4ca0-af7f-6c8e6fcffccd"</span></span>
+<span id="ens33file-14"><a href="#ens33file-14" aria-hidden="true" tabindex="-1"></a><span class="va">DEVICE</span><span class="op">=</span><span class="st">"ens33"</span></span>
+<span id="ens33file-15"><a href="#ens33file-15" aria-hidden="true" tabindex="-1"></a><span class="va">ONBOOT</span><span class="op">=</span><span class="st">"yes"</span></span>
+<span id="ens33file-16"><a href="#ens33file-16" aria-hidden="true" tabindex="-1"></a><span class="va">IPADDR</span><span class="op">=</span><span class="st">"192.168.65.10"</span></span>
+<span id="ens33file-17"><a href="#ens33file-17" aria-hidden="true" tabindex="-1"></a><span class="va">PREFIX</span><span class="op">=</span><span class="st">"24"</span></span>
+<span id="ens33file-18"><a href="#ens33file-18" aria-hidden="true" tabindex="-1"></a><span class="va">GATEWAY</span><span class="op">=</span><span class="st">"192.168.65.20"</span></span>
+<span id="ens33file-19"><a href="#ens33file-19" aria-hidden="true" tabindex="-1"></a><span class="va">DNS1</span><span class="op">=</span><span class="st">"192.168.65.10"</span></span>
+<span id="ens33file-20"><a href="#ens33file-20" aria-hidden="true" tabindex="-1"></a><span class="va">DNS2</span><span class="op">=</span><span class="st">"8.8.8.8"</span></span>
+<span id="ens33file-21"><a href="#ens33file-21" aria-hidden="true" tabindex="-1"></a><span class="va">DNS3</span><span class="op">=</span><span class="st">"8.8.4.4"</span></span>
+<span id="ens33file-22"><a href="#ens33file-22" aria-hidden="true" tabindex="-1"></a><span class="va">DOMAIN</span><span class="op">=</span><span class="st">"azuretech.local"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="ldap-client-configuration" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="ldap-client-configuration"><span class="header-section-number">4.2</span> LDAP Client Configuration</h2>
+<p>The LDAP Clients need to install some packing and create some automap files for autofs to automount LDAP user home directories. I used the follow script to accomplish this…</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>LDAP_Client_Install.sh</strong></pre>
+</div>
+<div class="sourceCode" id="ens33file"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="ens33file-1"><a href="#ens33file-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="ens33file-2"><a href="#ens33file-2" aria-hidden="true" tabindex="-1"></a><span class="ex">yum</span> install <span class="at">-y</span> openldap-clients nss-pam-ldapd nfs-utils autofs</span>
+<span id="ens33file-3"><a href="#ens33file-3" aria-hidden="true" tabindex="-1"></a><span class="ex">authconfig</span> <span class="at">--enableldap</span> <span class="at">--enableldapauth</span> <span class="at">--ldapserver</span><span class="op">=</span>192.168.65.10 <span class="at">--ldapbasedn</span><span class="op">=</span><span class="st">"dc=azuretech,dc=local"</span> <span class="at">--update</span></span>
+<span id="ens33file-4"><a href="#ens33file-4" aria-hidden="true" tabindex="-1"></a><span class="ex">systemctl</span> restart nslcd</span>
+<span id="ens33file-5"><a href="#ens33file-5" aria-hidden="true" tabindex="-1"></a><span class="ex">setsebool</span> <span class="at">-P</span> use_nfs_home_dirs=1</span>
+<span id="ens33file-6"><a href="#ens33file-6" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"/home /etc/home.map"</span> <span class="op">&gt;&gt;</span> /etc/auto.master</span>
+<span id="ens33file-7"><a href="#ens33file-7" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"* -fstype=nfs,rw,nosuid,soft 192.168.65.10:/home/&amp;"</span> <span class="op">&gt;&gt;</span> /etc/home.map</span>
+<span id="ens33file-8"><a href="#ens33file-8" aria-hidden="true" tabindex="-1"></a><span class="ex">systemctl</span> enable rpcbind</span>
+<span id="ens33file-9"><a href="#ens33file-9" aria-hidden="true" tabindex="-1"></a><span class="ex">systemctl</span> start rpcbind</span>
+<span id="ens33file-10"><a href="#ens33file-10" aria-hidden="true" tabindex="-1"></a><span class="ex">systemctl</span> enable autofs</span>
+<span id="ens33file-11"><a href="#ens33file-11" aria-hidden="true" tabindex="-1"></a><span class="ex">systemctl</span> start autofs</span>
+<span id="ens33file-12"><a href="#ens33file-12" aria-hidden="true" tabindex="-1"></a><span class="bu">exit</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="firewall-configuration" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="firewall-configuration"><span class="header-section-number">4.3</span> Firewall Configuration</h2>
+<p>Configured as seen in figures below. ( See <a href="#fig-firewall1">Figure&nbsp;3</a>, <a href="#fig-firewall2">Figure&nbsp;4</a>, &amp; <a href="#fig-firewall3">Figure&nbsp;5</a>)</p>
+<div id="fig-firewall1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="firewall-1.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption"><strong>Figure</strong>&nbsp;3<strong>.</strong> Firewall Configurations</figcaption>
+</figure>
+</div>
+<div id="fig-firewall2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="firewall-2.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption"><strong>Figure</strong>&nbsp;4<strong>.</strong> Firewall Configurations</figcaption>
+</figure>
+</div>
+<div id="fig-firewall3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="firewall-3.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption"><strong>Figure</strong>&nbsp;5<strong>.</strong> Firewall Configurations</figcaption>
+</figure>
+</div>
+</section>
+<section id="dns-master-server-configuration" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="dns-master-server-configuration"><span class="header-section-number">4.4</span> DNS Master Server Configuration</h2>
+<p>The DNS master server was installed on the same server as the LDAP so it is referred to as LDAP in the configuration files. The <a href="#namedfile">main config</a>, the <a href="#forwardfile">forward zone</a>, and the <a href="#reversefile">reverse zone</a> files shown below…</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>/etc/named.conf</strong></pre>
+</div>
+<div class="sourceCode" id="namedfile"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="namedfile-1"><a href="#namedfile-1" aria-hidden="true" tabindex="-1"></a>//</span>
+<span id="namedfile-2"><a href="#namedfile-2" aria-hidden="true" tabindex="-1"></a>// named.conf</span>
+<span id="namedfile-3"><a href="#namedfile-3" aria-hidden="true" tabindex="-1"></a>//</span>
+<span id="namedfile-4"><a href="#namedfile-4" aria-hidden="true" tabindex="-1"></a>// Provided by Red Hat bind package to configure the ISC BIND named(8) DNS</span>
+<span id="namedfile-5"><a href="#namedfile-5" aria-hidden="true" tabindex="-1"></a>// server as a caching only nameserver (as a localhost DNS resolver only).</span>
+<span id="namedfile-6"><a href="#namedfile-6" aria-hidden="true" tabindex="-1"></a>//</span>
+<span id="namedfile-7"><a href="#namedfile-7" aria-hidden="true" tabindex="-1"></a>// See /usr/share/doc/bind*/sample/ for example named configuration files.</span>
+<span id="namedfile-8"><a href="#namedfile-8" aria-hidden="true" tabindex="-1"></a>//</span>
+<span id="namedfile-9"><a href="#namedfile-9" aria-hidden="true" tabindex="-1"></a>// See the BIND Administrator's Reference Manual (ARM) for details about the</span>
+<span id="namedfile-10"><a href="#namedfile-10" aria-hidden="true" tabindex="-1"></a>// configuration located in /usr/share/doc/bind-{version}/Bv9ARM.html</span>
+<span id="namedfile-11"><a href="#namedfile-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="namedfile-12"><a href="#namedfile-12" aria-hidden="true" tabindex="-1"></a>options {</span>
+<span id="namedfile-13"><a href="#namedfile-13" aria-hidden="true" tabindex="-1"></a>  listen-on port 53 { 127.0.0.1; 192.168.65.10; };</span>
+<span id="namedfile-14"><a href="#namedfile-14" aria-hidden="true" tabindex="-1"></a>  // listen-on-v6 port 53 { ::1; };</span>
+<span id="namedfile-15"><a href="#namedfile-15" aria-hidden="true" tabindex="-1"></a>  directory"/var/named";</span>
+<span id="namedfile-16"><a href="#namedfile-16" aria-hidden="true" tabindex="-1"></a>  dump-file"/var/named/data/cache_dump.db";</span>
+<span id="namedfile-17"><a href="#namedfile-17" aria-hidden="true" tabindex="-1"></a>  statistics-file "/var/named/data/named_stats.txt";</span>
+<span id="namedfile-18"><a href="#namedfile-18" aria-hidden="true" tabindex="-1"></a>  memstatistics-file "/var/named/data/named_mem_stats.txt";</span>
+<span id="namedfile-19"><a href="#namedfile-19" aria-hidden="true" tabindex="-1"></a>  recursing-file "/var/named/data/named.recursing";</span>
+<span id="namedfile-20"><a href="#namedfile-20" aria-hidden="true" tabindex="-1"></a>  secroots-file "/var/named/data/named.secroots";</span>
+<span id="namedfile-21"><a href="#namedfile-21" aria-hidden="true" tabindex="-1"></a>  allow-query    { localhost; 192.168.65.0/24; };</span>
+<span id="namedfile-22"><a href="#namedfile-22" aria-hidden="true" tabindex="-1"></a>  allow-transfer { localhost; 192.168.65.11; };</span>
+<span id="namedfile-23"><a href="#namedfile-23" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="namedfile-24"><a href="#namedfile-24" aria-hidden="true" tabindex="-1"></a>  /*</span>
+<span id="namedfile-25"><a href="#namedfile-25" aria-hidden="true" tabindex="-1"></a>    - If you are building an AUTHORITATIVE DNS server, do NOT enable recursion.</span>
+<span id="namedfile-26"><a href="#namedfile-26" aria-hidden="true" tabindex="-1"></a>    - If you are building a RECURSIVE (caching) DNS server, you need to enable</span>
+<span id="namedfile-27"><a href="#namedfile-27" aria-hidden="true" tabindex="-1"></a>      recursion.</span>
+<span id="namedfile-28"><a href="#namedfile-28" aria-hidden="true" tabindex="-1"></a>    - If your recursive DNS server has a public IP address, you MUST enable access</span>
+<span id="namedfile-29"><a href="#namedfile-29" aria-hidden="true" tabindex="-1"></a>      control to limit queries to your legitimate users. Failing to do so will</span>
+<span id="namedfile-30"><a href="#namedfile-30" aria-hidden="true" tabindex="-1"></a>      cause your server to become part of large scale DNS amplification</span>
+<span id="namedfile-31"><a href="#namedfile-31" aria-hidden="true" tabindex="-1"></a>      attacks. Implementing BCP38 within your network would greatly</span>
+<span id="namedfile-32"><a href="#namedfile-32" aria-hidden="true" tabindex="-1"></a>      reduce such attack surface</span>
+<span id="namedfile-33"><a href="#namedfile-33" aria-hidden="true" tabindex="-1"></a>  */</span>
+<span id="namedfile-34"><a href="#namedfile-34" aria-hidden="true" tabindex="-1"></a>  recursion no;</span>
+<span id="namedfile-35"><a href="#namedfile-35" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="namedfile-36"><a href="#namedfile-36" aria-hidden="true" tabindex="-1"></a>  dnssec-enable yes;</span>
+<span id="namedfile-37"><a href="#namedfile-37" aria-hidden="true" tabindex="-1"></a>  dnssec-validation yes;</span>
+<span id="namedfile-38"><a href="#namedfile-38" aria-hidden="true" tabindex="-1"></a>  // dnssec-lookaside auto;</span>
+<span id="namedfile-39"><a href="#namedfile-39" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="namedfile-40"><a href="#namedfile-40" aria-hidden="true" tabindex="-1"></a>  /* Path to ISC DLV key */</span>
+<span id="namedfile-41"><a href="#namedfile-41" aria-hidden="true" tabindex="-1"></a>  bindkeys-file "/etc/named.root.key";managed-keys-directory "/var/named/dynamic";</span>
+<span id="namedfile-42"><a href="#namedfile-42" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="namedfile-43"><a href="#namedfile-43" aria-hidden="true" tabindex="-1"></a>  pid-file "/run/named/named.pid";</span>
+<span id="namedfile-44"><a href="#namedfile-44" aria-hidden="true" tabindex="-1"></a>  session-keyfile "/run/named/session.key";</span>
+<span id="namedfile-45"><a href="#namedfile-45" aria-hidden="true" tabindex="-1"></a>};</span>
+<span id="namedfile-46"><a href="#namedfile-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="namedfile-47"><a href="#namedfile-47" aria-hidden="true" tabindex="-1"></a>logging {</span>
+<span id="namedfile-48"><a href="#namedfile-48" aria-hidden="true" tabindex="-1"></a>  channel default_debug {</span>
+<span id="namedfile-49"><a href="#namedfile-49" aria-hidden="true" tabindex="-1"></a>    file "data/named.run";</span>
+<span id="namedfile-50"><a href="#namedfile-50" aria-hidden="true" tabindex="-1"></a>    severity dynamic;</span>
+<span id="namedfile-51"><a href="#namedfile-51" aria-hidden="true" tabindex="-1"></a>  };</span>
+<span id="namedfile-52"><a href="#namedfile-52" aria-hidden="true" tabindex="-1"></a>};</span>
+<span id="namedfile-53"><a href="#namedfile-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="namedfile-54"><a href="#namedfile-54" aria-hidden="true" tabindex="-1"></a>zone "." IN {</span>
+<span id="namedfile-55"><a href="#namedfile-55" aria-hidden="true" tabindex="-1"></a>  type hint;</span>
+<span id="namedfile-56"><a href="#namedfile-56" aria-hidden="true" tabindex="-1"></a>  file "named.ca";</span>
+<span id="namedfile-57"><a href="#namedfile-57" aria-hidden="true" tabindex="-1"></a>};</span>
+<span id="namedfile-58"><a href="#namedfile-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="namedfile-59"><a href="#namedfile-59" aria-hidden="true" tabindex="-1"></a>zone "azuretech.local" IN {</span>
+<span id="namedfile-60"><a href="#namedfile-60" aria-hidden="true" tabindex="-1"></a>  type master;</span>
+<span id="namedfile-61"><a href="#namedfile-61" aria-hidden="true" tabindex="-1"></a>  file "forward.azuretech";</span>
+<span id="namedfile-62"><a href="#namedfile-62" aria-hidden="true" tabindex="-1"></a>  allow-update { none; };</span>
+<span id="namedfile-63"><a href="#namedfile-63" aria-hidden="true" tabindex="-1"></a>};</span>
+<span id="namedfile-64"><a href="#namedfile-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="namedfile-65"><a href="#namedfile-65" aria-hidden="true" tabindex="-1"></a>zone "65.168.192.in-addr.arpa" IN {</span>
+<span id="namedfile-66"><a href="#namedfile-66" aria-hidden="true" tabindex="-1"></a>  type master;</span>
+<span id="namedfile-67"><a href="#namedfile-67" aria-hidden="true" tabindex="-1"></a>  file "reverse.azuretech";</span>
+<span id="namedfile-68"><a href="#namedfile-68" aria-hidden="true" tabindex="-1"></a>  allow-update { none; };</span>
+<span id="namedfile-69"><a href="#namedfile-69" aria-hidden="true" tabindex="-1"></a>};</span>
+<span id="namedfile-70"><a href="#namedfile-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="namedfile-71"><a href="#namedfile-71" aria-hidden="true" tabindex="-1"></a>include "/etc/named.rfc1912.zones";</span>
+<span id="namedfile-72"><a href="#namedfile-72" aria-hidden="true" tabindex="-1"></a>include "/etc/named.root.key";</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>/var/named/forward.azuretech</strong></pre>
+</div>
+<div class="sourceCode" id="forwardfile"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="forwardfile-1"><a href="#forwardfile-1" aria-hidden="true" tabindex="-1"></a>$TTL 86400</span>
+<span id="forwardfile-2"><a href="#forwardfile-2" aria-hidden="true" tabindex="-1"></a>@   IN SOA ldap.azuretech.local. root.azuretech.local. (</span>
+<span id="forwardfile-3"><a href="#forwardfile-3" aria-hidden="true" tabindex="-1"></a>                    2022061101 ; serial</span>
+<span id="forwardfile-4"><a href="#forwardfile-4" aria-hidden="true" tabindex="-1"></a>                    3600; refresh</span>
+<span id="forwardfile-5"><a href="#forwardfile-5" aria-hidden="true" tabindex="-1"></a>                    1800; retry</span>
+<span id="forwardfile-6"><a href="#forwardfile-6" aria-hidden="true" tabindex="-1"></a>                    604800 ; expire</span>
+<span id="forwardfile-7"><a href="#forwardfile-7" aria-hidden="true" tabindex="-1"></a>                    86400 ) ; minimum TTL</span>
+<span id="forwardfile-8"><a href="#forwardfile-8" aria-hidden="true" tabindex="-1"></a>                    </span>
+<span id="forwardfile-9"><a href="#forwardfile-9" aria-hidden="true" tabindex="-1"></a>;Name Servers</span>
+<span id="forwardfile-10"><a href="#forwardfile-10" aria-hidden="true" tabindex="-1"></a>    IN    NS    ldap.azuretech.local.     ; Master</span>
+<span id="forwardfile-11"><a href="#forwardfile-11" aria-hidden="true" tabindex="-1"></a>    IN    NS    samba.azuretech.local.    ; Slave</span>
+<span id="forwardfile-12"><a href="#forwardfile-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="forwardfile-13"><a href="#forwardfile-13" aria-hidden="true" tabindex="-1"></a>    IN    A     192.168.65.10 ; Name Server to IP resolve</span>
+<span id="forwardfile-14"><a href="#forwardfile-14" aria-hidden="true" tabindex="-1"></a>    IN    A     192.168.65.11</span>
+<span id="forwardfile-15"><a href="#forwardfile-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="forwardfile-16"><a href="#forwardfile-16" aria-hidden="true" tabindex="-1"></a>ldap        IN    A   192.168.65.10 ; Host</span>
+<span id="forwardfile-17"><a href="#forwardfile-17" aria-hidden="true" tabindex="-1"></a>samba       IN    A   192.168.65.11 ; Host</span>
+<span id="forwardfile-18"><a href="#forwardfile-18" aria-hidden="true" tabindex="-1"></a>nfs         IN    A   192.168.65.12 ; Client</span>
+<span id="forwardfile-19"><a href="#forwardfile-19" aria-hidden="true" tabindex="-1"></a>backup      IN    A   192.168.65.13 ; Client</span>
+<span id="forwardfile-20"><a href="#forwardfile-20" aria-hidden="true" tabindex="-1"></a>db1         IN    A   192.168.65.14 ; Client</span>
+<span id="forwardfile-21"><a href="#forwardfile-21" aria-hidden="true" tabindex="-1"></a>db2         IN    A   192.168.65.15 ; Client</span>
+<span id="forwardfile-22"><a href="#forwardfile-22" aria-hidden="true" tabindex="-1"></a>app1        IN    A   192.168.65.16 ; Client</span>
+<span id="forwardfile-23"><a href="#forwardfile-23" aria-hidden="true" tabindex="-1"></a>app2        IN    A   192.168.65.17 ; Client</span>
+<span id="forwardfile-24"><a href="#forwardfile-24" aria-hidden="true" tabindex="-1"></a>web1        IN    A   192.168.65.18 ; Client</span>
+<span id="forwardfile-25"><a href="#forwardfile-25" aria-hidden="true" tabindex="-1"></a>web2        IN    A   192.168.65.19 ; Client</span>
+<span id="forwardfile-26"><a href="#forwardfile-26" aria-hidden="true" tabindex="-1"></a>firewall    IN    A   192.168.65.20 ; Firewall</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>/var/named/reverse.azuretech</strong></pre>
+</div>
+<div class="sourceCode" id="reversefile"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="reversefile-1"><a href="#reversefile-1" aria-hidden="true" tabindex="-1"></a>$TTL 86400</span>
+<span id="reversefile-2"><a href="#reversefile-2" aria-hidden="true" tabindex="-1"></a>@   IN SOA ldap.azuretech.local. root.azuretech.local. (</span>
+<span id="reversefile-3"><a href="#reversefile-3" aria-hidden="true" tabindex="-1"></a>                    2022061101 ; serial</span>
+<span id="reversefile-4"><a href="#reversefile-4" aria-hidden="true" tabindex="-1"></a>                    3600; refresh</span>
+<span id="reversefile-5"><a href="#reversefile-5" aria-hidden="true" tabindex="-1"></a>                    1800; retry</span>
+<span id="reversefile-6"><a href="#reversefile-6" aria-hidden="true" tabindex="-1"></a>                    604800 ; expire</span>
+<span id="reversefile-7"><a href="#reversefile-7" aria-hidden="true" tabindex="-1"></a>                    86400 ) ; minimum TTL</span>
+<span id="reversefile-8"><a href="#reversefile-8" aria-hidden="true" tabindex="-1"></a>                    </span>
+<span id="reversefile-9"><a href="#reversefile-9" aria-hidden="true" tabindex="-1"></a>;Name Servers</span>
+<span id="reversefile-10"><a href="#reversefile-10" aria-hidden="true" tabindex="-1"></a>    IN    NS    ldap.azuretech.local.   ; Master</span>
+<span id="reversefile-11"><a href="#reversefile-11" aria-hidden="true" tabindex="-1"></a>    IN    NS    samba.azuretech.local.  ; Slave</span>
+<span id="reversefile-12"><a href="#reversefile-12" aria-hidden="true" tabindex="-1"></a>    IN    PTR   azuretech.local.</span>
+<span id="reversefile-13"><a href="#reversefile-13" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="reversefile-14"><a href="#reversefile-14" aria-hidden="true" tabindex="-1"></a>;Record (IP) points to hostname</span>
+<span id="reversefile-15"><a href="#reversefile-15" aria-hidden="true" tabindex="-1"></a>ldap        IN    A   192.168.65.10 ; Master Nameserver</span>
+<span id="reversefile-16"><a href="#reversefile-16" aria-hidden="true" tabindex="-1"></a>samba       IN    A   192.168.65.11 ; Slave Nameserver</span>
+<span id="reversefile-17"><a href="#reversefile-17" aria-hidden="true" tabindex="-1"></a>nfs         IN    A   192.168.65.12 ; Client</span>
+<span id="reversefile-18"><a href="#reversefile-18" aria-hidden="true" tabindex="-1"></a>backup      IN    A   192.168.65.13 ; Client</span>
+<span id="reversefile-19"><a href="#reversefile-19" aria-hidden="true" tabindex="-1"></a>db1         IN    A   192.168.65.14 ; Client</span>
+<span id="reversefile-20"><a href="#reversefile-20" aria-hidden="true" tabindex="-1"></a>db2         IN    A   192.168.65.15 ; Client</span>
+<span id="reversefile-21"><a href="#reversefile-21" aria-hidden="true" tabindex="-1"></a>app1        IN    A   192.168.65.16 ; Client</span>
+<span id="reversefile-22"><a href="#reversefile-22" aria-hidden="true" tabindex="-1"></a>app2        IN    A   192.168.65.17 ; Client</span>
+<span id="reversefile-23"><a href="#reversefile-23" aria-hidden="true" tabindex="-1"></a>web1        IN    A   192.168.65.18 ; Client</span>
+<span id="reversefile-24"><a href="#reversefile-24" aria-hidden="true" tabindex="-1"></a>web2        IN    A   192.168.65.19 ; Client</span>
+<span id="reversefile-25"><a href="#reversefile-25" aria-hidden="true" tabindex="-1"></a>firewall    IN    A   192.168.65.20 ; Firewall</span>
+<span id="reversefile-26"><a href="#reversefile-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="reversefile-27"><a href="#reversefile-27" aria-hidden="true" tabindex="-1"></a>10    IN    PTR   ldap.azuretech.local.</span>
+<span id="reversefile-28"><a href="#reversefile-28" aria-hidden="true" tabindex="-1"></a>11    IN    PTR   samba.azuretech.local.</span>
+<span id="reversefile-29"><a href="#reversefile-29" aria-hidden="true" tabindex="-1"></a>12    IN    PTR   nfs.azuretech.local.</span>
+<span id="reversefile-30"><a href="#reversefile-30" aria-hidden="true" tabindex="-1"></a>13    IN    PTR   backup.azuretech.local.</span>
+<span id="reversefile-31"><a href="#reversefile-31" aria-hidden="true" tabindex="-1"></a>14    IN    PTR   db1.azuretech.local.</span>
+<span id="reversefile-32"><a href="#reversefile-32" aria-hidden="true" tabindex="-1"></a>15    IN    PTR   db2.azuretech.local.</span>
+<span id="reversefile-33"><a href="#reversefile-33" aria-hidden="true" tabindex="-1"></a>16    IN    PTR   app1.azuretech.local.</span>
+<span id="reversefile-34"><a href="#reversefile-34" aria-hidden="true" tabindex="-1"></a>17    IN    PTR   app2.azuretech.local.</span>
+<span id="reversefile-35"><a href="#reversefile-35" aria-hidden="true" tabindex="-1"></a>18    IN    PTR   web1.azuretech.local.</span>
+<span id="reversefile-36"><a href="#reversefile-36" aria-hidden="true" tabindex="-1"></a>19    IN    PTR   web2.azuretech.local.</span>
+<span id="reversefile-37"><a href="#reversefile-37" aria-hidden="true" tabindex="-1"></a>20    IN    PTR   firewall.azuretech.local.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="dns-slave-server-configuration" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="dns-slave-server-configuration"><span class="header-section-number">4.5</span> DNS Slave Server Configuration</h2>
+<p>The DNS slave server was installed on the same server as the Samba, so it is referred to as samba in the configuration files. The <a href="#nameconffile">main config</a> file is shown below…</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>/etc/name.conf</strong></pre>
+</div>
+<div class="sourceCode" id="nameconffile"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="nameconffile-1"><a href="#nameconffile-1" aria-hidden="true" tabindex="-1"></a>//</span>
+<span id="nameconffile-2"><a href="#nameconffile-2" aria-hidden="true" tabindex="-1"></a>// named.conf</span>
+<span id="nameconffile-3"><a href="#nameconffile-3" aria-hidden="true" tabindex="-1"></a>//</span>
+<span id="nameconffile-4"><a href="#nameconffile-4" aria-hidden="true" tabindex="-1"></a>// Provided by Red Hat bind package to configure the ISC BIND named(8) DNS</span>
+<span id="nameconffile-5"><a href="#nameconffile-5" aria-hidden="true" tabindex="-1"></a>// server as a caching only nameserver (as a localhost DNS resolver only).</span>
+<span id="nameconffile-6"><a href="#nameconffile-6" aria-hidden="true" tabindex="-1"></a>//</span>
+<span id="nameconffile-7"><a href="#nameconffile-7" aria-hidden="true" tabindex="-1"></a>// See /usr/share/doc/bind*/sample/ for example named configuration files.</span>
+<span id="nameconffile-8"><a href="#nameconffile-8" aria-hidden="true" tabindex="-1"></a>//</span>
+<span id="nameconffile-9"><a href="#nameconffile-9" aria-hidden="true" tabindex="-1"></a>// See the BIND Administrator's Reference Manual (ARM) for details about the</span>
+<span id="nameconffile-10"><a href="#nameconffile-10" aria-hidden="true" tabindex="-1"></a>// configuration located in /usr/share/doc/bind-{version}/Bv9ARM.html</span>
+<span id="nameconffile-11"><a href="#nameconffile-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="nameconffile-12"><a href="#nameconffile-12" aria-hidden="true" tabindex="-1"></a>options {</span>
+<span id="nameconffile-13"><a href="#nameconffile-13" aria-hidden="true" tabindex="-1"></a>  listen-on port 53 { 127.0.0.1; 192.168.65.11; };</span>
+<span id="nameconffile-14"><a href="#nameconffile-14" aria-hidden="true" tabindex="-1"></a>  // listen-on-v6 port 53 { ::1; };</span>
+<span id="nameconffile-15"><a href="#nameconffile-15" aria-hidden="true" tabindex="-1"></a>  directory"/var/named";</span>
+<span id="nameconffile-16"><a href="#nameconffile-16" aria-hidden="true" tabindex="-1"></a>  dump-file"/var/named/data/cache_dump.db";</span>
+<span id="nameconffile-17"><a href="#nameconffile-17" aria-hidden="true" tabindex="-1"></a>  statistics-file "/var/named/data/named_stats.txt";</span>
+<span id="nameconffile-18"><a href="#nameconffile-18" aria-hidden="true" tabindex="-1"></a>  memstatistics-file "/var/named/data/named_mem_stats.txt";</span>
+<span id="nameconffile-19"><a href="#nameconffile-19" aria-hidden="true" tabindex="-1"></a>  recursing-file "/var/named/data/named.recursing";</span>
+<span id="nameconffile-20"><a href="#nameconffile-20" aria-hidden="true" tabindex="-1"></a>  secroots-file "/var/named/data/named.secroots";</span>
+<span id="nameconffile-21"><a href="#nameconffile-21" aria-hidden="true" tabindex="-1"></a>  allow-query { localhost; 192.168.65.0/24; };</span>
+<span id="nameconffile-22"><a href="#nameconffile-22" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="nameconffile-23"><a href="#nameconffile-23" aria-hidden="true" tabindex="-1"></a>  /*</span>
+<span id="nameconffile-24"><a href="#nameconffile-24" aria-hidden="true" tabindex="-1"></a>    - If you are building an AUTHORITATIVE DNS server, do NOT enable recursion.</span>
+<span id="nameconffile-25"><a href="#nameconffile-25" aria-hidden="true" tabindex="-1"></a>    - If you are building a RECURSIVE (caching) DNS server, you need to enable</span>
+<span id="nameconffile-26"><a href="#nameconffile-26" aria-hidden="true" tabindex="-1"></a>      recursion.</span>
+<span id="nameconffile-27"><a href="#nameconffile-27" aria-hidden="true" tabindex="-1"></a>    - If your recursive DNS server has a public IP address, you MUST enable access</span>
+<span id="nameconffile-28"><a href="#nameconffile-28" aria-hidden="true" tabindex="-1"></a>      control to limit queries to your legitimate users. Failing to do so will</span>
+<span id="nameconffile-29"><a href="#nameconffile-29" aria-hidden="true" tabindex="-1"></a>      cause your server to become part of large scale DNS amplification</span>
+<span id="nameconffile-30"><a href="#nameconffile-30" aria-hidden="true" tabindex="-1"></a>      attacks. Implementing BCP38 within your network would greatly</span>
+<span id="nameconffile-31"><a href="#nameconffile-31" aria-hidden="true" tabindex="-1"></a>      reduce such attack surface</span>
+<span id="nameconffile-32"><a href="#nameconffile-32" aria-hidden="true" tabindex="-1"></a>  */</span>
+<span id="nameconffile-33"><a href="#nameconffile-33" aria-hidden="true" tabindex="-1"></a>  recursion no;</span>
+<span id="nameconffile-34"><a href="#nameconffile-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="nameconffile-35"><a href="#nameconffile-35" aria-hidden="true" tabindex="-1"></a>  dnssec-enable yes;</span>
+<span id="nameconffile-36"><a href="#nameconffile-36" aria-hidden="true" tabindex="-1"></a>  dnssec-validation yes;</span>
+<span id="nameconffile-37"><a href="#nameconffile-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="nameconffile-38"><a href="#nameconffile-38" aria-hidden="true" tabindex="-1"></a>  /* Path to ISC DLV key */</span>
+<span id="nameconffile-39"><a href="#nameconffile-39" aria-hidden="true" tabindex="-1"></a>  bindkeys-file "/etc/named.root.key";</span>
+<span id="nameconffile-40"><a href="#nameconffile-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="nameconffile-41"><a href="#nameconffile-41" aria-hidden="true" tabindex="-1"></a>  managed-keys-directory "/var/named/dynamic";</span>
+<span id="nameconffile-42"><a href="#nameconffile-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="nameconffile-43"><a href="#nameconffile-43" aria-hidden="true" tabindex="-1"></a>  pid-file "/run/named/named.pid";</span>
+<span id="nameconffile-44"><a href="#nameconffile-44" aria-hidden="true" tabindex="-1"></a>  session-keyfile "/run/named/session.key";</span>
+<span id="nameconffile-45"><a href="#nameconffile-45" aria-hidden="true" tabindex="-1"></a>};</span>
+<span id="nameconffile-46"><a href="#nameconffile-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="nameconffile-47"><a href="#nameconffile-47" aria-hidden="true" tabindex="-1"></a>logging {</span>
+<span id="nameconffile-48"><a href="#nameconffile-48" aria-hidden="true" tabindex="-1"></a>  channel default_debug {</span>
+<span id="nameconffile-49"><a href="#nameconffile-49" aria-hidden="true" tabindex="-1"></a>    file "data/named.run";</span>
+<span id="nameconffile-50"><a href="#nameconffile-50" aria-hidden="true" tabindex="-1"></a>    severity dynamic;</span>
+<span id="nameconffile-51"><a href="#nameconffile-51" aria-hidden="true" tabindex="-1"></a>  };</span>
+<span id="nameconffile-52"><a href="#nameconffile-52" aria-hidden="true" tabindex="-1"></a>};</span>
+<span id="nameconffile-53"><a href="#nameconffile-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="nameconffile-54"><a href="#nameconffile-54" aria-hidden="true" tabindex="-1"></a>zone "." IN {</span>
+<span id="nameconffile-55"><a href="#nameconffile-55" aria-hidden="true" tabindex="-1"></a>  type hint;</span>
+<span id="nameconffile-56"><a href="#nameconffile-56" aria-hidden="true" tabindex="-1"></a>  file "named.ca";</span>
+<span id="nameconffile-57"><a href="#nameconffile-57" aria-hidden="true" tabindex="-1"></a>};</span>
+<span id="nameconffile-58"><a href="#nameconffile-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="nameconffile-59"><a href="#nameconffile-59" aria-hidden="true" tabindex="-1"></a>zone "azuretech.local" IN {</span>
+<span id="nameconffile-60"><a href="#nameconffile-60" aria-hidden="true" tabindex="-1"></a>  type slave;</span>
+<span id="nameconffile-61"><a href="#nameconffile-61" aria-hidden="true" tabindex="-1"></a>  file "slaves/azuretech.fwd.zone";</span>
+<span id="nameconffile-62"><a href="#nameconffile-62" aria-hidden="true" tabindex="-1"></a>  masters { 192.168.65.10; };</span>
+<span id="nameconffile-63"><a href="#nameconffile-63" aria-hidden="true" tabindex="-1"></a>};</span>
+<span id="nameconffile-64"><a href="#nameconffile-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="nameconffile-65"><a href="#nameconffile-65" aria-hidden="true" tabindex="-1"></a>zone "65.168.192.in-addr.arpa" IN {</span>
+<span id="nameconffile-66"><a href="#nameconffile-66" aria-hidden="true" tabindex="-1"></a>  type slave;</span>
+<span id="nameconffile-67"><a href="#nameconffile-67" aria-hidden="true" tabindex="-1"></a>  file "slaves/azuretech.rev.zone";</span>
+<span id="nameconffile-68"><a href="#nameconffile-68" aria-hidden="true" tabindex="-1"></a>  masters { 192.168.65.10; };</span>
+<span id="nameconffile-69"><a href="#nameconffile-69" aria-hidden="true" tabindex="-1"></a>};</span>
+<span id="nameconffile-70"><a href="#nameconffile-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="nameconffile-71"><a href="#nameconffile-71" aria-hidden="true" tabindex="-1"></a>include "/etc/named.rfc1912.zones";</span>
+<span id="nameconffile-72"><a href="#nameconffile-72" aria-hidden="true" tabindex="-1"></a>include "/etc/named.root.key";</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="dhcp-server-configuration" class="level2" data-number="4.6">
+<h2 data-number="4.6" class="anchored" data-anchor-id="dhcp-server-configuration"><span class="header-section-number">4.6</span> DHCP Server Configuration</h2>
+<p>The DHCP server was installed on the same server as the LDAP. The <a href="#dhcpdfile">main config</a> file is shown below…</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>/etc/dhcp/dhcpd.conf</strong></pre>
+</div>
+<div class="sourceCode" id="dhcpdfile"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="dhcpdfile-1"><a href="#dhcpdfile-1" aria-hidden="true" tabindex="-1"></a>#</span>
+<span id="dhcpdfile-2"><a href="#dhcpdfile-2" aria-hidden="true" tabindex="-1"></a># DHCP Server Configuration file.# see /usr/share/doc/dhcp*/dhcpd.conf.example</span>
+<span id="dhcpdfile-3"><a href="#dhcpdfile-3" aria-hidden="true" tabindex="-1"></a># see dhcpd.conf(5) man page</span>
+<span id="dhcpdfile-4"><a href="#dhcpdfile-4" aria-hidden="true" tabindex="-1"></a>#</span>
+<span id="dhcpdfile-5"><a href="#dhcpdfile-5" aria-hidden="true" tabindex="-1"></a>option domain-name "azuretech.local";</span>
+<span id="dhcpdfile-6"><a href="#dhcpdfile-6" aria-hidden="true" tabindex="-1"></a>option domain-name-servers ldap.azuretech.local, samba.azuretech.local, 8.8.8.8, 8.8.4.4;</span>
+<span id="dhcpdfile-7"><a href="#dhcpdfile-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="dhcpdfile-8"><a href="#dhcpdfile-8" aria-hidden="true" tabindex="-1"></a>default-lease-time 86400; # 24 hours</span>
+<span id="dhcpdfile-9"><a href="#dhcpdfile-9" aria-hidden="true" tabindex="-1"></a>max-lease-time 604800;    # One week</span>
+<span id="dhcpdfile-10"><a href="#dhcpdfile-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="dhcpdfile-11"><a href="#dhcpdfile-11" aria-hidden="true" tabindex="-1"></a># Use this to enble / disable dynamic dns updates globally.</span>
+<span id="dhcpdfile-12"><a href="#dhcpdfile-12" aria-hidden="true" tabindex="-1"></a>#ddns-update-style none;</span>
+<span id="dhcpdfile-13"><a href="#dhcpdfile-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="dhcpdfile-14"><a href="#dhcpdfile-14" aria-hidden="true" tabindex="-1"></a># If this DHCP server is the official DHCP server for the local</span>
+<span id="dhcpdfile-15"><a href="#dhcpdfile-15" aria-hidden="true" tabindex="-1"></a># network, the authoritative directive should be uncommented.</span>
+<span id="dhcpdfile-16"><a href="#dhcpdfile-16" aria-hidden="true" tabindex="-1"></a>authoritative;</span>
+<span id="dhcpdfile-17"><a href="#dhcpdfile-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="dhcpdfile-18"><a href="#dhcpdfile-18" aria-hidden="true" tabindex="-1"></a>subnet 192.168.65.0 netmask 255.255.255.0 {</span>
+<span id="dhcpdfile-19"><a href="#dhcpdfile-19" aria-hidden="true" tabindex="-1"></a>  range 192.168.65.21 192.168.65.100;</span>
+<span id="dhcpdfile-20"><a href="#dhcpdfile-20" aria-hidden="true" tabindex="-1"></a>  option domain-name-servers 192.168.65.10, 192.168.65.11, 8.8.8.8, 8.8.4.4;</span>
+<span id="dhcpdfile-21"><a href="#dhcpdfile-21" aria-hidden="true" tabindex="-1"></a>  option domain-name "azuretech.local";</span>
+<span id="dhcpdfile-22"><a href="#dhcpdfile-22" aria-hidden="true" tabindex="-1"></a>  option routers 192.168.65.2;</span>
+<span id="dhcpdfile-23"><a href="#dhcpdfile-23" aria-hidden="true" tabindex="-1"></a>  option subnet-mask 255.255.255.0;</span>
+<span id="dhcpdfile-24"><a href="#dhcpdfile-24" aria-hidden="true" tabindex="-1"></a>  option broadcast-address 192.168.65.255;</span>
+<span id="dhcpdfile-25"><a href="#dhcpdfile-25" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="dhcpdfile-26"><a href="#dhcpdfile-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="dhcpdfile-27"><a href="#dhcpdfile-27" aria-hidden="true" tabindex="-1"></a>host nfs {</span>
+<span id="dhcpdfile-28"><a href="#dhcpdfile-28" aria-hidden="true" tabindex="-1"></a>  hardware ethernet 00:0c:29:08:dc:1c;</span>
+<span id="dhcpdfile-29"><a href="#dhcpdfile-29" aria-hidden="true" tabindex="-1"></a>  fixed-address 192.168.65.12;</span>
+<span id="dhcpdfile-30"><a href="#dhcpdfile-30" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="dhcpdfile-31"><a href="#dhcpdfile-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="dhcpdfile-32"><a href="#dhcpdfile-32" aria-hidden="true" tabindex="-1"></a>host backup {</span>
+<span id="dhcpdfile-33"><a href="#dhcpdfile-33" aria-hidden="true" tabindex="-1"></a>  hardware ethernet 00:0c:29:0e:59:b4;</span>
+<span id="dhcpdfile-34"><a href="#dhcpdfile-34" aria-hidden="true" tabindex="-1"></a>  fixed-address 192.168.65.13;</span>
+<span id="dhcpdfile-35"><a href="#dhcpdfile-35" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="dhcpdfile-36"><a href="#dhcpdfile-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="dhcpdfile-37"><a href="#dhcpdfile-37" aria-hidden="true" tabindex="-1"></a>host db1 {</span>
+<span id="dhcpdfile-38"><a href="#dhcpdfile-38" aria-hidden="true" tabindex="-1"></a>  hardware ethernet 00:0c:29:d1:f5:0c;</span>
+<span id="dhcpdfile-39"><a href="#dhcpdfile-39" aria-hidden="true" tabindex="-1"></a>  fixed-address 192.168.65.14;</span>
+<span id="dhcpdfile-40"><a href="#dhcpdfile-40" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="dhcpdfile-41"><a href="#dhcpdfile-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="dhcpdfile-42"><a href="#dhcpdfile-42" aria-hidden="true" tabindex="-1"></a>host db2 {</span>
+<span id="dhcpdfile-43"><a href="#dhcpdfile-43" aria-hidden="true" tabindex="-1"></a>  hardware ethernet 00:0c:29:95:46:a9;</span>
+<span id="dhcpdfile-44"><a href="#dhcpdfile-44" aria-hidden="true" tabindex="-1"></a>  fixed-address 192.168.65.15;</span>
+<span id="dhcpdfile-45"><a href="#dhcpdfile-45" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="dhcpdfile-46"><a href="#dhcpdfile-46" aria-hidden="true" tabindex="-1"></a>host app1 {</span>
+<span id="dhcpdfile-47"><a href="#dhcpdfile-47" aria-hidden="true" tabindex="-1"></a>  hardware ethernet 00:0c:29:83:8c:60;</span>
+<span id="dhcpdfile-48"><a href="#dhcpdfile-48" aria-hidden="true" tabindex="-1"></a>  fixed-address 192.168.65.16;</span>
+<span id="dhcpdfile-49"><a href="#dhcpdfile-49" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="dhcpdfile-50"><a href="#dhcpdfile-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="dhcpdfile-51"><a href="#dhcpdfile-51" aria-hidden="true" tabindex="-1"></a>host app2 {</span>
+<span id="dhcpdfile-52"><a href="#dhcpdfile-52" aria-hidden="true" tabindex="-1"></a>  hardware ethernet 00:0c:29:f2:40:5c;</span>
+<span id="dhcpdfile-53"><a href="#dhcpdfile-53" aria-hidden="true" tabindex="-1"></a>  fixed-address 192.168.65.17;</span>
+<span id="dhcpdfile-54"><a href="#dhcpdfile-54" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="dhcpdfile-55"><a href="#dhcpdfile-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="dhcpdfile-56"><a href="#dhcpdfile-56" aria-hidden="true" tabindex="-1"></a>host web1 {</span>
+<span id="dhcpdfile-57"><a href="#dhcpdfile-57" aria-hidden="true" tabindex="-1"></a>  hardware ethernet 00:0c:29:a7:d9:38;</span>
+<span id="dhcpdfile-58"><a href="#dhcpdfile-58" aria-hidden="true" tabindex="-1"></a>  fixed-address 192.168.65.18;</span>
+<span id="dhcpdfile-59"><a href="#dhcpdfile-59" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="dhcpdfile-60"><a href="#dhcpdfile-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="dhcpdfile-61"><a href="#dhcpdfile-61" aria-hidden="true" tabindex="-1"></a>host web2 {</span>
+<span id="dhcpdfile-62"><a href="#dhcpdfile-62" aria-hidden="true" tabindex="-1"></a>  hardware ethernet 00:0c:29:e9:fa:2b;</span>
+<span id="dhcpdfile-63"><a href="#dhcpdfile-63" aria-hidden="true" tabindex="-1"></a>  fixed-address 192.168.65.19;</span>
+<span id="dhcpdfile-64"><a href="#dhcpdfile-64" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="nfs-server-configuration" class="level2" data-number="4.7">
+<h2 data-number="4.7" class="anchored" data-anchor-id="nfs-server-configuration"><span class="header-section-number">4.7</span> NFS Server Configuration</h2>
+<p>The NFS server’s <a href="#exportsfile">export</a> file and client <a href="#fstabfile">fstab config</a> file are shown below…</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>/etc/exports</strong></pre>
+</div>
+<div class="sourceCode" id="exportsfile"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="exportsfile-1"><a href="#exportsfile-1" aria-hidden="true" tabindex="-1"></a>/nfsfileshare 192.168.65.0/24(rw,sync,no_root_squash)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>/etc/fstab</strong></pre>
+</div>
+<div class="sourceCode" id="fstabfile"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="fstabfile-1"><a href="#fstabfile-1" aria-hidden="true" tabindex="-1"></a>#</span>
+<span id="fstabfile-2"><a href="#fstabfile-2" aria-hidden="true" tabindex="-1"></a># /etc/fstab</span>
+<span id="fstabfile-3"><a href="#fstabfile-3" aria-hidden="true" tabindex="-1"></a># Created by anaconda on Wed May 11 18:06:18 2022</span>
+<span id="fstabfile-4"><a href="#fstabfile-4" aria-hidden="true" tabindex="-1"></a>#</span>
+<span id="fstabfile-5"><a href="#fstabfile-5" aria-hidden="true" tabindex="-1"></a># Accessible filesystems, by reference, are maintained under '/dev/disk'</span>
+<span id="fstabfile-6"><a href="#fstabfile-6" aria-hidden="true" tabindex="-1"></a># See man pages fstab(5), findfs(8), mount(8) and/or blkid(8) for more info</span>
+<span id="fstabfile-7"><a href="#fstabfile-7" aria-hidden="true" tabindex="-1"></a>#</span>
+<span id="fstabfile-8"><a href="#fstabfile-8" aria-hidden="true" tabindex="-1"></a>/dev/mapper/centos-root /       xfs   defaults    00</span>
+<span id="fstabfile-9"><a href="#fstabfile-9" aria-hidden="true" tabindex="-1"></a>UUID=747f3e8d-9501-43e8-9ed3-3fae6fea9f23 /boot       xfs   defaults    00</span>
+<span id="fstabfile-10"><a href="#fstabfile-10" aria-hidden="true" tabindex="-1"></a>/dev/mapper/centos-swap swap        swap  defaults    00</span>
+<span id="fstabfile-11"><a href="#fstabfile-11" aria-hidden="true" tabindex="-1"></a>nfs:/nfsfileshare /mnt/nfsfileshare       nfs   nosuid,rw,sync,hard,intr    00</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="samba-server-configuration" class="level2" data-number="4.8">
+<h2 data-number="4.8" class="anchored" data-anchor-id="samba-server-configuration"><span class="header-section-number">4.8</span> Samba Server Configuration</h2>
+<p>The Samba server’s <a href="#ifcfgens33file">interface config</a> and <a href="#sambaconffile">smb.conf</a> files are shown below…</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>/etc/sysconfig/network-scripts/ifcfg-ens33</strong></pre>
+</div>
+<div class="sourceCode" id="ifcfgens33file"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="ifcfgens33file-1"><a href="#ifcfgens33file-1" aria-hidden="true" tabindex="-1"></a><span class="va">TYPE</span><span class="op">=</span><span class="st">"Ethernet"</span></span>
+<span id="ifcfgens33file-2"><a href="#ifcfgens33file-2" aria-hidden="true" tabindex="-1"></a><span class="va">PROXY_METHOD</span><span class="op">=</span><span class="st">"none"</span></span>
+<span id="ifcfgens33file-3"><a href="#ifcfgens33file-3" aria-hidden="true" tabindex="-1"></a><span class="va">BROWSER_ONLY</span><span class="op">=</span><span class="st">"no"</span></span>
+<span id="ifcfgens33file-4"><a href="#ifcfgens33file-4" aria-hidden="true" tabindex="-1"></a><span class="va">BOOTPROTO</span><span class="op">=</span><span class="st">"none"</span></span>
+<span id="ifcfgens33file-5"><a href="#ifcfgens33file-5" aria-hidden="true" tabindex="-1"></a><span class="va">DEFROUTE</span><span class="op">=</span><span class="st">"yes"</span></span>
+<span id="ifcfgens33file-6"><a href="#ifcfgens33file-6" aria-hidden="true" tabindex="-1"></a><span class="va">IPV4_FAILURE_FATAL</span><span class="op">=</span><span class="st">"no"</span></span>
+<span id="ifcfgens33file-7"><a href="#ifcfgens33file-7" aria-hidden="true" tabindex="-1"></a><span class="va">IPV6INIT</span><span class="op">=</span><span class="st">"no"</span></span>
+<span id="ifcfgens33file-8"><a href="#ifcfgens33file-8" aria-hidden="true" tabindex="-1"></a><span class="co">#IPV6_AUTOCONF="yes"</span></span>
+<span id="ifcfgens33file-9"><a href="#ifcfgens33file-9" aria-hidden="true" tabindex="-1"></a><span class="co">#IPV6_DEFROUTE="yes"</span></span>
+<span id="ifcfgens33file-10"><a href="#ifcfgens33file-10" aria-hidden="true" tabindex="-1"></a><span class="co">#IPV6_FAILURE_FATAL="no"</span></span>
+<span id="ifcfgens33file-11"><a href="#ifcfgens33file-11" aria-hidden="true" tabindex="-1"></a><span class="co">#IPV6_ADDR_GEN_MODE="stable-privacy"</span></span>
+<span id="ifcfgens33file-12"><a href="#ifcfgens33file-12" aria-hidden="true" tabindex="-1"></a><span class="va">NAME</span><span class="op">=</span><span class="st">"ens33"</span></span>
+<span id="ifcfgens33file-13"><a href="#ifcfgens33file-13" aria-hidden="true" tabindex="-1"></a><span class="va">UUID</span><span class="op">=</span><span class="st">"eb0d3098-d1cd-4d11-9e74-e7478d56b0c5"</span></span>
+<span id="ifcfgens33file-14"><a href="#ifcfgens33file-14" aria-hidden="true" tabindex="-1"></a><span class="va">DEVICE</span><span class="op">=</span><span class="st">"ens33"</span></span>
+<span id="ifcfgens33file-15"><a href="#ifcfgens33file-15" aria-hidden="true" tabindex="-1"></a><span class="va">ONBOOT</span><span class="op">=</span><span class="st">"yes"</span></span>
+<span id="ifcfgens33file-16"><a href="#ifcfgens33file-16" aria-hidden="true" tabindex="-1"></a><span class="va">IPADDR</span><span class="op">=</span><span class="st">"192.168.65.11"</span></span>
+<span id="ifcfgens33file-17"><a href="#ifcfgens33file-17" aria-hidden="true" tabindex="-1"></a><span class="va">PREFIX</span><span class="op">=</span><span class="st">"24"</span></span>
+<span id="ifcfgens33file-18"><a href="#ifcfgens33file-18" aria-hidden="true" tabindex="-1"></a><span class="va">GATEWAY</span><span class="op">=</span><span class="st">"192.168.65.20"</span></span>
+<span id="ifcfgens33file-19"><a href="#ifcfgens33file-19" aria-hidden="true" tabindex="-1"></a><span class="va">DNS1</span><span class="op">=</span><span class="st">"192.168.65.10"</span></span>
+<span id="ifcfgens33file-20"><a href="#ifcfgens33file-20" aria-hidden="true" tabindex="-1"></a><span class="va">DNS2</span><span class="op">=</span><span class="st">"192.168.65.11"</span></span>
+<span id="ifcfgens33file-21"><a href="#ifcfgens33file-21" aria-hidden="true" tabindex="-1"></a><span class="va">DNS3</span><span class="op">=</span><span class="st">"8.8.8.8"</span></span>
+<span id="ifcfgens33file-22"><a href="#ifcfgens33file-22" aria-hidden="true" tabindex="-1"></a><span class="va">DNS4</span><span class="op">=</span><span class="st">"8.8.4.4"</span></span>
+<span id="ifcfgens33file-23"><a href="#ifcfgens33file-23" aria-hidden="true" tabindex="-1"></a><span class="va">DOMAIN</span><span class="op">=</span><span class="st">"azuretech.local"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>/etc/samba/smb.conf</strong></pre>
+</div>
+<div class="sourceCode" id="sambaconffile"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="sambaconffile-1"><a href="#sambaconffile-1" aria-hidden="true" tabindex="-1"></a><span class="co"># See smb.conf.example for a more detailed config file or</span></span>
+<span id="sambaconffile-2"><a href="#sambaconffile-2" aria-hidden="true" tabindex="-1"></a><span class="co"># read the smb.conf manpage.</span></span>
+<span id="sambaconffile-3"><a href="#sambaconffile-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Run 'testparm' to verify the config is correct after</span></span>
+<span id="sambaconffile-4"><a href="#sambaconffile-4" aria-hidden="true" tabindex="-1"></a><span class="co"># you modified it.</span></span>
+<span id="sambaconffile-5"><a href="#sambaconffile-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="sambaconffile-6"><a href="#sambaconffile-6" aria-hidden="true" tabindex="-1"></a><span class="ex">[global]</span></span>
+<span id="sambaconffile-7"><a href="#sambaconffile-7" aria-hidden="true" tabindex="-1"></a>  <span class="ex">workgroup</span> = SAMBA</span>
+<span id="sambaconffile-8"><a href="#sambaconffile-8" aria-hidden="true" tabindex="-1"></a>  <span class="ex">security</span> = user</span>
+<span id="sambaconffile-9"><a href="#sambaconffile-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="sambaconffile-10"><a href="#sambaconffile-10" aria-hidden="true" tabindex="-1"></a>  <span class="ex">passdb</span> backend = tdbsam</span>
+<span id="sambaconffile-11"><a href="#sambaconffile-11" aria-hidden="true" tabindex="-1"></a>  <span class="ex">printing</span> = cups</span>
+<span id="sambaconffile-12"><a href="#sambaconffile-12" aria-hidden="true" tabindex="-1"></a>  <span class="ex">printcap</span> name = cups</span>
+<span id="sambaconffile-13"><a href="#sambaconffile-13" aria-hidden="true" tabindex="-1"></a>  <span class="ex">load</span> printers = yes</span>
+<span id="sambaconffile-14"><a href="#sambaconffile-14" aria-hidden="true" tabindex="-1"></a>  <span class="ex">cups</span> options = raw</span>
+<span id="sambaconffile-15"><a href="#sambaconffile-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="sambaconffile-16"><a href="#sambaconffile-16" aria-hidden="true" tabindex="-1"></a><span class="ex">[homes]</span></span>
+<span id="sambaconffile-17"><a href="#sambaconffile-17" aria-hidden="true" tabindex="-1"></a>  <span class="ex">comment</span> = Home Directories</span>
+<span id="sambaconffile-18"><a href="#sambaconffile-18" aria-hidden="true" tabindex="-1"></a>  <span class="ex">valid</span> users = %S, %D%w%S</span>
+<span id="sambaconffile-19"><a href="#sambaconffile-19" aria-hidden="true" tabindex="-1"></a>  <span class="ex">browseable</span> = No</span>
+<span id="sambaconffile-20"><a href="#sambaconffile-20" aria-hidden="true" tabindex="-1"></a>  <span class="bu">read</span> <span class="va">only</span> <span class="op">=</span> <span class="va">No</span></span>
+<span id="sambaconffile-21"><a href="#sambaconffile-21" aria-hidden="true" tabindex="-1"></a>  <span class="ex">inherit</span> acls = Yes</span>
+<span id="sambaconffile-22"><a href="#sambaconffile-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="sambaconffile-23"><a href="#sambaconffile-23" aria-hidden="true" tabindex="-1"></a><span class="ex">[printers]</span></span>
+<span id="sambaconffile-24"><a href="#sambaconffile-24" aria-hidden="true" tabindex="-1"></a>  <span class="ex">comment</span> = All Printers</span>
+<span id="sambaconffile-25"><a href="#sambaconffile-25" aria-hidden="true" tabindex="-1"></a>  <span class="ex">path</span> = /var/tmp</span>
+<span id="sambaconffile-26"><a href="#sambaconffile-26" aria-hidden="true" tabindex="-1"></a>  <span class="ex">printable</span> = Yes</span>
+<span id="sambaconffile-27"><a href="#sambaconffile-27" aria-hidden="true" tabindex="-1"></a>  <span class="ex">create</span> mask = 0600</span>
+<span id="sambaconffile-28"><a href="#sambaconffile-28" aria-hidden="true" tabindex="-1"></a>  <span class="ex">browseable</span> = No</span>
+<span id="sambaconffile-29"><a href="#sambaconffile-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="sambaconffile-30"><a href="#sambaconffile-30" aria-hidden="true" tabindex="-1"></a><span class="ex">[print$]</span></span>
+<span id="sambaconffile-31"><a href="#sambaconffile-31" aria-hidden="true" tabindex="-1"></a>  <span class="ex">comment</span> = Printer Drivers</span>
+<span id="sambaconffile-32"><a href="#sambaconffile-32" aria-hidden="true" tabindex="-1"></a>  <span class="ex">path</span> = /var/lib/samba/drivers</span>
+<span id="sambaconffile-33"><a href="#sambaconffile-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write</span> list = @printadmin root</span>
+<span id="sambaconffile-34"><a href="#sambaconffile-34" aria-hidden="true" tabindex="-1"></a>  <span class="ex">force</span> group = @printadmin</span>
+<span id="sambaconffile-35"><a href="#sambaconffile-35" aria-hidden="true" tabindex="-1"></a>  <span class="ex">create</span> mask = 0664</span>
+<span id="sambaconffile-36"><a href="#sambaconffile-36" aria-hidden="true" tabindex="-1"></a>  <span class="ex">directory</span> mask = 0775</span>
+<span id="sambaconffile-37"><a href="#sambaconffile-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="sambaconffile-38"><a href="#sambaconffile-38" aria-hidden="true" tabindex="-1"></a><span class="ex">[smb]</span></span>
+<span id="sambaconffile-39"><a href="#sambaconffile-39" aria-hidden="true" tabindex="-1"></a>  <span class="ex">path</span> = /samba</span>
+<span id="sambaconffile-40"><a href="#sambaconffile-40" aria-hidden="true" tabindex="-1"></a>  <span class="ex">browseable</span> = yes</span>
+<span id="sambaconffile-41"><a href="#sambaconffile-41" aria-hidden="true" tabindex="-1"></a>  <span class="bu">read</span> <span class="va">only</span> <span class="op">=</span> <span class="va">no</span></span>
+<span id="sambaconffile-42"><a href="#sambaconffile-42" aria-hidden="true" tabindex="-1"></a>  <span class="ex">force</span> create mode = 0660</span>
+<span id="sambaconffile-43"><a href="#sambaconffile-43" aria-hidden="true" tabindex="-1"></a>  <span class="ex">force</span> directory mode = 2770</span>
+<span id="sambaconffile-44"><a href="#sambaconffile-44" aria-hidden="true" tabindex="-1"></a>  <span class="ex">valid</span> users = smb @sadmin</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="email-server-configuration" class="level2" data-number="4.9">
+<h2 data-number="4.9" class="anchored" data-anchor-id="email-server-configuration"><span class="header-section-number">4.9</span> Email Server Configuration</h2>
+<p>The email servers’ were installed on the samba server machine and that is why it is labelled as samba in the config files. The <a href="#maincffile">Postfix</a> and <a href="#dovfile">Dovecot</a> config file alterations are shown below…</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>/etc/postfix/main.cf</strong></pre>
+</div>
+<div class="sourceCode" id="maincffile"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="maincffile-1"><a href="#maincffile-1" aria-hidden="true" tabindex="-1"></a><span class="co"># line 75: uncomment and specify hostname</span></span>
+<span id="maincffile-2"><a href="#maincffile-2" aria-hidden="true" tabindex="-1"></a><span class="ex">myhostname</span> = samba.azuretech.local</span>
+<span id="maincffile-3"><a href="#maincffile-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="maincffile-4"><a href="#maincffile-4" aria-hidden="true" tabindex="-1"></a><span class="co"># line 83: uncomment and specify domain name</span></span>
+<span id="maincffile-5"><a href="#maincffile-5" aria-hidden="true" tabindex="-1"></a><span class="ex">mydomain</span> = azuretech.local</span>
+<span id="maincffile-6"><a href="#maincffile-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="maincffile-7"><a href="#maincffile-7" aria-hidden="true" tabindex="-1"></a><span class="co"># line 99: uncomment</span></span>
+<span id="maincffile-8"><a href="#maincffile-8" aria-hidden="true" tabindex="-1"></a><span class="ex">myorigin</span> = <span class="va">$mydomain</span></span>
+<span id="maincffile-9"><a href="#maincffile-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="maincffile-10"><a href="#maincffile-10" aria-hidden="true" tabindex="-1"></a><span class="co"># line 116: change</span></span>
+<span id="maincffile-11"><a href="#maincffile-11" aria-hidden="true" tabindex="-1"></a><span class="ex">inet_interfaces</span> = all</span>
+<span id="maincffile-12"><a href="#maincffile-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="maincffile-13"><a href="#maincffile-13" aria-hidden="true" tabindex="-1"></a><span class="co"># line 164: add</span></span>
+<span id="maincffile-14"><a href="#maincffile-14" aria-hidden="true" tabindex="-1"></a><span class="ex">mydestination</span> = <span class="va">$myhostname</span>, localhost.<span class="va">$mydomain</span>, localhost, <span class="va">$mydomain</span></span>
+<span id="maincffile-15"><a href="#maincffile-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="maincffile-16"><a href="#maincffile-16" aria-hidden="true" tabindex="-1"></a><span class="co"># line 264: uncomment and specify your local network</span></span>
+<span id="maincffile-17"><a href="#maincffile-17" aria-hidden="true" tabindex="-1"></a><span class="ex">mynetworks</span> = 192.168.65.0/24</span>
+<span id="maincffile-18"><a href="#maincffile-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="maincffile-19"><a href="#maincffile-19" aria-hidden="true" tabindex="-1"></a><span class="co"># line 419: uncomment (use Maildir)</span></span>
+<span id="maincffile-20"><a href="#maincffile-20" aria-hidden="true" tabindex="-1"></a><span class="ex">home_mailbox</span> = Maildir/</span>
+<span id="maincffile-21"><a href="#maincffile-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="maincffile-22"><a href="#maincffile-22" aria-hidden="true" tabindex="-1"></a><span class="co"># line 574: add</span></span>
+<span id="maincffile-23"><a href="#maincffile-23" aria-hidden="true" tabindex="-1"></a><span class="ex">smtpd_banner</span> = <span class="va">$myhostname</span> ESMTP</span>
+<span id="maincffile-24"><a href="#maincffile-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="maincffile-25"><a href="#maincffile-25" aria-hidden="true" tabindex="-1"></a><span class="co"># add follows to the end</span></span>
+<span id="maincffile-26"><a href="#maincffile-26" aria-hidden="true" tabindex="-1"></a><span class="co"># limit an email size with 10M</span></span>
+<span id="maincffile-27"><a href="#maincffile-27" aria-hidden="true" tabindex="-1"></a><span class="ex">message_size_limit</span> = 10485760</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>/etc/dovecot/dovecot.conf</strong></pre>
+</div>
+<div class="sourceCode" id="dovfile"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="dovfile-1"><a href="#dovfile-1" aria-hidden="true" tabindex="-1"></a><span class="co"># line 24: uncomment</span></span>
+<span id="dovfile-2"><a href="#dovfile-2" aria-hidden="true" tabindex="-1"></a><span class="ex">protocols</span> = imap pop3 lmtp</span>
+<span id="dovfile-3"><a href="#dovfile-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="dovfile-4"><a href="#dovfile-4" aria-hidden="true" tabindex="-1"></a><span class="co"># line 30: uncomment and change ( if not use IPv6 )</span></span>
+<span id="dovfile-5"><a href="#dovfile-5" aria-hidden="true" tabindex="-1"></a><span class="ex">listen</span> = <span class="pp">*</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>/etc/dovecot/conf.d/10-auth.conf</strong></pre>
+</div>
+<div class="sourceCode" id="10authfile"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="10authfile-1"><a href="#10authfile-1" aria-hidden="true" tabindex="-1"></a><span class="co"># line 10: uncomment and change ( allow plain text auth )</span></span>
+<span id="10authfile-2"><a href="#10authfile-2" aria-hidden="true" tabindex="-1"></a><span class="ex">disable_plaintext_auth</span> = no</span>
+<span id="10authfile-3"><a href="#10authfile-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="10authfile-4"><a href="#10authfile-4" aria-hidden="true" tabindex="-1"></a><span class="co"># line 100: add</span></span>
+<span id="10authfile-5"><a href="#10authfile-5" aria-hidden="true" tabindex="-1"></a><span class="ex">auth_mechanisms</span> = plain login</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>/etc/dovecot/conf.d/10-mail.conf</strong></pre>
+</div>
+<div class="sourceCode" id="10mailfile"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="10mailfile-1"><a href="#10mailfile-1" aria-hidden="true" tabindex="-1"></a><span class="co"># line 30: uncomment and add</span></span>
+<span id="10mailfile-2"><a href="#10mailfile-2" aria-hidden="true" tabindex="-1"></a><span class="ex">mail_location</span> = maildir:~/Maildir</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>/etc/dovecot/conf.d/10-master.conf</strong></pre>
+</div>
+<div class="sourceCode" id="10masterfile"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="10masterfile-1"><a href="#10masterfile-1" aria-hidden="true" tabindex="-1"></a><span class="co"># line 96-98: uncomment and add like follows</span></span>
+<span id="10masterfile-2"><a href="#10masterfile-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Postfix smtp-auth</span></span>
+<span id="10masterfile-3"><a href="#10masterfile-3" aria-hidden="true" tabindex="-1"></a><span class="ex">unix_listener</span> /var/spool/postfix/private/auth {</span>
+<span id="10masterfile-4"><a href="#10masterfile-4" aria-hidden="true" tabindex="-1"></a>  <span class="ex">mode</span> = 0666</span>
+<span id="10masterfile-5"><a href="#10masterfile-5" aria-hidden="true" tabindex="-1"></a>  <span class="ex">user</span> = postfix</span>
+<span id="10masterfile-6"><a href="#10masterfile-6" aria-hidden="true" tabindex="-1"></a>  <span class="ex">group</span> = postfix</span>
+<span id="10masterfile-7"><a href="#10masterfile-7" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>/etc/dovecot/conf.d/10-ssl.conf</strong></pre>
+</div>
+<div class="sourceCode" id="10sslfile"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="10sslfile-1"><a href="#10sslfile-1" aria-hidden="true" tabindex="-1"></a><span class="co"># line 8: change (not require SSL)</span></span>
+<span id="10sslfile-2"><a href="#10sslfile-2" aria-hidden="true" tabindex="-1"></a><span class="ex">ssl</span> = no</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="network-administrators-utilities" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Network Administrator’s Utilities</h1>
+<section id="password-generator-script" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="password-generator-script"><span class="header-section-number">5.1</span> Password Generator Script</h2>
+<p>As an administration tool I created a <a href="#passgenfile">random password generator script</a> that asks how long you want the password to be. After it generates the password is asks if the user wants to output it into a file and if so, what should the file name be. The bash script code for the file is below…</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>passwdgen_script.sh</strong></pre>
+</div>
+<div class="sourceCode" id="passgenfile"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="passgenfile-1"><a href="#passgenfile-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="passgenfile-2"><a href="#passgenfile-2" aria-hidden="true" tabindex="-1"></a><span class="co">#This is a script for generating secure random password suggestions for users</span></span>
+<span id="passgenfile-3"><a href="#passgenfile-3" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="at">-e</span> <span class="st">"\n****** Secure Random Password Generator ******\n\nLet's generate a random password...\n\nHow long would you like your password to be?\n\nCharacter Length: "</span></span>
+<span id="passgenfile-4"><a href="#passgenfile-4" aria-hidden="true" tabindex="-1"></a><span class="bu">read</span> <span class="va">length</span></span>
+<span id="passgenfile-5"><a href="#passgenfile-5" aria-hidden="true" tabindex="-1"></a><span class="va">passwd</span><span class="op">=</span><span class="kw">`</span><span class="bu">echo</span> <span class="va">$RANDOM</span> <span class="kw">|</span> <span class="fu">md5sum</span> <span class="kw">|</span> <span class="fu">head</span> <span class="at">-c</span> <span class="va">${length}</span><span class="kw">`</span></span>
+<span id="passgenfile-6"><a href="#passgenfile-6" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="at">-e</span> <span class="st">"\nPassword Suggestion: </span><span class="va">${passwd}</span><span class="st">\n\nWould you like to store this password in a file? (y/n): "</span></span>
+<span id="passgenfile-7"><a href="#passgenfile-7" aria-hidden="true" tabindex="-1"></a><span class="va">answer</span><span class="op">=</span>null</span>
+<span id="passgenfile-8"><a href="#passgenfile-8" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="bu">[</span> <span class="va">${answer}</span> <span class="ot">!=</span> y <span class="bu">]</span> <span class="kw">||</span> <span class="bu">[</span> <span class="va">${answer}</span> <span class="ot">!=</span> n <span class="bu">]</span><span class="kw">;</span> <span class="cf">do</span></span>
+<span id="passgenfile-9"><a href="#passgenfile-9" aria-hidden="true" tabindex="-1"></a><span class="bu">read</span> <span class="va">answer</span></span>
+<span id="passgenfile-10"><a href="#passgenfile-10" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="va">${answer}</span> <span class="ot">=</span> <span class="st">"y"</span> <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="passgenfile-11"><a href="#passgenfile-11" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="at">-e</span> <span class="st">"\nWhat would you like you filename to be?: "</span></span>
+<span id="passgenfile-12"><a href="#passgenfile-12" aria-hidden="true" tabindex="-1"></a>  <span class="bu">read</span> <span class="va">filenm</span></span>
+<span id="passgenfile-13"><a href="#passgenfile-13" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="va">${passwd}</span> <span class="op">&gt;</span> <span class="va">${filenm}</span></span>
+<span id="passgenfile-14"><a href="#passgenfile-14" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="at">-e</span> <span class="st">"\nFile has been saved in the current working directory... Goodbye!\n"</span></span>
+<span id="passgenfile-15"><a href="#passgenfile-15" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span></span>
+<span id="passgenfile-16"><a href="#passgenfile-16" aria-hidden="true" tabindex="-1"></a><span class="cf">elif</span> <span class="bu">[</span> <span class="va">${answer}</span> <span class="ot">=</span> <span class="st">"n"</span> <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="passgenfile-17"><a href="#passgenfile-17" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="at">-e</span> <span class="st">"\nOk... Gooodbye!\n"</span></span>
+<span id="passgenfile-18"><a href="#passgenfile-18" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span></span>
+<span id="passgenfile-19"><a href="#passgenfile-19" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span></span>
+<span id="passgenfile-20"><a href="#passgenfile-20" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="at">-e</span> <span class="st">"\nNot a valid answer, try again.. You must choose either (y/n): \r"</span></span>
+<span id="passgenfile-21"><a href="#passgenfile-21" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span>
+<span id="passgenfile-22"><a href="#passgenfile-22" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span>
+<span id="passgenfile-23"><a href="#passgenfile-23" aria-hidden="true" tabindex="-1"></a><span class="cf">return</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="ip-address-script" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="ip-address-script"><span class="header-section-number">5.2</span> IP Address Script</h2>
+<p>As an administration tool I created an <a href="#ipaddrfile">IP address script</a> that asks you for an IP address. Then it asks the user for the subnet mask in bits and after which it prints the given IP address’ classification along with the subnet mask in decimal format. Thoughout the script if the user gives the wrong output it tells the user what they did wrong and lets them try the input again. The bash script code for the file is below…</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>ipaddr_script.sh</strong></pre>
+</div>
+<div class="sourceCode" id="ipaddrfile"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="ipaddrfile-1"><a href="#ipaddrfile-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="ipaddrfile-2"><a href="#ipaddrfile-2" aria-hidden="true" tabindex="-1"></a><span class="co">#This script informs users about IP address class</span></span>
+<span id="ipaddrfile-3"><a href="#ipaddrfile-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="ipaddrfile-4"><a href="#ipaddrfile-4" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="at">-e</span> <span class="st">"\n\n****** IP Address Classification ******\n"</span></span>
+<span id="ipaddrfile-5"><a href="#ipaddrfile-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="ipaddrfile-6"><a href="#ipaddrfile-6" aria-hidden="true" tabindex="-1"></a><span class="va">ipaddr</span><span class="op">=</span>null</span>
+<span id="ipaddrfile-7"><a href="#ipaddrfile-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="ipaddrfile-8"><a href="#ipaddrfile-8" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="ot">! </span><span class="kw">[[</span> <span class="va">${ipaddr}</span> <span class="ot">=~</span> <span class="pp">.</span><span class="op">[</span><span class="ss">0</span><span class="op">-</span><span class="ss">9</span><span class="op">]</span> <span class="kw">]]</span> <span class="kw">||</span> <span class="bu">[</span> <span class="va">${</span><span class="op">#</span><span class="va">ipaddr}</span> <span class="ot">-gt</span> 15 <span class="bu">]</span> <span class="kw">||</span> <span class="bu">[</span> <span class="va">${</span><span class="op">#</span><span class="va">ipaddr}</span> <span class="ot">-lt</span> 7 <span class="bu">]</span> <span class="kw">||</span> <span class="bu">[</span> <span class="va">${firstoct}</span> <span class="ot">-lt</span> 1 <span class="bu">]</span> <span class="kw">||</span> <span class="bu">[</span> <span class="va">${firstoct}</span> <span class="ot">-gt</span> 255 <span class="bu">]</span> <span class="kw">||</span> <span class="bu">[</span> <span class="va">${secoct}</span> <span class="ot">-lt</span> 1 <span class="bu">]</span> <span class="kw">||</span> <span class="bu">[</span> <span class="va">${secoct}</span> <span class="ot">-gt</span> 255 <span class="bu">]</span> <span class="kw">||</span> <span class="bu">[</span> <span class="va">${thirdoct}</span> <span class="ot">-lt</span> 1 <span class="bu">]</span> <span class="kw">||</span> <span class="bu">[</span> <span class="va">${thirdoct}</span> <span class="ot">-gt</span> 255 <span class="bu">]</span> <span class="kw">||</span> <span class="bu">[</span> <span class="va">${fourthoct}</span> <span class="ot">-lt</span> 1 <span class="bu">]</span> <span class="kw">||</span> <span class="bu">[</span> <span class="va">${fourthoct}</span> <span class="ot">-gt</span> 255 <span class="bu">]</span><span class="kw">;</span> <span class="cf">do</span></span>
+<span id="ipaddrfile-9"><a href="#ipaddrfile-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="ipaddrfile-10"><a href="#ipaddrfile-10" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="at">-e</span> <span class="st">"\nProvide IP Address: "</span></span>
+<span id="ipaddrfile-11"><a href="#ipaddrfile-11" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="ipaddrfile-12"><a href="#ipaddrfile-12" aria-hidden="true" tabindex="-1"></a>  <span class="bu">read</span> <span class="va">ipaddr</span></span>
+<span id="ipaddrfile-13"><a href="#ipaddrfile-13" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="ipaddrfile-14"><a href="#ipaddrfile-14" aria-hidden="true" tabindex="-1"></a>  <span class="va">firstoct</span><span class="op">=</span><span class="kw">`</span><span class="bu">echo</span> <span class="va">${ipaddr}</span> <span class="kw">|</span> <span class="fu">awk</span> <span class="at">-F</span><span class="st">'.'</span> <span class="st">'{print $1}'</span><span class="kw">`</span></span>
+<span id="ipaddrfile-15"><a href="#ipaddrfile-15" aria-hidden="true" tabindex="-1"></a>  <span class="va">secoct</span><span class="op">=</span><span class="kw">`</span><span class="bu">echo</span> <span class="va">${ipaddr}</span> <span class="kw">|</span> <span class="fu">awk</span> <span class="at">-F</span><span class="st">'.'</span> <span class="st">'{print $2}'</span><span class="kw">`</span></span>
+<span id="ipaddrfile-16"><a href="#ipaddrfile-16" aria-hidden="true" tabindex="-1"></a>  <span class="va">thirdoct</span><span class="op">=</span><span class="kw">`</span><span class="bu">echo</span> <span class="va">${ipaddr}</span> <span class="kw">|</span> <span class="fu">awk</span> <span class="at">-F</span><span class="st">'.'</span> <span class="st">'{print $3}'</span><span class="kw">`</span></span>
+<span id="ipaddrfile-17"><a href="#ipaddrfile-17" aria-hidden="true" tabindex="-1"></a>  <span class="va">fourthoct</span><span class="op">=</span><span class="kw">`</span><span class="bu">echo</span> <span class="va">${ipaddr}</span> <span class="kw">|</span> <span class="fu">awk</span> <span class="at">-F</span><span class="st">'.'</span> <span class="st">'{print $4}'</span><span class="kw">`</span></span>
+<span id="ipaddrfile-18"><a href="#ipaddrfile-18" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="ipaddrfile-19"><a href="#ipaddrfile-19" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="bu">[</span> <span class="va">${</span><span class="op">#</span><span class="va">ipaddr}</span> <span class="ot">-gt</span> 15 <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="ipaddrfile-20"><a href="#ipaddrfile-20" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="at">-e</span> <span class="st">"\nIP address is too long, try again..."</span></span>
+<span id="ipaddrfile-21"><a href="#ipaddrfile-21" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="ipaddrfile-22"><a href="#ipaddrfile-22" aria-hidden="true" tabindex="-1"></a>  <span class="cf">elif</span> <span class="bu">[</span> <span class="va">${</span><span class="op">#</span><span class="va">ipaddr}</span> <span class="ot">-lt</span> 7 <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="ipaddrfile-23"><a href="#ipaddrfile-23" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="at">-e</span> <span class="st">"\nIP address is too short, try again..."</span></span>
+<span id="ipaddrfile-24"><a href="#ipaddrfile-24" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="ipaddrfile-25"><a href="#ipaddrfile-25" aria-hidden="true" tabindex="-1"></a>  <span class="cf">elif</span> <span class="ot">! </span><span class="kw">[[</span> <span class="va">${ipaddr}</span> <span class="ot">=~</span> <span class="pp">.</span><span class="op">[</span><span class="ss">0</span><span class="op">-</span><span class="ss">9</span><span class="op">]</span> <span class="kw">]];</span> <span class="cf">then</span></span>
+<span id="ipaddrfile-26"><a href="#ipaddrfile-26" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="at">-e</span> <span class="st">"\nMust be a number, try again..."</span></span>
+<span id="ipaddrfile-27"><a href="#ipaddrfile-27" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="ipaddrfile-28"><a href="#ipaddrfile-28" aria-hidden="true" tabindex="-1"></a>  <span class="cf">elif</span> <span class="bu">[</span> <span class="va">${firstoct}</span> <span class="ot">-lt</span> 1 <span class="bu">]</span> <span class="kw">||</span> <span class="bu">[</span> <span class="va">${firstoct}</span> <span class="ot">-gt</span> 255 <span class="bu">]</span> <span class="kw">||</span> <span class="bu">[</span> <span class="va">${secoct}</span> <span class="ot">-lt</span> 1 <span class="bu">]</span> <span class="kw">||</span> <span class="bu">[</span> <span class="va">${secoct}</span> <span class="ot">-gt</span> 255 <span class="bu">]</span> <span class="kw">||</span> <span class="bu">[</span> <span class="va">${thirdoct}</span> <span class="ot">-lt</span> 1 <span class="bu">]</span> <span class="kw">||</span> <span class="bu">[</span> <span class="va">${thirdoct}</span> <span class="ot">-gt</span> 255 <span class="bu">]</span> <span class="kw">||</span> <span class="bu">[</span> <span class="va">${fourthoct}</span> <span class="ot">-lt</span> 1 <span class="bu">]</span> <span class="kw">||</span> <span class="bu">[</span> <span class="va">${fourthoct}</span> <span class="ot">-gt</span> 255 <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="ipaddrfile-29"><a href="#ipaddrfile-29" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="at">-e</span> <span class="st">"\nEach octect must be a number between 1-255, try again..."</span></span>
+<span id="ipaddrfile-30"><a href="#ipaddrfile-30" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="ipaddrfile-31"><a href="#ipaddrfile-31" aria-hidden="true" tabindex="-1"></a>  <span class="cf">fi</span></span>
+<span id="ipaddrfile-32"><a href="#ipaddrfile-32" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span>
+<span id="ipaddrfile-33"><a href="#ipaddrfile-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="ipaddrfile-34"><a href="#ipaddrfile-34" aria-hidden="true" tabindex="-1"></a><span class="va">sbmask</span><span class="op">=</span>null</span>
+<span id="ipaddrfile-35"><a href="#ipaddrfile-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="ipaddrfile-36"><a href="#ipaddrfile-36" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="ot">! </span><span class="kw">[[</span> <span class="va">${sbmask}</span> <span class="ot">=~</span> <span class="op">[</span><span class="ss">0</span><span class="op">-</span><span class="ss">9</span><span class="op">]</span> <span class="kw">]]</span> <span class="kw">||</span> <span class="bu">[</span> <span class="va">${sbmask}</span> <span class="ot">-gt</span> 32 <span class="bu">]</span> <span class="kw">||</span> <span class="bu">[</span> <span class="va">${sbmask}</span> <span class="ot">-lt</span> 1 <span class="bu">]</span><span class="kw">;</span> <span class="cf">do</span></span>
+<span id="ipaddrfile-37"><a href="#ipaddrfile-37" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="at">-e</span> <span class="st">"\nHow many bits is the subnet mask?:"</span></span>
+<span id="ipaddrfile-38"><a href="#ipaddrfile-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="ipaddrfile-39"><a href="#ipaddrfile-39" aria-hidden="true" tabindex="-1"></a>  <span class="bu">read</span> <span class="va">sbmask</span></span>
+<span id="ipaddrfile-40"><a href="#ipaddrfile-40" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="ipaddrfile-41"><a href="#ipaddrfile-41" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="bu">[</span> <span class="va">${sbmask}</span> <span class="ot">-gt</span> 32 <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="ipaddrfile-42"><a href="#ipaddrfile-42" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="at">-e</span> <span class="st">"\nThere are only 32 bits in a subnet mask, try again..."</span></span>
+<span id="ipaddrfile-43"><a href="#ipaddrfile-43" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="ipaddrfile-44"><a href="#ipaddrfile-44" aria-hidden="true" tabindex="-1"></a>  <span class="cf">elif</span> <span class="bu">[</span> <span class="va">${sbmask}</span> <span class="ot">-lt</span> 1 <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="ipaddrfile-45"><a href="#ipaddrfile-45" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="at">-e</span> <span class="st">"\nMust have at least 1 bit in the subnet mask, try again..."</span></span>
+<span id="ipaddrfile-46"><a href="#ipaddrfile-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="ipaddrfile-47"><a href="#ipaddrfile-47" aria-hidden="true" tabindex="-1"></a>  <span class="cf">elif</span> <span class="ot">! </span><span class="kw">[[</span> <span class="va">${sbmask}</span> <span class="ot">=~</span> <span class="op">[</span><span class="ss">0</span><span class="op">-</span><span class="ss">9</span><span class="op">]</span> <span class="kw">]];</span> <span class="cf">then</span></span>
+<span id="ipaddrfile-48"><a href="#ipaddrfile-48" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="at">-e</span> <span class="st">"\nMust be a number, try again..."</span></span>
+<span id="ipaddrfile-49"><a href="#ipaddrfile-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="ipaddrfile-50"><a href="#ipaddrfile-50" aria-hidden="true" tabindex="-1"></a>  <span class="cf">fi</span></span>
+<span id="ipaddrfile-51"><a href="#ipaddrfile-51" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span>
+<span id="ipaddrfile-52"><a href="#ipaddrfile-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="ipaddrfile-53"><a href="#ipaddrfile-53" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="va">${firstoct}</span> <span class="ot">-gt</span> 0 <span class="bu">]</span> <span class="kw">&amp;&amp;</span> <span class="bu">[</span> <span class="va">${firstoct}</span> <span class="ot">-lt</span> 128 <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="ipaddrfile-54"><a href="#ipaddrfile-54" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="at">-e</span> <span class="st">"\n** CLASS A ADDRESS **"</span></span>
+<span id="ipaddrfile-55"><a href="#ipaddrfile-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="ipaddrfile-56"><a href="#ipaddrfile-56" aria-hidden="true" tabindex="-1"></a><span class="cf">elif</span> <span class="bu">[</span> <span class="va">${firstoct}</span> <span class="ot">-gt</span> 127 <span class="bu">]</span> <span class="kw">&amp;&amp;</span> <span class="bu">[</span> <span class="va">${firstoct}</span> <span class="ot">-lt</span> 192 <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="ipaddrfile-57"><a href="#ipaddrfile-57" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="at">-e</span> <span class="st">"\n** CLASS B ADDRESS **"</span></span>
+<span id="ipaddrfile-58"><a href="#ipaddrfile-58" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="ipaddrfile-59"><a href="#ipaddrfile-59" aria-hidden="true" tabindex="-1"></a><span class="cf">elif</span> <span class="bu">[</span> <span class="va">${firstoct}</span> <span class="ot">-gt</span> 191 <span class="bu">]</span> <span class="kw">&amp;&amp;</span> <span class="bu">[</span> <span class="va">${firstoct}</span> <span class="ot">-lt</span> 224 <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="ipaddrfile-60"><a href="#ipaddrfile-60" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="at">-e</span> <span class="st">"\n** CLASS C ADDRESS **"</span></span>
+<span id="ipaddrfile-61"><a href="#ipaddrfile-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="ipaddrfile-62"><a href="#ipaddrfile-62" aria-hidden="true" tabindex="-1"></a><span class="cf">elif</span> <span class="bu">[</span> <span class="va">${firstoct}</span> <span class="ot">-gt</span> 223 <span class="bu">]</span> <span class="kw">&amp;&amp;</span> <span class="bu">[</span> <span class="va">${firstoct}</span> <span class="ot">-lt</span> 240 <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="ipaddrfile-63"><a href="#ipaddrfile-63" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="at">-e</span> <span class="st">"\n** CLASS D ADDRESS **"</span></span>
+<span id="ipaddrfile-64"><a href="#ipaddrfile-64" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="ipaddrfile-65"><a href="#ipaddrfile-65" aria-hidden="true" tabindex="-1"></a><span class="cf">elif</span> <span class="bu">[</span> <span class="va">${firstoct}</span> <span class="ot">-gt</span> 239 <span class="bu">]</span> <span class="kw">&amp;&amp;</span> <span class="bu">[</span> <span class="va">${firstoct}</span> <span class="ot">-lt</span> 256 <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="ipaddrfile-66"><a href="#ipaddrfile-66" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="at">-e</span> <span class="st">"\n** CLASS E ADDRESS **"</span></span>
+<span id="ipaddrfile-67"><a href="#ipaddrfile-67" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="ipaddrfile-68"><a href="#ipaddrfile-68" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span></span>
+<span id="ipaddrfile-69"><a href="#ipaddrfile-69" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span></span>
+<span id="ipaddrfile-70"><a href="#ipaddrfile-70" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span>
+<span id="ipaddrfile-71"><a href="#ipaddrfile-71" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="at">-e</span> <span class="st">"\nIP Address: </span><span class="va">${ipaddr}</span><span class="st">"</span></span>
+<span id="ipaddrfile-72"><a href="#ipaddrfile-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="ipaddrfile-73"><a href="#ipaddrfile-73" aria-hidden="true" tabindex="-1"></a><span class="va">M</span><span class="op">=</span><span class="va">$((</span> <span class="bn">0xffffffff</span> <span class="op">^</span> ((<span class="dv">1</span> <span class="op">&lt;&lt;</span> (<span class="dv">32</span><span class="op">-</span><span class="va">sbmask</span>)) <span class="op">-</span><span class="dv">1</span>) <span class="va">))</span></span>
+<span id="ipaddrfile-74"><a href="#ipaddrfile-74" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="at">-e</span> <span class="st">"\nSubnet Mask: </span><span class="va">$((</span> (<span class="va">M</span><span class="op">&gt;&gt;</span><span class="dv">24</span>) <span class="op">&amp;</span> <span class="bn">0xff</span> <span class="va">))</span><span class="st">.</span><span class="va">$((</span> (<span class="va">M</span><span class="op">&gt;&gt;</span><span class="dv">16</span>) <span class="op">&amp;</span> <span class="bn">0xff</span> <span class="va">))</span><span class="st">.</span><span class="va">$((</span> (<span class="va">M</span><span class="op">&gt;&gt;</span><span class="dv">8</span>) <span class="op">&amp;</span> <span class="bn">0xff</span> <span class="va">))</span><span class="st">.</span><span class="va">$((</span> <span class="va">M</span> <span class="op">&amp;</span> <span class="bn">0xff</span> <span class="va">))</span><span class="st">"</span></span>
+<span id="ipaddrfile-75"><a href="#ipaddrfile-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="ipaddrfile-76"><a href="#ipaddrfile-76" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="at">-e</span> <span class="st">"\nGoodbye!\n"</span></span>
+<span id="ipaddrfile-77"><a href="#ipaddrfile-77" aria-hidden="true" tabindex="-1"></a><span class="cf">return</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="security" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Security</h1>
+<section id="firewalld-selinux" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="firewalld-selinux"><span class="header-section-number">6.1</span> Firewalld &amp; SELinux</h2>
+<p>Many turn firewalld off to make it easier to configure their services but it is far better to add the port rules that you need to each server for their respective services. In addition, it is a better practice to keep SELinux enabled and to change the security contexts where needed. Throughout the server configuration process these systems were constantly adjusted in the prototype network to allow the services to run but were never disabled. This ensures that the network is as hardened as it can be to intruders.</p>
+</section>
+</section>
+<section id="appendix" class="level1 unnumbered">
+<h1 class="unnumbered">Appendix</h1>
+<section id="references" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="references">References</h2>
+<section id="nfs" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="nfs">NFS</h3>
+<p><a href="https://www.itzgeek.com/how-tos/linux/centos-how-tos/how-to-setup-nfs-server-on-centos-7-rhel-7-fedora-22.html">https://www.itzgeek.com/how-tos/linux/centos-how-tos/how-to-setup-nfs-server-on-centos-7-rhel-7-fedora-22.html</a></p>
+</section>
+<section id="nfs---windows" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="nfs---windows">NFS - Windows</h3>
+<p><a href="https://it.umn.edu/services-technologies/how-tos/network-file-system-nfs-mount-nfs-share">https://it.umn.edu/services-technologies/how-tos/network-file-system-nfs-mount-nfs-share</a></p>
+</section>
+<section id="ldap" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="ldap">LDAP</h3>
+<p><a href="https://www.itzgeek.com/how-tos/linux/centos-how-tos/step-step-openldap-server-configuration-centos-7-rhel-7.html">https://www.itzgeek.com/how-tos/linux/centos-how-tos/step-step-openldap-server-configuration-centos-7-rhel-7.html</a></p>
+</section>
+<section id="ldap-local-user-migration" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="ldap-local-user-migration">LDAP Local User Migration</h3>
+<p><a href="https://www.itzgeek.com/how-tos/linux/centos-how-tos/migrate-local-users-ldap-accounts.html">https://www.itzgeek.com/how-tos/linux/centos-how-tos/migrate-local-users-ldap-accounts.html</a></p>
+</section>
+<section id="ldap-automount-home-directories" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="ldap-automount-home-directories">LDAP Automount Home Directories</h3>
+<p><a href="https://www.myfaqbase.com/q0001874-Software-OS-Unix-Linux-RHEL-7-RHCSA-How-to-configure-AutoFS-to-mount-user-home-directories-from-NFS-server.html">https://www.myfaqbase.com/q0001874-Software-OS-Unix-Linux-RHEL-7-RHCSA-How-to-configure-AutoFS-to-mount-user-home-directories-from-NFS-server.html</a></p>
+</section>
+<section id="ldap-tls" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="ldap-tls">LDAP TLS</h3>
+<p><a href="https://www.golinuxcloud.com/configure-openldap-with-tls-certificates/">https://www.golinuxcloud.com/configure-openldap-with-tls-certificates/</a></p>
+</section>
+<section id="samba" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="samba">Samba</h3>
+<p><a href="https://linuxize.com/post/how-to-install-and-configure-samba-on-centos-7/">https://linuxize.com/post/how-to-install-and-configure-samba-on-centos-7/</a></p>
+</section>
+<section id="postfix-server" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="postfix-server">Postfix Server</h3>
+<p><a href="https://www.server-world.info/en/note?os=CentOS_7&amp;p=mail">https://www.server-world.info/en/note?os=CentOS_7&amp;p=mail</a></p>
+</section>
+<section id="dovcote-server" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="dovcote-server">Dovcote Server</h3>
+<p><a href="https://www.server-world.info/en/note?os=CentOS_7&amp;p=mail&amp;f=2">https://www.server-world.info/en/note?os=CentOS_7&amp;p=mail&amp;f=2</a></p>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
