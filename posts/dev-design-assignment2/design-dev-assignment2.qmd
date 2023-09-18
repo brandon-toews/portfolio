@@ -31,9 +31,9 @@ crossref:
 ![](MeatSweetsClustering.png)
 
 ::: callout-tip
-## Video Walkthrough {#video-walkthrough}
+## Video Walkthrough
 
-View software [video walkthrough](#video-walkthrough)
+View software [video walkthrough](#software-video-walkthrough)
 :::
 
 # Project Overview

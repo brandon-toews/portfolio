@@ -48,9 +48,9 @@ crossref:
 :::
 
 ::: callout-tip
-## Video Walkthrough {#video-walkthrough}
+## Video Walkthrough
 
-View sandbox game [video walkthrough](#video-walkthrough)
+View sandbox game [video walkthrough](#game-mech-walkthrough)
 :::
 
 # Programming Design Patterns
@@ -87,4 +87,4 @@ The other type of spawn class stores all of the different enemy classes. It rand
 
 # Video Walkthrough
 
-![](UnrealWalkthrough.mp4)
+![](UnrealWalkthrough.mp4){#game-mech-walkthrough}

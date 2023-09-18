@@ -56,9 +56,9 @@ For more information on model deployments see [Deployment](#deployment) section 
 :::
 
 ::: callout-tip
-## Video Walkthrough {#video-walkthrough}
+## Video Walkthrough
 
-View model training [video walkthrough](#video-walkthrough)
+View model training [video walkthrough](#model-training-video-walkthrough)
 :::
 
 # Project Overview
@@ -160,7 +160,7 @@ After studying some of the tests I started to isolate that a batch size of 32 di
 
 # Appendix {#appendix .unnumbered}
 
-## Model Training Video Walkthrough {.unnumbered}
+## Model Training Video Walkthrough {#model-training-video-walkthrough .unnumbered}
 
 ![](VideoPresentation.mp4)
 

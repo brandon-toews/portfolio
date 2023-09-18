@@ -12,6 +12,7 @@ categories:
 - games
 - unity
 - djikstra
+- ai
 - matrices
 date: "2023-05-13"
 description: Unity Games Engine project to implement a star map navigation style simulation with custom pathfinding script. 
@@ -30,14 +31,14 @@ crossref:
 ::: {.callout-tip collapse="true"}
 ## Play Demo
 
-|                    |                      |                 |     |
-|-------------------:|----------------------|----------------:|-----|
-|        **Forward** | `Up Arrow` or `W`    |         **Down** | `Q` |
-|       **Backward** | `Down Arrow` or `S`  |    **Look Left** | `Z` |
-|    **Strafe Left** | `Left Arrow` or `A`  |   **Look Right** | `X` |
-|   **Strafe Right** | `Right Arrow` or `D` |      **Look Up** | `R` |
-|             **Up** | `E`                  |    **Look Down** | `F` |
-| **Escape Program** | `Esc`                | **Reset Galaxy** |`Space`|
+|                    |                      |                  |         |
+|-------------------:|----------------------|-----------------:|---------|
+|        **Forward** | `Up Arrow` or `W`    |         **Down** | `Q`     |
+|       **Backward** | `Down Arrow` or `S`  |    **Look Left** | `Z`     |
+|    **Strafe Left** | `Left Arrow` or `A`  |   **Look Right** | `X`     |
+|   **Strafe Right** | `Right Arrow` or `D` |      **Look Up** | `R`     |
+|             **Up** | `E`                  |    **Look Down** | `F`     |
+| **Escape Program** | `Esc`                | **Reset Galaxy** | `Space` |
 
 : **Camera Keyboard Controls**{tbl-colwidths="\[30,20,20,30\]"}
 
@@ -60,4 +61,3 @@ View source code on Github [repository](https://github.com/brandon-toews/star-na
 # Video Walkthrough
 
 ![](StarMapWalkthrough.mp4){#video-walkthrough}
-
