@@ -10,11 +10,9 @@ badges: true
 categories:
 - design
 - development
-- business
-- project management
+- ai
 - machine learning
 - tkinter
-- software
 - ui
 - database
 date: "2023-06-05"
@@ -33,7 +31,7 @@ crossref:
 ![](MeatSweetsClustering.png)
 
 ::: callout-tip
-## Video Walkthrough
+## Video Walkthrough {#video-walkthrough}
 
 View software [video walkthrough](#video-walkthrough)
 :::
@@ -153,4 +151,4 @@ The prototype software has already unearthed some intriguing lines of investigat
 
 ## Software Video Walkthrough {.unnumbered}
 
-![](PrototypeSoftwareWalkthrough.mp4){#video-walkthrough}
+![](PrototypeSoftwareWalkthrough.mp4)

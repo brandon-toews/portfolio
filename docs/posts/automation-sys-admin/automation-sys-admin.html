@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Brandon Toews">
+<meta name="dcterms.date" content="2022-09-19">
+<meta name="description" content="Project to plan and design an expansion to a fictitious Microsoft Windows Server based network, develop a prototype network, and to produce documentation along with it.">
+
+<title>portfolio - Automation in Systems Administration Project</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+<link rel="stylesheet" href="../../styles.css">
+<meta name="twitter:title" content="portfolio - Automation in Systems Administration Project">
+<meta name="twitter:description" content="Project to plan and design an expansion to a fictitious Microsoft Windows Server based network, develop a prototype network, and to produce documentation along with it.">
+<meta name="twitter:image" content="https://brandon-toews.github.io/portfolio/posts/automation-sys-admin/future-network.png">
+<meta name="twitter:image-height" content="520">
+<meta name="twitter:image-width" content="1077">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">portfolio</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html" rel="" target="">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/brandon-toews" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Automation in Systems Administration Project</h1>
+                  <div>
+        <div class="description">
+          Project to plan and design an expansion to a fictitious Microsoft Windows Server based network, develop a prototype network, and to produce documentation along with it.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">networking</div>
+                <div class="quarto-category">design</div>
+                <div class="quarto-category">microsoft</div>
+                <div class="quarto-category">network diagram</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Brandon Toews </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">September 19, 2022</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#project-overview" id="toc-project-overview" class="nav-link active" data-scroll-target="#project-overview"><span class="header-section-number">1</span> Project Overview</a>
+  <ul class="collapse">
+  <li><a href="#purpose-of-document" id="toc-purpose-of-document" class="nav-link" data-scroll-target="#purpose-of-document"><span class="header-section-number">1.1</span> Purpose of Document</a></li>
+  <li><a href="#scope" id="toc-scope" class="nav-link" data-scroll-target="#scope"><span class="header-section-number">1.2</span> Scope</a></li>
+  </ul></li>
+  <li><a href="#stage-1" id="toc-stage-1" class="nav-link" data-scroll-target="#stage-1"><span class="header-section-number">2</span> Stage 1</a>
+  <ul class="collapse">
+  <li><a href="#existing-network-analysis" id="toc-existing-network-analysis" class="nav-link" data-scroll-target="#existing-network-analysis"><span class="header-section-number">2.1</span> Existing Network Analysis</a></li>
+  </ul></li>
+  <li><a href="#stage-2" id="toc-stage-2" class="nav-link" data-scroll-target="#stage-2"><span class="header-section-number">3</span> Stage 2</a>
+  <ul class="collapse">
+  <li><a href="#future-proposed-network" id="toc-future-proposed-network" class="nav-link" data-scroll-target="#future-proposed-network"><span class="header-section-number">3.1</span> Future / Proposed Network</a></li>
+  <li><a href="#fault-tolerance-and-availability" id="toc-fault-tolerance-and-availability" class="nav-link" data-scroll-target="#fault-tolerance-and-availability"><span class="header-section-number">3.2</span> Fault Tolerance and Availability</a></li>
+  <li><a href="#security" id="toc-security" class="nav-link" data-scroll-target="#security"><span class="header-section-number">3.3</span> Security</a></li>
+  <li><a href="#administration" id="toc-administration" class="nav-link" data-scroll-target="#administration"><span class="header-section-number">3.4</span> Administration</a></li>
+  <li><a href="#branchcache" id="toc-branchcache" class="nav-link" data-scroll-target="#branchcache"><span class="header-section-number">3.5</span> BranchCache</a></li>
+  <li><a href="#future-network-ip-address-tables" id="toc-future-network-ip-address-tables" class="nav-link" data-scroll-target="#future-network-ip-address-tables"><span class="header-section-number">3.6</span> Future Network – IP Address Tables</a></li>
+  <li><a href="#future-network-diagrams" id="toc-future-network-diagrams" class="nav-link" data-scroll-target="#future-network-diagrams"><span class="header-section-number">3.7</span> Future Network Diagrams</a></li>
+  </ul></li>
+  <li><a href="#future-ipv6-implementation" id="toc-future-ipv6-implementation" class="nav-link" data-scroll-target="#future-ipv6-implementation"><span class="header-section-number">4</span> Future IPv6 Implementation</a>
+  <ul class="collapse">
+  <li><a href="#directaccess" id="toc-directaccess" class="nav-link" data-scroll-target="#directaccess"><span class="header-section-number">4.1</span> DirectAccess</a></li>
+  </ul></li>
+  <li><a href="#appendix" id="toc-appendix" class="nav-link" data-scroll-target="#appendix">Appendix</a>
+  <ul class="collapse">
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a>
+  <ul class="collapse">
+  <li><a href="#directaccess-1" id="toc-directaccess-1" class="nav-link" data-scroll-target="#directaccess-1">DirectAccess</a></li>
+  <li><a href="#wsus-servers" id="toc-wsus-servers" class="nav-link" data-scroll-target="#wsus-servers">WSUS Servers</a></li>
+  <li><a href="#branchcache-1" id="toc-branchcache-1" class="nav-link" data-scroll-target="#branchcache-1">BranchCache</a></li>
+  <li><a href="#principle-of-least-priviledge" id="toc-principle-of-least-priviledge" class="nav-link" data-scroll-target="#principle-of-least-priviledge">Principle of Least Priviledge</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="automation-sys-admin.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p><img src="future-network.png" class="img-fluid"></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Expand To Learn About Project Scenario
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>You have been hired with a company who currently has Microsoft Windows Server based network installed. Please refer to the chart below for more details on the network setup. As the company is planning to upgrade and expand their network to the latest Microsoft based network, you are required to perform a system analysis and design to better understand the needs of the business. This business is going to acquire a new location within a month. It is required that you develop a prototype network to explain your design accommodating future expansions. New Location is in Kelowna, British Columbia and it can house up to 40 employees.</p>
+<table class="table">
+<colgroup>
+<col style="width: 29%">
+<col style="width: 70%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Items</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Locations</td>
+<td>Head Office - Vancouver</td>
+</tr>
+<tr class="even">
+<td>Company Size</td>
+<td>72 employees</td>
+</tr>
+<tr class="odd">
+<td>Departments</td>
+<td>Administration (23), Marketing (19), Sales (27) and IT (3)</td>
+</tr>
+<tr class="even">
+<td>Domain Name</td>
+<td>tandoori.local</td>
+</tr>
+<tr class="odd">
+<td>Domain Controllers</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>File Servers</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td>Backup Servers</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>Database Servers</td>
+<td>AWS Cloud Based Service</td>
+</tr>
+<tr class="odd">
+<td>DHCP</td>
+<td>Yes</td>
+</tr>
+<tr class="even">
+<td>Local DNS</td>
+<td>Yes</td>
+</tr>
+<tr class="odd">
+<td>Web Servers</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>Firewall</td>
+<td>Yes</td>
+</tr>
+<tr class="odd">
+<td>Antivirus Solution</td>
+<td>Yes</td>
+</tr>
+<tr class="even">
+<td>Mail Server</td>
+<td>Cloud Based Service</td>
+</tr>
+<tr class="odd">
+<td>Work Stations + Laptops</td>
+<td>75</td>
+</tr>
+<tr class="even">
+<td>BYOD Phone</td>
+<td>72</td>
+</tr>
+</tbody>
+</table>
+<p>Project Requirements &amp; Future Expansions:</p>
+<ul>
+<li>Company has decided to acquire a new building in Kelowna, BC functioning as a branch office for Interior BC.</li>
+<li>This new location will reflect the same company structure but with fewer employees. There are 17 people moving from Vancouver to Kelowna and 15 new employees are being hired for the new location locally.</li>
+<li>All hardware has already been purchased for this new location.</li>
+<li>Kelowna branch has to be connected with the head-office at all time and all the resources must be available to both locations, but still minimize the WAN traffic.</li>
+<li>With the head office a new network segment has to be created for RnD purpose. There has to be an RODC functioning in this network as well.</li>
+<li>RnD network must acquire IP addresses from the Head-Office network.</li>
+<li>RnD network will have total of 10 machines including the RODC.</li>
+</ul>
+<p>Project Deliverables:</p>
+<ol type="1">
+<li>Prototype network designed and implemented in multiple stages.</li>
+<li>A written document, which explains existing network, new network and contrast of them. Support your answer with diagrams. A journal detailing your progress in implementation phase.</li>
+</ol>
+</div>
+</div>
+</div>
+<section id="project-overview" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Project Overview</h1>
+<section id="purpose-of-document" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="purpose-of-document"><span class="header-section-number">1.1</span> Purpose of Document</h2>
+<p>The purpose of this document is to provide an in-depth system analysis of the existing Tandoori Inc network and to propose designs for the upgrade and expansion of said network.</p>
+</section>
+<section id="scope" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="scope"><span class="header-section-number">1.2</span> Scope</h2>
+<p>The scope of the project involves an examination of the current network to ascertain where it can be improved. In addition, design and implementation of the future expansion showing contrasts between current and future networks. The proposed solutions must include detailed configurations and address potential growth of the business in the future.</p>
+</section>
+</section>
+<section id="stage-1" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Stage 1</h1>
+<section id="existing-network-analysis" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="existing-network-analysis"><span class="header-section-number">2.1</span> Existing Network Analysis</h2>
+<p>The existing network is located in Vancouver head office and utilizes 7 on-premises servers comprised of <strong>two (2) domain controllers, two (2) file servers, one (1) backup server, one (1) web server, and one (1) firewall/router</strong>. In addition, there is <strong>one (1) load balanced database server cluster and one (1) load balanced mail server cluster</strong> both deployed from AWS cloud infrastructure. There are seventy-five (75) work stations &amp; laptops, seventy-two (72) BYOD phones all with antivirus software installed. All clients that do not require static IP addresses acquire there addresses from a DHCP server on the primary domain controller(Subnet and IP address table are shown in section 2.2 IP Address Table). The exception to this are the BYOD phones, they acquire their local IP addresses from the wireless access point. A local DNS is also installed on the primary domain server. The file servers are configured with a folder hierarchy consisting of a <strong>“CompanyData” folder</strong> containing <strong>four (4) departments, “Administration”, “Marketing”, “Sales”, and “IT”</strong>, all departments housing data in <strong>public and private folders</strong>. ( See <a href="#fig-existnet">Figure&nbsp;1</a> )</p>
+<div id="fig-existnet" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<div id="fig-exiptable" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="existing-iptable.png" class="img-fluid figure-img" data-ref-parent="fig-existnet"></p>
+<figcaption class="figure-caption">(a) IP Address Table</figcaption>
+</figure>
+</div>
+<div id="fig-exdiagram" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="existing-network.png" class="img-fluid figure-img" data-ref-parent="fig-existnet"></p>
+<figcaption class="figure-caption">(b) Network Diagram</figcaption>
+</figure>
+</div>
+<figcaption class="figure-caption"><strong>Figure</strong>&nbsp;1<strong>.</strong> Existing Network</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="stage-2" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Stage 2</h1>
+<section id="future-proposed-network" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="future-proposed-network"><span class="header-section-number">3.1</span> Future / Proposed Network</h2>
+<p>A new location in Kelowna will be setup as a branch office for Interior B.C. Seventeen (17) employees from the Vancouver branch will move to the Kelowna branch and fifteen (15) new empoyees will be hired locally. The new branch will require the addition of another subnet and servers to service the new location. The Kelowna branch will be connected to the head office at all times with all resources being available in both locations.</p>
+<p>In addition, a new RnD department with it’s own subnet and Read-Only Domain Controller will be setup in the Vancouver branch. <mark>All workstations in the RnD Department network segment will acquire IP addresses from the DHCP server hosted on the primary domain controller in the Vancouver head office network.</mark> To minimize the WAN traffic the Kelowna branch will house the same amount and kind of servers that the Vancouver branch does allowing for the clients in the Kelowna network to access services in their own location. The Kelowna network will be comprised of <strong>two (2) domain controllers, two (2) file servers, one (1) backup server, one (1) web server, and one (1) firewall/router</strong>. The domain controllers, file servers, and web server will replicate from the Vancouver branch assuring that all company data and services are in sync across the organization. Active Directory will be updated to include the addition of the new branch and subsequent servers and client machines. A DFS will be setup for the entire business and <strong>the folder hierarchy for the previous file servers will be transferred to DFS based file services on the two (2) file servers located at the Vancouver branch</strong>. DFS file service must be accessible to RnD network but RnD is restricted to only one folder.</p>
+</section>
+<section id="fault-tolerance-and-availability" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="fault-tolerance-and-availability"><span class="header-section-number">3.2</span> Fault Tolerance and Availability</h2>
+<p>Active Directory will be configured to <strong>regularly backup all crucial server data to the backup servers hosted in the network that they are located</strong>. <mark>Failover clusters for both the Vancouver and Kelowna network will be deployed in the company’s already existing AWS infrastructure.</mark> These <strong>clusters will employ load balancing technology and elastic provisioning</strong> should the on premises servers go offline. These strategies will allow for the new system to have excellent fault tolerance and high availability ensuring that the expanded network maintain a high quality of performance.</p>
+</section>
+<section id="security" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="security"><span class="header-section-number">3.3</span> Security</h2>
+<p>Edge routers on both Vancouver and Kelowna networks with act as a firewall and router in one. Local firewalls on all servers and clients will also be configured for maximum protection. <mark>In addition, an Inter-Site VPN will be employed so that the Vancouver and Kelowna networks will have a secured/tunneled connection leaving it impossible for man-in-the-middle attacks to occur.</mark> Each branch will access the AWS infrastructure through a secure VPN connection as well. <strong>The VPN will be configured to utilize the highest level of security available without the need for certificates</strong>.</p>
+</section>
+<section id="administration" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="administration"><span class="header-section-number">3.4</span> Administration</h2>
+<p>For administrative purposes, <strong>IT will be given access to all servers and administrative capabilities within the company by means of group policies employed in Active Directory</strong>. In addition to being able to perform their duties internally they will also be given <strong>administrative access externally through secure VPN connections</strong>. This will allow for quick responses to outages or emergencies that occur outside of office hours. <strong>Upstream and downstream WSUS servers will be used</strong> to ensure smooth updates and upgrades to the various servers and clients in the system. <strong>The upstream WSUS server will be hosted on the Primary Domain Controller (DC1.Van.Tandoori.Local) in the <mark>Vancouver network</mark></strong> and will be managed by IT staff there. <strong>The downstream WSUS server will be provisioned on the Primary Domain Controller (DC1.Kel.Tandoori.Local) in the <mark>Kelowna network</mark></strong> which will inherit update approvals from the upstream server housed in Vancouver. This configuration will save bandwidth on internet connections and allow for updates to be administered entirely by IT staff at head offices in Vancouver. Active Directory Group Policies will be used to implement software deployment and access for the various servers, client machines, and users in the network. Careful considerations will be given to what softwares and accesses will be afforded to the machines and users in the network to ensure that the principle of least privilege is adheard to. <mark>Therefore, only <strong>necessary software</strong> and <strong>necessary access</strong> will be provisioned using Group Policies in the Active Directory environment.</mark></p>
+</section>
+<section id="branchcache" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="branchcache"><span class="header-section-number">3.5</span> BranchCache</h2>
+<p>To optimize WAN bandwidth <strong>BranchCache technology</strong> will be utilized for company data. <mark>The two (2) file servers located at the Kelowna branch will be configured as hosted cache servers and will cache data housed in the file servers located at the Vancouver branch.</mark> This will allow for quick retrieval of company data for clients located in the Kelowna network and will ensure continuity of data across the entirety of the organization’s infrastructure.</p>
+</section>
+<section id="future-network-ip-address-tables" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="future-network-ip-address-tables"><span class="header-section-number">3.6</span> Future Network – IP Address Tables</h2>
+<p>Subnets were designed in a way to allow for large amounts of room for growth. Both Vancouver and Kelowna networks were allocated a 16 bit address space to give plenty of room to add new departments or even resubnet the existing subnets to allow for more room if departments outgrow their allocated space. Even the subnets for each department were created very large (given a 24 bit address space) to allow for growth within the department. The RnD department network was given a 24 bit address space that well exceeds its need at this current time. ( See <a href="#fig-futnetip">Figure&nbsp;2</a> )</p>
+<div id="fig-futnetip" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<div id="fig-futvanip" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="futureip-1.png" class="img-fluid figure-img" data-ref-parent="fig-futnetip"></p>
+<figcaption class="figure-caption">(a) Vancouver Network Address Table</figcaption>
+</figure>
+</div>
+<div id="fig-futrndip" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="furtureip-2.png" class="img-fluid figure-img" data-ref-parent="fig-futnetip"></p>
+<figcaption class="figure-caption">(b) RnD Network Address Table</figcaption>
+</figure>
+</div>
+<div id="fig-futkelip" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="furtureip-3.png" class="img-fluid figure-img" data-ref-parent="fig-futnetip"></p>
+<figcaption class="figure-caption">(c) Kelowna Network Address Table</figcaption>
+</figure>
+</div>
+<figcaption class="figure-caption"><strong>Figure</strong>&nbsp;2<strong>.</strong> Future Network – IP Address Tables</figcaption>
+</figure>
+</div>
+</section>
+<section id="future-network-diagrams" class="level2" data-number="3.7">
+<h2 data-number="3.7" class="anchored" data-anchor-id="future-network-diagrams"><span class="header-section-number">3.7</span> Future Network Diagrams</h2>
+<div id="fig-futnetdia" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<div id="fig-fulldia" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="future-network.png" class="img-fluid figure-img" data-ref-parent="fig-futnetdia"></p>
+<figcaption class="figure-caption">(a) Full Network Diagram</figcaption>
+</figure>
+</div>
+<div id="fig-fulldia" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="future-network-van.png" class="img-fluid figure-img" data-ref-parent="fig-futnetdia"></p>
+<figcaption class="figure-caption">(b) Vancouver Network Diagram</figcaption>
+</figure>
+</div>
+<div id="fig-fulldia" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="future-network-kel.png" class="img-fluid figure-img" data-ref-parent="fig-futnetdia"></p>
+<figcaption class="figure-caption">(c) Kelowna Network Diagram</figcaption>
+</figure>
+</div>
+<figcaption class="figure-caption"><strong>Figure</strong>&nbsp;3<strong>.</strong> Future Network Diagrams</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="future-ipv6-implementation" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Future IPv6 Implementation</h1>
+<section id="directaccess" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="directaccess"><span class="header-section-number">4.1</span> DirectAccess</h2>
+<p>Even though the internet will eventually move towards IPv6 only, by and large IPv4 is still predominantly used today. This presents a problem because when your company makes the switch you will have communication issues with external clients using IPv4 that try to access your services. DirectAccess uses IPv6 transition protocols to facilitate communications with IPv4 connections. In my professional opinion I believe you should invest your time and energy into converting soon and using DirectAccess to address the communications issues that come with it. However, I think you should implement the pending network expansion first and allow the company time to adjust to the new infrastructure before making the switch. After 2 – 5 years operating with the new branch network and RnD department network your IT team should have all of the major issues worked out, giving you the right circumstances to move ahead with transitioning to IPv6. Please consult the references to DirectAccess technology posted in the Appendix of this document to become more familiar with the process and to help you make an informed decision.</p>
+</section>
+</section>
+<section id="appendix" class="level1 unnumbered">
+<h1 class="unnumbered">Appendix</h1>
+<section id="references" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="references">References</h2>
+<section id="directaccess-1" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="directaccess-1">DirectAccess</h3>
+<p><a href="https://docs.microsoft.com/en-us/windows-server/remote/remote-access/directaccess/single-server-wizard/da-basic-plan-s1-infrastructure" class="uri">https://docs.microsoft.com/en-us/windows-server/remote/remote-access/directaccess/single-server-wizard/da-basic-plan-s1-infrastructure</a></p>
+<p><a href="https://directaccess.richardhicks.com/2014/10/28/directaccess-ipv6-transition-protocols-explained/" class="uri">https://directaccess.richardhicks.com/2014/10/28/directaccess-ipv6-transition-protocols-explained/</a></p>
+</section>
+<section id="wsus-servers" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="wsus-servers">WSUS Servers</h3>
+<p><a href="https://docs.microsoft.com/de-de/security-updates/windowsupdateservices/18127375" class="uri">https://docs.microsoft.com/de-de/security-updates/windowsupdateservices/18127375</a></p>
+<p><a href="https://askme4tech.com/how-install-configure-wsus-downstream-server-windows-server-2016" class="uri">https://askme4tech.com/how-install-configure-wsus-downstream-server-windows-server-2016</a></p>
+</section>
+<section id="branchcache-1" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="branchcache-1">BranchCache</h3>
+<p><a href="https://docs.microsoft.com/en-us/windows-server/networking/branchcache/branchcache" class="uri">https://docs.microsoft.com/en-us/windows-server/networking/branchcache/branchcache</a></p>
+</section>
+<section id="principle-of-least-priviledge" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="principle-of-least-priviledge">Principle of Least Priviledge</h3>
+<p><a href="https://www.cisa.gov/uscert/bsi/articles/knowledge/principles/least-privilege" class="uri">https://www.cisa.gov/uscert/bsi/articles/knowledge/principles/least-privilege</a></p>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

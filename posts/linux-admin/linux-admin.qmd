@@ -7,10 +7,12 @@ author: "Brandon Toews"
 badges: true
 categories:
 - networking
+- design
 - linux
 - ldap
+- network diagram
 date: "2022-06-17"
-description: Project to design and setup a prototype network using headless CentOS 7.0 servers and to produce documentation along with it.
+description: Project to design and setup a mock prototype network using headless CentOS 7.0 servers and to produce documentation along with it.
 toc: true
 number-sections: true
 image: Linux.jpeg
@@ -29,25 +31,25 @@ crossref:
 
 You are required to add/replace/remove services from the current network. Company president has asked to explain the need of major updates and upgrades to the network. In order to get approval of major upgrades to the network you have been tasked to setup a prototype network by senior admin. You need to come up with the following prototype network along with technical documentation and a rationale for your suggestions:
 
-* Setup a prototype network with NIS as your central authentication server.
-* Configure a Firewall to protect internal network. Explain if there are some other methods to enhance the security of your network.
-* Setup a network share for internal users.
-* Configure a master and a slave name server for your internal network.
-* Configure a DHCP server for your internal network.
-* With the exception of your firewall, NIS, DHCP server etc., all client machines must obtain their network configuration via DHCP. Any additional servers must obtain static IP addresses via DHCP.
-* All employee users must be able to authenticate on any client machines using NIS and all users' home directories must be automounted under /home.
-* Find services which are vulnerable and replace them with protected services.
-* Setup an FTP server, so that users may be able to upload the data as needed, exhibit the functionality with a simple method.
-* Users must be able to send and receive local email (that is, email addressed to users within the company's domain) from the client machines.
+-   Setup a prototype network with NIS as your central authentication server.
+-   Configure a Firewall to protect internal network. Explain if there are some other methods to enhance the security of your network.
+-   Setup a network share for internal users.
+-   Configure a master and a slave name server for your internal network.
+-   Configure a DHCP server for your internal network.
+-   With the exception of your firewall, NIS, DHCP server etc., all client machines must obtain their network configuration via DHCP. Any additional servers must obtain static IP addresses via DHCP.
+-   All employee users must be able to authenticate on any client machines using NIS and all users' home directories must be automounted under /home.
+-   Find services which are vulnerable and replace them with protected services.
+-   Setup an FTP server, so that users may be able to upload the data as needed, exhibit the functionality with a simple method.
+-   Users must be able to send and receive local email (that is, email addressed to users within the company's domain) from the client machines.
 
-Develop network administrator’s utilities:
+Develop network administrator's utilities:
 
-* Create a script that generates secure random password suggestions for internal users. Ask for details.
-* In a Bash script, ask user to provide an IP address, also ask how many bits is the subnet mask. Now provide the following output:
-  + What class the IP address belongs to?
-  + Print subnet mask in decimal number system
-    - IP: 192.168.0.0
-    - SM: 255.255.255.0
+-   Create a script that generates secure random password suggestions for internal users. Ask for details.
+-   In a Bash script, ask user to provide an IP address, also ask how many bits is the subnet mask. Now provide the following output:
+    -   What class the IP address belongs to?
+    -   Print subnet mask in decimal number system
+        -   IP: 192.168.0.0
+        -   SM: 255.255.255.0
 :::
 
 # Project Overview
@@ -58,42 +60,47 @@ The purpose of this document is to provide suggestions, solutions, and configura
 
 ## Scope
 
-The scope of the project involves an examination of the current network to
-ascertain where it can be improved. In addition, design and implemention of a
-prototype network to demonstrate what it could look like after the proposed
-upgrades. The proposed solutions must include detailed configurations and
-address potential growth of the business in the future.
+The scope of the project involves an examination of the current network to ascertain where it can be improved. In addition, design and implemention of a prototype network to demonstrate what it could look like after the proposed upgrades. The proposed solutions must include detailed configurations and address potential growth of the business in the future.
 
 # Network Topology
 
 ## Existing Network Design
+
 The existing network utilizes 11 servers comprised of one (1) NIS authentication server, two (2) NFS file share servers, one (1) Telnet server, two (2) database servers, two (2) app servers, two (2) web servers, and one (1) backup server. ( See @fig-curnet )
 
 ![Existing Network Topology](current-net.png){#fig-curnet}
 
 ## Proposed Network Topology
+
 The proposed network utilizes 11 servers comprised of one (1) LDAP authentication server, one (1) Samba file share server, one (1) NFS file share server, two (2) database servers, two (2) app servers, two (2) web servers, one (1) backup server, and one (1) Firewall. ( See @fig-propnet )
 
 ![Proposed Network Topology](prop-net.png){#fig-propnet}
 
 # Upgrades
+
 ## Server OS Upgrade
+
 The existing servers are all running CentOS 5.0 currently which is starting to become old and losing community support. All servers should be upgraded to CentOS 7.0 as this will provide the most support while maintaining stronger stability that newer releases.3.2 LDAP Centralized Authentication Current network athentication is managed by a NIS server which only functions for Linux operating systems and passes sensitive information in plain text. The prototype network runs an LDAP server instead for many reasons. Eventually the Windows clients can be looped into the system to authenticate making it so that the total Linux and Windows structures would all be managed from the same place. In addition LDAP touts improved security as it utilizes TLS certifications to establish connections and pass information. The LDAP server can be used to authenticate against for all of the other services that the network contains.
 
 ## Firewall Addition
+
 No firewall is present with the existing network which places the system at significantly more risk. With the addition of a pfSense firewall in place all internal traffic is protected and blocked from the external. All traffic that accesses anything outside of the LAN, including and especially the internet, is routed through firewall so as to keep as small of an attack surface as possible.
 
 ## Samba Share Server
+
 While the two (2) NFS share servers are useful they are overkill and could be downsized to make room for something that may grow better with the company in the future. One (1) of the NFS servers has been replaced in the prototype network for a Samba server. At the moment the Samba server is just acting as a share but the possibilities for it to be so much more are endless. In the future it could be utilized alongside the LDAP server to provide authentication for both Windows and Linux clients. All users could sign in on whatever device they prefer while the Samba server acts as an NT4 primary domain server or even an Active Directory domain controller, all with an LDAP backend. This would all for a possibility to add a secondary domain server to add redundancy to the system and provide stability as the business grows.
 
 ## Telnet & FTP
+
 The current system utilizes Telnet for communications among servers which has been long recognized as very insecure and should not be used in production. Hence all Telnet services have been replaced with SSH servers so as to secure and encrypted communications. Having SSH servers allows us to take advantage of Secure Copy Protocol which will also replace the very insecure File Transfer Protocol servers the occupy the system now. Neither Telnet nor FTP servers should be used as long as we have better options like SSH and SCP available to us.
 
 # Configurations
+
 ## LDAP Configuration
+
 The LDAP server has an NFS server running on it to export the home directories to the client servers so that they can automount them when they login to various users. The LDAP structure has been generated on the LDAP server using the following ldif files and ens33 file... [db.ldif](#dbfile), [monitor.ldif](#monitorfile), [base.ldif](#basefile), [users.ldif](#usersfile), [groups.ldif](#groupsfile), [ens33](#ens33file).
 
-```{#dbfile .default filename="db.ldif"}
+``` {#dbfile .default filename="db.ldif"}
 dn: olcDatabase={2}hdb,cn=config
 changetype: modify
 replace: olcSuffix
@@ -110,7 +117,7 @@ replace: olcRootPW
 olcRootPW: {SSHA}GBlGYcFck5dRl6+FwVlArdlJywiCsCfK
 ```
 
-```{#monitorfile .default filename="monitor.ldif"}
+``` {#monitorfile .default filename="monitor.ldif"}
 dn: olcDatabase={1}monitor,cn=config
 changetype: modify
 replace: olcAccess
@@ -118,7 +125,7 @@ olcAccess: {0}to * by dn.base="gidNumber=0+uidNumber=0,cn=peercred,cn=external,
 cn=auth" read by dn.base="cn=ldapadm,dc=azuretech,dc=local" read by * none
 ```
 
-```{#basefile .default filename="base.ldif"}
+``` {#basefile .default filename="base.ldif"}
 dn: dc=azuretech,dc=local
 dc: azuretech
 objectClass: top
@@ -138,7 +145,7 @@ objectClass: organizationalUnit
 ou: Group
 ```
 
-```{#usersfile .default filename="users.ldif"}
+``` {#usersfile .default filename="users.ldif"}
 dn: uid=ldapuser1,ou=People,dc=azuretech,dc=local
 uid: ldapuser1
 cn: ldapuser1
@@ -210,7 +217,7 @@ gidNumber: 1002
 homeDirectory: /home/ldapuser3
 ```
 
-```{#groupsfile .default filename="groups.ldif"}
+``` {#groupsfile .default filename="groups.ldif"}
 dn: cn=ldapuser1,ou=Group,dc=azuretech,dc=local
 objectClass: posixGroup
 objectClass: top
@@ -233,7 +240,7 @@ userPassword: {crypt}x
 gidNumber: 1002
 ```
 
-```{#ens33file .bash filename="/etc/sysconfig/network-scripts/ifcfg-ens33"}
+``` {#ens33file .bash filename="/etc/sysconfig/network-scripts/ifcfg-ens33"}
 TYPE="Ethernet"
 PROXY_METHOD="none"
 BROWSER_ONLY="no"
@@ -259,9 +266,10 @@ DOMAIN="azuretech.local"
 ```
 
 ## LDAP Client Configuration
+
 The LDAP Clients need to install some packing and create some automap files for autofs to automount LDAP user home directories. I used the follow script to accomplish this...
 
-```{#ens33file .bash filename="LDAP_Client_Install.sh"}
+``` {#ens33file .bash filename="LDAP_Client_Install.sh"}
 #!/bin/bash
 yum install -y openldap-clients nss-pam-ldapd nfs-utils autofs
 authconfig --enableldap --enableldapauth --ldapserver=192.168.65.10 --ldapbasedn="dc=azuretech,dc=local" --update
@@ -277,20 +285,20 @@ exit
 ```
 
 ## Firewall Configuration
+
 Configured as seen in figures below. ( See @fig-firewall1, @fig-firewall2, & @fig-firewall3)
 
 ![Firewall Configurations](firewall-1.png){#fig-firewall1}
 
-
 ![Firewall Configurations](firewall-2.png){#fig-firewall2}
-
 
 ![Firewall Configurations](firewall-3.png){#fig-firewall3}
 
 ## DNS Master Server Configuration
+
 The DNS master server was installed on the same server as the LDAP so it is referred to as LDAP in the configuration files. The [main config](#namedfile), the [forward zone](#forwardfile), and the [reverse zone](#reversefile) files shown below...
 
-```{#namedfile .default filename="/etc/named.conf"}
+``` {#namedfile .default filename="/etc/named.conf"}
 //
 // named.conf
 //
@@ -365,7 +373,7 @@ include "/etc/named.rfc1912.zones";
 include "/etc/named.root.key";
 ```
 
-```{#forwardfile .default filename="/var/named/forward.azuretech"}
+``` {#forwardfile .default filename="/var/named/forward.azuretech"}
 $TTL 86400
 @   IN SOA ldap.azuretech.local. root.azuretech.local. (
                     2022061101 ; serial
@@ -394,7 +402,7 @@ web2        IN    A   192.168.65.19 ; Client
 firewall    IN    A   192.168.65.20 ; Firewall
 ```
 
-```{#reversefile .default filename="/var/named/reverse.azuretech"}
+``` {#reversefile .default filename="/var/named/reverse.azuretech"}
 $TTL 86400
 @   IN SOA ldap.azuretech.local. root.azuretech.local. (
                     2022061101 ; serial
@@ -435,9 +443,10 @@ firewall    IN    A   192.168.65.20 ; Firewall
 ```
 
 ## DNS Slave Server Configuration
+
 The DNS slave server was installed on the same server as the Samba, so it is referred to as samba in the configuration files. The [main config](#nameconffile) file is shown below...
 
-```{#nameconffile .default filename="/etc/name.conf"}
+``` {#nameconffile .default filename="/etc/name.conf"}
 //
 // named.conf
 //
@@ -513,9 +522,10 @@ include "/etc/named.root.key";
 ```
 
 ## DHCP Server Configuration
+
 The DHCP server was installed on the same server as the LDAP. The [main config](#dhcpdfile) file is shown below...
 
-```{#dhcpdfile .default filename="/etc/dhcp/dhcpd.conf"}
+``` {#dhcpdfile .default filename="/etc/dhcp/dhcpd.conf"}
 #
 # DHCP Server Configuration file.# see /usr/share/doc/dhcp*/dhcpd.conf.example
 # see dhcpd.conf(5) man page
@@ -583,13 +593,14 @@ host web2 {
 ```
 
 ## NFS Server Configuration
+
 The NFS server's [export](#exportsfile) file and client [fstab config](#fstabfile) file are shown below...
 
-```{#exportsfile .default filename="/etc/exports"}
+``` {#exportsfile .default filename="/etc/exports"}
 /nfsfileshare 192.168.65.0/24(rw,sync,no_root_squash)
 ```
 
-```{#fstabfile .default filename="/etc/fstab"}
+``` {#fstabfile .default filename="/etc/fstab"}
 #
 # /etc/fstab
 # Created by anaconda on Wed May 11 18:06:18 2022
@@ -604,9 +615,10 @@ nfs:/nfsfileshare /mnt/nfsfileshare       nfs   nosuid,rw,sync,hard,intr    00
 ```
 
 ## Samba Server Configuration
+
 The Samba server's [interface config](#ifcfgens33file) and [smb.conf](#sambaconffile) files are shown below...
 
-```{#ifcfgens33file .bash filename="/etc/sysconfig/network-scripts/ifcfg-ens33"}
+``` {#ifcfgens33file .bash filename="/etc/sysconfig/network-scripts/ifcfg-ens33"}
 TYPE="Ethernet"
 PROXY_METHOD="none"
 BROWSER_ONLY="no"
@@ -632,7 +644,7 @@ DNS4="8.8.4.4"
 DOMAIN="azuretech.local"
 ```
 
-```{#sambaconffile .bash filename="/etc/samba/smb.conf"}
+``` {#sambaconffile .bash filename="/etc/samba/smb.conf"}
 # See smb.conf.example for a more detailed config file or
 # read the smb.conf manpage.
 # Run 'testparm' to verify the config is correct after
@@ -680,9 +692,10 @@ DOMAIN="azuretech.local"
 ```
 
 ## Email Server Configuration
+
 The email servers' were installed on the samba server machine and that is why it is labelled as samba in the config files. The [Postfix](#maincffile) and [Dovecot](#dovfile) config file alterations are shown below...
 
-```{#maincffile .bash filename="/etc/postfix/main.cf"}
+``` {#maincffile .bash filename="/etc/postfix/main.cf"}
 # line 75: uncomment and specify hostname
 myhostname = samba.azuretech.local
 
@@ -712,7 +725,7 @@ smtpd_banner = $myhostname ESMTP
 message_size_limit = 10485760
 ```
 
-```{#dovfile .bash filename="/etc/dovecot/dovecot.conf"}
+``` {#dovfile .bash filename="/etc/dovecot/dovecot.conf"}
 # line 24: uncomment
 protocols = imap pop3 lmtp
 
@@ -720,7 +733,7 @@ protocols = imap pop3 lmtp
 listen = *
 ```
 
-```{#10authfile .bash filename="/etc/dovecot/conf.d/10-auth.conf"}
+``` {#10authfile .bash filename="/etc/dovecot/conf.d/10-auth.conf"}
 # line 10: uncomment and change ( allow plain text auth )
 disable_plaintext_auth = no
 
@@ -728,12 +741,12 @@ disable_plaintext_auth = no
 auth_mechanisms = plain login
 ```
 
-```{#10mailfile .bash filename="/etc/dovecot/conf.d/10-mail.conf"}
+``` {#10mailfile .bash filename="/etc/dovecot/conf.d/10-mail.conf"}
 # line 30: uncomment and add
 mail_location = maildir:~/Maildir
 ```
 
-```{#10masterfile .bash filename="/etc/dovecot/conf.d/10-master.conf"}
+``` {#10masterfile .bash filename="/etc/dovecot/conf.d/10-master.conf"}
 # line 96-98: uncomment and add like follows
 # Postfix smtp-auth
 unix_listener /var/spool/postfix/private/auth {
@@ -743,16 +756,18 @@ unix_listener /var/spool/postfix/private/auth {
 }
 ```
 
-```{#10sslfile .bash filename="/etc/dovecot/conf.d/10-ssl.conf"}
+``` {#10sslfile .bash filename="/etc/dovecot/conf.d/10-ssl.conf"}
 # line 8: change (not require SSL)
 ssl = no
 ```
 
 # Network Administrator's Utilities
+
 ## Password Generator Script
+
 As an administration tool I created a [random password generator script](#passgenfile) that asks how long you want the password to be. After it generates the password is asks if the user wants to output it into a file and if so, what should the file name be. The bash script code for the file is below...
 
-```{#passgenfile .bash filename="passwdgen_script.sh"}
+``` {#passgenfile .bash filename="passwdgen_script.sh"}
 #!/bin/bash
 #This is a script for generating secure random password suggestions for users
 echo -e "\n****** Secure Random Password Generator ******\n\nLet's generate a random password...\n\nHow long would you like your password to be?\n\nCharacter Length: "
@@ -779,9 +794,10 @@ return
 ```
 
 ## IP Address Script
+
 As an administration tool I created an [IP address script](#ipaddrfile) that asks you for an IP address. Then it asks the user for the subnet mask in bits and after which it prints the given IP address' classification along with the subnet mask in decimal format. Thoughout the script if the user gives the wrong output it tells the user what they did wrong and lets them try the input again. The bash script code for the file is below...
 
-```{#ipaddrfile .bash filename="ipaddr_script.sh"}
+``` {#ipaddrfile .bash filename="ipaddr_script.sh"}
 #!/bin/bash
 #This script informs users about IP address class
 
@@ -862,34 +878,47 @@ return
 ```
 
 # Security
+
 ## Firewalld & SELinux
+
 Many turn firewalld off to make it easier to configure their services but it is far better to add the port rules that you need to each server for their respective services. In addition, it is a better practice to keep SELinux enabled and to change the security contexts where needed. Throughout the server configuration process these systems were constantly adjusted in the prototype network to allow the services to run but were never disabled. This ensures that the network is as hardened as it can be to intruders.
 
 # Appendix {.unnumbered}
+
 ## References {.unnumbered}
+
 ### NFS {.unnumbered}
-[https://www.itzgeek.com/how-tos/linux/centos-how-tos/how-to-setup-nfs-server-on-centos-7-rhel-7-fedora-22.html](https://www.itzgeek.com/how-tos/linux/centos-how-tos/how-to-setup-nfs-server-on-centos-7-rhel-7-fedora-22.html)
+
+<https://www.itzgeek.com/how-tos/linux/centos-how-tos/how-to-setup-nfs-server-on-centos-7-rhel-7-fedora-22.html>
 
 ### NFS - Windows {.unnumbered}
-[https://it.umn.edu/services-technologies/how-tos/network-file-system-nfs-mount-nfs-share](https://it.umn.edu/services-technologies/how-tos/network-file-system-nfs-mount-nfs-share)
+
+<https://it.umn.edu/services-technologies/how-tos/network-file-system-nfs-mount-nfs-share>
 
 ### LDAP {.unnumbered}
-[https://www.itzgeek.com/how-tos/linux/centos-how-tos/step-step-openldap-server-configuration-centos-7-rhel-7.html](https://www.itzgeek.com/how-tos/linux/centos-how-tos/step-step-openldap-server-configuration-centos-7-rhel-7.html)
+
+<https://www.itzgeek.com/how-tos/linux/centos-how-tos/step-step-openldap-server-configuration-centos-7-rhel-7.html>
 
 ### LDAP Local User Migration {.unnumbered}
-[https://www.itzgeek.com/how-tos/linux/centos-how-tos/migrate-local-users-ldap-accounts.html](https://www.itzgeek.com/how-tos/linux/centos-how-tos/migrate-local-users-ldap-accounts.html)
+
+<https://www.itzgeek.com/how-tos/linux/centos-how-tos/migrate-local-users-ldap-accounts.html>
 
 ### LDAP Automount Home Directories {.unnumbered}
-[https://www.myfaqbase.com/q0001874-Software-OS-Unix-Linux-RHEL-7-RHCSA-How-to-configure-AutoFS-to-mount-user-home-directories-from-NFS-server.html](https://www.myfaqbase.com/q0001874-Software-OS-Unix-Linux-RHEL-7-RHCSA-How-to-configure-AutoFS-to-mount-user-home-directories-from-NFS-server.html)
+
+<https://www.myfaqbase.com/q0001874-Software-OS-Unix-Linux-RHEL-7-RHCSA-How-to-configure-AutoFS-to-mount-user-home-directories-from-NFS-server.html>
 
 ### LDAP TLS {.unnumbered}
-[https://www.golinuxcloud.com/configure-openldap-with-tls-certificates/](https://www.golinuxcloud.com/configure-openldap-with-tls-certificates/)
+
+<https://www.golinuxcloud.com/configure-openldap-with-tls-certificates/>
 
 ### Samba {.unnumbered}
-[https://linuxize.com/post/how-to-install-and-configure-samba-on-centos-7/](https://linuxize.com/post/how-to-install-and-configure-samba-on-centos-7/)
+
+<https://linuxize.com/post/how-to-install-and-configure-samba-on-centos-7/>
 
 ### Postfix Server {.unnumbered}
-[https://www.server-world.info/en/note?os=CentOS_7&p=mail](https://www.server-world.info/en/note?os=CentOS_7&p=mail)
+
+<https://www.server-world.info/en/note?os=CentOS_7&p=mail>
 
 ### Dovcote Server {.unnumbered}
-[https://www.server-world.info/en/note?os=CentOS_7&p=mail&f=2](https://www.server-world.info/en/note?os=CentOS_7&p=mail&f=2)
+
+<https://www.server-world.info/en/note?os=CentOS_7&p=mail&f=2>

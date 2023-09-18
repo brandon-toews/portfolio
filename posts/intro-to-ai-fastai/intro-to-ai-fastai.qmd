@@ -6,6 +6,7 @@ format:
 author: "Brandon Toews"
 badges: true
 categories:
+- ai
 - deep learning
 - neural network
 - fastai
@@ -41,17 +42,17 @@ notebook-view:
 ::: {.callout-tip collapse="true"}
 ## Play Demo
 
+```{=html}
 <script
-	type="module"
-	src="https://gradio.s3-us-west-2.amazonaws.com/3.43.2/gradio.js"
+    type="module"
+    src="https://gradio.s3-us-west-2.amazonaws.com/3.43.2/gradio.js"
 ></script>
-
+```
 <gradio-app src="https://btoews-bee-vs-wasp.hf.space"></gradio-app>
 
 **Select one of the example photos or upload your own photo to test how the model classifies the image.**
 
 For more information on model deployments see [Deployment](#deployment) section of [Appendix](#appendix).
-
 :::
 
 ::: callout-tip
@@ -163,24 +164,25 @@ After studying some of the tests I started to isolate that a batch size of 32 di
 
 ![](VideoPresentation.mp4)
 
-## References {.unnumbered}
+## References {#references .unnumbered}
 
 **Optimization Library**\
 <https://optuna.org/>
 
-## Deployment {.unnumbered}
+## Deployment {#deployment .unnumbered}
 
 #### Deployment Source Code {.unnumbered}
+
 View the source code for the model deployment on HuggingFace [repository](https://huggingface.co/spaces/btoews/bee-vs-wasp/tree/main).
 
 #### Gradio App {.unnumbered}
+
 View [Gradio app](https://btoews-bee-vs-wasp.hf.space) for model deployment hosted on HuggingFace.
 
 #### Deployment Resources {.unnumbered}
+
 **Hugging Face** - AI community & place to host ML deployments\
-[https://huggingface.co/](https://huggingface.co/)
+<https://huggingface.co/>
 
 **Gradio** - Open-source Python library used to build machine learning/data science demos & web applications\
-[https://www.gradio.app/](https://www.gradio.app/)
-
-
+<https://www.gradio.app/>

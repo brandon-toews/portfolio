@@ -27,6 +27,12 @@ crossref:
 
 ![](hotel-booking-system.jpeg)
 
+::: {.callout-note collapse="true"}
+## Expand To Learn About Business Scenario
+
+The purpose of the Hotel Booking System is to assist with room booking for two of the Hotels, the RESORT HOTEL and CITY HOTEL. Through the system, the Customers book the hotel with their choice of hotel and booking details such as arrival date, number of adults and children. The hotel can ask for any missing information such as meal choice, and country details the customer through email. The customer replies to the hotel with all the missing information. Both the hotel stores the customer details in their customer detail database. The hotel generates the bills on the arrival of the customer. While generating the RESORT HOTEL gives a 10% discount if the customer has stayed at RESORT HOTEL before and the CITY HOTEL gives a 12 % discount to any customer who has stayed at that hotel before. But, if any customer has a history of any cancellations in the past year then the RESORT HOTEL does not give any discount. All the payments are handled by ABC Bank. The bank generates the invoice of the payment and sends copies to the customer and the hotel. The system also communicates with a nearby Restaurant which looks after all the meal requests of the customer. The restaurant gets a notification about the food requirements of customers once the booking confirmation is generated. In addition, if any customer needs the car parking facility then the customer needs to notify while generating the booking details. The Car Parking Agency, co-partner of the hotel group handles the parking facility. The car parking invoice is generated separately and sent to the customer for payment at the time of departure.
+:::
+
 # Project Overview
 
 ## Purpose of Document
@@ -37,11 +43,6 @@ The purpose of this document is to provide system designs to use in the developm
 
 The scope of the project involves an examination of the business scenario to ascertain how best to design, develop, and improve upon the proposed hotel booking system. In addition, creation of system designs and implementation documentation must be produced to drive the development of the project. The proposed solutions must include detailed logical & physical Entity-Relationship Diagrams, a Context Diagram, and up to Level 2 Data Flow Diagrams.
 
-::: {.callout-note collapse="true"}
-## Expand To Learn About Business Scenario
-
-The purpose of the Hotel Booking System is to assist with room booking for two of the Hotels, the RESORT HOTEL and CITY HOTEL. Through the system, the Customers book the hotel with their choice of hotel and booking details such as arrival date, number of adults and children. The hotel can ask for any missing information such as meal choice, and country details the customer through email. The customer replies to the hotel with all the missing information. Both the hotel stores the customer details in their customer detail database. The hotel generates the bills on the arrival of the customer. While generating the RESORT HOTEL gives a 10% discount if the customer has stayed at RESORT HOTEL before and the CITY HOTEL gives a 12 % discount to any customer who has stayed at that hotel before. But, if any customer has a history of any cancellations in the past year then the RESORT HOTEL does not give any discount. All the payments are handled by ABC Bank. The bank generates the invoice of the payment and sends copies to the customer and the hotel. The system also communicates with a nearby Restaurant which looks after all the meal requests of the customer. The restaurant gets a notification about the food requirements of customers once the booking confirmation is generated. In addition, if any customer needs the car parking facility then the customer needs to notify while generating the booking details. The Car Parking Agency, co-partner of the hotel group handles the parking facility. The car parking invoice is generated separately and sent to the customer for payment at the time of departure.
-:::
 
 # Software Development Methodologies
 

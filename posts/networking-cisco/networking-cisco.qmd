@@ -8,7 +8,7 @@ categories:
 - networking
 - cisco
 - vmware
-- subnetting
+- network diagram
 - routing
 date: "2021-12-14"
 description: Designed and constructed a fictional network using GNS3 simulation software and VMs running on VMware.
