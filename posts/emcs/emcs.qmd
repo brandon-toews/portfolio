@@ -5,10 +5,7 @@ format:
 author: "Brandon Toews"
 badges: true
 categories:
-- networking
-- microsoft
-- exchange server
-- active directory
+- Networking
 date: "2022-03-03"
 description: Deployed an Exchange server environment using Microsoft Exchange Server 2016.
 toc: true

@@ -7,13 +7,7 @@ format:
 author: "Brandon Toews"
 badges: true
 categories:
-- mathematics
-- c#
-- games
-- unity
-- djikstra
-- ai
-- matrices
+- Games Programming
 date: "2023-05-13"
 description: Unity Games Engine project to implement a star map navigation style simulation with custom pathfinding script. 
 toc: true

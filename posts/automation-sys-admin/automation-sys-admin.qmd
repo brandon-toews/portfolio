@@ -6,10 +6,7 @@ format:
 author: "Brandon Toews"
 badges: true
 categories:
-- networking
-- design
-- microsoft
-- network diagram
+- Networking
 date: "2022-09-19"
 description: Project to plan and design an expansion to a fictitious Microsoft Windows Server based network, develop a prototype network, and to produce documentation along with it.
 toc: true

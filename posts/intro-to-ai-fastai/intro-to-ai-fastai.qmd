@@ -6,15 +6,7 @@ format:
 author: "Brandon Toews"
 badges: true
 categories:
-- ai
-- deep learning
-- neural network
-- fastai
-- kaggle
-- colab
-- vision
-- hyperparameter
-- optimization
+- AI / ML
 date: "2023-06-09"
 description: Project to train a deep learning model to correctly classify an image of a wasp or a bee using transfer learning with the fastai library.
 toc: true

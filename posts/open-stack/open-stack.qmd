@@ -5,10 +5,7 @@ format:
 author: "Brandon Toews"
 badges: true
 categories:
-- networking
-- openstack
-- virtualization
-- cloud computing
+- Networking
 date: "2022-03-17"
 description: Created an OpenStack environment by manually installing and configuring services.
 toc: true

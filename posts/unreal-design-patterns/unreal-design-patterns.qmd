@@ -7,13 +7,7 @@ format:
 author: "Brandon Toews"
 badges: true
 categories:
-- algorithms
-- c++
-- games
-- unreal
-- programming
-- patterns
-- ai
+- Games Programming
 date: "2023-05-19"
 description: Mechanics sandbox game to demonstrate programming design patterns using Unreal Engine. Implemented command, state machine, object pool & prototype design patterns using C++ and Unreal's Blueprints Visual Scripting system. 
 toc: true

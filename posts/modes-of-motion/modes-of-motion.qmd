@@ -7,11 +7,7 @@ format:
 author: "Brandon Toews"
 badges: true
 categories:
-- mathematics
-- c#
-- games
-- unity
-- lerp
+- Games Programming
 date: "2022-11-30"
 description: Unity Games Engine project to demonstrate various methods of movement, making use of custom linear interpolation (lerp) libraries and scripts using Unity physics. 
 toc: true

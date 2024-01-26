@@ -7,11 +7,7 @@ format:
 author: "Brandon Toews"
 badges: true
 categories:
-- algorithms
-- c++
-- games
-- programming
-- playbuffer
+- Games Programming
 date: "2023-01-13"
 description: Retro game written in C++ using a beginner's game-development framework called Playbuffer
 toc: true

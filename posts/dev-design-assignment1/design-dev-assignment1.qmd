@@ -6,12 +6,7 @@ format:
 author: "Brandon Toews"
 badges: true
 categories:
-- design
-- development
-- methodologies
-- entity-relationship diagram
-- context diagram
-- data flow diagram
+- Software / System Design
 date: "2022-12-09"
 description: Project to design a hotel booking system based on a mock system design case scenario.
 toc: true
@@ -42,7 +37,6 @@ The purpose of this document is to provide system designs to use in the developm
 ## Scope
 
 The scope of the project involves an examination of the business scenario to ascertain how best to design, develop, and improve upon the proposed hotel booking system. In addition, creation of system designs and implementation documentation must be produced to drive the development of the project. The proposed solutions must include detailed logical & physical Entity-Relationship Diagrams, a Context Diagram, and up to Level 2 Data Flow Diagrams.
-
 
 # Software Development Methodologies
 

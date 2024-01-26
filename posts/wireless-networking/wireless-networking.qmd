@@ -6,9 +6,7 @@ format:
 author: "Brandon Toews"
 badges: true
 categories:
-- networking
-- wireless
-- wlan
+- Networking
 date: "2021-12-19"
 description: Designed a mock solution for a P2P network with wifi coverage. Produced documentation to propose hardware, along with instructions for installation and configuration.
 toc: true
