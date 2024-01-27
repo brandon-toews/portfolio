@@ -2,66 +2,70 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://brandon-toews.github.io/portfolio/about.html</loc>
-    <lastmod>2024-01-26T16:15:39.988Z</lastmod>
+    <lastmod>2024-01-27T20:44:18.575Z</lastmod>
   </url>
   <url>
     <loc>https://brandon-toews.github.io/portfolio/posts/modes-of-motion/modes-of-motion.html</loc>
-    <lastmod>2024-01-26T16:15:37.640Z</lastmod>
+    <lastmod>2024-01-27T20:44:16.035Z</lastmod>
   </url>
   <url>
     <loc>https://brandon-toews.github.io/portfolio/posts/automation-sys-admin/automation-sys-admin.html</loc>
-    <lastmod>2024-01-26T16:15:36.044Z</lastmod>
+    <lastmod>2024-01-27T20:44:14.439Z</lastmod>
   </url>
   <url>
-    <loc>https://brandon-toews.github.io/portfolio/posts/intro-to-ai-assignment1/Assignment1BrandonToews.html</loc>
-    <lastmod>2024-01-26T16:15:34.416Z</lastmod>
-  </url>
-  <url>
-    <loc>https://brandon-toews.github.io/portfolio/posts/star-map-nav/star-map-nav.html</loc>
-    <lastmod>2024-01-26T16:15:30.412Z</lastmod>
-  </url>
-  <url>
-    <loc>https://brandon-toews.github.io/portfolio/posts/linux-admin/linux-admin.html</loc>
-    <lastmod>2024-01-26T16:15:29.164Z</lastmod>
-  </url>
-  <url>
-    <loc>https://brandon-toews.github.io/portfolio/posts/intro-to-ai-fastai/intro-to-ai-fastai.html</loc>
-    <lastmod>2024-01-26T16:15:26.772Z</lastmod>
-  </url>
-  <url>
-    <loc>https://brandon-toews.github.io/portfolio/posts/networking-cisco/networking-cisco.html</loc>
-    <lastmod>2024-01-26T16:15:06.012Z</lastmod>
-  </url>
-  <url>
-    <loc>https://brandon-toews.github.io/portfolio/posts/emcs/emcs.html</loc>
-    <lastmod>2024-01-26T16:15:05.016Z</lastmod>
-  </url>
-  <url>
-    <loc>https://brandon-toews.github.io/portfolio/posts/laserman/laserman.html</loc>
-    <lastmod>2024-01-26T16:15:06.552Z</lastmod>
-  </url>
-  <url>
-    <loc>https://brandon-toews.github.io/portfolio/posts/dev-design-assignment1/design-dev-assignment1.html</loc>
-    <lastmod>2024-01-26T16:15:27.720Z</lastmod>
-  </url>
-  <url>
-    <loc>https://brandon-toews.github.io/portfolio/posts/unreal-design-patterns/unreal-design-patterns.html</loc>
-    <lastmod>2024-01-26T16:15:29.836Z</lastmod>
+    <loc>https://brandon-toews.github.io/portfolio/posts/ai-ethics-IP/ai-ethics-IP.html</loc>
+    <lastmod>2024-01-27T20:44:45.602Z</lastmod>
   </url>
   <url>
     <loc>https://brandon-toews.github.io/portfolio/posts/wireless-networking/wireless-networking.html</loc>
-    <lastmod>2024-01-26T16:15:31.552Z</lastmod>
+    <lastmod>2024-01-27T20:44:08.695Z</lastmod>
+  </url>
+  <url>
+    <loc>https://brandon-toews.github.io/portfolio/posts/unreal-design-patterns/unreal-design-patterns.html</loc>
+    <lastmod>2024-01-27T20:44:06.943Z</lastmod>
+  </url>
+  <url>
+    <loc>https://brandon-toews.github.io/portfolio/posts/dev-design-assignment1/design-dev-assignment1.html</loc>
+    <lastmod>2024-01-27T20:44:04.803Z</lastmod>
+  </url>
+  <url>
+    <loc>https://brandon-toews.github.io/portfolio/posts/laserman/laserman.html</loc>
+    <lastmod>2024-01-27T20:43:43.592Z</lastmod>
+  </url>
+  <url>
+    <loc>https://brandon-toews.github.io/portfolio/posts/emcs/emcs.html</loc>
+    <lastmod>2024-01-27T20:43:42.036Z</lastmod>
+  </url>
+  <url>
+    <loc>https://brandon-toews.github.io/portfolio/posts/networking-cisco/networking-cisco.html</loc>
+    <lastmod>2024-01-27T20:43:43.040Z</lastmod>
+  </url>
+  <url>
+    <loc>https://brandon-toews.github.io/portfolio/posts/intro-to-ai-fastai/intro-to-ai-fastai.html</loc>
+    <lastmod>2024-01-27T20:44:03.823Z</lastmod>
+  </url>
+  <url>
+    <loc>https://brandon-toews.github.io/portfolio/posts/linux-admin/linux-admin.html</loc>
+    <lastmod>2024-01-27T20:44:06.247Z</lastmod>
+  </url>
+  <url>
+    <loc>https://brandon-toews.github.io/portfolio/posts/star-map-nav/star-map-nav.html</loc>
+    <lastmod>2024-01-27T20:44:07.535Z</lastmod>
+  </url>
+  <url>
+    <loc>https://brandon-toews.github.io/portfolio/posts/intro-to-ai-assignment1/Assignment1BrandonToews.html</loc>
+    <lastmod>2024-01-27T20:44:11.487Z</lastmod>
   </url>
   <url>
     <loc>https://brandon-toews.github.io/portfolio/posts/open-stack/open-stack.html</loc>
-    <lastmod>2024-01-26T16:15:34.936Z</lastmod>
+    <lastmod>2024-01-27T20:44:13.279Z</lastmod>
   </url>
   <url>
     <loc>https://brandon-toews.github.io/portfolio/posts/dev-design-assignment2/design-dev-assignment2.html</loc>
-    <lastmod>2024-01-26T16:15:37.036Z</lastmod>
+    <lastmod>2024-01-27T20:44:15.427Z</lastmod>
   </url>
   <url>
     <loc>https://brandon-toews.github.io/portfolio/index.html</loc>
-    <lastmod>2024-01-26T16:15:39.532Z</lastmod>
+    <lastmod>2024-01-27T20:44:18.139Z</lastmod>
   </url>
 </urlset>

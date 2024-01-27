@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/ai-ethics-IP/ai-ethics-IP.html",
       "/posts/intro-to-ai-fastai/intro-to-ai-fastai.html",
       "/posts/dev-design-assignment2/design-dev-assignment2.html",
       "/posts/unreal-design-patterns/unreal-design-patterns.html",

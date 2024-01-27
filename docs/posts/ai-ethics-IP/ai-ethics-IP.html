@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Brandon Toews">
+<meta name="dcterms.date" content="2023-12-21">
+<meta name="description" content="This paper critically examines the ethical implications of AI and intellectual property, focusing on the intersection of legal frameworks and psychological factors.">
+
+<title>portfolio - Artificial Intelligence and Intellectual Property</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+<link rel="stylesheet" href="../../styles.css">
+<meta name="twitter:title" content="portfolio - Artificial Intelligence and Intellectual Property">
+<meta name="twitter:description" content="This paper critically examines the ethical implications of AI and intellectual property, focusing on the intersection of legal frameworks and psychological factors.">
+<meta name="twitter:image" content="https://brandon-toews.github.io/portfolio/posts/ai-ethics-IP/post-pic.jpg">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">portfolio</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html" rel="" target="">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/brandon-toews" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Artificial Intelligence and Intellectual Property</h1>
+                  <div>
+        <div class="description">
+          This paper critically examines the ethical implications of AI and intellectual property, focusing on the intersection of legal frameworks and psychological factors.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">AI / ML</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Brandon Toews </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">December 21, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#abstract" id="toc-abstract" class="nav-link active" data-scroll-target="#abstract">Abstract</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a></li>
+  <li><a href="#literature-review" id="toc-literature-review" class="nav-link" data-scroll-target="#literature-review"><span class="header-section-number">2</span> Literature Review</a>
+  <ul class="collapse">
+  <li><a href="#legal-landscape" id="toc-legal-landscape" class="nav-link" data-scroll-target="#legal-landscape"><span class="header-section-number">2.1</span> Legal landscape</a></li>
+  <li><a href="#psychological-factors-that-contribute-to-unethical-behavior" id="toc-psychological-factors-that-contribute-to-unethical-behavior" class="nav-link" data-scroll-target="#psychological-factors-that-contribute-to-unethical-behavior"><span class="header-section-number">2.2</span> Psychological factors that contribute to unethical behavior</a></li>
+  <li><a href="#organizational-psychological-factors" id="toc-organizational-psychological-factors" class="nav-link" data-scroll-target="#organizational-psychological-factors"><span class="header-section-number">2.3</span> Organizational psychological factors</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">3</span> Conclusion</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="ai-ethics-IP.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p><br>
+</p>
+<p><img src="post-pic.jpg" class="img-fluid"></p>
+<section id="exploring-the-ethical-implications-of-artificial-intelligence-and-intellectual-property-a-legal-and-psychological-analysis" class="level1 unnumbered unlisted">
+<h1 class="unnumbered unlisted">Exploring the Ethical Implications of Artificial Intelligence and Intellectual Property: A Legal and Psychological Analysis</h1>
+</section>
+<section id="abstract" class="level1 unnumbered">
+<h1 class="unnumbered">Abstract</h1>
+<p>As artificial intelligence (AI) continues to advance, the ethical dimensions of its impact on intellectual property (IP) become increasingly critical. This paper critically examines the ethical implications of AI and IP, focusing on the intersection of legal frameworks and psychological factors. The primary research question addresses the potential ethical impacts of AI in IP, dissecting both legal and psychological dimensions separately and within organizational contexts. The methodology integrates in-depth exploration of legal dimensions using established frameworks and precedents, complemented by an extensive review of relevant psychological literature. The synthesis of these dimensions reveals the complexity introduced by AI, uncovering several possible negative ethical impacts. The legal landscape, characterized by soft law measures and a lag in regulatory development, may amplify psychological factors influencing unethical behavior. The paper explores how anticipated guilt, social acceptability, and psychological distance contribute to unethical behavior, especially in the context of IP theft facilitated by AI. Organizational psychological factors, such as Psychological Contract Theory and future self-continuity, are also examined, shedding light on potential avenues for unethical use of AI in IP within organizational settings. The conclusion emphasizes the need for regulatory frameworks aligned with ethical principles to address psychological factors and minimize the risks associated with AI in IP. While acknowledging the potential for AI to enhance IP protection, the paper underscores the importance of mitigating risks associated with its dual-use nature, emphasizing the role of societal and regulatory tools in fostering an ethical AI environment.</p>
+</section>
+<section id="introduction" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
+<p>As AI advances it becomes increasingly more powerful and therefore more capable of dealing harm. The ever-looming question remains, how will those who use and develop this technology wield it? IP is near and dear to our hearts as a society, and we go to great lengths to establish and protect it. Being the powerful tool that it is, it is important that we analyze what ethical impacts AI could have on IP. This paper aims to critically examine the ethical implications of AI in IP, focusing on the intersection of legal frameworks and psychological factors. The primary research question guiding this investigation is what the potential ethical impacts of AI in IP are. We will discuss the legal landscape of AI usage and development and psychological factors underpinning unethical behavior in individuals separately and within an organization. An examination of these will demonstrate that the added layer of complexity by the introduction and use of AI does present a number of possible negative ethical impacts.</p>
+<p>The methodology employed in this study involves an in-depth exploration of legal dimensions, drawing on established frameworks and precedents. The psychological factors are examined through an extensive review of relevant literature, ensuring a thorough analysis. This dual methodology is particularly pertinent as it enables the identification of potential conflicts, intersections, and gaps between legal and psychological considerations. The legal analysis establishes the framework within which ethical behavior is expected, while insights from psychology elucidate the factors that may influence adherence or deviation from these ethical norms. The synergy between these dimensions contributes a unique and valuable perspective to the ongoing discourse on AI ethics.</p>
+</section>
+<section id="literature-review" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Literature Review</h1>
+<section id="legal-landscape" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="legal-landscape"><span class="header-section-number">2.1</span> Legal landscape</h2>
+<p>It can be argued that there is a growing emphasis on ethical AI development, with organizations and researchers actively working to establish ethical principles and guidelines (<a href="#references">Carrillo, M. R., 2020, p.6</a>). While there has been progress made in ethical AI development (<a href="#references">Nourbakhsh, I. R., 2021, p.1</a>), potential negative ethical impacts still exist. Focusing solely on ethical principles may not be sufficient to prevent unethical behavior. A distinction between law and ethics must be established to carefully consider the ethical impacts raised in this paper. Laws are created to enforce what society agrees on as ethically acceptable and to hold individuals accountable for those ethical standards. Widespread confusion between legal and ethical principles specifically in AI is used to develop ethical principles to the exclusion of laws, reasoning that they are interchangeable (<a href="#references">Carrillo, M. R., 2020, p.6</a>). On the surface, it may seem favorable to focus more on establishing ethical principles, but this may be counterproductive to ensuring ethical behavior.</p>
+<p>The current legal landscape for AI development may exacerbate the psychological factors underpinning unethical behavior in this space. In recent years, soft law measures have been taken supporting ethical principles over hard regulation. Most notably, soft law, an international instrument containing statements of expected behavior (<a href="#references">Yan, M., 2019, p.50</a>), lacks enforceability and accountability in that there is often no development of institutional frameworks or clear assignment of responsibility (<a href="#references">Delacroix, S. and Wagner, B., 2021, p.3</a>). Concepts of cost, risk and social acceptability exert considerably influence over whether an individual will engage in unethical behavior. In the absence of regulation, perceptions of cost and risk are minimized and, in some cases, even contribute to increased social acceptance of unethical behavior (<a href="#references">Mills, P. and Groening, C., 2021, pp.378-380</a>). Given that it can be difficult to establish IP alone, with the addition of AI bringing with it its current regulatory state may obscure the costs and risks associated with IP theft even further. Lack of regulation in AI development may also fuel social acceptance to abuse AI in regard to IP, as is the case in password sharing with Netflix (<a href="#references">Mills, P. and Groening, C., 2021, pp.378</a>).</p>
+<p>Critics might argue that legal frameworks will eventually catch up with AI advancements, closing regulatory gaps and minimizing the risks of unethical behavior. While legal frameworks do have the potential to evolve, the challenge remains in catching up and keeping pace with rapidly advancing AI technologies. Waiting for legal frameworks to catch up might allow a window for unethical practices to proliferate.</p>
+<p>In addition, psychological factors contribute to whether a person will commit unethical behaviors. Concepts such as anticipated guilt, social acceptability, indirect action, psychological distance and cost/rewards can be used to explain or even predict the likelihood of unethical behavior (<a href="#references">Mills, P. and Groening, C., 2021, pp.378-380</a>, <a href="#references">Gratch, J. and Fast, N. J., 2022, pp.2-4</a>, <a href="#references">Reardon, J. et al., 2019, pp.511,514</a>). These concepts will be elaborated on to further tease out the ethical impact that AI may have on IP.</p>
+</section>
+<section id="psychological-factors-that-contribute-to-unethical-behavior" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="psychological-factors-that-contribute-to-unethical-behavior"><span class="header-section-number">2.2</span> Psychological factors that contribute to unethical behavior</h2>
+<p><a href="#references">Reardon, J. et al.&nbsp;(2019, p.522)</a> has demonstrated that a consumer’s ethical perceptions about downloading pirated music had the highest direct impact on whether they participated in such activities. Namely, if a consumer felt strongly that downloading illegal music was ethically wrong then they were far less likely to do it. This beautifully illustrates how having a strong ethical code can have a massive impact in preventing unethical behavior. <a href="#references">Ellis, L. M. (2022, pp.9,10,12)</a> explains that idea theft is looked upon more harshly than money theft because the behavior is most often attributed to negative personality characteristics such as self-interest and inauthenticity. As a result, idea thieves suffer severe interpersonal consequences thereby proving idea theft is regarded as a highly unethical behavior (<a href="#references">Ellis, L. M., 2022, p.12</a>). There are limitations in linking <a href="#references">Ellis, L. M. (2022)</a> studies on idea theft specifically with IP theft as there are nuanced differences between the two. However, as the two bear marked similarities in core concepts such as financial gain and authenticity it is reasonable to conclude both are viewed similarly as highly unethical behaviors by society in general.</p>
+<p>Seeing that IP theft is considered as highly unethical and ethical perceptions have the highest direct impact in preventing unethical behavior one could conclude that pursuing the development of ethical principles to the exclusion of laws may be the most effective approach. However, <a href="#references">González-Esteban y Patrici Calvo, E. (2022, p.1)</a> reveals that there exists an increase in professional malpractice including plagiarism, illicit appropriation of ideas, concepts, and results and improper or fraudulent use of information. While IP theft is not specifically listed as increasing by <a href="#references">González-Esteban y Patrici Calvo, E. (2022, p.1)</a> the actions that are listed comprise some if not all aspects of IP theft. How is it that actions which contribute to IP theft remain prevalent amidst strong ethical perceptions against them are maintained at large? In this author’s opinion, the answer to that question highlights the potential ethical impact that AI introduces to the subject of IP.</p>
+<p>The apparent contradiction between what should theoretically prevent IP theft and the reality of the situation can, in part, be explained by the psychological factors we touched on earlier. Anticipated guilt, arising from a consideration of violating one’s own standards, produces powerful motivation to act within the bounds of one’s ethical perceptions (<a href="#references">Mills, P. and Groening, C., 2021, pp.378-380</a>, <a href="#references">Reardon, J. et al., 2019, pp.511,514</a>). However, when there exists a social consensus that a given behavior is ethically acceptable evidenced by the fact that many individuals engage in the behavior this constitutes social acceptability. Social acceptability exerts a potent moderating effect of anticipated guilt such that as social acceptability of an unethical behavior increases so does engagement in said behavior (<a href="#references">Mills, P. and Groening, C., 2021, pp.378-380</a>). There exist strong personal motivations, namely anticipated guilt, to avoid engaging in IP theft. However, the social acceptability of core behaviors involved in IP theft has likely caused many to defer their ethical reservations on the matter.</p>
+<p>AI may strengthen other psychological factors that could influence the social acceptability of IP theft. <a href="#references">Gratch, J. and Fast, N. J. (2022, pp.2)</a> explain that indirect action, when one party acts on another through an agent, increases likelihood of unethical behavior. An attractive feature of AI is its ability to process amounts of data that are impossible for a human to absorb and extract valuable insights from that data. Therefore, it is likely that humans will use AI to sift through data that may, without their knowledge, contain IP. The model may then present insights that encroach on someone else’s IP but by the process abstracts the ideas from the owner of the property. This presents a potential situation whereby an individual could inadvertently steal someone else’s IP. Or the psychological distance afforded through the indirect action of using an AI model may reduce the perceived intensity of the negative consequences (<a href="#references">Gratch, J. and Fast, N. J. 2022, p.2</a>). In either case, these lower perceptions of the potential cost involved in the action increase the likelihood of IP theft. The increased likelihood of using AI to steal IP could then result in an increase in cases resulting in an even greater social acceptance of this unethical behavior.</p>
+</section>
+<section id="organizational-psychological-factors" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="organizational-psychological-factors"><span class="header-section-number">2.3</span> Organizational psychological factors</h2>
+<p>The discussion up until this point has been formulated around the individual use of AI in IP. However, other psychological factors explaining unethical behavior emerge when considering the social and environmental dynamics that accompany life in an organization. The prevalence of corporate scandals indicates a pervasiveness of unethical behavior that routinely transpires within organizations (<a href="#references">Griep, Y. et al., 2023, p.1</a>). While AI technology is becoming increasingly more accessible to individuals, the development and usage of these is still more accessible to organizations that possess the resources to engage them. It is important to ponder AI usage within the context of an organizational environment with the objectives that accompany it and how this could further elucidate the ethical impacts it may have on IP.</p>
+<p>Psychological Contract Theory posits that an employee has a mental model of the exchange agreement between him/herself and the organization. This psychological contract is what they believe their organization is obligated to provide them with in return for their contributions. A perceived breach in this contract increases the likelihood that the employee will engage in unethical behavior that harms the company. However, if the contract is perceived as fulfilled then the employee is more likely to engage in unethical pro-organizational behavior as they feel obligate to reciprocate beneficial treatment. Unethical pro-organizational behaviors are unethical acts that employees engage in with a desire to benefit their organization. Even though these acts routinely damage organizations, the employees who perpetrate them have the intention of helping (<a href="#references">Griep, Y. et al., 2023, pp.2,12,13</a>).</p>
+<p>Organizations with the resources to develop and employ AI technologies often deliver competitive wages and benefits to their employees. This increases the likelihood that their employees would be more inclined towards unethical pro-organizational behavior resulting in AI abuse at the expense of IP. Feelings of obligation to reciprocate beneficial treatment may move employees to use AI to steal IP even when the organization does not condone it. Employees that discover previously unknown IP theft in their models may be inclined to lie about and/or cover up the training dataset. These coupled with the speed with which an AI model can process data could facilitate IP theft on a mass scale.</p>
+<p>Future self-continuity refers to how well a person identifies with themself in the future and if they can image how they might feel. If their future self feels like a stranger to them then they are more likely to act in an unethical way because they do not have a good sense of how they will feel in the future (<a href="#references">Hershfield, H. E., Cohen, T. R. and Thompson, L., 2012, p.300</a>). <a href="#references">Hershfield, H. E., Cohen, T. R. and Thompson, L. (2012, pp.307-308)</a> were able to shift a person to think more in terms of the future in general rather than future self and by doing so increased a propensity to think more about immediate short-term gains and thereby increase likelihood of engaging in unethical behavior. Many organizations channel employees focus on quarterly earnings and shareholder meetings where the goal is increased profit from last quarter. This consistent and pressurized training of focus on short-term outcomes may successfully shift employee thinking away from a healthier future self-continuity thereby raising likelihood of them engaging in unethical behavior. With a lower future self-continuity, a person may feel more inclined to seize a competitive edge by using AI to steal IP.</p>
+<p>Any one of these two organizational factors on their own increase likelihood of unethical behavior but in combination with each other creates powerful conditions to elicit unethical use of AI. Unethical use of AI, being able to bestow great financial rewards, may be all too tempting for someone who feels an obligation to reciprocate beneficial treatment. Especially when an individual’s focus is being constantly aligned with quarterly earnings, shifting thoughts from ethically fortifying thought patterns of future self-continuity. If we include the current legal landscape of AI use and development, with its lack of regulatory boundaries, along with psychological distance afforded by AI technologies, a deadly cocktail emerges. A potent cocktail that can easily intoxicate individuals towards unethical use and further adding to it a rise in social acceptability. As illustrated, these issues can stack up on each other to add more weight towards tipping the scales in favor of unethical behavior.</p>
+</section>
+</section>
+<section id="conclusion" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Conclusion</h1>
+<p>Some may contend that AI technologies can be employed to enhance IP protection, providing better tools for monitoring and preventing IP theft. There is significant potential for AI to contribute to IP protection but that does not discount the dual-use nature of technology. AI’s capabilities can be exploited for both positive and negative purposes, and the focus should be on minimizing the risks associated with unethical use. Further research into developing regulatory frameworks in lockstep with ethical principles to specifically address the psychological factors underpinning unethical behavior may produce more favorable outcomes in the future. In this author’s opinion, if we work towards creating a psychological environment that favors ethical uses of AI using societal and regulatory tools, we will minimize negative and maximize positive impacts of AI in IP.</p>
+<p>Examining the ethical impact of AI on IP is a complex endeavor. Of the many layers to consider in addressing this subject, an examination of the psychology behind ethical/unethical behavior, inside and outside organizations, alongside the current capabilities and regulatory state of AI is needed. After considering these, we see that there are conditions that foster an environment conducive to negative ethical impacts. Although there are strong trends towards developing robust ethical principles in AI development, some negative ethical impacts are sure to in sue. It may be that the psychological effects of using AI technologies will lead to an increase of unethical use of IP. Or the capabilities of AI may enable IP theft on a greater scale thus increasing cases. It remains unclear whether there will be an increase in IP crime with the integration of AI technologies. Nevertheless, AI constitutes a potent tool that introduces a heightened level of complexity to the understanding of factors influencing unethical behavior. While we endeavor to adjust to this addition of complexity in the matter, we are likely to see new and unforeseeable ethical dynamics emerge that call us to readjust accordingly.</p>
+</section>
+<section id="references" class="level1 unnumbered">
+<h1 class="unnumbered">References</h1>
+<p>Carrillo, M. R. (2020) “Artificial Intelligence: From Ethics to Law,” Telecommunications Policy, 44(6), pp.&nbsp;1–1. doi: 10.1016/j.telpol.2020.101937.</p>
+<p>Delacroix, S. and Wagner, B. (2021) “Constructing a Mutually Supportive Interface between Ethics and Regulation,” Computer Law &amp; Security Review: The International Journal of Technology Law and Practice, 40. doi: 10.1016/j.clsr.2020.105520.</p>
+<p>Ellis, L. M. (2022) “The Interpersonal Consequences of Stealing Ideas: Worse Character Judgments and Less Co-Worker Support for an Idea (vs.&nbsp;Money) Thief,” Organizational Behavior and Human Decision Processes, 171. doi: 10.1016/j.obhdp.2022.104165.</p>
+<p>González-Esteban y Patrici Calvo, E. (2022) “Ethically Governing Artificial Intelligence in the Field of Scientific Research and Innovation,” Heliyon, 8(2). doi: 10.1016/j.heliyon.2022.e08946.</p>
+<p>Gratch, J. and Fast, N. J. (2022) “The Power to Harm: Ai Assistants Pave the Way to Unethical Behavior,” Current Opinion in Psychology, 47. doi: 10.1016/j.copsyc.2022.101382.</p>
+<p>Griep, Y. et al.&nbsp;(2023) “You Scratch My Back, I’ll Scratch Yours: Unethical Pro-Organizational Behavior and Deviance in Response to Different Psychological Contract States,” Journal of business research, 156.</p>
+<p>Hershfield, H. E., Cohen, T. R. and Thompson, L. (2012) “Short Horizons and Tempting Situations: Lack of Continuity to Our Future Selves Leads to Unethical Decision Making and Behavior,” Organizational Behavior and Human Decision Processes, 117(2), pp.&nbsp;298–310. doi: 10.1016/j.obhdp.2011.11.002.</p>
+<p>Mills, P. and Groening, C. (2021) “The Role of Social Acceptability and Guilt in Unethical Consumer Behavior: Following the Crowd or Their Own Moral Compass?,” Journal of Business Research, 136, pp.&nbsp;377–388. doi: 10.1016/j.jbusres.2021.07.021.</p>
+<p>Nourbakhsh, I. R. (2021) “Ai Ethics: A Call to Faculty,” Association for Computing Machinery. Communications of the ACM, 64(9), pp.&nbsp;43–43. doi: 10.1145/3478516.</p>
+<p>Reardon, J. et al.&nbsp;(2019) “A Global Consumer Decision Model of Intellectual Property Theft,” Journal of Research in Interactive Marketing, 13(4), pp.&nbsp;509–528. doi: 10.1108/JRIM-07-2018-0093.</p>
+<p>Yan, M. (2019) “Corporate Social Responsibility Versus Shareholder Value Maximization: Through the Lens of Hard and Soft Law,” Northwestern Journal of International Law &amp; Business, 40(1), pp.&nbsp;47–85.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
