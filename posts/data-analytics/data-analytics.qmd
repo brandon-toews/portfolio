@@ -1,0 +1,346 @@
+---
+title: "Exploring Distributions, Transformations, and Predictive Modeling"
+format:
+  html:
+    code-tools:
+      source: https://github.com/brandon-toews/data-analytics-assignment
+  pdf: default
+author: "Brandon Toews"
+badges: true
+categories:
+- AI / ML
+date: "2024-1-9"
+description: An exploratory data analysis on an Ookla speedtest dataset with applications of descriptive analytics, data transformations, hypothesis testing, and predictive modelling.
+toc: true
+number-sections: true
+image: post-pic.png
+twitter-card: true
+card-style: summary
+crossref:
+  fig-title: '**Figure**'
+  fig-labels: arabic
+  title-delim: "**.**"
+---
+
+\
+
+![](post-pic.png)
+
+# Description
+
+In this section, we elaborate on the steps taken to clean the dataset obtained from 'ookla_speed_q4_2022.csv'. The dataset, consisting of 20,000 entries and 7 features related to network performance, underwent a comprehensive cleaning process.
+
+::: callout-tip
+## Dataset
+
+View [Ookla](https://github.com/teamookla/ookla-open-data) dataset on `ookla-open-data` repository.
+:::
+
+::: {.callout-tip collapse="true"}
+## Description Section Source Code
+
+View [Description.ipynb](https://github.com/brandon-toews/data-analytics-assignment/blob/main/Description.ipynb) notebook for this section.
+:::
+
+## Initial Data Overview
+
+Upon loading the dataset using the pandas library in Python, we observed that it contained 20,000 entries with 7 columns. An initial assessment revealed the presence of missing values in the `avg_lat_down_ms` and `avg_lat_up_ms` columns. ([Fig. 1](#fig-missing))
+
+{{< embed Description.ipynb#fig-missing echo=true >}}
+
+## Data Cleaning Steps
+
+-   **Dropping Rows with Missing Values:** Rows containing missing values were dropped to ensure the reliability of our subsequent analyses. ([Fig. 1](#fig-missing))
+-   **Column Removal:** We removed the unnecessary `Unnamed: 0` column, as it served as an unnamed index and did not contribute to the analysis.
+-   **Spelling Corrections and Categorization:** We addressed spelling errors in the `net_type` column, changing 'moblie' to 'Mobile' and capitalizing 'fixed'. The `net_type` column was then converted to a categorical data type.
+-   **Duplicate Entry Removal:** Duplicate entries were identified and subsequently dropped to ensure the uniqueness of our data.
+-   **Conversion of Float Columns to Int:** We verified the `avg_lat_down_ms` and `avg_lat_up_ms` columns for floating-point values and converted them to integers if necessary.
+
+## Column Renaming and Unit Conversion
+
+To enhance clarity, we renamed columns related to average download and upload speeds and converted the corresponding values from kilobits per second to megabits per second.
+
+## Resulting Dataset
+
+The resulting cleaned dataset, now saved as 'cleaned_dataset.parquet', comprises 19,030 entries and 6 columns, each with non-null values. The `net_type` column is categorized into 'Mobile' and 'Fixed'. The dataset is now ready for further analysis and modeling.
+
+# Comprehensive Data Analysis
+
+In this section, we delve into the exploratory data analysis (EDA) process, aiming to comprehend the underlying distributions, compare fixed and mobile network data, and identify any notable correlations. Recognizing that the initial data exhibited heavily positively skewed distributions, we undertook a series of data transformations to bring the distributions closer to normality. The primary objective was to enhance the suitability of the data for subsequent hypothesis testing.
+
+::: {.callout-tip collapse="true"}
+## Comprehensive Data Analysis Section Source Code
+
+View [Analysis.ipynb](https://github.com/brandon-toews/data-analytics-assignment/blob/main/Analysis.ipynb) notebook for this section.
+:::
+
+## Understanding Initial Distributions
+
+The initial step involved an examination of the distributions of both fixed and mobile network data. Histograms, box plots ([Fig. 2](#fig-distplots)), and summary statistics ([Figs. 3](#fig-stats) & [4](#fig-colskews)) were employed to gain insights into the central tendencies, dispersions, and skewness of the datasets. Notably, the distributions were observed to be heavily positively skewed, prompting the need for transformation to meet the assumptions of parametric statistical tests.
+
+::: {#fig-distplots layout-ncol=2}
+
+![Box/Hist plots of `avg_d_mbps`](hist_d.png){#fig-hist_d}
+
+![Box/Hist plots of `avg_u_mbps`](hist_u.png){#fig-hist_u}
+
+![Box/Hist plots of `avg_lat_ms`](hist_lat.png){#fig-hist_lat}
+
+![Box/Hist plots of `avg_lat_down_ms`](hist_down.png){#fig-hist_down}
+
+![Box/Hist plots of `avg_lat_up_ms`](hist_up.png){#fig-hist_up}
+
+Box and histogram plots
+:::
+
+![Summary statistics of each network type](des_ana.png){#fig-stats}
+
+::: {#fig-colskews layout-ncol=2}
+
+![`avg_d_mbps` column](skew_d.png){#fig-dskews}
+
+![`avg_u_mbps` column](skew_u.png){#fig-uskews}
+
+![`avg_lat_ms` column](skew_lat.png){#fig-latskews}
+
+![`avg_lat_up_ms` column](skew_up.png){#fig-upskews}
+
+![`avg_lat_down_ms` column](skew_down.png){#fig-downskews}
+
+Skew and kurtosis values for everything and each network type
+:::
+
+## Comparative Analysis
+
+To assess the disparities between fixed and mobile networks, we conducted thorough comparative analyses. Kernel density plots ([Fig. 5](#fig-kdeplots)) and statistical tests ([Fig. 3](#fig-stats)) were leveraged to highlight variations in central tendencies. These comparisons served as a foundation for subsequent transformations and allowed us to pinpoint differences between the two networks.
+
+::: {#fig-kdeplots layout-ncol=2}
+
+![`avg_d_mbps` for fixed network](fix_d.png){#fig-kdefix_d}
+
+![`avg_d_mbps` for mobile network](mobile_d.png){#kdemob_d}
+
+![`avg_u_mbps` for fixed network](fix_u.png){#kdefix_u}
+
+![`avg_u_mbps` for mobile network](mob_u.png){#kdemob_u}
+
+![`avg_lat_ms` for fixed network](fix_lat.png){#fig-kdefix_lat}
+
+![`avg_lat_ms` for mobile network](mob_lat.png){#fig-kdemob_lat}
+
+![`avg_lat_down_ms` for fixed network](fix_down.png){#fig-kdefix_down}
+
+![`avg_lat_down_ms` for mobile network](mob_down.png){#fig-kdemob_down}
+
+![`avg_lat_up_ms` for fixed network](fix_up.png){#fig-kdefix_up}
+
+![`avg_lat_up_ms` for mobile network](mob_up.png){#fig-kdemob_up}
+
+KDE plots
+:::
+
+## Data Transformations
+
+Several data transformations were applied, including but not limited to logarithmic, Box-Cox, and Yeo-Johnson transformations. Each transformation was carefully chosen based on its appropriateness for the given context and the nature of the initial distributions. Log transformations, for instance, are effective in addressing exponential growth patterns, while Box-Cox transformations are versatile in handling skewed data. (Lee, S. X. and McLachlan, G. J., 2022) (West, R. M., 2022)
+
+## Comparative Assessment of Transformations
+
+A meticulous examination of the transformed datasets ensued, involving comparative analyses with the original data. Visualizations ([Figs. 6](#fig-transcomp)) and statistical measures, including skewness and kurtosis tests ([Fig. 8](#fig-transskews)), were employed to quantify the improvements brought about by each transformation. The Yeo-Johnson transformation consistently demonstrated superior results in terms of bringing the data closer to a normal distribution. ([Fig. 7](#fig-yeojdists))
+
+{{< embed Analysis.ipynb#fig-transcomp echo=true >}}
+\
+
+::: {#fig-yeojdists layout-ncol=2}
+
+![`avg_d_mbps` for fixed network](fyj_d.png){#fig-fyj_d}
+
+![`avg_d_mbps` for mobile network](myj_d.png){#fig-myj_d}
+
+![`avg_u_mbps` for fixed network](fyj_u.png){#fig-fyj_u}
+
+![`avg_u_mbps` for mobile network](myj_u.png){#fig-myj_u}
+
+![`avg_lat_ms` for fixed network](fyj_lat.png){#fig-fyj_lat}
+
+![`avg_lat_ms` for mobile network](myj_lat.png){#fig-myj_lat}
+
+![`avg_lat_down_ms` for fixed network](fyj_down.png){#fig-fyj_down}
+
+![`avg_lat_down_ms` for mobile network](myj_down.png){#fig-myj_down}
+
+![`avg_lat_up_ms` for fixed network](fyj_up.png){#fig-fyj_up}
+
+![`avg_lat_up_ms` for mobile network](myj_up.png){#fig-myj_up}
+
+Yeo-Johnson transformed KDE plots
+:::
+
+::: {#fig-transskews}
+
+![`avg_d_mbps` column](tskew_d.png){#fig-tdskews}
+
+![`avg_u_mbps` column](tskew_u.png){#fig-tuskews}
+
+![`avg_lat_ms` column](tskew_lat.png){#fig-tlatskews}
+
+![`avg_lat_up_ms` column](tskew_up.png){#fig-tupskews}
+
+![`avg_lat_down_ms` column](tskew_down.png){#fig-tdownskews}
+
+Comparison of original skew with data transformation skews on both networks
+:::
+
+## Correlation Analysis
+
+In addition to distribution improvements, we investigated the impact of transformations on correlation structures within the data. Scatter plots ([Figs. 9](#fig-orgpairs) & [10](#fig-transpairs)) and correlation matrices ([Figs. 11](#fig-orgheatmaps) & [12](#fig-transheatmaps)) were employed to evaluate changes in relationships between variables. This step aimed to ensure that the transformations not only enhanced distributions but also preserved or revealed meaningful associations.
+
+{{< embed Analysis.ipynb#fig-orgpairs echo=true >}}
+\
+{{< embed Analysis.ipynb#fig-transpairs echo=true >}}
+\
+{{< embed Analysis.ipynb#fig-orgheatmaps echo=true >}}
+\
+{{< embed Analysis.ipynb#fig-transheatmaps echo=true >}}
+
+## Conclusion
+
+The described EDA and distribution transformations constitute a critical phase in preparing the data for hypothesis testing. The chosen transformations were justified through a systematic exploration of initial distributions, comparative analyses, and a thorough assessment of the impact on correlations. The Yeo-Johnson transformation demonstrated a remarkable ability to normalize skewed data, effectively mitigating the positive skewness observed in the initial distributions. This methodical approach ensures that subsequent analyses are conducted on data that aligns more closely with parametric assumptions, enhancing the robustness and reliability of the findings.
+
+# Hypothesis Definition and Testing
+
+This section explores the variability and average download speed differences between fixed and mobile networks. Our goal is to determine if the standard deviation of `avg_d_mbps` varies significantly between the networks, providing insights into their consistency, and to establish whether one network has significantly higher average download speeds.
+
+::: {.callout-tip collapse="true"}
+## Hypothesis Definition and Testing Section Source Code
+
+View [Hypothesis_Testing.ipynb](https://github.com/brandon-toews/data-analytics-assignment/blob/main/Hypothesis_Testing.ipynb) notebook for this section.
+:::
+
+## Methodology
+
+We employed a comprehensive set of statistical tests, considering the positively skewed nature of the original `avg_d_mbps` dataset.
+
+### Levene's Test: Untransformed Data
+
+Levene's test was conducted on the untransformed `avg_d_mbps` data to assess whether the standard deviation of download speeds differs significantly between fixed and mobile networks.
+
+-   *Decision Justification*: Levene's test is robust for assessing equality of variances, and its non-parametric nature aligns well with the skewed distribution of the original data. (Yuhang Zhou, Yiyang Zhu and Weng Kee Wong, 2023) (Hosken, D. J., Buss, D. L. and Hodgson, D. J., 2018)
+
+### F-Test: Yeo-Johnson Transformed Data
+
+An F-test was performed on Yeo-Johnson transformed data to compare variances between fixed and mobile networks after addressing the skewness.
+
+-   *Decision Justification*: F-test is suitable for comparing variances, and using the transformed data allows us to make robust comparisons while accounting for skewness.
+
+### T-Tests: Untransformed and Yeo-Johnson Transformed Data
+
+Independent sample t-tests were conducted on both untransformed and transformed `avg_d_mbps` data to assess whether one network has significantly higher average download speeds than the other.
+
+-   *Decision Justification*: T-tests are appropriate for comparing means, and conducting them on both datasets ensures a comprehensive evaluation of average download speeds.
+
+### Mann-Whitney U Test: Untransformed Data
+
+A non-parametric Mann-Whitney U test was performed on the untransformed data to corroborate findings from the t-tests and provide additional robustness. 
+
+-   *Decision Justification*: The non-parametric nature of the Mann-Whitney U test suits skewed data, offering an alternative perspective on average download speed differences. (Mori, M. et al., 2024) (María Teresa Politi, Juliana Carvalho Ferreira and Cecilia María Patino, 2021)
+
+## Results and Interpretation
+
+### Levene's Test: Untransformed Data
+- **F statistic:** 1046.03, **p-value:** 0.0
+- **Conclusion:** The standard deviation of `avg_d_mbps` significantly differs between fixed and mobile networks.
+
+### F-Test: Yeo-Johnson Transformed Data
+- **F statistic:** 6.07, **p-value:** 0.0
+- **Conclusion:** The F-test on transformed data reinforces the conclusion that the standard deviation of `avg_d_mbps` varies significantly between networks. Also, it indicates that the fixed network has significantly higher average download speeds and a higher standard deviation than the mobile network.
+
+### T-Tests: Untransformed and Transformed Data
+
+#### Untransformed Data: 
+- **t statistic:** 40.16, **p-value:** 0.0 
+- **Conclusion:** The fixed network has significantly higher average download speeds than the mobile network, and it also exhibits a higher standard deviation.
+
+#### Yeo-Johnson Transformed Data: 
+- **t statistic:** 120.57, **p-value:** 0.0 
+- **Conclusion:** The transformed data supports the initial conclusion of the fixed network outperforming the mobile network in both average download speeds and standard deviation.
+
+### Mann-Whitney U Test: Untransformed Data
+
+- **U statistic:** 63199341.5, **p-value:** 0.0 
+- **Conclusion:** The Mann-Whitney U test aligns with t-test results, indicating that the fixed network tends to have significantly higher average download speeds and a higher standard deviation.
+
+## Summary
+
+Our multifaceted analysis, incorporating Levene's test, F-test, t-tests on both original and transformed data, and the Mann-Whitney U test, consistently suggests that the fixed network exhibits significantly higher average download speeds compared to the mobile network. However, it's important to note that this superior performance is accompanied by a higher standard deviation, indicating a greater degree of variability in download speeds. While the fixed network showcases higher speeds on average, the increased standard deviation suggests a higher level of variability, implying that the consistency of download speeds in the fixed network may be more variable than that of the mobile network. This thorough approach provides a nuanced understanding of the network performance, acknowledging the strengths and potential areas of variability.
+
+# Implementation
+
+::: {.callout-tip collapse="true"}
+## Implementation Section Source Code
+
+View [ML_Models.ipynb](https://github.com/brandon-toews/data-analytics-assignment/blob/main/ML_Models.ipynb) notebook for this section.
+:::
+
+## Regression Models for Average Download Speed
+
+### Linear Regression
+
+Uni-variate and Multivariate linear regression models were employed to predict average download speed (`avg_d_mbps`). The initial models were trained on the original data, and the others were trained on Yeo-Johnson transformed data. The Yeo-Johnson transformed data exhibited a marginal improvement in performance, suggesting that addressing skewness contributed to better predictions (Pan, P., Li, R. and Zhang, Y., 2023). The mean absolute error (MAE), mean squared error (MSE), root mean squared error (RMSE), and R-squared (R2) were used to evaluate model performance. ([Figs. 13](#fig-uniresults) & [14](#fig-multiresults)) (Subasi, A. et al., 2020)
+
+
+![Comparison of uni-variate linear regression models trained on original and transformed data](reg_t.png){#fig-uniresults}
+
+![Comparison of multivariate linear regression models trained on original and transformed data](lregm.png){#fig-multiresults}
+
+
+### Gradient Boosting Regression
+
+A multivariate Gradient Boosting Regressor was employed as a more sophisticated regression model (Subasi, A. et al., 2020). The model was trained on the original data, and its performance was evaluated using the same metrics ([Fig. 15](#fig-gbresults)). The Gradient Boosting model outperformed the linear regression models, achieving an R2 of 0.54. Gradient Boosting Regression demonstrated superior predictive power compared to linear regression.
+
+
+![Gradient boosting results](gbreg.png){#fig-gbresults}
+
+
+## Classification Models for Network Type
+
+### Support Vector Machine (SVM)
+
+An SVM classification model was trained on original, and Yeo-Johnson transformed data to predict the network type (Fixed or Mobile). Again, the transformed data trained model performed better than the other, achieving an accuracy of approximately 87%. The confusion matrix ([Figs. 16](#fig-orgvector) & [17](#fig-transvector)) and classification report provided insights into precision, recall, and F1-score for each class.
+
+{{< embed ML_Models.ipynb#fig-orgvector echo=true >}}
+\
+{{< embed ML_Models.ipynb#fig-transvector echo=true >}}
+
+### Random Forest Classifier
+
+A Random Forest Classifier was also employed for classification, achieving an accuracy of approximately 87%. ([Figs. 18](#fig-randforest) & [19](#fig-randforest-betterpars)) A [grid search](#lst-gridsearch) was conducted to fine-tune hyperparameters, resulting in optimal values for max_depth, max_leaf_nodes, min_samples_leaf, and min_samples_split. (Behera, G. and Nain, N., 2022)
+
+{{< embed ML_Models.ipynb#fig-randforest echo=true >}}
+\
+{{< embed ML_Models.ipynb#lst-gridsearch echo=true >}}
+\
+{{< embed ML_Models.ipynb#fig-randforest-betterpars echo=true >}}
+
+## Model Comparison and Analysis
+
+The choice of models depended on the nature of the prediction task. Gradient Boosting Regression demonstrated superior performance in predicting average download speed, while Random Forest Classification excelled in predicting network types. The decision to employ Yeo-Johnson transformation in regression was justified by the slight improvement in predictive accuracy (Pan, P., Li, R. and Zhang, Y., 2023). Both SVM and Random Forest Classifier provided competitive results for network classification, with the latter outperforming SVM.
+
+# References {.unnumbered}
+
+Behera, G. and Nain, N. (2022) "Gso-Crs: Grid Search Optimization for Collaborative Recommendation System," Sādhanā : Published by the Indian Academy of Sciences, 47(3). doi: 10.1007/s12046-022-01924-0.
+
+Hosken, D. J., Buss, D. L. and Hodgson, D. J. (2018) 'Beware the F Test (or, How to Compare Variances)', Animal behaviour, 136, pp. 119--126.
+
+Lee, S. X. and McLachlan, G. J. (2022) 'An Overview of Skew Distributions in Model-Based Clustering', Journal of Multivariate Analysis, 188. doi: 10.1016/j.jmva.2021.104853.
+
+María Teresa Politi, Juliana Carvalho Ferreira and Cecilia María Patino (2021) Nonparametric Statistical Tests: Friend or Foe?, 47(4). doi: 10.36416/1806-3756/e20210292.
+
+Mori, M. et al. (2024) "An Analytical Investigation of Body Parts More Susceptible to Aging and Composition Changes Using Statistical Hypothesis Testing," Healthcare Analytics, 5. doi: 10.1016/j.health.2023.100284.
+
+Pan, P., Li, R. and Zhang, Y. (2023) "Predicting Punching Shear in Rc Interior Flat Slabs with Steel and Frp Reinforcements Using Box-Cox and Yeo-Johnson Transformations," Case Studies in Construction Materials, 19. doi: 10.1016/j.cscm.2023.e02409.
+
+Subasi, A. et al. (2020) "Permeability Prediction of Petroleum Reservoirs Using Stochastic Gradient Boosting Regression," Journal of Ambient Intelligence and Humanized Computing, 13(7), pp. 3555--3564. doi: 10.1007/s12652-020-01986-0.
+
+West, R. M. (2022) "Best Practice in Statistics: The Use of Log Transformation," Annals of Clinical Biochemistry, 59(3), pp. 162--165. doi: 10.1177/00045632211050531.
+
+Yuhang Zhou, Yiyang Zhu and Weng Kee Wong (2023) 'Statistical Tests for Homogeneity of Variance for Clinical Trials and Recommendations', Contemporary Clinical Trials Communications, 33, p. 101119. doi: 10.1016/j.conctc.2023.101119.

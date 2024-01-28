@@ -1,0 +1,1947 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+  letterpaper,
+  DIV=11,
+  numbers=noendperiod,
+  oneside]{scrartcl}
+
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else  
+    % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[left=1in,marginparwidth=2.0666666666667in,textwidth=4.1333333333333in,marginparsep=0.3in]{geometry}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\setcounter{secnumdepth}{5}
+% Make \paragraph and \subparagraph free-standing
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{241,243,245}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.40,0.45,0.13}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\ExtensionTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.28,0.35,0.67}{#1}}
+\newcommand{\ImportTok}[1]{\textcolor[rgb]{0.00,0.46,0.62}{#1}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\NormalTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.07,0.07,0.07}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
+\KOMAoption{captions}{tableheading}
+\makeatletter
+\@ifpackageloaded{tcolorbox}{}{\usepackage[skins,breakable]{tcolorbox}}
+\@ifpackageloaded{fontawesome5}{}{\usepackage{fontawesome5}}
+\definecolor{quarto-callout-color}{HTML}{909090}
+\definecolor{quarto-callout-note-color}{HTML}{0758E5}
+\definecolor{quarto-callout-important-color}{HTML}{CC1914}
+\definecolor{quarto-callout-warning-color}{HTML}{EB9113}
+\definecolor{quarto-callout-tip-color}{HTML}{00A047}
+\definecolor{quarto-callout-caution-color}{HTML}{FC5300}
+\definecolor{quarto-callout-color-frame}{HTML}{acacac}
+\definecolor{quarto-callout-note-color-frame}{HTML}{4582ec}
+\definecolor{quarto-callout-important-color-frame}{HTML}{d9534f}
+\definecolor{quarto-callout-warning-color-frame}{HTML}{f0ad4e}
+\definecolor{quarto-callout-tip-color-frame}{HTML}{02b875}
+\definecolor{quarto-callout-caution-color-frame}{HTML}{fd7e14}
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Table of contents}
+\else
+  \newcommand\contentsname{Table of contents}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{List of Figures}
+\else
+  \newcommand\listfigurename{List of Figures}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{List of Tables}
+\else
+  \newcommand\listtablename{List of Tables}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Figure}
+\else
+  \newcommand\figurename{Figure}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Table}
+\else
+  \newcommand\tablename{Table}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Listing}
+\newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+\makeatletter
+\@ifpackageloaded{tcolorbox}{}{\usepackage[skins,breakable]{tcolorbox}}
+\makeatother
+\makeatletter
+\@ifundefined{shadecolor}{\definecolor{shadecolor}{rgb}{.97, .97, .97}}
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{sidenotes}{}{\usepackage{sidenotes}}
+\@ifpackageloaded{marginnote}{}{\usepackage{marginnote}}
+\makeatother
+\makeatletter
+\makeatother
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={Exploring Distributions, Transformations, and Predictive Modeling},
+  pdfauthor={Brandon Toews},
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Exploring Distributions, Transformations, and Predictive
+Modeling}
+\author{Brandon Toews}
+\date{2024-01-09}
+
+\begin{document}
+\maketitle
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[interior hidden, sharp corners, boxrule=0pt, borderline west={3pt}{0pt}{shadecolor}, breakable, enhanced, frame hidden]}{\end{tcolorbox}}\fi
+
+\renewcommand*\contentsname{Table of contents}
+{
+\hypersetup{linkcolor=}
+\setcounter{tocdepth}{3}
+\tableofcontents
+}
+\hfill\break
+
+\includegraphics{post-pic.png}
+
+\hypertarget{description}{%
+\section{Description}\label{description}}
+
+In this section, we elaborate on the steps taken to clean the dataset
+obtained from `ookla\_speed\_q4\_2022.csv'. The dataset, consisting of
+20,000 entries and 7 features related to network performance, underwent
+a comprehensive cleaning process.
+
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Dataset}, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, colback=white, leftrule=.75mm, colframe=quarto-callout-tip-color-frame, colbacktitle=quarto-callout-tip-color!10!white, titlerule=0mm, opacitybacktitle=0.6, arc=.35mm, rightrule=.15mm, left=2mm, breakable, opacityback=0, coltitle=black]
+
+View \href{https://github.com/teamookla/ookla-open-data}{Ookla} dataset
+on \texttt{ookla-open-data} repository.
+
+\end{tcolorbox}
+
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Description Section Source Code}, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, colback=white, leftrule=.75mm, colframe=quarto-callout-tip-color-frame, colbacktitle=quarto-callout-tip-color!10!white, titlerule=0mm, opacitybacktitle=0.6, arc=.35mm, rightrule=.15mm, left=2mm, breakable, opacityback=0, coltitle=black]
+
+View
+\href{https://github.com/brandon-toews/data-analytics-assignment/blob/main/Description.ipynb}{Description.ipynb}
+notebook for this section.
+
+\end{tcolorbox}
+
+\hypertarget{initial-data-overview}{%
+\subsection{Initial Data Overview}\label{initial-data-overview}}
+
+Upon loading the dataset using the pandas library in Python, we observed
+that it contained 20,000 entries with 7 columns. An initial assessment
+revealed the presence of missing values in the
+\texttt{avg\_lat\_down\_ms} and \texttt{avg\_lat\_up\_ms} columns.
+(\protect\hyperlink{fig-missing}{Fig. 1})
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Create a deep copy of the dataframe for cleaning}
+\NormalTok{cleaning\_df }\OperatorTok{=}\NormalTok{ df.copy()}
+
+\CommentTok{\# Not many rows with missing values as shown in plot}
+\NormalTok{cleaning\_df.isna().}\BuiltInTok{sum}\NormalTok{().plot(kind}\OperatorTok{=}\StringTok{\textquotesingle{}bar\textquotesingle{}}\NormalTok{, ylim}\OperatorTok{=}\NormalTok{(}\DecValTok{0}\NormalTok{, cleaning\_df.shape[}\DecValTok{0}\NormalTok{]))}
+
+\CommentTok{\# Drop rows with missing values}
+\NormalTok{cleaning\_df.dropna(inplace }\OperatorTok{=} \VariableTok{True}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[H]
+
+{\centering \includegraphics{data-analytics_files/figure-latex/fig-missing-output-1.png}
+
+}
+
+\caption{\label{fig-missing}Bar plot of missing values in each column}
+
+\end{figure}
+
+\hypertarget{data-cleaning-steps}{%
+\subsection{Data Cleaning Steps}\label{data-cleaning-steps}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Dropping Rows with Missing Values:} Rows containing missing
+  values were dropped to ensure the reliability of our subsequent
+  analyses. (\protect\hyperlink{fig-missing}{Fig. 1})
+\item
+  \textbf{Column Removal:} We removed the unnecessary
+  \texttt{Unnamed:\ 0} column, as it served as an unnamed index and did
+  not contribute to the analysis.
+\item
+  \textbf{Spelling Corrections and Categorization:} We addressed
+  spelling errors in the \texttt{net\_type} column, changing `moblie' to
+  `Mobile' and capitalizing `fixed'. The \texttt{net\_type} column was
+  then converted to a categorical data type.
+\item
+  \textbf{Duplicate Entry Removal:} Duplicate entries were identified
+  and subsequently dropped to ensure the uniqueness of our data.
+\item
+  \textbf{Conversion of Float Columns to Int:} We verified the
+  \texttt{avg\_lat\_down\_ms} and \texttt{avg\_lat\_up\_ms} columns for
+  floating-point values and converted them to integers if necessary.
+\end{itemize}
+
+\hypertarget{column-renaming-and-unit-conversion}{%
+\subsection{Column Renaming and Unit
+Conversion}\label{column-renaming-and-unit-conversion}}
+
+To enhance clarity, we renamed columns related to average download and
+upload speeds and converted the corresponding values from kilobits per
+second to megabits per second.
+
+\hypertarget{resulting-dataset}{%
+\subsection{Resulting Dataset}\label{resulting-dataset}}
+
+The resulting cleaned dataset, now saved as `cleaned\_dataset.parquet',
+comprises 19,030 entries and 6 columns, each with non-null values. The
+\texttt{net\_type} column is categorized into `Mobile' and `Fixed'. The
+dataset is now ready for further analysis and modeling.
+
+\hypertarget{comprehensive-data-analysis}{%
+\section{Comprehensive Data
+Analysis}\label{comprehensive-data-analysis}}
+
+In this section, we delve into the exploratory data analysis (EDA)
+process, aiming to comprehend the underlying distributions, compare
+fixed and mobile network data, and identify any notable correlations.
+Recognizing that the initial data exhibited heavily positively skewed
+distributions, we undertook a series of data transformations to bring
+the distributions closer to normality. The primary objective was to
+enhance the suitability of the data for subsequent hypothesis testing.
+
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Comprehensive Data Analysis Section Source Code}, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, colback=white, leftrule=.75mm, colframe=quarto-callout-tip-color-frame, colbacktitle=quarto-callout-tip-color!10!white, titlerule=0mm, opacitybacktitle=0.6, arc=.35mm, rightrule=.15mm, left=2mm, breakable, opacityback=0, coltitle=black]
+
+View
+\href{https://github.com/brandon-toews/data-analytics-assignment/blob/main/Analysis.ipynb}{Analysis.ipynb}
+notebook for this section.
+
+\end{tcolorbox}
+
+\hypertarget{understanding-initial-distributions}{%
+\subsection{Understanding Initial
+Distributions}\label{understanding-initial-distributions}}
+
+The initial step involved an examination of the distributions of both
+fixed and mobile network data. Histograms, box plots
+(\protect\hyperlink{fig-distplots}{Fig. 2}), and summary statistics
+(\protect\hyperlink{fig-stats}{Figs. 3} \&
+\protect\hyperlink{fig-colskews}{4}) were employed to gain insights into
+the central tendencies, dispersions, and skewness of the datasets.
+Notably, the distributions were observed to be heavily positively
+skewed, prompting the need for transformation to meet the assumptions of
+parametric statistical tests.
+
+\begin{figure}
+
+\begin{minipage}[t]{0.50\linewidth}
+
+{\centering 
+
+\raisebox{-\height}{
+
+\includegraphics{hist_d.png}
+
+}
+
+}
+
+\subcaption{\label{fig-hist_d}Box/Hist plots of \texttt{avg\_d\_mbps}}
+\end{minipage}%
+%
+\begin{minipage}[t]{0.50\linewidth}
+
+{\centering 
+
+\raisebox{-\height}{
+
+\includegraphics{hist_u.png}
+
+}
+
+}
+
+\subcaption{\label{fig-hist_u}Box/Hist plots of \texttt{avg\_u\_mbps}}
+\end{minipage}%
+\newline
+\begin{minipage}[t]{0.50\linewidth}
+
+{\centering 
+
+\raisebox{-\height}{
+
+\includegraphics{hist_lat.png}
+
+}
+
+}
+
+\subcaption{\label{fig-hist_lat}Box/Hist plots of \texttt{avg\_lat\_ms}}
+\end{minipage}%
+%
+\begin{minipage}[t]{0.50\linewidth}
+
+{\centering 
+
+\raisebox{-\height}{
+
+\includegraphics{hist_down.png}
+
+}
+
+}
+
+\subcaption{\label{fig-hist_down}Box/Hist plots of
+\texttt{avg\_lat\_down\_ms}}
+\end{minipage}%
+\newline
+\begin{minipage}[t]{0.50\linewidth}
+
+{\centering 
+
+\raisebox{-\height}{
+
+\includegraphics{hist_up.png}
+
+}
+
+}
+
+\subcaption{\label{fig-hist_up}Box/Hist plots of
+\texttt{avg\_lat\_up\_ms}}
+\end{minipage}%
+
+\caption{\label{fig-distplots}Box and histogram plots}
+
+\end{figure}
+
+\begin{figure}
+
+{\centering \includegraphics{des_ana.png}
+
+}
+
+\caption{\label{fig-stats}Summary statistics of each network type}
+
+\end{figure}
+
+\begin{figure}
+
+\begin{minipage}[t]{0.50\linewidth}
+
+{\centering 
+
+\raisebox{-\height}{
+
+\includegraphics{skew_d.png}
+
+}
+
+}
+
+\subcaption{\label{fig-dskews}\texttt{avg\_d\_mbps} column}
+\end{minipage}%
+%
+\begin{minipage}[t]{0.50\linewidth}
+
+{\centering 
+
+\raisebox{-\height}{
+
+\includegraphics{skew_u.png}
+
+}
+
+}
+
+\subcaption{\label{fig-uskews}\texttt{avg\_u\_mbps} column}
+\end{minipage}%
+\newline
+\begin{minipage}[t]{0.50\linewidth}
+
+{\centering 
+
+\raisebox{-\height}{
+
+\includegraphics{skew_lat.png}
+
+}
+
+}
+
+\subcaption{\label{fig-latskews}\texttt{avg\_lat\_ms} column}
+\end{minipage}%
+%
+\begin{minipage}[t]{0.50\linewidth}
+
+{\centering 
+
+\raisebox{-\height}{
+
+\includegraphics{skew_up.png}
+
+}
+
+}
+
+\subcaption{\label{fig-upskews}\texttt{avg\_lat\_up\_ms} column}
+\end{minipage}%
+\newline
+\begin{minipage}[t]{0.50\linewidth}
+
+{\centering 
+
+\raisebox{-\height}{
+
+\includegraphics{skew_down.png}
+
+}
+
+}
+
+\subcaption{\label{fig-downskews}\texttt{avg\_lat\_down\_ms} column}
+\end{minipage}%
+
+\caption{\label{fig-colskews}Skew and kurtosis values for everything and
+each network type}
+
+\end{figure}
+
+\hypertarget{comparative-analysis}{%
+\subsection{Comparative Analysis}\label{comparative-analysis}}
+
+To assess the disparities between fixed and mobile networks, we
+conducted thorough comparative analyses. Kernel density plots
+(\protect\hyperlink{fig-kdeplots}{Fig. 5}) and statistical tests
+(\protect\hyperlink{fig-stats}{Fig. 3}) were leveraged to highlight
+variations in central tendencies. These comparisons served as a
+foundation for subsequent transformations and allowed us to pinpoint
+differences between the two networks.
+
+\begin{figure}
+
+\begin{minipage}[t]{0.50\linewidth}
+
+{\centering 
+
+\raisebox{-\height}{
+
+\includegraphics{fix_d.png}
+
+}
+
+}
+
+\subcaption{\label{fig-kdefix_d}\texttt{avg\_d\_mbps} for fixed network}
+\end{minipage}%
+%
+\begin{minipage}[t]{0.50\linewidth}
+
+{\centering 
+
+\raisebox{-\height}{
+
+\includegraphics{mobile_d.png}
+
+}
+
+\caption{\texttt{avg\_d\_mbps} for mobile network}
+
+}
+
+\end{minipage}%
+\newline
+\begin{minipage}[t]{0.50\linewidth}
+
+{\centering 
+
+\raisebox{-\height}{
+
+\includegraphics{fix_u.png}
+
+}
+
+\caption{\texttt{avg\_u\_mbps} for fixed network}
+
+}
+
+\end{minipage}%
+%
+\begin{minipage}[t]{0.50\linewidth}
+
+{\centering 
+
+\raisebox{-\height}{
+
+\includegraphics{mob_u.png}
+
+}
+
+\caption{\texttt{avg\_u\_mbps} for mobile network}
+
+}
+
+\end{minipage}%
+\newline
+\begin{minipage}[t]{0.50\linewidth}
+
+{\centering 
+
+\raisebox{-\height}{
+
+\includegraphics{fix_lat.png}
+
+}
+
+}
+
+\subcaption{\label{fig-kdefix_lat}\texttt{avg\_lat\_ms} for fixed
+network}
+\end{minipage}%
+%
+\begin{minipage}[t]{0.50\linewidth}
+
+{\centering 
+
+\raisebox{-\height}{
+
+\includegraphics{mob_lat.png}
+
+}
+
+}
+
+\subcaption{\label{fig-kdemob_lat}\texttt{avg\_lat\_ms} for mobile
+network}
+\end{minipage}%
+\newline
+\begin{minipage}[t]{0.50\linewidth}
+
+{\centering 
+
+\raisebox{-\height}{
+
+\includegraphics{fix_down.png}
+
+}
+
+}
+
+\subcaption{\label{fig-kdefix_down}\texttt{avg\_lat\_down\_ms} for fixed
+network}
+\end{minipage}%
+%
+\begin{minipage}[t]{0.50\linewidth}
+
+{\centering 
+
+\raisebox{-\height}{
+
+\includegraphics{mob_down.png}
+
+}
+
+}
+
+\subcaption{\label{fig-kdemob_down}\texttt{avg\_lat\_down\_ms} for
+mobile network}
+\end{minipage}%
+\newline
+\begin{minipage}[t]{0.50\linewidth}
+
+{\centering 
+
+\raisebox{-\height}{
+
+\includegraphics{fix_up.png}
+
+}
+
+}
+
+\subcaption{\label{fig-kdefix_up}\texttt{avg\_lat\_up\_ms} for fixed
+network}
+\end{minipage}%
+%
+\begin{minipage}[t]{0.50\linewidth}
+
+{\centering 
+
+\raisebox{-\height}{
+
+\includegraphics{mob_up.png}
+
+}
+
+}
+
+\subcaption{\label{fig-kdemob_up}\texttt{avg\_lat\_up\_ms} for mobile
+network}
+\end{minipage}%
+
+\caption{\label{fig-kdeplots}KDE plots}
+
+\end{figure}
+
+\hypertarget{data-transformations}{%
+\subsection{Data Transformations}\label{data-transformations}}
+
+Several data transformations were applied, including but not limited to
+logarithmic, Box-Cox, and Yeo-Johnson transformations. Each
+transformation was carefully chosen based on its appropriateness for the
+given context and the nature of the initial distributions. Log
+transformations, for instance, are effective in addressing exponential
+growth patterns, while Box-Cox transformations are versatile in handling
+skewed data. (Lee, S. X. and McLachlan, G. J., 2022) (West, R. M., 2022)
+
+\hypertarget{comparative-assessment-of-transformations}{%
+\subsection{Comparative Assessment of
+Transformations}\label{comparative-assessment-of-transformations}}
+
+A meticulous examination of the transformed datasets ensued, involving
+comparative analyses with the original data. Visualizations
+(\protect\hyperlink{fig-transcomp}{Figs. 6}) and statistical measures,
+including skewness and kurtosis tests
+(\protect\hyperlink{fig-transskews}{Fig. 8}), were employed to quantify
+the improvements brought about by each transformation. The Yeo-Johnson
+transformation consistently demonstrated superior results in terms of
+bringing the data closer to a normal distribution.
+(\protect\hyperlink{fig-yeojdists}{Fig. 7})
+
+\begin{figure}
+
+{\centering 
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Define a list of colors for the transformations}
+\NormalTok{trans\_colors }\OperatorTok{=}\NormalTok{ [}\StringTok{\textquotesingle{}y\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}g\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}c\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}m\textquotesingle{}}\NormalTok{]}
+
+\CommentTok{\# Define a dictionary that maps transformation names to transformation functions}
+\NormalTok{trans\_funcs }\OperatorTok{=}\NormalTok{ \{}
+    \StringTok{\textquotesingle{}Sqrt Skew\textquotesingle{}}\NormalTok{: np.sqrt,  }\CommentTok{\# Square root transformation}
+    \StringTok{\textquotesingle{}Log Skew\textquotesingle{}}\NormalTok{: np.log1p,  }\CommentTok{\# Logarithmic transformation}
+    \StringTok{\textquotesingle{}Box{-}Cox Skew\textquotesingle{}}\NormalTok{: stats.boxcox,  }\CommentTok{\# Box{-}Cox transformation}
+    \StringTok{\textquotesingle{}Yeo{-}J Skew\textquotesingle{}}\NormalTok{: stats.yeojohnson  }\CommentTok{\# Yeo{-}Johnson transformation}
+\NormalTok{\}}
+
+\CommentTok{\# Loop over each transformation in the \textquotesingle{}trans\_funcs\textquotesingle{} dictionary}
+\ControlFlowTok{for}\NormalTok{ transform }\KeywordTok{in}\NormalTok{ trans\_funcs:}
+    \CommentTok{\# Loop over each key in the \textquotesingle{}dfs\textquotesingle{} dictionary}
+    \ControlFlowTok{for}\NormalTok{ key }\KeywordTok{in}\NormalTok{ dfs:}
+        \CommentTok{\# Get the number of columns in the dataframe corresponding to the current key}
+\NormalTok{        num\_cols }\OperatorTok{=} \BuiltInTok{len}\NormalTok{(dfs[key][}\DecValTok{0}\NormalTok{].columns)}
+        \CommentTok{\# Create a subplot with \textquotesingle{}num\_cols\textquotesingle{} rows and 2 columns, and set the figure size}
+\NormalTok{        fig, ax }\OperatorTok{=}\NormalTok{ plt.subplots(num\_cols, }\DecValTok{2}\NormalTok{, figsize}\OperatorTok{=}\NormalTok{(}\DecValTok{13}\NormalTok{, }\DecValTok{5}\OperatorTok{*}\NormalTok{num\_cols))}
+        
+        \CommentTok{\# Loop over each column in the dataframe corresponding to the current key}
+        \ControlFlowTok{for}\NormalTok{ i, col }\KeywordTok{in} \BuiltInTok{enumerate}\NormalTok{(dfs[key][}\DecValTok{0}\NormalTok{]):}
+            \CommentTok{\# Apply the transformation to the column}
+            \ControlFlowTok{if}\NormalTok{ transform }\KeywordTok{in}\NormalTok{ [}\StringTok{\textquotesingle{}Box{-}Cox Skew\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}Yeo{-}J Skew\textquotesingle{}}\NormalTok{]:}
+                \CommentTok{\# For Box{-}Cox and Yeo{-}Johnson transformations, the function returns two values}
+\NormalTok{                target, \_ }\OperatorTok{=}\NormalTok{ trans\_funcs[transform](dfs[key][}\DecValTok{0}\NormalTok{][col])}
+            \ControlFlowTok{else}\NormalTok{:}
+                \CommentTok{\# For other transformations, the function returns one value}
+\NormalTok{                target }\OperatorTok{=}\NormalTok{ trans\_funcs[transform](dfs[key][}\DecValTok{0}\NormalTok{][col])}
+
+            \CommentTok{\# Calculate the skewness of the transformed data}
+\NormalTok{            transformed\_skew }\OperatorTok{=}\NormalTok{ np.}\BuiltInTok{round}\NormalTok{(stats.skew(target),}\DecValTok{5}\NormalTok{)}
+
+            \CommentTok{\# Store the skewness in the \textquotesingle{}trans\_skews\textquotesingle{} dictionary}
+\NormalTok{            trans\_skews[col][key][transform] }\OperatorTok{=}\NormalTok{ transformed\_skew}
+
+            \CommentTok{\# Plot a histogram of the original data}
+\NormalTok{            sns.histplot(dfs[key][}\DecValTok{0}\NormalTok{][col], label}\OperatorTok{=}\StringTok{\textquotesingle{}Orginal Skew: }\SpecialCharTok{\{0\}}\StringTok{\textquotesingle{}}\NormalTok{.}\BuiltInTok{format}\NormalTok{(trans\_skews[col][key][}\StringTok{\textquotesingle{}Org Skew\textquotesingle{}}\NormalTok{]), color}\OperatorTok{=}\StringTok{"r"}\NormalTok{, ax}\OperatorTok{=}\NormalTok{ax[i][}\DecValTok{0}\NormalTok{], kde}\OperatorTok{=}\VariableTok{True}\NormalTok{, edgecolor}\OperatorTok{=}\VariableTok{None}\NormalTok{)}
+\NormalTok{            ax[i][}\DecValTok{0}\NormalTok{].legend()}
+\NormalTok{            ax[i][}\DecValTok{0}\NormalTok{].set\_xlabel(}\StringTok{\textquotesingle{}ORGINAL\textquotesingle{}}\NormalTok{)}
+\NormalTok{            ax[i][}\DecValTok{0}\NormalTok{].set\_title(key}\OperatorTok{+}\StringTok{\textquotesingle{} {-} \textquotesingle{}}\OperatorTok{+}\NormalTok{col)}
+
+            \CommentTok{\# Plot a histogram of the transformed data}
+\NormalTok{            sns.histplot(target, label}\OperatorTok{=}\StringTok{\textquotesingle{}Transformed Skew: }\SpecialCharTok{\{0\}}\StringTok{\textquotesingle{}}\NormalTok{.}\BuiltInTok{format}\NormalTok{(transformed\_skew), color}\OperatorTok{=}\NormalTok{trans\_colors[trans\_list.index(transform)}\OperatorTok{{-}}\DecValTok{1}\NormalTok{], ax}\OperatorTok{=}\NormalTok{ax[i][}\DecValTok{1}\NormalTok{], kde}\OperatorTok{=}\VariableTok{True}\NormalTok{, edgecolor}\OperatorTok{=}\VariableTok{None}\NormalTok{)}
+\NormalTok{            ax[i][}\DecValTok{1}\NormalTok{].legend()}
+\NormalTok{            ax[i][}\DecValTok{1}\NormalTok{].set\_xlabel(transform }\OperatorTok{+} \StringTok{\textquotesingle{} TRANSFORMED\textquotesingle{}}\NormalTok{)}
+\NormalTok{            ax[i][}\DecValTok{1}\NormalTok{].set\_title(key}\OperatorTok{+}\StringTok{\textquotesingle{} {-} \textquotesingle{}}\OperatorTok{+}\NormalTok{col)}
+        
+        \CommentTok{\# Adjust the padding between and around the subplots}
+\NormalTok{        fig.tight\_layout()}
+        \CommentTok{\# Display the figure}
+\NormalTok{        plt.show()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure*}[H]
+
+{\centering \includegraphics{data-analytics_files/figure-latex/fig-transcomp-output-1.png}
+
+}
+
+\caption{Original vs Sqrt transformed on fixed network}
+
+\end{figure*}
+
+\begin{figure*}[H]
+
+{\centering \includegraphics{data-analytics_files/figure-latex/fig-transcomp-output-2.png}
+
+}
+
+\caption{Original vs Sqrt transformed on mobile network}
+
+\end{figure*}
+
+\begin{figure*}[H]
+
+{\centering \includegraphics{data-analytics_files/figure-latex/fig-transcomp-output-3.png}
+
+}
+
+\caption{Original vs Log transformed on fixed network}
+
+\end{figure*}
+
+\begin{figure*}[H]
+
+{\centering \includegraphics{data-analytics_files/figure-latex/fig-transcomp-output-4.png}
+
+}
+
+\caption{Original vs Log transformed on mobile network}
+
+\end{figure*}
+
+\begin{figure*}[H]
+
+{\centering \includegraphics{data-analytics_files/figure-latex/fig-transcomp-output-5.png}
+
+}
+
+\caption{Original vs Box-Cox transformed on fixed network}
+
+\end{figure*}
+
+\begin{figure*}[H]
+
+{\centering \includegraphics{data-analytics_files/figure-latex/fig-transcomp-output-6.png}
+
+}
+
+\caption{Original vs Box-Cox transformed on mobile network}
+
+\end{figure*}
+
+\begin{figure*}[H]
+
+{\centering \includegraphics{data-analytics_files/figure-latex/fig-transcomp-output-7.png}
+
+}
+
+\caption{Original vs Yeo-Johnson transformed on fixed network}
+
+\end{figure*}
+
+\begin{figure*}[H]
+
+{\centering \includegraphics{data-analytics_files/figure-latex/fig-transcomp-output-8.png}
+
+}
+
+\caption{Original vs Yeo-Johnson transformed on mobile network}
+
+\end{figure*}
+
+}
+
+\caption{\label{fig-transcomp}Comparisons of data transformations on
+distributions}
+
+\end{figure}
+
+\hfill\break
+
+\begin{figure}
+
+\begin{minipage}[t]{0.50\linewidth}
+
+{\centering 
+
+\raisebox{-\height}{
+
+\includegraphics{fyj_d.png}
+
+}
+
+}
+
+\subcaption{\label{fig-fyj_d}\texttt{avg\_d\_mbps} for fixed network}
+\end{minipage}%
+%
+\begin{minipage}[t]{0.50\linewidth}
+
+{\centering 
+
+\raisebox{-\height}{
+
+\includegraphics{myj_d.png}
+
+}
+
+}
+
+\subcaption{\label{fig-myj_d}\texttt{avg\_d\_mbps} for mobile network}
+\end{minipage}%
+\newline
+\begin{minipage}[t]{0.50\linewidth}
+
+{\centering 
+
+\raisebox{-\height}{
+
+\includegraphics{fyj_u.png}
+
+}
+
+}
+
+\subcaption{\label{fig-fyj_u}\texttt{avg\_u\_mbps} for fixed network}
+\end{minipage}%
+%
+\begin{minipage}[t]{0.50\linewidth}
+
+{\centering 
+
+\raisebox{-\height}{
+
+\includegraphics{myj_u.png}
+
+}
+
+}
+
+\subcaption{\label{fig-myj_u}\texttt{avg\_u\_mbps} for mobile network}
+\end{minipage}%
+\newline
+\begin{minipage}[t]{0.50\linewidth}
+
+{\centering 
+
+\raisebox{-\height}{
+
+\includegraphics{fyj_lat.png}
+
+}
+
+}
+
+\subcaption{\label{fig-fyj_lat}\texttt{avg\_lat\_ms} for fixed network}
+\end{minipage}%
+%
+\begin{minipage}[t]{0.50\linewidth}
+
+{\centering 
+
+\raisebox{-\height}{
+
+\includegraphics{myj_lat.png}
+
+}
+
+}
+
+\subcaption{\label{fig-myj_lat}\texttt{avg\_lat\_ms} for mobile network}
+\end{minipage}%
+\newline
+\begin{minipage}[t]{0.50\linewidth}
+
+{\centering 
+
+\raisebox{-\height}{
+
+\includegraphics{fyj_down.png}
+
+}
+
+}
+
+\subcaption{\label{fig-fyj_down}\texttt{avg\_lat\_down\_ms} for fixed
+network}
+\end{minipage}%
+%
+\begin{minipage}[t]{0.50\linewidth}
+
+{\centering 
+
+\raisebox{-\height}{
+
+\includegraphics{myj_down.png}
+
+}
+
+}
+
+\subcaption{\label{fig-myj_down}\texttt{avg\_lat\_down\_ms} for mobile
+network}
+\end{minipage}%
+\newline
+\begin{minipage}[t]{0.50\linewidth}
+
+{\centering 
+
+\raisebox{-\height}{
+
+\includegraphics{fyj_up.png}
+
+}
+
+}
+
+\subcaption{\label{fig-fyj_up}\texttt{avg\_lat\_up\_ms} for fixed
+network}
+\end{minipage}%
+%
+\begin{minipage}[t]{0.50\linewidth}
+
+{\centering 
+
+\raisebox{-\height}{
+
+\includegraphics{myj_up.png}
+
+}
+
+}
+
+\subcaption{\label{fig-myj_up}\texttt{avg\_lat\_up\_ms} for mobile
+network}
+\end{minipage}%
+
+\caption{\label{fig-yeojdists}Yeo-Johnson transformed KDE plots}
+
+\end{figure}
+
+\begin{figure}
+
+{\centering 
+
+\begin{figure}
+
+{\centering \includegraphics{tskew_d.png}
+
+}
+
+\caption{\texttt{avg\_d\_mbps} column}
+
+\end{figure}
+
+\begin{figure}
+
+{\centering \includegraphics{tskew_u.png}
+
+}
+
+\caption{\texttt{avg\_u\_mbps} column}
+
+\end{figure}
+
+\begin{figure}
+
+{\centering \includegraphics{tskew_lat.png}
+
+}
+
+\caption{\texttt{avg\_lat\_ms} column}
+
+\end{figure}
+
+\begin{figure}
+
+{\centering \includegraphics{tskew_up.png}
+
+}
+
+\caption{\texttt{avg\_lat\_up\_ms} column}
+
+\end{figure}
+
+\begin{figure}
+
+{\centering \includegraphics{tskew_down.png}
+
+}
+
+\caption{\texttt{avg\_lat\_down\_ms} column}
+
+\end{figure}
+
+}
+
+\caption{\label{fig-transskews}Comparison of original skew with data
+transformation skews on both networks}
+
+\end{figure}
+
+\hypertarget{correlation-analysis}{%
+\subsection{Correlation Analysis}\label{correlation-analysis}}
+
+In addition to distribution improvements, we investigated the impact of
+transformations on correlation structures within the data. Scatter plots
+(\protect\hyperlink{fig-orgpairs}{Figs. 9} \&
+\protect\hyperlink{fig-transpairs}{10}) and correlation matrices
+(\protect\hyperlink{fig-orgheatmaps}{Figs. 11} \&
+\protect\hyperlink{fig-transheatmaps}{12}) were employed to evaluate
+changes in relationships between variables. This step aimed to ensure
+that the transformations not only enhanced distributions but also
+preserved or revealed meaningful associations.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Create a pairplot of the dataframe \textquotesingle{}df\textquotesingle{} sorted by \textquotesingle{}net\_type\textquotesingle{}}
+\NormalTok{g }\OperatorTok{=}\NormalTok{ sns.pairplot(df, hue}\OperatorTok{=}\StringTok{\textquotesingle{}net\_type\textquotesingle{}}\NormalTok{, corner}\OperatorTok{=}\VariableTok{True}\NormalTok{)}
+\CommentTok{\# Set the title of the plot and adjust its position}
+\NormalTok{g.fig.suptitle(}\StringTok{\textquotesingle{}Everything\textquotesingle{}}\NormalTok{, y}\OperatorTok{=}\FloatTok{1.02}\NormalTok{)}
+\CommentTok{\# Display the plot}
+\NormalTok{plt.show()}
+
+\CommentTok{\# Loop over each key in the dictionary of dataframes \textquotesingle{}dfs\textquotesingle{}}
+\ControlFlowTok{for}\NormalTok{ key }\KeywordTok{in}\NormalTok{ dfs:}
+    \CommentTok{\# Create a pairplot each dataframe in the dictionary}
+\NormalTok{    g }\OperatorTok{=}\NormalTok{ sns.pairplot(dfs[key][}\DecValTok{0}\NormalTok{], corner}\OperatorTok{=}\VariableTok{True}\NormalTok{)}
+    \CommentTok{\# Set the title of the plot as the key and adjust its position}
+\NormalTok{    g.fig.suptitle(key, y}\OperatorTok{=}\FloatTok{1.02}\NormalTok{)}
+    \CommentTok{\# Display the plot}
+\NormalTok{    plt.show()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+\begin{minipage}[t]{\linewidth}
+
+{\centering 
+
+\raisebox{-\height}{
+
+\includegraphics{data-analytics_files/figure-latex/fig-orgpairs-output-1.png}
+
+}
+
+}
+
+\subcaption{\label{fig-orgpairs-1}Both networks}
+\end{minipage}%
+\newline
+\begin{minipage}[t]{0.50\linewidth}
+
+{\centering 
+
+\raisebox{-\height}{
+
+\includegraphics{data-analytics_files/figure-latex/fig-orgpairs-output-2.png}
+
+}
+
+}
+
+\subcaption{\label{fig-orgpairs-2}Fixed network}
+\end{minipage}%
+%
+\begin{minipage}[t]{0.50\linewidth}
+
+{\centering 
+
+\raisebox{-\height}{
+
+\includegraphics{data-analytics_files/figure-latex/fig-orgpairs-output-3.png}
+
+}
+
+}
+
+\subcaption{\label{fig-orgpairs-3}Mobile network}
+\end{minipage}%
+
+\caption{\label{fig-orgpairs}Pairplots on untransformed data}
+
+\end{figure}
+
+\hfill\break
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Loop over each key in the \textquotesingle{}yeoj\_dfs\textquotesingle{} dictionary}
+\ControlFlowTok{for}\NormalTok{ key }\KeywordTok{in}\NormalTok{ yeoj\_dfs:}
+    \CommentTok{\# Create a pairplot of the dataframe corresponding to the current key}
+    \CommentTok{\# \textquotesingle{}corner=True\textquotesingle{} means that only the lower triangle of the plot will be shown}
+\NormalTok{    g }\OperatorTok{=}\NormalTok{ sns.pairplot(yeoj\_dfs[key], corner}\OperatorTok{=}\VariableTok{True}\NormalTok{)}
+    
+    \CommentTok{\# Set the title of the figure, adding a small space above the title}
+\NormalTok{    g.fig.suptitle(key}\OperatorTok{+}\StringTok{\textquotesingle{}: Yeo{-}J Transformed\textquotesingle{}}\NormalTok{, y}\OperatorTok{=}\FloatTok{1.02}\NormalTok{)}
+    
+    \CommentTok{\# Display the figure}
+\NormalTok{    plt.show()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+\begin{minipage}[t]{0.50\linewidth}
+
+{\centering 
+
+\raisebox{-\height}{
+
+\includegraphics{data-analytics_files/figure-latex/fig-transpairs-output-1.png}
+
+}
+
+}
+
+\subcaption{\label{fig-transpairs-1}Fixed network}
+\end{minipage}%
+%
+\begin{minipage}[t]{0.50\linewidth}
+
+{\centering 
+
+\raisebox{-\height}{
+
+\includegraphics{data-analytics_files/figure-latex/fig-transpairs-output-2.png}
+
+}
+
+}
+
+\subcaption{\label{fig-transpairs-2}Mobile network}
+\end{minipage}%
+
+\caption{\label{fig-transpairs}Pairplots on Yeo-Johnson transformed
+data}
+
+\end{figure}
+
+\hfill\break
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Create a subplot with 1 row and 3 columns, sharing the y{-}axis, and set the figure size}
+\NormalTok{fig, axes\_mat }\OperatorTok{=}\NormalTok{ plt.subplots(}\DecValTok{1}\NormalTok{, }\DecValTok{3}\NormalTok{, sharey}\OperatorTok{=}\VariableTok{True}\NormalTok{, figsize}\OperatorTok{=}\NormalTok{(}\DecValTok{10}\NormalTok{, }\DecValTok{5}\NormalTok{))}
+
+\CommentTok{\# Create a correlation matrix of all the numerical columns}
+\NormalTok{corr }\OperatorTok{=}\NormalTok{ df.drop(columns}\OperatorTok{=}\StringTok{\textquotesingle{}net\_type\textquotesingle{}}\NormalTok{).corr()}
+
+\CommentTok{\# Visualize the correlation matrix with a heatmap}
+\NormalTok{sns.heatmap(corr, cmap}\OperatorTok{=}\StringTok{\textquotesingle{}RdBu\textquotesingle{}}\NormalTok{, vmin}\OperatorTok{={-}}\DecValTok{1}\NormalTok{, vmax}\OperatorTok{=}\DecValTok{1}\NormalTok{, annot}\OperatorTok{=}\VariableTok{True}\NormalTok{, square}\OperatorTok{=}\VariableTok{True}\NormalTok{, ax}\OperatorTok{=}\NormalTok{axes\_mat[}\DecValTok{0}\NormalTok{], cbar}\OperatorTok{=}\VariableTok{False}\NormalTok{)}
+
+\CommentTok{\# Rotate and align labels on the x{-}axis}
+\NormalTok{axes\_mat[}\DecValTok{0}\NormalTok{].set\_xticklabels(axes\_mat[}\DecValTok{0}\NormalTok{].get\_xticklabels(), rotation}\OperatorTok{=}\DecValTok{45}\NormalTok{, horizontalalignment}\OperatorTok{=}\StringTok{\textquotesingle{}right\textquotesingle{}}\NormalTok{)}
+\NormalTok{axes\_mat[}\DecValTok{0}\NormalTok{].set\_title(}\StringTok{\textquotesingle{}Correlation Matrix for Everything\textquotesingle{}}\NormalTok{)}
+
+\CommentTok{\# Loop over each key in the dictionary \textquotesingle{}dfs\textquotesingle{} and }
+\CommentTok{\# the axes in \textquotesingle{}axes\_mat\textquotesingle{} starting from the second one}
+\ControlFlowTok{for}\NormalTok{ key, ax }\KeywordTok{in} \BuiltInTok{zip}\NormalTok{(dfs, axes\_mat[}\DecValTok{1}\NormalTok{:]):}
+    \CommentTok{\# Create a correlation matrix of all the numerical columns}
+\NormalTok{    corr }\OperatorTok{=}\NormalTok{ dfs[key][}\DecValTok{0}\NormalTok{].corr()}
+
+    \CommentTok{\# Visualize the correlation matrix with a heatmap}
+\NormalTok{    sns.heatmap(corr, cmap}\OperatorTok{=}\StringTok{\textquotesingle{}RdBu\textquotesingle{}}\NormalTok{, vmin}\OperatorTok{={-}}\DecValTok{1}\NormalTok{, vmax}\OperatorTok{=}\DecValTok{1}\NormalTok{, annot}\OperatorTok{=}\VariableTok{True}\NormalTok{, square}\OperatorTok{=}\VariableTok{True}\NormalTok{, ax}\OperatorTok{=}\NormalTok{ax, cbar}\OperatorTok{=}\VariableTok{False}\NormalTok{)}
+
+    \CommentTok{\# Rotate and align labels on the x{-}axis}
+\NormalTok{    ax.set\_xticklabels(ax.get\_xticklabels(), rotation}\OperatorTok{=}\DecValTok{45}\NormalTok{, horizontalalignment}\OperatorTok{=}\StringTok{\textquotesingle{}right\textquotesingle{}}\NormalTok{)}
+\NormalTok{    ax.set\_title(}\StringTok{\textquotesingle{}Correlation Matrix for \textquotesingle{}}\OperatorTok{+}\NormalTok{key)}
+
+\CommentTok{\# Create a colorbar for the whole figure}
+\NormalTok{norm }\OperatorTok{=}\NormalTok{ Normalize(vmin}\OperatorTok{={-}}\DecValTok{1}\NormalTok{, vmax}\OperatorTok{=}\DecValTok{1}\NormalTok{)}
+\CommentTok{\# Create a ScalarMappable object with the \textquotesingle{}RdBu\textquotesingle{} colormap and the normalization}
+\NormalTok{sm }\OperatorTok{=}\NormalTok{ plt.cm.ScalarMappable(cmap}\OperatorTok{=}\StringTok{\textquotesingle{}RdBu\textquotesingle{}}\NormalTok{, norm}\OperatorTok{=}\NormalTok{norm)}
+\CommentTok{\# Set the array for the ScalarMappable to an empty array}
+\NormalTok{sm.set\_array([])}
+
+\CommentTok{\# Add an axes to the figure for the colorbar at position [left, top, width, height]}
+\NormalTok{cbar\_ax }\OperatorTok{=}\NormalTok{ fig.add\_axes([}\FloatTok{0.15}\NormalTok{, }\FloatTok{0.95}\NormalTok{, }\FloatTok{0.7}\NormalTok{, }\FloatTok{0.05}\NormalTok{])  }\CommentTok{\# [left, top, width, height]}
+\CommentTok{\# Add the colorbar to the figure with the ScalarMappable,}
+\CommentTok{\# with horizontal orientation, and in the colorbar axes}
+\NormalTok{fig.colorbar(sm, orientation}\OperatorTok{=}\StringTok{\textquotesingle{}horizontal\textquotesingle{}}\NormalTok{, cax}\OperatorTok{=}\NormalTok{cbar\_ax)}
+
+\CommentTok{\# Adjust the padding between and around the subplots}
+\NormalTok{plt.tight\_layout()}
+\CommentTok{\# Display the figure}
+\NormalTok{plt.show()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[H]
+
+{\centering \includegraphics{data-analytics_files/figure-latex/fig-orgheatmaps-output-1.png}
+
+}
+
+\caption{\label{fig-orgheatmaps}Correlation heatmap matrices for both
+networks together and separately}
+
+\end{figure}
+
+\hfill\break
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Create a subplot with 1 row and 2 columns, }
+\CommentTok{\# sharing the y{-}axis, and set the figure size}
+\NormalTok{fig, axes\_mat }\OperatorTok{=}\NormalTok{ plt.subplots(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, sharey}\OperatorTok{=}\VariableTok{True}\NormalTok{, figsize}\OperatorTok{=}\NormalTok{(}\DecValTok{10}\NormalTok{, }\DecValTok{7}\NormalTok{))}
+
+\CommentTok{\# Loop over each key in the \textquotesingle{}yeoj\_dfs\textquotesingle{} dictionary and the axes in \textquotesingle{}axes\_mat\textquotesingle{}}
+\ControlFlowTok{for}\NormalTok{ key, ax }\KeywordTok{in} \BuiltInTok{zip}\NormalTok{(yeoj\_dfs, axes\_mat):}
+    \CommentTok{\# Create a correlation matrix of all the numerical columns}
+\NormalTok{    corr }\OperatorTok{=}\NormalTok{ yeoj\_dfs[key].corr()}
+
+    \CommentTok{\# Visualize the correlation matrix with a heatmap}
+\NormalTok{    sns.heatmap(corr, cmap}\OperatorTok{=}\StringTok{\textquotesingle{}RdBu\textquotesingle{}}\NormalTok{, vmin}\OperatorTok{={-}}\DecValTok{1}\NormalTok{, vmax}\OperatorTok{=}\DecValTok{1}\NormalTok{, annot}\OperatorTok{=}\VariableTok{True}\NormalTok{, square}\OperatorTok{=}\VariableTok{True}\NormalTok{, ax}\OperatorTok{=}\NormalTok{ax, cbar}\OperatorTok{=}\VariableTok{False}\NormalTok{)}
+
+    \CommentTok{\# Rotate and align labels on the x{-}axis}
+\NormalTok{    ax.set\_xticklabels(ax.get\_xticklabels(), rotation}\OperatorTok{=}\DecValTok{45}\NormalTok{, horizontalalignment}\OperatorTok{=}\StringTok{\textquotesingle{}right\textquotesingle{}}\NormalTok{)}
+\NormalTok{    ax.set\_title(}\StringTok{\textquotesingle{}Correlation Matrix for \textquotesingle{}}\OperatorTok{+}\NormalTok{key)}
+
+\CommentTok{\# Create a colorbar for the whole figure}
+\NormalTok{norm }\OperatorTok{=}\NormalTok{ Normalize(vmin}\OperatorTok{={-}}\DecValTok{1}\NormalTok{, vmax}\OperatorTok{=}\DecValTok{1}\NormalTok{)}
+\NormalTok{sm }\OperatorTok{=}\NormalTok{ plt.cm.ScalarMappable(cmap}\OperatorTok{=}\StringTok{\textquotesingle{}RdBu\textquotesingle{}}\NormalTok{, norm}\OperatorTok{=}\NormalTok{norm)}
+\NormalTok{sm.set\_array([])}
+
+\CommentTok{\# Add an axes to the figure for the colorbar at position [left, top, width, height]}
+\NormalTok{cbar\_ax }\OperatorTok{=}\NormalTok{ fig.add\_axes([}\FloatTok{0.15}\NormalTok{, }\FloatTok{0.95}\NormalTok{, }\FloatTok{0.7}\NormalTok{, }\FloatTok{0.05}\NormalTok{])  }\CommentTok{\# [left, top, width, height]}
+\NormalTok{fig.colorbar(sm, orientation}\OperatorTok{=}\StringTok{\textquotesingle{}horizontal\textquotesingle{}}\NormalTok{, cax}\OperatorTok{=}\NormalTok{cbar\_ax)}
+
+\CommentTok{\# Adjust the padding between and around the subplots}
+\NormalTok{plt.tight\_layout()}
+\CommentTok{\# Display the figure}
+\NormalTok{plt.show()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[H]
+
+{\centering \includegraphics{data-analytics_files/figure-latex/fig-transheatmaps-output-1.png}
+
+}
+
+\caption{\label{fig-transheatmaps}Correlation heatmap matrices for both
+networks after Yeo-Johnson transformation}
+
+\end{figure}
+
+\hypertarget{conclusion}{%
+\subsection{Conclusion}\label{conclusion}}
+
+The described EDA and distribution transformations constitute a critical
+phase in preparing the data for hypothesis testing. The chosen
+transformations were justified through a systematic exploration of
+initial distributions, comparative analyses, and a thorough assessment
+of the impact on correlations. The Yeo-Johnson transformation
+demonstrated a remarkable ability to normalize skewed data, effectively
+mitigating the positive skewness observed in the initial distributions.
+This methodical approach ensures that subsequent analyses are conducted
+on data that aligns more closely with parametric assumptions, enhancing
+the robustness and reliability of the findings.
+
+\hypertarget{hypothesis-definition-and-testing}{%
+\section{Hypothesis Definition and
+Testing}\label{hypothesis-definition-and-testing}}
+
+This section explores the variability and average download speed
+differences between fixed and mobile networks. Our goal is to determine
+if the standard deviation of \texttt{avg\_d\_mbps} varies significantly
+between the networks, providing insights into their consistency, and to
+establish whether one network has significantly higher average download
+speeds.
+
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Hypothesis Definition and Testing Section Source Code}, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, colback=white, leftrule=.75mm, colframe=quarto-callout-tip-color-frame, colbacktitle=quarto-callout-tip-color!10!white, titlerule=0mm, opacitybacktitle=0.6, arc=.35mm, rightrule=.15mm, left=2mm, breakable, opacityback=0, coltitle=black]
+
+View
+\href{https://github.com/brandon-toews/data-analytics-assignment/blob/main/Hypothesis_Testing.ipynb}{Hypothesis\_Testing.ipynb}
+notebook for this section.
+
+\end{tcolorbox}
+
+\hypertarget{methodology}{%
+\subsection{Methodology}\label{methodology}}
+
+We employed a comprehensive set of statistical tests, considering the
+positively skewed nature of the original \texttt{avg\_d\_mbps} dataset.
+
+\hypertarget{levenes-test-untransformed-data}{%
+\subsubsection{Levene's Test: Untransformed
+Data}\label{levenes-test-untransformed-data}}
+
+Levene's test was conducted on the untransformed \texttt{avg\_d\_mbps}
+data to assess whether the standard deviation of download speeds differs
+significantly between fixed and mobile networks.
+
+\begin{itemize}
+\tightlist
+\item
+  \emph{Decision Justification}: Levene's test is robust for assessing
+  equality of variances, and its non-parametric nature aligns well with
+  the skewed distribution of the original data. (Yuhang Zhou, Yiyang Zhu
+  and Weng Kee Wong, 2023) (Hosken, D. J., Buss, D. L. and Hodgson, D.
+  J., 2018)
+\end{itemize}
+
+\hypertarget{f-test-yeo-johnson-transformed-data}{%
+\subsubsection{F-Test: Yeo-Johnson Transformed
+Data}\label{f-test-yeo-johnson-transformed-data}}
+
+An F-test was performed on Yeo-Johnson transformed data to compare
+variances between fixed and mobile networks after addressing the
+skewness.
+
+\begin{itemize}
+\tightlist
+\item
+  \emph{Decision Justification}: F-test is suitable for comparing
+  variances, and using the transformed data allows us to make robust
+  comparisons while accounting for skewness.
+\end{itemize}
+
+\hypertarget{t-tests-untransformed-and-yeo-johnson-transformed-data}{%
+\subsubsection{T-Tests: Untransformed and Yeo-Johnson Transformed
+Data}\label{t-tests-untransformed-and-yeo-johnson-transformed-data}}
+
+Independent sample t-tests were conducted on both untransformed and
+transformed \texttt{avg\_d\_mbps} data to assess whether one network has
+significantly higher average download speeds than the other.
+
+\begin{itemize}
+\tightlist
+\item
+  \emph{Decision Justification}: T-tests are appropriate for comparing
+  means, and conducting them on both datasets ensures a comprehensive
+  evaluation of average download speeds.
+\end{itemize}
+
+\hypertarget{mann-whitney-u-test-untransformed-data}{%
+\subsubsection{Mann-Whitney U Test: Untransformed
+Data}\label{mann-whitney-u-test-untransformed-data}}
+
+A non-parametric Mann-Whitney U test was performed on the untransformed
+data to corroborate findings from the t-tests and provide additional
+robustness.
+
+\begin{itemize}
+\tightlist
+\item
+  \emph{Decision Justification}: The non-parametric nature of the
+  Mann-Whitney U test suits skewed data, offering an alternative
+  perspective on average download speed differences. (Mori, M. et al.,
+  2024) (María Teresa Politi, Juliana Carvalho Ferreira and Cecilia
+  María Patino, 2021)
+\end{itemize}
+
+\hypertarget{results-and-interpretation}{%
+\subsection{Results and
+Interpretation}\label{results-and-interpretation}}
+
+\hypertarget{levenes-test-untransformed-data-1}{%
+\subsubsection{Levene's Test: Untransformed
+Data}\label{levenes-test-untransformed-data-1}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{F statistic:} 1046.03, \textbf{p-value:} 0.0
+\item
+  \textbf{Conclusion:} The standard deviation of \texttt{avg\_d\_mbps}
+  significantly differs between fixed and mobile networks.
+\end{itemize}
+
+\hypertarget{f-test-yeo-johnson-transformed-data-1}{%
+\subsubsection{F-Test: Yeo-Johnson Transformed
+Data}\label{f-test-yeo-johnson-transformed-data-1}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{F statistic:} 6.07, \textbf{p-value:} 0.0
+\item
+  \textbf{Conclusion:} The F-test on transformed data reinforces the
+  conclusion that the standard deviation of \texttt{avg\_d\_mbps} varies
+  significantly between networks. Also, it indicates that the fixed
+  network has significantly higher average download speeds and a higher
+  standard deviation than the mobile network.
+\end{itemize}
+
+\hypertarget{t-tests-untransformed-and-transformed-data}{%
+\subsubsection{T-Tests: Untransformed and Transformed
+Data}\label{t-tests-untransformed-and-transformed-data}}
+
+\hypertarget{untransformed-data}{%
+\paragraph{Untransformed Data:}\label{untransformed-data}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{t statistic:} 40.16, \textbf{p-value:} 0.0
+\item
+  \textbf{Conclusion:} The fixed network has significantly higher
+  average download speeds than the mobile network, and it also exhibits
+  a higher standard deviation.
+\end{itemize}
+
+\hypertarget{yeo-johnson-transformed-data}{%
+\paragraph{Yeo-Johnson Transformed
+Data:}\label{yeo-johnson-transformed-data}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{t statistic:} 120.57, \textbf{p-value:} 0.0
+\item
+  \textbf{Conclusion:} The transformed data supports the initial
+  conclusion of the fixed network outperforming the mobile network in
+  both average download speeds and standard deviation.
+\end{itemize}
+
+\hypertarget{mann-whitney-u-test-untransformed-data-1}{%
+\subsubsection{Mann-Whitney U Test: Untransformed
+Data}\label{mann-whitney-u-test-untransformed-data-1}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{U statistic:} 63199341.5, \textbf{p-value:} 0.0
+\item
+  \textbf{Conclusion:} The Mann-Whitney U test aligns with t-test
+  results, indicating that the fixed network tends to have significantly
+  higher average download speeds and a higher standard deviation.
+\end{itemize}
+
+\hypertarget{summary}{%
+\subsection{Summary}\label{summary}}
+
+Our multifaceted analysis, incorporating Levene's test, F-test, t-tests
+on both original and transformed data, and the Mann-Whitney U test,
+consistently suggests that the fixed network exhibits significantly
+higher average download speeds compared to the mobile network. However,
+it's important to note that this superior performance is accompanied by
+a higher standard deviation, indicating a greater degree of variability
+in download speeds. While the fixed network showcases higher speeds on
+average, the increased standard deviation suggests a higher level of
+variability, implying that the consistency of download speeds in the
+fixed network may be more variable than that of the mobile network. This
+thorough approach provides a nuanced understanding of the network
+performance, acknowledging the strengths and potential areas of
+variability.
+
+\hypertarget{implementation}{%
+\section{Implementation}\label{implementation}}
+
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Implementation Section Source Code}, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, colback=white, leftrule=.75mm, colframe=quarto-callout-tip-color-frame, colbacktitle=quarto-callout-tip-color!10!white, titlerule=0mm, opacitybacktitle=0.6, arc=.35mm, rightrule=.15mm, left=2mm, breakable, opacityback=0, coltitle=black]
+
+View
+\href{https://github.com/brandon-toews/data-analytics-assignment/blob/main/ML_Models.ipynb}{ML\_Models.ipynb}
+notebook for this section.
+
+\end{tcolorbox}
+
+\hypertarget{regression-models-for-average-download-speed}{%
+\subsection{Regression Models for Average Download
+Speed}\label{regression-models-for-average-download-speed}}
+
+\hypertarget{linear-regression}{%
+\subsubsection{Linear Regression}\label{linear-regression}}
+
+Uni-variate and Multivariate linear regression models were employed to
+predict average download speed (\texttt{avg\_d\_mbps}). The initial
+models were trained on the original data, and the others were trained on
+Yeo-Johnson transformed data. The Yeo-Johnson transformed data exhibited
+a marginal improvement in performance, suggesting that addressing
+skewness contributed to better predictions (Pan, P., Li, R. and Zhang,
+Y., 2023). The mean absolute error (MAE), mean squared error (MSE), root
+mean squared error (RMSE), and R-squared (R2) were used to evaluate
+model performance. (\protect\hyperlink{fig-uniresults}{Figs. 13} \&
+\protect\hyperlink{fig-multiresults}{14}) (Subasi, A. et al., 2020)
+
+\begin{figure}
+
+{\centering \includegraphics{reg_t.png}
+
+}
+
+\caption{\label{fig-uniresults}Comparison of uni-variate linear
+regression models trained on original and transformed data}
+
+\end{figure}
+
+\begin{figure}
+
+{\centering \includegraphics{lregm.png}
+
+}
+
+\caption{\label{fig-multiresults}Comparison of multivariate linear
+regression models trained on original and transformed data}
+
+\end{figure}
+
+\hypertarget{gradient-boosting-regression}{%
+\subsubsection{Gradient Boosting
+Regression}\label{gradient-boosting-regression}}
+
+A multivariate Gradient Boosting Regressor was employed as a more
+sophisticated regression model (Subasi, A. et al., 2020). The model was
+trained on the original data, and its performance was evaluated using
+the same metrics (\protect\hyperlink{fig-gbresults}{Fig. 15}). The
+Gradient Boosting model outperformed the linear regression models,
+achieving an R2 of 0.54. Gradient Boosting Regression demonstrated
+superior predictive power compared to linear regression.
+
+\begin{figure}
+
+{\centering \includegraphics{gbreg.png}
+
+}
+
+\caption{\label{fig-gbresults}Gradient boosting results}
+
+\end{figure}
+
+\hypertarget{classification-models-for-network-type}{%
+\subsection{Classification Models for Network
+Type}\label{classification-models-for-network-type}}
+
+\hypertarget{support-vector-machine-svm}{%
+\subsubsection{Support Vector Machine
+(SVM)}\label{support-vector-machine-svm}}
+
+An SVM classification model was trained on original, and Yeo-Johnson
+transformed data to predict the network type (Fixed or Mobile). Again,
+the transformed data trained model performed better than the other,
+achieving an accuracy of approximately 87\%. The confusion matrix
+(\protect\hyperlink{fig-orgvector}{Figs. 16} \&
+\protect\hyperlink{fig-transvector}{17}) and classification report
+provided insights into precision, recall, and F1-score for each class.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Support Vector Machine model}
+\NormalTok{model }\OperatorTok{=}\NormalTok{ svm.SVC()}
+
+\CommentTok{\# Train the model}
+\NormalTok{model.fit(X\_train, y\_train)}
+
+\CommentTok{\# Make predictions}
+\NormalTok{y\_pred }\OperatorTok{=}\NormalTok{ model.predict(X\_test)}
+
+\CommentTok{\# Plot confusion matrix}
+\NormalTok{cm }\OperatorTok{=}\NormalTok{ confusion\_matrix(y\_test, y\_pred, labels}\OperatorTok{=}\NormalTok{model.classes\_)}
+\NormalTok{disp }\OperatorTok{=}\NormalTok{ ConfusionMatrixDisplay(confusion\_matrix}\OperatorTok{=}\NormalTok{cm, display\_labels}\OperatorTok{=}\NormalTok{model.classes\_)}
+\NormalTok{disp.plot()}
+\NormalTok{plt.show()}
+
+\CommentTok{\# Evaluate the model}
+\BuiltInTok{print}\NormalTok{(classification\_report(y\_test, y\_pred))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[H]
+
+{\centering \includegraphics{data-analytics_files/figure-latex/fig-orgvector-output-1.png}
+
+}
+
+\caption{\label{fig-orgvector}SVM original data confusion matrix}
+
+\end{figure}
+
+\begin{verbatim}
+              precision    recall  f1-score   support
+
+       Fixed       0.84      0.80      0.82      1968
+      Mobile       0.79      0.83      0.81      1838
+
+    accuracy                           0.82      3806
+   macro avg       0.82      0.82      0.82      3806
+weighted avg       0.82      0.82      0.82      3806
+\end{verbatim}
+
+\hfill\break
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Support Vector Machine model with yeo{-}j transform}
+
+\CommentTok{\# Create a pipeline for the transformed data}
+\NormalTok{pipe\_trans }\OperatorTok{=}\NormalTok{ Pipeline([}
+    \CommentTok{\# Apply Yeo{-}Johnson transformation}
+\NormalTok{    (}\StringTok{\textquotesingle{}power\_transform\textquotesingle{}}\NormalTok{, PowerTransformer(method}\OperatorTok{=}\StringTok{\textquotesingle{}yeo{-}johnson\textquotesingle{}}\NormalTok{)), }
+    \CommentTok{\# Create a SVM model}
+\NormalTok{    (}\StringTok{\textquotesingle{}model\textquotesingle{}}\NormalTok{, svm.SVC())  }
+\NormalTok{])}
+
+\CommentTok{\# Train the model}
+\NormalTok{pipe\_trans.fit(X\_train, y\_train)}
+
+\CommentTok{\# Make predictions}
+\NormalTok{y\_pred }\OperatorTok{=}\NormalTok{ pipe\_trans.predict(X\_test)}
+
+\CommentTok{\# Plot confusion matrix}
+\NormalTok{cm }\OperatorTok{=}\NormalTok{ confusion\_matrix(y\_test, y\_pred, labels}\OperatorTok{=}\NormalTok{pipe\_trans.classes\_)}
+\NormalTok{disp }\OperatorTok{=}\NormalTok{ ConfusionMatrixDisplay(confusion\_matrix}\OperatorTok{=}\NormalTok{cm, display\_labels}\OperatorTok{=}\NormalTok{pipe\_trans.classes\_)}
+\NormalTok{disp.plot()}
+\NormalTok{plt.show()}
+
+\CommentTok{\# Evaluate the model}
+\BuiltInTok{print}\NormalTok{(classification\_report(y\_test, y\_pred))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[H]
+
+{\centering \includegraphics{data-analytics_files/figure-latex/fig-transvector-output-1.png}
+
+}
+
+\caption{\label{fig-transvector}SVM transformed data confusion matrix}
+
+\end{figure}
+
+\begin{verbatim}
+              precision    recall  f1-score   support
+
+       Fixed       0.92      0.83      0.87      1968
+      Mobile       0.84      0.92      0.88      1838
+
+    accuracy                           0.87      3806
+   macro avg       0.88      0.88      0.87      3806
+weighted avg       0.88      0.87      0.87      3806
+\end{verbatim}
+
+\hypertarget{random-forest-classifier}{%
+\subsubsection{Random Forest
+Classifier}\label{random-forest-classifier}}
+
+A Random Forest Classifier was also employed for classification,
+achieving an accuracy of approximately 87\%.
+(\protect\hyperlink{fig-randforest}{Figs. 18} \&
+\protect\hyperlink{fig-randforest-betterpars}{19}) A
+\protect\hyperlink{lst-gridsearch}{grid search} was conducted to
+fine-tune hyperparameters, resulting in optimal values for max\_depth,
+max\_leaf\_nodes, min\_samples\_leaf, and min\_samples\_split. (Behera,
+G. and Nain, N., 2022)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Random Forest Classifier Model}
+
+\CommentTok{\# Create a pipeline for the transformed data}
+\NormalTok{pipe\_trans }\OperatorTok{=}\NormalTok{ Pipeline([}
+    \CommentTok{\# Apply Random Forest}
+\NormalTok{    (}\StringTok{\textquotesingle{}model\textquotesingle{}}\NormalTok{, RandomForestClassifier(n\_estimators}\OperatorTok{=}\DecValTok{300}\NormalTok{))}
+\NormalTok{])}
+
+\CommentTok{\# Train the model}
+\NormalTok{pipe\_trans.fit(X\_train, y\_train)}
+
+\CommentTok{\# Make predictions}
+\NormalTok{y\_pred }\OperatorTok{=}\NormalTok{ pipe\_trans.predict(X\_test)}
+
+\CommentTok{\# Plot confusion matrix}
+\NormalTok{cm }\OperatorTok{=}\NormalTok{ confusion\_matrix(y\_test, y\_pred, labels}\OperatorTok{=}\NormalTok{pipe\_trans.classes\_)}
+\NormalTok{disp }\OperatorTok{=}\NormalTok{ ConfusionMatrixDisplay(confusion\_matrix}\OperatorTok{=}\NormalTok{cm, display\_labels}\OperatorTok{=}\NormalTok{pipe\_trans.classes\_)}
+\NormalTok{disp.plot()}
+\NormalTok{plt.show()}
+
+\CommentTok{\# Evaluate the model}
+\BuiltInTok{print}\NormalTok{(classification\_report(y\_test, y\_pred))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[H]
+
+{\centering \includegraphics{data-analytics_files/figure-latex/fig-randforest-output-1.png}
+
+}
+
+\caption{\label{fig-randforest}Random forest confusion matrix}
+
+\end{figure}
+
+\begin{verbatim}
+              precision    recall  f1-score   support
+
+       Fixed       0.90      0.85      0.87      1968
+      Mobile       0.84      0.90      0.87      1838
+
+    accuracy                           0.87      3806
+   macro avg       0.87      0.87      0.87      3806
+weighted avg       0.87      0.87      0.87      3806
+\end{verbatim}
+
+\hfill\break
+
+\hypertarget{lst-gridsearch}{}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Perform grid search to find more optimal hyperparameters for }
+\CommentTok{\# The Random Forest Classifier Model}
+
+\CommentTok{\# Define the parameter grid}
+\NormalTok{param\_grid }\OperatorTok{=}\NormalTok{ \{}
+    \StringTok{\textquotesingle{}model\_\_max\_depth\textquotesingle{}}\NormalTok{: [}\VariableTok{None}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DecValTok{15}\NormalTok{],}
+    \StringTok{\textquotesingle{}model\_\_max\_leaf\_nodes\textquotesingle{}}\NormalTok{: [}\VariableTok{None}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DecValTok{15}\NormalTok{],}
+    \StringTok{\textquotesingle{}model\_\_min\_samples\_leaf\textquotesingle{}}\NormalTok{: [}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{4}\NormalTok{],}
+    \StringTok{\textquotesingle{}model\_\_min\_samples\_split\textquotesingle{}}\NormalTok{: [}\DecValTok{2}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{10}\NormalTok{]}
+\NormalTok{\}}
+
+\CommentTok{\# Create a GridSearchCV object}
+\NormalTok{grid\_search }\OperatorTok{=}\NormalTok{ GridSearchCV(pipe\_trans, param\_grid, cv}\OperatorTok{=}\DecValTok{2}\NormalTok{, scoring}\OperatorTok{=}\StringTok{\textquotesingle{}accuracy\textquotesingle{}}\NormalTok{, verbose}\OperatorTok{=}\DecValTok{1}\NormalTok{, n\_jobs}\OperatorTok{={-}}\DecValTok{1}\NormalTok{)}
+
+\CommentTok{\# Fit the GridSearchCV object to the data}
+\NormalTok{grid\_search.fit(X\_train, y\_train)}
+
+\CommentTok{\# Print the best parameters}
+\BuiltInTok{print}\NormalTok{(grid\_search.best\_params\_)}
+\BuiltInTok{print}\NormalTok{(grid\_search.best\_score\_)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Fitting 2 folds for each of 144 candidates, totalling 288 fits
+{'model__max_depth': None, 'model__max_leaf_nodes': None, 'model__min_samples_leaf': 1, 'model__min_samples_split': 5}
+0.8707304256437205
+\end{verbatim}
+
+\hfill\break
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Try Random Forest classifier with better parameters}
+\CommentTok{\# Create a pipeline for the transformed data}
+\NormalTok{pipe\_trans }\OperatorTok{=}\NormalTok{ Pipeline([}
+    \CommentTok{\# Apply Random Forest}
+\NormalTok{    (}\StringTok{\textquotesingle{}model\textquotesingle{}}\NormalTok{, RandomForestClassifier(n\_estimators}\OperatorTok{=}\DecValTok{300}\NormalTok{, max\_depth}\OperatorTok{=}\VariableTok{None}\NormalTok{, max\_leaf\_nodes}\OperatorTok{=}\VariableTok{None}\NormalTok{, min\_samples\_leaf}\OperatorTok{=}\DecValTok{1}\NormalTok{, min\_samples\_split}\OperatorTok{=}\DecValTok{5}\NormalTok{,  ))  }
+\NormalTok{])}
+
+\CommentTok{\# Train the model}
+\NormalTok{pipe\_trans.fit(X\_train, y\_train)}
+
+\CommentTok{\# Make predictions}
+\NormalTok{y\_pred }\OperatorTok{=}\NormalTok{ pipe\_trans.predict(X\_test)}
+
+\CommentTok{\# Plot confusion matrix}
+\NormalTok{cm }\OperatorTok{=}\NormalTok{ confusion\_matrix(y\_test, y\_pred, labels}\OperatorTok{=}\NormalTok{pipe\_trans.classes\_)}
+\NormalTok{disp }\OperatorTok{=}\NormalTok{ ConfusionMatrixDisplay(confusion\_matrix}\OperatorTok{=}\NormalTok{cm, display\_labels}\OperatorTok{=}\NormalTok{pipe\_trans.classes\_)}
+\NormalTok{disp.plot()}
+\NormalTok{plt.show()}
+
+\CommentTok{\# Evaluate the model}
+\BuiltInTok{print}\NormalTok{(classification\_report(y\_test, y\_pred))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[H]
+
+{\centering \includegraphics{data-analytics_files/figure-latex/fig-randforest-betterpars-output-1.png}
+
+}
+
+\caption{\label{fig-randforest-betterpars}Random forest confusion matrix
+trained with more optimal parameters}
+
+\end{figure}
+
+\begin{verbatim}
+              precision    recall  f1-score   support
+
+       Fixed       0.90      0.84      0.87      1968
+      Mobile       0.84      0.90      0.87      1838
+
+    accuracy                           0.87      3806
+   macro avg       0.87      0.87      0.87      3806
+weighted avg       0.88      0.87      0.87      3806
+\end{verbatim}
+
+\hypertarget{model-comparison-and-analysis}{%
+\subsection{Model Comparison and
+Analysis}\label{model-comparison-and-analysis}}
+
+The choice of models depended on the nature of the prediction task.
+Gradient Boosting Regression demonstrated superior performance in
+predicting average download speed, while Random Forest Classification
+excelled in predicting network types. The decision to employ Yeo-Johnson
+transformation in regression was justified by the slight improvement in
+predictive accuracy (Pan, P., Li, R. and Zhang, Y., 2023). Both SVM and
+Random Forest Classifier provided competitive results for network
+classification, with the latter outperforming SVM.
+
+\hypertarget{references}{%
+\section*{References}\label{references}}
+\addcontentsline{toc}{section}{References}
+
+Behera, G. and Nain, N. (2022) ``Gso-Crs: Grid Search Optimization for
+Collaborative Recommendation System,'' Sādhanā : Published by the Indian
+Academy of Sciences, 47(3). doi: 10.1007/s12046-022-01924-0.
+
+Hosken, D. J., Buss, D. L. and Hodgson, D. J. (2018) `Beware the F Test
+(or, How to Compare Variances)', Animal behaviour, 136, pp.~119--126.
+
+Lee, S. X. and McLachlan, G. J. (2022) `An Overview of Skew
+Distributions in Model-Based Clustering', Journal of Multivariate
+Analysis, 188. doi: 10.1016/j.jmva.2021.104853.
+
+María Teresa Politi, Juliana Carvalho Ferreira and Cecilia María Patino
+(2021) Nonparametric Statistical Tests: Friend or Foe?, 47(4). doi:
+10.36416/1806-3756/e20210292.
+
+Mori, M. et al.~(2024) ``An Analytical Investigation of Body Parts More
+Susceptible to Aging and Composition Changes Using Statistical
+Hypothesis Testing,'' Healthcare Analytics, 5. doi:
+10.1016/j.health.2023.100284.
+
+Pan, P., Li, R. and Zhang, Y. (2023) ``Predicting Punching Shear in Rc
+Interior Flat Slabs with Steel and Frp Reinforcements Using Box-Cox and
+Yeo-Johnson Transformations,'' Case Studies in Construction Materials,
+19. doi: 10.1016/j.cscm.2023.e02409.
+
+Subasi, A. et al.~(2020) ``Permeability Prediction of Petroleum
+Reservoirs Using Stochastic Gradient Boosting Regression,'' Journal of
+Ambient Intelligence and Humanized Computing, 13(7), pp.~3555--3564.
+doi: 10.1007/s12652-020-01986-0.
+
+West, R. M. (2022) ``Best Practice in Statistics: The Use of Log
+Transformation,'' Annals of Clinical Biochemistry, 59(3), pp.~162--165.
+doi: 10.1177/00045632211050531.
+
+Yuhang Zhou, Yiyang Zhu and Weng Kee Wong (2023) `Statistical Tests for
+Homogeneity of Variance for Clinical Trials and Recommendations',
+Contemporary Clinical Trials Communications, 33, p.~101119. doi:
+10.1016/j.conctc.2023.101119.
+
+
+
+\end{document}

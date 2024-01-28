@@ -175,328 +175,6 @@
     "text": "References\n\nMikroTik “mANTBox 52 15s\nhttps://mikrotik.com/product/mantbox_52_15s\n\n\nWC-44 Outdoor Enclosure with Clear Cover\nhttps://www.polycase.com/wc-44\n\n\nPole Mounting Assembly\nhttps://wilsonamplifiers.ca/pole-mounting-assembly-for-outdoor-antennas-10-inch-901117/\n\n\n150ft Cat8 Heavy Duty High-speed Cable\nhttps://www.amazon.ca/Ethernet-Shielded-Lastest-2000Mhz-Weatherproof/dp/B087N2BBF6\n\n\nUniFi EdgeSwitch 16XP\nhttps://store.ui.com/collections/operator-edgemax-switches/products/es-16xp\n\n\nNetgate 3100 MAX pfSense+ Security Gateway\nhttps://shop.netgate.com/products/3100-max-pfsense?variant=32156745531507\n\n\nUniFi Access Point WiFi 6 Long-Range\nhttps://store.ui.com/products/unifi-6-long-range-access-point_pos=20&_sid=883e3e553&_ss=r"
   },
   {
-    "objectID": "posts/unreal-design-patterns/unreal-design-patterns.html#command-design-pattern-c",
-    "href": "posts/unreal-design-patterns/unreal-design-patterns.html#command-design-pattern-c",
-    "title": "Programming Design Patterns",
-    "section": "2.1 Command Design Pattern (C++)",
-    "text": "2.1 Command Design Pattern (C++)\nCreated C++ classes that inherit from UObject class. Three command child classes(Jump, Run and Fire) inherit from a base command class. Command objects are created by the level blueprint based on keyboard and mouse inputs. These command objects then go on to execute the specific command they were designed for."
-  },
-  {
-    "objectID": "posts/unreal-design-patterns/unreal-design-patterns.html#state-machine-design-pattern-c",
-    "href": "posts/unreal-design-patterns/unreal-design-patterns.html#state-machine-design-pattern-c",
-    "title": "Programming Design Patterns",
-    "section": "2.2 State Machine Design Pattern (C++)",
-    "text": "2.2 State Machine Design Pattern (C++)\nCreated C++ state classes are that inherit from UObject class and are managed by a StateManager class that inherits from Actor component class. The StateManager actor component object is created and attached to the enemy character class. The StateManager component then creates the three different state objects, switches the current state based on certain conditions and runs the current state."
-  },
-  {
-    "objectID": "posts/unreal-design-patterns/unreal-design-patterns.html#object-pool-design-pattern-blueprints",
-    "href": "posts/unreal-design-patterns/unreal-design-patterns.html#object-pool-design-pattern-blueprints",
-    "title": "Programming Design Patterns",
-    "section": "2.3 Object Pool Design Pattern (Blueprints)",
-    "text": "2.3 Object Pool Design Pattern (Blueprints)\nCreated Blueprint BulletPool class actor component that attaches to actors and created a set number of bullets from the blueprint bullet class. The bulletpool than attaches the created bullets to the character and when the chsaracter’s fire method is invoked it uses the bullets from the bullet pool. If the bullet pool becomes empty then the player must wait for it to refill before firing more bullets."
-  },
-  {
-    "objectID": "posts/unreal-design-patterns/unreal-design-patterns.html#prototype-design-pattern-blueprints",
-    "href": "posts/unreal-design-patterns/unreal-design-patterns.html#prototype-design-pattern-blueprints",
-    "title": "Programming Design Patterns",
-    "section": "2.4 Prototype Design Pattern (Blueprints)",
-    "text": "2.4 Prototype Design Pattern (Blueprints)\nCreated Blueprint spawn classes that spawn different enemy characters from blueprint child enemy character classes.\nOne type of spawn class has a public variable that can be set in the unreal inspector for each instance that stores a specific enemy character class. It then spawns a character based on the saved enemy character class and saves it and continues to invoke that intial spawned character’s Clone method to spawn more characters of that class. This spawner creates and stores only one prototype of one type of enemy to spawn further enemies from.\nThe other type of spawn class stores all of the different enemy classes. It randomly selects an enemy class from the list of enemy classes, spawns an instance of this class, runs the Clone method of that instance to spawn an enemy, and finally destroys the initial instance of the enemy. So this spawner type can spawn any type of enemy by creating and using a prototype of that enemy."
-  },
-  {
-    "objectID": "posts/dev-design-assignment1/design-dev-assignment1.html#purpose-of-document",
-    "href": "posts/dev-design-assignment1/design-dev-assignment1.html#purpose-of-document",
-    "title": "Hotel Booking System Mock Design",
-    "section": "1.1 Purpose of Document",
-    "text": "1.1 Purpose of Document\nThe purpose of this document is to provide system designs to use in the development of the hotel booking system for City and Resort hotels."
-  },
-  {
-    "objectID": "posts/dev-design-assignment1/design-dev-assignment1.html#scope",
-    "href": "posts/dev-design-assignment1/design-dev-assignment1.html#scope",
-    "title": "Hotel Booking System Mock Design",
-    "section": "1.2 Scope",
-    "text": "1.2 Scope\nThe scope of the project involves an examination of the business scenario to ascertain how best to design, develop, and improve upon the proposed hotel booking system. In addition, creation of system designs and implementation documentation must be produced to drive the development of the project. The proposed solutions must include detailed logical & physical Entity-Relationship Diagrams, a Context Diagram, and up to Level 2 Data Flow Diagrams."
-  },
-  {
-    "objectID": "posts/dev-design-assignment1/design-dev-assignment1.html#waterfall",
-    "href": "posts/dev-design-assignment1/design-dev-assignment1.html#waterfall",
-    "title": "Hotel Booking System Mock Design",
-    "section": "2.1 Waterfall",
-    "text": "2.1 Waterfall\nThe Waterfall methodology contains five phases that are as follows: Requirements, Design, Implementation, Verification and Maintenance. Each of these phases are present in most methodologies however with the Waterfall approach each phase is followed by the next in strict fashion. The team can only progress to the next phase when the current phase has been completed and you cannot revert back to a previous phase. This approach is useful when a high level of reliability is needed for a project."
-  },
-  {
-    "objectID": "posts/dev-design-assignment1/design-dev-assignment1.html#agile",
-    "href": "posts/dev-design-assignment1/design-dev-assignment1.html#agile",
-    "title": "Hotel Booking System Mock Design",
-    "section": "2.2 Agile",
-    "text": "2.2 Agile\nThe Agile method is an iterative approach that allows for similar phases as Waterfall to be engaged simultaneously and in no specific order. The team is able to work in small increments allowing for customer input regularly. This methodology is far more flexible in terms of adapting to changes in customer wants and needs as they see the project develop."
-  },
-  {
-    "objectID": "posts/dev-design-assignment1/design-dev-assignment1.html#preferred-software-development-methodology",
-    "href": "posts/dev-design-assignment1/design-dev-assignment1.html#preferred-software-development-methodology",
-    "title": "Hotel Booking System Mock Design",
-    "section": "2.3 Preferred Software Development Methodology",
-    "text": "2.3 Preferred Software Development Methodology\nThe fact that there are two hotels that will be using this system in essence means that there two clients to consider in the development of this project. Each client has unique requirements that differ from one another and are subject to change. As the hospitality industry is fast paced and endeavours to adapt to ever changing customer opinions, the Agile methodology is best suited for this project. As stated above, Waterfall is great for certain projects but is highly inflexible while Agile allows for development teams to incorporate client input in small, digestible increments. This approach will translate to a product that provides more utility to the customer which in turn will result in higher customer satisfaction. ( See Appendix – Waterfall Methodology & Agile Methodology )"
-  },
-  {
-    "objectID": "posts/dev-design-assignment1/design-dev-assignment1.html#logical-entity-relationship-diagram",
-    "href": "posts/dev-design-assignment1/design-dev-assignment1.html#logical-entity-relationship-diagram",
-    "title": "Hotel Booking System Mock Design",
-    "section": "3.1 Logical Entity-Relationship Diagram",
-    "text": "3.1 Logical Entity-Relationship Diagram\nThe four entities in this diagram are as follows: Customer, City Reservation, Resort Reservation and Invoice. Each entity has a primary key that consists of a uniquely generated number. The system is purposefully designed with no weak entities and foreign keys as this is not advisable to create a robust system. The Customer can either book a reservation at the City or Resort hotel. There is a need to delineate the City and Resort hotel reservations because of their individual discount policies. Each hotel will only reward their customers with a discount when they have previously stayed at their specific location before. In addition, the Resort hotel will only provide a discount to customers who haven’t had any cancellations at their location in the past year. Therefore the Resort Reservation entity has an addition attribute labelled “Cancelled” that records whether any of the reservations have been cancelled. With the information supplied from the reservation entities the Invoice is populated. ( See Figure 1 )\n\n\n\nFigure 1. Logical Entity-Relationship Diagram"
-  },
-  {
-    "objectID": "posts/dev-design-assignment1/design-dev-assignment1.html#physical-entity-relationship-diagram",
-    "href": "posts/dev-design-assignment1/design-dev-assignment1.html#physical-entity-relationship-diagram",
-    "title": "Hotel Booking System Mock Design",
-    "section": "3.2 Physical Entity-Relationship Diagram",
-    "text": "3.2 Physical Entity-Relationship Diagram\nThe invoice entity contains a composite and multivalued attribute labelled “Payment” that allows for storage of the date and amount for payments made towards the total. When payments are made the “Amount Owing” attribute on the entry is updated accordingly. ( See Figure 2 )\n\n\n\nFigure 2. Physical Entity-Relationship Diagram"
-  },
-  {
-    "objectID": "posts/dev-design-assignment1/design-dev-assignment1.html#data-fields-with-sample-data",
-    "href": "posts/dev-design-assignment1/design-dev-assignment1.html#data-fields-with-sample-data",
-    "title": "Hotel Booking System Mock Design",
-    "section": "3.3 Data Fields with Sample Data",
-    "text": "3.3 Data Fields with Sample Data\n\n\n\nFigure 3. Data Fields with Sample Data"
-  },
-  {
-    "objectID": "posts/dev-design-assignment1/design-dev-assignment1.html#context-diagram",
-    "href": "posts/dev-design-assignment1/design-dev-assignment1.html#context-diagram",
-    "title": "Hotel Booking System Mock Design",
-    "section": "4.1 Context Diagram",
-    "text": "4.1 Context Diagram\nSix (6) entities: Customer, City Hotel, Resort Hotel, Car Parking Agency, Restaurant and ABC Bank interact with the system from a data flow perspective. A hotel only interacts with the system if the customer has chosen the specified hotel. Each entity’s interactions with the system will be described in further depth in the items to follow. ( See Figure 4 )\n\n\n\nFigure 4. Context Diagram"
-  },
-  {
-    "objectID": "posts/dev-design-assignment1/design-dev-assignment1.html#level-1-dfd",
-    "href": "posts/dev-design-assignment1/design-dev-assignment1.html#level-1-dfd",
-    "title": "Hotel Booking System Mock Design",
-    "section": "4.2 Level 1 DFD",
-    "text": "4.2 Level 1 DFD\nThere are three (3) processes depicted at level 1 that handle the flow of data for the system. Process 1, “Booking”, involves making a reservation, obtaining missing information for the reservation and cancelling the reservation. Process 2, “Check-In”, is where the customer checks into their room and makes an initial payment. Process 3, “Check-Out”, ends the customer’s interaction with the system by settling the remaining balance on the invoice and paying the parking invoice if the customer has opted for parking. ( See Figure 5 )\n\n\n\nFigure 5. Level 1 Data Flow Diagram"
-  },
-  {
-    "objectID": "posts/dev-design-assignment1/design-dev-assignment1.html#level-2-dfd-booking-process-1",
-    "href": "posts/dev-design-assignment1/design-dev-assignment1.html#level-2-dfd-booking-process-1",
-    "title": "Hotel Booking System Mock Design",
-    "section": "4.3 Level 2 DFD – Booking Process 1",
-    "text": "4.3 Level 2 DFD – Booking Process 1\nThere are five (5) sub-processes depicted at level 2 of “Booking” Process 1. In Process 1.1 the customer submits their customer details which are then stored. Process 1.2 generates room and date availability information by examining current reservations which is then used by the customer to submit their reservation preferences. In Process 1.3 the reservation details are stored and the hotel sends the customer a reservation code and request, in the form of an email, to submit missing information. The only none mandatory fields that may be missing are “Food Requirements” and “Parking”. ( See Figure 1, Figure 2 and Figure 3 ) Process 1.4 gives the customer an opportunity to submit the missing information by clicking a link provided in the information request email and filling in the missing fields. This new information is then sent to the hotel, restaurant and parking agency along with being saved in the customer’s reservation entry. Process 1.5 allows the customer to cancel the reservation if desired. When a cancellation is made the “Cancellation” field is updated if it is a Resort reservation entry or it deletes the entry in the case of a City reservation. All relevant parties are then informed of the cancellation. ( See Figure 6 )\n\n\n\nFigure 6. Level 2 Data Flow Diagram Booking Process 1"
-  },
-  {
-    "objectID": "posts/dev-design-assignment1/design-dev-assignment1.html#level-2-dfd-check-in-process-2",
-    "href": "posts/dev-design-assignment1/design-dev-assignment1.html#level-2-dfd-check-in-process-2",
-    "title": "Hotel Booking System Mock Design",
-    "section": "4.4 Level 2 DFD – Check-In Process 2",
-    "text": "4.4 Level 2 DFD – Check-In Process 2\nThere are four (4) sub-processes depicted at level 2 of “Check-In” Process 2. In Process 2.1 the customer submits their reservation code which is then used to extract the customer’s details and reservation. This information is used by the hotel to generate an invoice which is then stored and a copy is sent to the customer in Process 2.2. In Process 2.3 the customer submits payment information which is then received by ABC bank along with the invoice. In Process 2.4 the bank handles the payment, sends payment confirmation to all relevant parties and the invoice entry is updated with payment details. ( See Figure 7 )\n\n\n\nFigure 7. Level 2 Data Flow Diagram Check-In Process 2"
-  },
-  {
-    "objectID": "posts/dev-design-assignment1/design-dev-assignment1.html#level-2-dfd-check-out-process-3",
-    "href": "posts/dev-design-assignment1/design-dev-assignment1.html#level-2-dfd-check-out-process-3",
-    "title": "Hotel Booking System Mock Design",
-    "section": "4.5 Level 2 DFD – Check-Out Process 3",
-    "text": "4.5 Level 2 DFD – Check-Out Process 3\nThere are three (3) sub-processes depicted at level 2 of “Check-Out” Process 3. In Process 3.1 the customer submits their reservation code which is then used by the hotel to bring up the customer’s details, reservation and invoice. The customer details and reservation are also sent to the Car Parking Agency which uses Process 3.2 to send the customer a parking invoice along with their hotel invoice. In Process 3.3 the customer submits payment information for both invoices, which is then received by ABC bank along with both invoices. In Process 3.4 the bank processes the payment and sends payment confirmation to all relevant parties and the hotel invoice entry is updated with payment details. ( See Figure 8 )\n\n\n\nFigure 8. Level 2 Data Flow Diagram Check-Out Process 3"
-  },
-  {
-    "objectID": "posts/dev-design-assignment1/design-dev-assignment1.html#additional-review-process",
-    "href": "posts/dev-design-assignment1/design-dev-assignment1.html#additional-review-process",
-    "title": "Hotel Booking System Mock Design",
-    "section": "5.1 Additional Review Process",
-    "text": "5.1 Additional Review Process\nAn improvement upon the system could be achieved by adding a fourth process at level 1 to prompt the customer to provide a review. The review information could then be stored in an additional field in the reservation data stores. This review information could then be analyzed by AI technology to produce actionable suggestions on how to improve the customer’s experience."
-  },
-  {
-    "objectID": "posts/dev-design-assignment1/design-dev-assignment1.html#sentiment-intent-analysis",
-    "href": "posts/dev-design-assignment1/design-dev-assignment1.html#sentiment-intent-analysis",
-    "title": "Hotel Booking System Mock Design",
-    "section": "5.2 Sentiment & Intent Analysis",
-    "text": "5.2 Sentiment & Intent Analysis\nNatural language processing could be employed to analyze thousands of reviews to identify recurring themes and topics reported on by customers. These can then be rated so that hotel staff can see how customers feel and why they feel that way. This would allow for staff to see where best to make improvements to their services thereby increasing customer satisfaction. ( See Appendix – Sentiment & Intent Analysis )"
-  },
-  {
-    "objectID": "posts/dev-design-assignment1/design-dev-assignment1.html#references",
-    "href": "posts/dev-design-assignment1/design-dev-assignment1.html#references",
-    "title": "Hotel Booking System Mock Design",
-    "section": "References",
-    "text": "References\n\nWaterfall Methodology\nhttps://www.projectmanager.com/guides/waterfall-methodology/\n\n\nAgile Methodology\nhttps://www.atlassian.com/agile\n\n\n\n\nSentiment & Intent Analysis\nhttps://www.lexalytics.com/technology/sentiment-analysis/\nhttps://www.lexalytics.com/technology/intentions/"
-  },
-  {
-    "objectID": "posts/laserman/laserman.html",
-    "href": "posts/laserman/laserman.html",
-    "title": "Retro C++ Game LaserMan",
-    "section": "",
-    "text": "Play Game\n\n\n\n\n\n\nPlayer Keyboard Controls\n\n\n\n\n\n\n\n\nMove\nArrow Keys\nSelect\nEnter\n\n\nEscape Program\nEsc\n\n\n\n\n\n\n🚀 Play Game\nDownload, unzip and open LaserMan.exe (Only runs on Windows)\n\n\n\n\n\nRetro Game\nProject to create a retro game using a beginner’s game-development framework called Playbuffer all written in C++ strictly for Windows. Programming algorithms and techniques such as state machines and object oriented programming were developed in the game loop.\n\n\n\n\n\n\nSource Code\n\n\n\nView source code on Github repository.\n\n\n\n\nVideo Walkthrough\nVideo"
-  },
-  {
-    "objectID": "posts/emcs/emcs.html",
-    "href": "posts/emcs/emcs.html",
-    "title": "Microsoft Exchange Server Network",
-    "section": "",
-    "text": "Deployed an Exchange server environment using Microsoft Exchange Server 2016. Created three (3) domain controllers, two (2) mailbox servers, and one (1) edge transport server on VMware. One (1) of the domain controllers was running Server Core. Formatted disks with different file systems and created simple, spanned, stripped, mirrored, and RAID-5 volumes. Installed and configured Active Directory including creating and managing OU structure, users, and groups. Created an Active Directory backup and restored from backup. Installed and upgraded Exchange Server 2016. Created mailbox databases in a DAG. Configured namespaces, SSL certificates, and mail flow. Spent extensive time using PowerShell and Exchange Management Shell for installs and configuration. See project screenshots below.\n\n\n\n\n\nFigure 1. Domain Controller 1 - IP Configurations\n\n\n\n\n\nFigure 2. Domain Controller 3 (Server Core) - IP Configurations\n\n\n\n\n\nFigure 3. Domain Controller 3 (Server Core) - Firewall Configurations\n\n\n\n\n\n\n\n\nFigure 4. Domain Controller 2 - Raid Volumes\n\n\n\n\n\n\n\n\nFigure 5. Active Directory Installation\n\n\n\n\n\nFigure 6. Active Directory - OUs & Users\n\n\n\n\n\n\n\n\nFigure 7. Exchange Server Install\n\n\n\n\n\nFigure 8. Mailbox Databases\n\n\n\n\n\nFigure 9. Recipients\n\n\n\n\n\nFigure 10. Resource Mailboxes & Distribution Groups"
-  },
-  {
-    "objectID": "posts/emcs/emcs.html#domain-controller-configurations",
-    "href": "posts/emcs/emcs.html#domain-controller-configurations",
-    "title": "Microsoft Exchange Server Network",
-    "section": "",
-    "text": "Figure 1. Domain Controller 1 - IP Configurations\n\n\n\n\n\nFigure 2. Domain Controller 3 (Server Core) - IP Configurations\n\n\n\n\n\nFigure 3. Domain Controller 3 (Server Core) - Firewall Configurations"
-  },
-  {
-    "objectID": "posts/emcs/emcs.html#file-systems",
-    "href": "posts/emcs/emcs.html#file-systems",
-    "title": "Microsoft Exchange Server Network",
-    "section": "",
-    "text": "Figure 4. Domain Controller 2 - Raid Volumes"
-  },
-  {
-    "objectID": "posts/emcs/emcs.html#active-directory",
-    "href": "posts/emcs/emcs.html#active-directory",
-    "title": "Microsoft Exchange Server Network",
-    "section": "",
-    "text": "Figure 5. Active Directory Installation\n\n\n\n\n\nFigure 6. Active Directory - OUs & Users"
-  },
-  {
-    "objectID": "posts/emcs/emcs.html#exhange-server",
-    "href": "posts/emcs/emcs.html#exhange-server",
-    "title": "Microsoft Exchange Server Network",
-    "section": "",
-    "text": "Figure 7. Exchange Server Install\n\n\n\n\n\nFigure 8. Mailbox Databases\n\n\n\n\n\nFigure 9. Recipients\n\n\n\n\n\nFigure 10. Resource Mailboxes & Distribution Groups"
-  },
-  {
-    "objectID": "posts/networking-cisco/networking-cisco.html",
-    "href": "posts/networking-cisco/networking-cisco.html",
-    "title": "Networking with Cisco Technologies",
-    "section": "",
-    "text": "Designed and constructed a fictional network with five (5) departments in two (2) locations using GNS3 simulation software. All departments were represented by Windows 10 VMs run on VMware and were configured to communicate with each other thru GNS3. Variable length subnetting from an address space of 172.16.16.0/20 was used to create department subnets. Routing protocol OSPF along with ACLs were used to allow departments to communicate with each other while at the same time preventing certain ones from reaching others. See figures below for full documentation of the project.\n\n\n\n\n\n\nExpand To Learn About Project Scenario\n\n\n\n\n\nThe head office is located in Vancouver and has three departments. These departments are Accounting, Administration, and Human Resources. The Accounting department uses 10 computers, Administration uses 19 computers, and Human Resources uses 3 computers.\nThe branch office is located in Kelowna and has two departments. These departments are Marketing and Sales. The Marketing department uses 16 computers, and the Sales department uses 45 computers.\n\n\n\n\n\n\n\n\nFigure 1. Network Diagram\n\n\n\n\n\n\n\n\nFigure 2. IP Address Scheme\n\n\n\n\n\n\n\n\nFigure 3. Access Control Lists\n\n\n\n\n\n\n\n\nFigure 4. Router Access Credentials\n\n\n\n\n\n\nListing 1. Vancouver Router Configuration\n!\n!\nversion 12.4\nservice timestamps debug datetime msec\nservice timestamps log datetime msec\nno service password-encryption\n!\nhostname Vancouver\n!\nboot-start-marker\nboot-end-marker\n!\nenable secret 5 $1$rCPC$Q34x6NTdMojTQHgQQwDe7/\n!\nno aaa new-model\nmemory-size iomem 5\nno ip icmp rate-limit unreachable\n!\n!\nip cef\nno ip domain lookup\n!\n!\n!\n!\n!\nip tcp synwait-time 5\n!\n!\ninterface Ethernet0/0\n  description Router Network\n  ip address 172.16.16.153 255.255.255.252\n  half-duplex\n!\ninterface Ethernet0/1\n  description HR Network\n  ip address 172.16.16.148 255.255.255.248\n  ip access-group 3 out\n  half-duplex\n!\ninterface Ethernet0/2\n  description Admin & SMTP/WebServer Network\n  ip address 172.16.16.84 255.255.255.224\n  ip access-group 110 out\n  half-duplex\n!\ninterface Ethernet0/3\n  description Accounting Network\n  ip address 172.16.16.139 255.255.255.240\n  ip access-group 2 out\n  half-duplex\n!\nrouter ospf 1\n  log-adjacency-changes\n  network 172.16.16.64 0.0.0.31 area 0\n  network 172.16.16.128 0.0.0.15 area 0\n  network 172.16.16.144 0.0.0.7 area 0\n  network 172.16.16.152 0.0.0.3 area 0\n!\nno ip http server\n!\nip forward-protocol nd\n!\n!\naccess-list 2 deny   172.16.16.96 0.0.0.31\naccess-list 2 deny   172.16.16.0 0.0.0.63\naccess-list 2 permit any\naccess-list 3 deny   172.16.16.0 0.0.0.63\naccess-list 3 permit any\naccess-list 110 deny   tcp 172.16.16.128 0.0.0.15 host 172.16.16.66 eq\nwww\naccess-list 110 deny   tcp 172.16.16.144 0.0.0.7 host 172.16.16.66 eq\nwww\naccess-list 110 deny   tcp 172.16.16.0 0.0.0.63 host 172.16.16.66 eq\nsmtp\naccess-list 110 deny   tcp 172.16.16.96 0.0.0.31 host 172.16.16.66 eq\nsmtp\naccess-list 110 permit ip any any\nno cdp log mismatch duplex\n!\ncontrol-plane\n!\nbanner motd\n\nWelcome to Vancouver\n\n!\nline con 0\n  exec-timeout 0 0\n  privilege level 15\n  logging synchronous\nline aux 0\n  exec-timeout 0 0\n  privilege level 15\n  logging synchronous\nline vty 0 4\n  password 1234\n  login\n!\n!\nend\n\n\nListing 2. Kelowna Router Configuration\n!\n!\nversion 12.4\nservice timestamps debug datetime msec\nservice timestamps log datetime msec\nno service password-encryption\n!\nhostname Kelowna\n!\nboot-start-marker\nboot-end-marker\n!\nenable secret 5 $1$dGub$MNu5a6gEp0IcO1T14Qlg4/\n!\nno aaa new-model\nmemory-size iomem 5\nno ip icmp rate-limit unreachable\n!\n!\nip cef\nno ip domain lookup\n!\n!\n!\n!\n!\nip tcp synwait-time 5\n!\n!\ninterface Ethernet0/0\n  description Router Network\n  ip address 172.16.16.154 255.255.255.252\n  half-duplex\n!\ninterface Ethernet0/1\n  description Sales Network\n  ip address 172.16.16.46 255.255.255.192\n  ip access-group 1 out\n  half-duplex\n!\ninterface Ethernet0/2\n  description Marketing Network\n  ip address 172.16.16.113 255.255.255.224\n  ip access-group 4 out\n  half-duplex\n!\ninterface Ethernet0/3\n  description Nothing\n  no ip address\n  shutdown\n  half-duplex\n!\nrouter ospf 1\n  log-adjacency-changes\n  network 172.16.16.0 0.0.0.63 area 0\n  network 172.16.16.96 0.0.0.31 area 0\n  network 172.16.16.152 0.0.0.3 area 0\n!\nno ip http server\n!\nip forward-protocol nd\n!\n!\naccess-list 1 deny   172.16.16.128 0.0.0.15\naccess-list 1 deny   172.16.16.96 0.0.0.31\naccess-list 1 permit any\naccess-list 4 deny   172.16.16.0 0.0.0.63\naccess-list 4 permit any\nno cdp log mismatch duplex\n!\ncontrol-plane\n!\nbanner motd\n\n\nWelcome to Kelowna\n\n\n!\nline con 0\n  exec-timeout 0 0\n  privilege level 15\n  logging synchronous\nline aux 0\n  exec-timeout 0 0\n  privilege level 15\n  logging synchronous\nline vty 0 4\n  password 1234\n  login\n!\n!\nend"
-  },
-  {
-    "objectID": "posts/networking-cisco/networking-cisco.html#network-diagram",
-    "href": "posts/networking-cisco/networking-cisco.html#network-diagram",
-    "title": "Networking with Cisco Technologies",
-    "section": "",
-    "text": "Figure 1. Network Diagram"
-  },
-  {
-    "objectID": "posts/networking-cisco/networking-cisco.html#ip-address-scheme",
-    "href": "posts/networking-cisco/networking-cisco.html#ip-address-scheme",
-    "title": "Networking with Cisco Technologies",
-    "section": "",
-    "text": "Figure 2. IP Address Scheme"
-  },
-  {
-    "objectID": "posts/networking-cisco/networking-cisco.html#access-control-lists",
-    "href": "posts/networking-cisco/networking-cisco.html#access-control-lists",
-    "title": "Networking with Cisco Technologies",
-    "section": "",
-    "text": "Figure 3. Access Control Lists"
-  },
-  {
-    "objectID": "posts/networking-cisco/networking-cisco.html#router-access-credentials",
-    "href": "posts/networking-cisco/networking-cisco.html#router-access-credentials",
-    "title": "Networking with Cisco Technologies",
-    "section": "",
-    "text": "Figure 4. Router Access Credentials"
-  },
-  {
-    "objectID": "posts/networking-cisco/networking-cisco.html#router-configurations",
-    "href": "posts/networking-cisco/networking-cisco.html#router-configurations",
-    "title": "Networking with Cisco Technologies",
-    "section": "",
-    "text": "Listing 1. Vancouver Router Configuration\n!\n!\nversion 12.4\nservice timestamps debug datetime msec\nservice timestamps log datetime msec\nno service password-encryption\n!\nhostname Vancouver\n!\nboot-start-marker\nboot-end-marker\n!\nenable secret 5 $1$rCPC$Q34x6NTdMojTQHgQQwDe7/\n!\nno aaa new-model\nmemory-size iomem 5\nno ip icmp rate-limit unreachable\n!\n!\nip cef\nno ip domain lookup\n!\n!\n!\n!\n!\nip tcp synwait-time 5\n!\n!\ninterface Ethernet0/0\n  description Router Network\n  ip address 172.16.16.153 255.255.255.252\n  half-duplex\n!\ninterface Ethernet0/1\n  description HR Network\n  ip address 172.16.16.148 255.255.255.248\n  ip access-group 3 out\n  half-duplex\n!\ninterface Ethernet0/2\n  description Admin & SMTP/WebServer Network\n  ip address 172.16.16.84 255.255.255.224\n  ip access-group 110 out\n  half-duplex\n!\ninterface Ethernet0/3\n  description Accounting Network\n  ip address 172.16.16.139 255.255.255.240\n  ip access-group 2 out\n  half-duplex\n!\nrouter ospf 1\n  log-adjacency-changes\n  network 172.16.16.64 0.0.0.31 area 0\n  network 172.16.16.128 0.0.0.15 area 0\n  network 172.16.16.144 0.0.0.7 area 0\n  network 172.16.16.152 0.0.0.3 area 0\n!\nno ip http server\n!\nip forward-protocol nd\n!\n!\naccess-list 2 deny   172.16.16.96 0.0.0.31\naccess-list 2 deny   172.16.16.0 0.0.0.63\naccess-list 2 permit any\naccess-list 3 deny   172.16.16.0 0.0.0.63\naccess-list 3 permit any\naccess-list 110 deny   tcp 172.16.16.128 0.0.0.15 host 172.16.16.66 eq\nwww\naccess-list 110 deny   tcp 172.16.16.144 0.0.0.7 host 172.16.16.66 eq\nwww\naccess-list 110 deny   tcp 172.16.16.0 0.0.0.63 host 172.16.16.66 eq\nsmtp\naccess-list 110 deny   tcp 172.16.16.96 0.0.0.31 host 172.16.16.66 eq\nsmtp\naccess-list 110 permit ip any any\nno cdp log mismatch duplex\n!\ncontrol-plane\n!\nbanner motd\n\nWelcome to Vancouver\n\n!\nline con 0\n  exec-timeout 0 0\n  privilege level 15\n  logging synchronous\nline aux 0\n  exec-timeout 0 0\n  privilege level 15\n  logging synchronous\nline vty 0 4\n  password 1234\n  login\n!\n!\nend\n\n\nListing 2. Kelowna Router Configuration\n!\n!\nversion 12.4\nservice timestamps debug datetime msec\nservice timestamps log datetime msec\nno service password-encryption\n!\nhostname Kelowna\n!\nboot-start-marker\nboot-end-marker\n!\nenable secret 5 $1$dGub$MNu5a6gEp0IcO1T14Qlg4/\n!\nno aaa new-model\nmemory-size iomem 5\nno ip icmp rate-limit unreachable\n!\n!\nip cef\nno ip domain lookup\n!\n!\n!\n!\n!\nip tcp synwait-time 5\n!\n!\ninterface Ethernet0/0\n  description Router Network\n  ip address 172.16.16.154 255.255.255.252\n  half-duplex\n!\ninterface Ethernet0/1\n  description Sales Network\n  ip address 172.16.16.46 255.255.255.192\n  ip access-group 1 out\n  half-duplex\n!\ninterface Ethernet0/2\n  description Marketing Network\n  ip address 172.16.16.113 255.255.255.224\n  ip access-group 4 out\n  half-duplex\n!\ninterface Ethernet0/3\n  description Nothing\n  no ip address\n  shutdown\n  half-duplex\n!\nrouter ospf 1\n  log-adjacency-changes\n  network 172.16.16.0 0.0.0.63 area 0\n  network 172.16.16.96 0.0.0.31 area 0\n  network 172.16.16.152 0.0.0.3 area 0\n!\nno ip http server\n!\nip forward-protocol nd\n!\n!\naccess-list 1 deny   172.16.16.128 0.0.0.15\naccess-list 1 deny   172.16.16.96 0.0.0.31\naccess-list 1 permit any\naccess-list 4 deny   172.16.16.0 0.0.0.63\naccess-list 4 permit any\nno cdp log mismatch duplex\n!\ncontrol-plane\n!\nbanner motd\n\n\nWelcome to Kelowna\n\n\n!\nline con 0\n  exec-timeout 0 0\n  privilege level 15\n  logging synchronous\nline aux 0\n  exec-timeout 0 0\n  privilege level 15\n  logging synchronous\nline vty 0 4\n  password 1234\n  login\n!\n!\nend"
-  },
-  {
-    "objectID": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#purpose-of-document",
-    "href": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#purpose-of-document",
-    "title": "Deep Learning FastAI Model",
-    "section": "1.1 Purpose of Document",
-    "text": "1.1 Purpose of Document\nThe purpose of this document is to detail the building of deep learning models using a convolutional neural network architecture. The different techniques, models and methods used to improve performance will be discussed."
-  },
-  {
-    "objectID": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#bee-vs-wasp",
-    "href": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#bee-vs-wasp",
-    "title": "Deep Learning FastAI Model",
-    "section": "2.1 Bee vs Wasp",
-    "text": "2.1 Bee vs Wasp\nFor this project I chose a Bee vs Wasp dataset found on Kaggle. I imported the dataset and created a new folder called “images” to which I added subfolders: “bee1”, “bee2”, “wasp1”, “wasp2”, “other_insect” and “other_noinsect”. The data loader in my custom train_models function then creates classes based on the folder structure and feeds that to the model. The data set itself isn’t the cleanest as it seems that some images have not been placed in the correct folder which will sometimes give the model wrong information. No doubt this will affect the accuracy that can be attained with this dataset.\n\n\n\n\n\n\nDataset\n\n\n\nView Bee vs Wasp dataset on Kaggle."
-  },
-  {
-    "objectID": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#trial-and-error",
-    "href": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#trial-and-error",
-    "title": "Deep Learning FastAI Model",
-    "section": "3.1 Trial and Error",
-    "text": "3.1 Trial and Error\nI created a custom function named train_models that I could use to conduct my tests a little faster. With a trial and error approach, I began manually trying different learning rates, model types and image sizes, along with training models with unfrozen weights ( See Figure 1, Table 1, Figure 2 & Table 2 ). Eventually I thought I should start trying to automate some of these tuning methods and, by doing so, hopefully optimize the outcomes.\n\n\n\n\n\n\nNote\n\n\n\nView full details of the trial and error testing in the Experimenting section on the Google Colab Notebook.\n\n\n\n\n#Function to train models more easily\ndef train_models(image_size, batch_size, images_path, test_size, model_type):\n    #instructions for preparing data batches, size of images\n    #and normalize data\n    batch_tfms = [*aug_transforms(size=image_size),Normalize.from_stats(*imagenet_stats)]\n\n    #function for creating batches with specified parameters\n    data = ImageDataLoaders.from_folder(images_path,\n                                        valid_pct=test_size,\n                                        ds_tfms=batch_tfms,\n                                        item_tfms=Resize(460),\n                                        bs=batch_size)\n    \n    # test whether batch function is working with parameters\n    data.show_batch(max_n=9, figsize=(20,10))\n\n    #return the trained model\n    return vision_learner(data, model_type, metrics=error_rate).to_fp16()\n\nSource: Google Colab Notebook\n\n\n\n\n\nCode\n#image size\nimage_size = 224\n\n#batch size, number of images to transfer to GPU to train at one time\nbatch_size = 64\n\n#Image path\nimages_path = \"kaggle_bee_vs_wasp/images\"\n\n#test size\ntest_size = 0.2\n\n#CNN model\nmodel_type = resnet34\n\n#Create model with dataset and parameters\nlearn_resnet34 = train_models(image_size, batch_size, images_path, test_size, model_type)\n\n\n\n\n\nFigure 1. First resnet34 model test\n\n\n\n\nSource: Google Colab Notebook\n\n\n\n\n\nCode\n#train with discovered learning\n#rates and train two more epochs... may improve accuracy\nlearn_resnet34.fit_one_cycle(2, lr_max=slice(1e-6,1e-3))\n\n\n\n\n\n\n\n\nTable 1. First resnet34 best training results\n\n\nepoch\ntrain_loss\nvalid_loss\nerror_rate\ntime\n\n\n\n\n0\n0.179072\n0.169389\n0.055166\n02:12\n\n\n1\n0.105617\n0.161333\n0.046848\n02:08\n\n\n\n\n\n\nSource: Google Colab Notebook\n\n\n\n\n\nCode\n#image size\nimage_size = 224\n\n#batch size, number of images to transfer to GPU to train at one time\nbatch_size = 64\n\n#Image path\nimages_path = \"kaggle_bee_vs_wasp/images\"\n\n#test size\ntest_size = 0.2\n\n#CNN model\nmodel_type = resnet50\n\n#Try resnet50 with same image size as first resnet34 tests\nlearn_resnet50 = train_models(image_size, batch_size, images_path, test_size, model_type)\n\n\n\n\n\nFigure 2. First resnet50 model test\n\n\n\n\nSource: Google Colab Notebook\n\n\n\n\n\nCode\n#save where the model is currently at\nlearn_resnet50.save('stage_2')\n# freeze most of the weights again and train two more epochs\nlearn_resnet50.freeze()\nlearn_resnet50.fit_one_cycle(2)\n\n\n\n\n\n\n\n\nTable 2. First resnet50 best training results\n\n\nepoch\ntrain_loss\nvalid_loss\nerror_rate\ntime\n\n\n\n\n0\n0.152754\n0.199921\n0.056918\n04:58\n\n\n1\n0.082319\n0.159553\n0.042907\n04:59\n\n\n\n\n\n\nSource: Google Colab Notebook"
-  },
-  {
-    "objectID": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#automating-hyperparameter-tuning",
-    "href": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#automating-hyperparameter-tuning",
-    "title": "Deep Learning FastAI Model",
-    "section": "3.2 Automating Hyperparameter Tuning",
-    "text": "3.2 Automating Hyperparameter Tuning\nIn research, I found a Python library called Optuna that could be used to automate hyperparameter tuning. Optuna does this by creating a “study” that runs a user specified amount of trials and uses an objective function to suggest user specified parameters to optimize for a certain metric. So in this case, I created a custom objective function named tune_hyperparameters that takes in learning rate, batch size, and weight decay parameters and returns the error rate of the model trained with those parameters. The Optuna optimize function then suggests hyperparameters that should start lowering the error rate of successive trials. I then wrote another custom function called optimization_study that ran the Optuna study using the tune_hyperparameters function. The optimization_study function also selects the trial that did the best and proceeds to unfreeze all of the weights and train the model again with the best found hyperparameters. Some of my initial tests with this automated hyperparameter tuning proved promising as I was able to get the error rate lower than I had previously gotten it.\n\n\n\n\n\n\nNote\n\n\n\nView full details of the automation testing in the Automate Hyperparameter Tuning section on the Google Colab Notebook.\n\n\n\n\n\n\n# Custom function to choose the best trial and unfreeze weights to train further\ndef optimization_study(selected_model):\n\n    # Create an Optuna study and optimize the objective function\n    study = optuna.create_study(direction=\"minimize\") # Minimize the error rate\n    study.optimize(lambda trial: tune_hyperparameters(trial, image_size, images_path, test_size, selected_model), n_trials=3)\n\n    # Print the best hyperparameters and the corresponding accuracy\n    best_params = study.best_params\n    best_error_rate = study.best_value\n    print(\"Best Hyperparameters:\", best_params)\n    print(\"Best Accuracy:\", best_error_rate)\n\n    #retrieve best model's state dict file\n    best_state_dict_file = f\"{selected_model}_state_dict_trial_{study.best_trial.number}.pth\"\n\n    # Get the best trial from the study\n    best_trial = study.trials[study.best_trial.number]\n\n    # Retrieve the hyperparameters of the best trial\n    hyperparameters = best_trial.params\n\n    # Access individual hyperparameters\n    learning_rate = hyperparameters[\"learning_rate\"]\n    batch_size = hyperparameters[\"batch_size\"]\n    weight_decay = hyperparameters[\"weight_decay\"]\n\n    #Create model with the same architecture as the best trial and load dict file into it\n    best_trial_learn = train_models(image_size, batch_size, images_path, test_size, selected_model)\n    best_trial_learn.model.load_state_dict(torch.load(best_state_dict_file))\n\n    #unfreeze all weights to train with optimal hyperparameters\n    best_trial_learn.unfreeze()\n    # Fit the model with the best trial's hyperparameters\n    best_trial_learn.fine_tune(4, base_lr=learning_rate, wd=weight_decay)\n\n    #close it back up\n    best_trial_learn.freeze()\n\n    #return the model with all of the best results\n    return best_trial_learn\n\nSource: Google Colab Notebook"
-  },
-  {
-    "objectID": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#automate-testing-different-models",
-    "href": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#automate-testing-different-models",
-    "title": "Deep Learning FastAI Model",
-    "section": "3.3 Automate Testing Different Models",
-    "text": "3.3 Automate Testing Different Models\nAs I started to achieve some good results with my automations I decided to go even further. I wrote another custom function called try_models that loops through a list of different models, runs an Optuna study on it and saves the model state from the best trial from that particular study on that particular model. Once the try_models function has finished looping through the list of models it selects the model that achieved the lowest error rate, creates a learner from that model and loads the model state of the best trial from that model. It then proceeds to unfreeze all of the weights and train the model again with hyperparameters from that particular model’s best trail. After training is complete the function freezes the weights again, displays the results, and returns the model. I found some success using this new function as long as I kept the trial size relatively low as when I increased the trial size it exponentially increases compute time and quickly reaches the limits of free tier kernels.\n\n\n\n\n\n\nNote\n\n\n\nView full details of the try_models function automation testing in the Automate testing different models section on the Kaggle Notebook.\n\n\n\n\n# Custom function to try different models with the other automation functions\ndef try_models(image_size, images_path, test_size, models, trial_size):\n    best_trials = {}\n    for model in models:\n        best_trials[model.__name__] = optimization_study(image_size, images_path, test_size, model, trial_size)\n        \n    best_overall = min(best_trials,  key=lambda x: best_trials[x].value)\n    lowest_model = best_trials[best_overall]\n    print(\"\\n\\nBest Overall Model:\", lowest_model.user_attrs['model'].__name__)\n    print(\"Error Rate:\", lowest_model.value)\n    print(\"Load Model's state and retrain with best hyperparameters\")\n    \n    \n    #retrieve best model's state dict file\n    best_state_dict_file = f\"/kaggle/working/{lowest_model.user_attrs['model'].__name__}_state_dict_trial_{lowest_model.number}.pth\"\n\n    \n    # Retrieve the hyperparameters of the best trial\n    hyperparameters = lowest_model.params\n\n    # Access individual hyperparameters\n    learning_rate = hyperparameters[\"learning_rate\"]\n    batch_size = hyperparameters[\"batch_size\"]\n    weight_decay = hyperparameters[\"weight_decay\"]\n\n    #Create model with the same architecture as the best trial and load dict file into it\n    best_model_learn = train_models(image_size, batch_size, images_path, test_size, lowest_model.user_attrs[\"model\"])\n    best_model_learn.model.load_state_dict(torch.load(best_state_dict_file))\n\n    #unfreeze all weights to train with optimal hyperparameters\n    best_model_learn.unfreeze()\n    # Fit the model with the best trial's hyperparameters\n    best_model_learn.fine_tune(1, base_lr=learning_rate, wd=weight_decay)\n\n    #close it back up\n    best_model_learn.freeze()\n    \n    # Evaluate the model on the validation set\n    best_error_rate = best_model_learn.validate()[1]\n    \n    print(f\"\\n\\nFinal result after training model \"+lowest_model.user_attrs['model'].__name__+\" with:\")\n    print(\"Hyperparameters:\", hyperparameters)\n    print(\"Error Rate:\", best_error_rate)\n\n    \n    #return the model with all of the best results\n    return best_model_learn\n\nSource: Kaggle Notebook"
-  },
-  {
-    "objectID": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#data-augmentation",
-    "href": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#data-augmentation",
-    "title": "Deep Learning FastAI Model",
-    "section": "3.4 Data Augmentation",
-    "text": "3.4 Data Augmentation\nI also briefly experimented with some data augmentation, namely randomly cropping to a 224x224 image size and introducing a random horizontal flip to the images. Tests with this didn’t seem to yield any improved results, in fact it seems it may have adversely affected model performance in training. I theorize that this didn’t have much effect because the dataset already possesses a great deal of randomness so injecting more isn’t advantageous."
-  },
-  {
-    "objectID": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#usage-limits",
-    "href": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#usage-limits",
-    "title": "Deep Learning FastAI Model",
-    "section": "4.1 Usage Limits",
-    "text": "4.1 Usage Limits\nVery early on it was clear that usage limits of free tier kernels would significantly limit the ability to experiment, test and iterate. For this reason, the approach was taken to use more than one kernel so that when one reached its limit the other could be used to continue with the project. Google Colab and Kaggle were both used to complete this project and in the following two items ( 4.2 Google Colab & 4.3 Kaggle ) in this section I detail what each kernel was primarily used for. A notebook from each kernel is provided in this project submission, with Part 1 and Part 3 being included in the Google Colab notebook and Part 2 being included in the Kaggle notebook."
-  },
-  {
-    "objectID": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#google-colab",
-    "href": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#google-colab",
-    "title": "Deep Learning FastAI Model",
-    "section": "4.2 Google Colab",
-    "text": "4.2 Google Colab\nI started my initial experimentation in Google Colab and that is why it starts with the heading Part 1. Part way through the refinement of my custom automation functions I reached my limit with Google Colab so Part 2 of my code is found in the Kaggle notebook. The final part of my testing and code can be found under Part 3 of the Google Colab notebook. In Part 3, I decided to purchase some Pay-As-You-Go compute so that I could continue the rest of my project without further delays."
-  },
-  {
-    "objectID": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#kaggle",
-    "href": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#kaggle",
-    "title": "Deep Learning FastAI Model",
-    "section": "4.3 Kaggle",
-    "text": "4.3 Kaggle\nThe Kaggle notebook starts with the heading of Part 2 as it is the point where I switched from Google Colab. The Kaggle notebook only includes one part and it is where most of the refinements on my custom functions can be found. I was able to make some fairly large tests at the end of the Kaggle notebook but then reached my limit. At this point I switched back to finish things off in my Google Colab notebook under Part 3."
-  },
-  {
-    "objectID": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#worst-performance",
-    "href": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#worst-performance",
-    "title": "Deep Learning FastAI Model",
-    "section": "5.1 Worst Performance",
-    "text": "5.1 Worst Performance\nI wasn’t able to test VGG16 to long before I ran into limit restrictions on the kernel but it wasn’t performing all that well from what was seen. Further investigation would be required to confirm that VGG16 is not a good model for this dataset. SqueezeNet models did not perform as well as the other models which is not surprising giving the size and architecture of SqueezeNet models ( See Figure 3 ). The 896x896 image size did not seem to yield better results and neither did batch sizes 16 and 64. Learning rate range 1e-5 - 1e-1 did not yield good results as well as weight decay range 1e-5 – 1e-3.\n\n\n\nFigure 3. Best SqueezeNet model results after optimization automations were the worst results."
-  },
-  {
-    "objectID": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#best-performance",
-    "href": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#best-performance",
-    "title": "Deep Learning FastAI Model",
-    "section": "5.2 Best Performance",
-    "text": "5.2 Best Performance\nAfter studying some of the tests I started to isolate that a batch size of 32 did consistently well. Along with training only with a 32 batch size I narrowed the learning rate range to 1e-3 – 1e-2 and the weight decay range to 1e-5 -1e-4 as these ranges seems to provide the best results. In the end of all my testing the best performance I achieved was from a Resnet32 model trained with a 224 image size, 32 batch size, a learning rate of 3.102551277095900e-3 and a weight decay of 7.49113519525403e-05. This yielded a model with a training loss of 0.022758, valid loss of 0.065226, and error rate of 0.015762. These results show that the model is slightly overfitted but performing quite well. ( See Figure 4 )\n\n\n\nFigure 4. Best Resnet model results after optimization automations were the best performance."
-  },
-  {
-    "objectID": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#model-training-video-walkthrough",
-    "href": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#model-training-video-walkthrough",
-    "title": "Deep Learning FastAI Model",
-    "section": "Model Training Video Walkthrough",
-    "text": "Model Training Video Walkthrough\nVideo"
-  },
-  {
-    "objectID": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#references",
-    "href": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#references",
-    "title": "Deep Learning FastAI Model",
-    "section": "References",
-    "text": "References\nOptimization Library\nhttps://optuna.org/"
-  },
-  {
-    "objectID": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#deployment",
-    "href": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#deployment",
-    "title": "Deep Learning FastAI Model",
-    "section": "Deployment",
-    "text": "Deployment\n\nDeployment Source Code\nView the source code for the model deployment on HuggingFace repository.\n\n\nGradio App\nView Gradio app for model deployment hosted on HuggingFace.\n\n\nDeployment Resources\nHugging Face - AI community & place to host ML deployments\nhttps://huggingface.co/\nGradio - Open-source Python library used to build machine learning/data science demos & web applications\nhttps://www.gradio.app/"
-  },
-  {
     "objectID": "posts/linux-admin/linux-admin.html#purpose-of-document",
     "href": "posts/linux-admin/linux-admin.html#purpose-of-document",
     "title": "Linux Administration Project",
@@ -642,6 +320,440 @@
     "title": "Linux Administration Project",
     "section": "References",
     "text": "References\n\nNFS\nhttps://www.itzgeek.com/how-tos/linux/centos-how-tos/how-to-setup-nfs-server-on-centos-7-rhel-7-fedora-22.html\n\n\nNFS - Windows\nhttps://it.umn.edu/services-technologies/how-tos/network-file-system-nfs-mount-nfs-share\n\n\nLDAP\nhttps://www.itzgeek.com/how-tos/linux/centos-how-tos/step-step-openldap-server-configuration-centos-7-rhel-7.html\n\n\nLDAP Local User Migration\nhttps://www.itzgeek.com/how-tos/linux/centos-how-tos/migrate-local-users-ldap-accounts.html\n\n\nLDAP Automount Home Directories\nhttps://www.myfaqbase.com/q0001874-Software-OS-Unix-Linux-RHEL-7-RHCSA-How-to-configure-AutoFS-to-mount-user-home-directories-from-NFS-server.html\n\n\nLDAP TLS\nhttps://www.golinuxcloud.com/configure-openldap-with-tls-certificates/\n\n\nSamba\nhttps://linuxize.com/post/how-to-install-and-configure-samba-on-centos-7/\n\n\nPostfix Server\nhttps://www.server-world.info/en/note?os=CentOS_7&p=mail\n\n\nDovcote Server\nhttps://www.server-world.info/en/note?os=CentOS_7&p=mail&f=2"
+  },
+  {
+    "objectID": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#purpose-of-document",
+    "href": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#purpose-of-document",
+    "title": "Deep Learning FastAI Model",
+    "section": "1.1 Purpose of Document",
+    "text": "1.1 Purpose of Document\nThe purpose of this document is to detail the building of deep learning models using a convolutional neural network architecture. The different techniques, models and methods used to improve performance will be discussed."
+  },
+  {
+    "objectID": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#bee-vs-wasp",
+    "href": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#bee-vs-wasp",
+    "title": "Deep Learning FastAI Model",
+    "section": "2.1 Bee vs Wasp",
+    "text": "2.1 Bee vs Wasp\nFor this project I chose a Bee vs Wasp dataset found on Kaggle. I imported the dataset and created a new folder called “images” to which I added subfolders: “bee1”, “bee2”, “wasp1”, “wasp2”, “other_insect” and “other_noinsect”. The data loader in my custom train_models function then creates classes based on the folder structure and feeds that to the model. The data set itself isn’t the cleanest as it seems that some images have not been placed in the correct folder which will sometimes give the model wrong information. No doubt this will affect the accuracy that can be attained with this dataset.\n\n\n\n\n\n\nDataset\n\n\n\nView Bee vs Wasp dataset on Kaggle."
+  },
+  {
+    "objectID": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#trial-and-error",
+    "href": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#trial-and-error",
+    "title": "Deep Learning FastAI Model",
+    "section": "3.1 Trial and Error",
+    "text": "3.1 Trial and Error\nI created a custom function named train_models that I could use to conduct my tests a little faster. With a trial and error approach, I began manually trying different learning rates, model types and image sizes, along with training models with unfrozen weights ( See Figure 1, Table 1, Figure 2 & Table 2 ). Eventually I thought I should start trying to automate some of these tuning methods and, by doing so, hopefully optimize the outcomes.\n\n\n\n\n\n\nNote\n\n\n\nView full details of the trial and error testing in the Experimenting section on the Google Colab Notebook.\n\n\n\n\n#Function to train models more easily\ndef train_models(image_size, batch_size, images_path, test_size, model_type):\n    #instructions for preparing data batches, size of images\n    #and normalize data\n    batch_tfms = [*aug_transforms(size=image_size),Normalize.from_stats(*imagenet_stats)]\n\n    #function for creating batches with specified parameters\n    data = ImageDataLoaders.from_folder(images_path,\n                                        valid_pct=test_size,\n                                        ds_tfms=batch_tfms,\n                                        item_tfms=Resize(460),\n                                        bs=batch_size)\n    \n    # test whether batch function is working with parameters\n    data.show_batch(max_n=9, figsize=(20,10))\n\n    #return the trained model\n    return vision_learner(data, model_type, metrics=error_rate).to_fp16()\n\nSource: Google Colab Notebook\n\n\n\n\n\nCode\n#image size\nimage_size = 224\n\n#batch size, number of images to transfer to GPU to train at one time\nbatch_size = 64\n\n#Image path\nimages_path = \"kaggle_bee_vs_wasp/images\"\n\n#test size\ntest_size = 0.2\n\n#CNN model\nmodel_type = resnet34\n\n#Create model with dataset and parameters\nlearn_resnet34 = train_models(image_size, batch_size, images_path, test_size, model_type)\n\n\n\n\n\nFigure 1. First resnet34 model test\n\n\n\n\nSource: Google Colab Notebook\n\n\n\n\n\nCode\n#train with discovered learning\n#rates and train two more epochs... may improve accuracy\nlearn_resnet34.fit_one_cycle(2, lr_max=slice(1e-6,1e-3))\n\n\n\n\n\n\n\n\nTable 1. First resnet34 best training results\n\n\nepoch\ntrain_loss\nvalid_loss\nerror_rate\ntime\n\n\n\n\n0\n0.179072\n0.169389\n0.055166\n02:12\n\n\n1\n0.105617\n0.161333\n0.046848\n02:08\n\n\n\n\n\n\nSource: Google Colab Notebook\n\n\n\n\n\nCode\n#image size\nimage_size = 224\n\n#batch size, number of images to transfer to GPU to train at one time\nbatch_size = 64\n\n#Image path\nimages_path = \"kaggle_bee_vs_wasp/images\"\n\n#test size\ntest_size = 0.2\n\n#CNN model\nmodel_type = resnet50\n\n#Try resnet50 with same image size as first resnet34 tests\nlearn_resnet50 = train_models(image_size, batch_size, images_path, test_size, model_type)\n\n\n\n\n\nFigure 2. First resnet50 model test\n\n\n\n\nSource: Google Colab Notebook\n\n\n\n\n\nCode\n#save where the model is currently at\nlearn_resnet50.save('stage_2')\n# freeze most of the weights again and train two more epochs\nlearn_resnet50.freeze()\nlearn_resnet50.fit_one_cycle(2)\n\n\n\n\n\n\n\n\nTable 2. First resnet50 best training results\n\n\nepoch\ntrain_loss\nvalid_loss\nerror_rate\ntime\n\n\n\n\n0\n0.152754\n0.199921\n0.056918\n04:58\n\n\n1\n0.082319\n0.159553\n0.042907\n04:59\n\n\n\n\n\n\nSource: Google Colab Notebook"
+  },
+  {
+    "objectID": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#automating-hyperparameter-tuning",
+    "href": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#automating-hyperparameter-tuning",
+    "title": "Deep Learning FastAI Model",
+    "section": "3.2 Automating Hyperparameter Tuning",
+    "text": "3.2 Automating Hyperparameter Tuning\nIn research, I found a Python library called Optuna that could be used to automate hyperparameter tuning. Optuna does this by creating a “study” that runs a user specified amount of trials and uses an objective function to suggest user specified parameters to optimize for a certain metric. So in this case, I created a custom objective function named tune_hyperparameters that takes in learning rate, batch size, and weight decay parameters and returns the error rate of the model trained with those parameters. The Optuna optimize function then suggests hyperparameters that should start lowering the error rate of successive trials. I then wrote another custom function called optimization_study that ran the Optuna study using the tune_hyperparameters function. The optimization_study function also selects the trial that did the best and proceeds to unfreeze all of the weights and train the model again with the best found hyperparameters. Some of my initial tests with this automated hyperparameter tuning proved promising as I was able to get the error rate lower than I had previously gotten it.\n\n\n\n\n\n\nNote\n\n\n\nView full details of the automation testing in the Automate Hyperparameter Tuning section on the Google Colab Notebook.\n\n\n\n\n\n\n# Custom function to choose the best trial and unfreeze weights to train further\ndef optimization_study(selected_model):\n\n    # Create an Optuna study and optimize the objective function\n    study = optuna.create_study(direction=\"minimize\") # Minimize the error rate\n    study.optimize(lambda trial: tune_hyperparameters(trial, image_size, images_path, test_size, selected_model), n_trials=3)\n\n    # Print the best hyperparameters and the corresponding accuracy\n    best_params = study.best_params\n    best_error_rate = study.best_value\n    print(\"Best Hyperparameters:\", best_params)\n    print(\"Best Accuracy:\", best_error_rate)\n\n    #retrieve best model's state dict file\n    best_state_dict_file = f\"{selected_model}_state_dict_trial_{study.best_trial.number}.pth\"\n\n    # Get the best trial from the study\n    best_trial = study.trials[study.best_trial.number]\n\n    # Retrieve the hyperparameters of the best trial\n    hyperparameters = best_trial.params\n\n    # Access individual hyperparameters\n    learning_rate = hyperparameters[\"learning_rate\"]\n    batch_size = hyperparameters[\"batch_size\"]\n    weight_decay = hyperparameters[\"weight_decay\"]\n\n    #Create model with the same architecture as the best trial and load dict file into it\n    best_trial_learn = train_models(image_size, batch_size, images_path, test_size, selected_model)\n    best_trial_learn.model.load_state_dict(torch.load(best_state_dict_file))\n\n    #unfreeze all weights to train with optimal hyperparameters\n    best_trial_learn.unfreeze()\n    # Fit the model with the best trial's hyperparameters\n    best_trial_learn.fine_tune(4, base_lr=learning_rate, wd=weight_decay)\n\n    #close it back up\n    best_trial_learn.freeze()\n\n    #return the model with all of the best results\n    return best_trial_learn\n\nSource: Google Colab Notebook"
+  },
+  {
+    "objectID": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#automate-testing-different-models",
+    "href": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#automate-testing-different-models",
+    "title": "Deep Learning FastAI Model",
+    "section": "3.3 Automate Testing Different Models",
+    "text": "3.3 Automate Testing Different Models\nAs I started to achieve some good results with my automations I decided to go even further. I wrote another custom function called try_models that loops through a list of different models, runs an Optuna study on it and saves the model state from the best trial from that particular study on that particular model. Once the try_models function has finished looping through the list of models it selects the model that achieved the lowest error rate, creates a learner from that model and loads the model state of the best trial from that model. It then proceeds to unfreeze all of the weights and train the model again with hyperparameters from that particular model’s best trail. After training is complete the function freezes the weights again, displays the results, and returns the model. I found some success using this new function as long as I kept the trial size relatively low as when I increased the trial size it exponentially increases compute time and quickly reaches the limits of free tier kernels.\n\n\n\n\n\n\nNote\n\n\n\nView full details of the try_models function automation testing in the Automate testing different models section on the Kaggle Notebook.\n\n\n\n\n# Custom function to try different models with the other automation functions\ndef try_models(image_size, images_path, test_size, models, trial_size):\n    best_trials = {}\n    for model in models:\n        best_trials[model.__name__] = optimization_study(image_size, images_path, test_size, model, trial_size)\n        \n    best_overall = min(best_trials,  key=lambda x: best_trials[x].value)\n    lowest_model = best_trials[best_overall]\n    print(\"\\n\\nBest Overall Model:\", lowest_model.user_attrs['model'].__name__)\n    print(\"Error Rate:\", lowest_model.value)\n    print(\"Load Model's state and retrain with best hyperparameters\")\n    \n    \n    #retrieve best model's state dict file\n    best_state_dict_file = f\"/kaggle/working/{lowest_model.user_attrs['model'].__name__}_state_dict_trial_{lowest_model.number}.pth\"\n\n    \n    # Retrieve the hyperparameters of the best trial\n    hyperparameters = lowest_model.params\n\n    # Access individual hyperparameters\n    learning_rate = hyperparameters[\"learning_rate\"]\n    batch_size = hyperparameters[\"batch_size\"]\n    weight_decay = hyperparameters[\"weight_decay\"]\n\n    #Create model with the same architecture as the best trial and load dict file into it\n    best_model_learn = train_models(image_size, batch_size, images_path, test_size, lowest_model.user_attrs[\"model\"])\n    best_model_learn.model.load_state_dict(torch.load(best_state_dict_file))\n\n    #unfreeze all weights to train with optimal hyperparameters\n    best_model_learn.unfreeze()\n    # Fit the model with the best trial's hyperparameters\n    best_model_learn.fine_tune(1, base_lr=learning_rate, wd=weight_decay)\n\n    #close it back up\n    best_model_learn.freeze()\n    \n    # Evaluate the model on the validation set\n    best_error_rate = best_model_learn.validate()[1]\n    \n    print(f\"\\n\\nFinal result after training model \"+lowest_model.user_attrs['model'].__name__+\" with:\")\n    print(\"Hyperparameters:\", hyperparameters)\n    print(\"Error Rate:\", best_error_rate)\n\n    \n    #return the model with all of the best results\n    return best_model_learn\n\nSource: Kaggle Notebook"
+  },
+  {
+    "objectID": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#data-augmentation",
+    "href": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#data-augmentation",
+    "title": "Deep Learning FastAI Model",
+    "section": "3.4 Data Augmentation",
+    "text": "3.4 Data Augmentation\nI also briefly experimented with some data augmentation, namely randomly cropping to a 224x224 image size and introducing a random horizontal flip to the images. Tests with this didn’t seem to yield any improved results, in fact it seems it may have adversely affected model performance in training. I theorize that this didn’t have much effect because the dataset already possesses a great deal of randomness so injecting more isn’t advantageous."
+  },
+  {
+    "objectID": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#usage-limits",
+    "href": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#usage-limits",
+    "title": "Deep Learning FastAI Model",
+    "section": "4.1 Usage Limits",
+    "text": "4.1 Usage Limits\nVery early on it was clear that usage limits of free tier kernels would significantly limit the ability to experiment, test and iterate. For this reason, the approach was taken to use more than one kernel so that when one reached its limit the other could be used to continue with the project. Google Colab and Kaggle were both used to complete this project and in the following two items ( 4.2 Google Colab & 4.3 Kaggle ) in this section I detail what each kernel was primarily used for. A notebook from each kernel is provided in this project submission, with Part 1 and Part 3 being included in the Google Colab notebook and Part 2 being included in the Kaggle notebook."
+  },
+  {
+    "objectID": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#google-colab",
+    "href": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#google-colab",
+    "title": "Deep Learning FastAI Model",
+    "section": "4.2 Google Colab",
+    "text": "4.2 Google Colab\nI started my initial experimentation in Google Colab and that is why it starts with the heading Part 1. Part way through the refinement of my custom automation functions I reached my limit with Google Colab so Part 2 of my code is found in the Kaggle notebook. The final part of my testing and code can be found under Part 3 of the Google Colab notebook. In Part 3, I decided to purchase some Pay-As-You-Go compute so that I could continue the rest of my project without further delays."
+  },
+  {
+    "objectID": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#kaggle",
+    "href": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#kaggle",
+    "title": "Deep Learning FastAI Model",
+    "section": "4.3 Kaggle",
+    "text": "4.3 Kaggle\nThe Kaggle notebook starts with the heading of Part 2 as it is the point where I switched from Google Colab. The Kaggle notebook only includes one part and it is where most of the refinements on my custom functions can be found. I was able to make some fairly large tests at the end of the Kaggle notebook but then reached my limit. At this point I switched back to finish things off in my Google Colab notebook under Part 3."
+  },
+  {
+    "objectID": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#worst-performance",
+    "href": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#worst-performance",
+    "title": "Deep Learning FastAI Model",
+    "section": "5.1 Worst Performance",
+    "text": "5.1 Worst Performance\nI wasn’t able to test VGG16 to long before I ran into limit restrictions on the kernel but it wasn’t performing all that well from what was seen. Further investigation would be required to confirm that VGG16 is not a good model for this dataset. SqueezeNet models did not perform as well as the other models which is not surprising giving the size and architecture of SqueezeNet models ( See Figure 3 ). The 896x896 image size did not seem to yield better results and neither did batch sizes 16 and 64. Learning rate range 1e-5 - 1e-1 did not yield good results as well as weight decay range 1e-5 – 1e-3.\n\n\n\nFigure 3. Best SqueezeNet model results after optimization automations were the worst results."
+  },
+  {
+    "objectID": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#best-performance",
+    "href": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#best-performance",
+    "title": "Deep Learning FastAI Model",
+    "section": "5.2 Best Performance",
+    "text": "5.2 Best Performance\nAfter studying some of the tests I started to isolate that a batch size of 32 did consistently well. Along with training only with a 32 batch size I narrowed the learning rate range to 1e-3 – 1e-2 and the weight decay range to 1e-5 -1e-4 as these ranges seems to provide the best results. In the end of all my testing the best performance I achieved was from a Resnet32 model trained with a 224 image size, 32 batch size, a learning rate of 3.102551277095900e-3 and a weight decay of 7.49113519525403e-05. This yielded a model with a training loss of 0.022758, valid loss of 0.065226, and error rate of 0.015762. These results show that the model is slightly overfitted but performing quite well. ( See Figure 4 )\n\n\n\nFigure 4. Best Resnet model results after optimization automations were the best performance."
+  },
+  {
+    "objectID": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#model-training-video-walkthrough",
+    "href": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#model-training-video-walkthrough",
+    "title": "Deep Learning FastAI Model",
+    "section": "Model Training Video Walkthrough",
+    "text": "Model Training Video Walkthrough\nVideo"
+  },
+  {
+    "objectID": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#references",
+    "href": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#references",
+    "title": "Deep Learning FastAI Model",
+    "section": "References",
+    "text": "References\nOptimization Library\nhttps://optuna.org/"
+  },
+  {
+    "objectID": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#deployment",
+    "href": "posts/intro-to-ai-fastai/intro-to-ai-fastai.html#deployment",
+    "title": "Deep Learning FastAI Model",
+    "section": "Deployment",
+    "text": "Deployment\n\nDeployment Source Code\nView the source code for the model deployment on HuggingFace repository.\n\n\nGradio App\nView Gradio app for model deployment hosted on HuggingFace.\n\n\nDeployment Resources\nHugging Face - AI community & place to host ML deployments\nhttps://huggingface.co/\nGradio - Open-source Python library used to build machine learning/data science demos & web applications\nhttps://www.gradio.app/"
+  },
+  {
+    "objectID": "posts/networking-cisco/networking-cisco.html",
+    "href": "posts/networking-cisco/networking-cisco.html",
+    "title": "Networking with Cisco Technologies",
+    "section": "",
+    "text": "Designed and constructed a fictional network with five (5) departments in two (2) locations using GNS3 simulation software. All departments were represented by Windows 10 VMs run on VMware and were configured to communicate with each other thru GNS3. Variable length subnetting from an address space of 172.16.16.0/20 was used to create department subnets. Routing protocol OSPF along with ACLs were used to allow departments to communicate with each other while at the same time preventing certain ones from reaching others. See figures below for full documentation of the project.\n\n\n\n\n\n\nExpand To Learn About Project Scenario\n\n\n\n\n\nThe head office is located in Vancouver and has three departments. These departments are Accounting, Administration, and Human Resources. The Accounting department uses 10 computers, Administration uses 19 computers, and Human Resources uses 3 computers.\nThe branch office is located in Kelowna and has two departments. These departments are Marketing and Sales. The Marketing department uses 16 computers, and the Sales department uses 45 computers.\n\n\n\n\n\n\n\n\nFigure 1. Network Diagram\n\n\n\n\n\n\n\n\nFigure 2. IP Address Scheme\n\n\n\n\n\n\n\n\nFigure 3. Access Control Lists\n\n\n\n\n\n\n\n\nFigure 4. Router Access Credentials\n\n\n\n\n\n\nListing 1. Vancouver Router Configuration\n!\n!\nversion 12.4\nservice timestamps debug datetime msec\nservice timestamps log datetime msec\nno service password-encryption\n!\nhostname Vancouver\n!\nboot-start-marker\nboot-end-marker\n!\nenable secret 5 $1$rCPC$Q34x6NTdMojTQHgQQwDe7/\n!\nno aaa new-model\nmemory-size iomem 5\nno ip icmp rate-limit unreachable\n!\n!\nip cef\nno ip domain lookup\n!\n!\n!\n!\n!\nip tcp synwait-time 5\n!\n!\ninterface Ethernet0/0\n  description Router Network\n  ip address 172.16.16.153 255.255.255.252\n  half-duplex\n!\ninterface Ethernet0/1\n  description HR Network\n  ip address 172.16.16.148 255.255.255.248\n  ip access-group 3 out\n  half-duplex\n!\ninterface Ethernet0/2\n  description Admin & SMTP/WebServer Network\n  ip address 172.16.16.84 255.255.255.224\n  ip access-group 110 out\n  half-duplex\n!\ninterface Ethernet0/3\n  description Accounting Network\n  ip address 172.16.16.139 255.255.255.240\n  ip access-group 2 out\n  half-duplex\n!\nrouter ospf 1\n  log-adjacency-changes\n  network 172.16.16.64 0.0.0.31 area 0\n  network 172.16.16.128 0.0.0.15 area 0\n  network 172.16.16.144 0.0.0.7 area 0\n  network 172.16.16.152 0.0.0.3 area 0\n!\nno ip http server\n!\nip forward-protocol nd\n!\n!\naccess-list 2 deny   172.16.16.96 0.0.0.31\naccess-list 2 deny   172.16.16.0 0.0.0.63\naccess-list 2 permit any\naccess-list 3 deny   172.16.16.0 0.0.0.63\naccess-list 3 permit any\naccess-list 110 deny   tcp 172.16.16.128 0.0.0.15 host 172.16.16.66 eq\nwww\naccess-list 110 deny   tcp 172.16.16.144 0.0.0.7 host 172.16.16.66 eq\nwww\naccess-list 110 deny   tcp 172.16.16.0 0.0.0.63 host 172.16.16.66 eq\nsmtp\naccess-list 110 deny   tcp 172.16.16.96 0.0.0.31 host 172.16.16.66 eq\nsmtp\naccess-list 110 permit ip any any\nno cdp log mismatch duplex\n!\ncontrol-plane\n!\nbanner motd\n\nWelcome to Vancouver\n\n!\nline con 0\n  exec-timeout 0 0\n  privilege level 15\n  logging synchronous\nline aux 0\n  exec-timeout 0 0\n  privilege level 15\n  logging synchronous\nline vty 0 4\n  password 1234\n  login\n!\n!\nend\n\n\nListing 2. Kelowna Router Configuration\n!\n!\nversion 12.4\nservice timestamps debug datetime msec\nservice timestamps log datetime msec\nno service password-encryption\n!\nhostname Kelowna\n!\nboot-start-marker\nboot-end-marker\n!\nenable secret 5 $1$dGub$MNu5a6gEp0IcO1T14Qlg4/\n!\nno aaa new-model\nmemory-size iomem 5\nno ip icmp rate-limit unreachable\n!\n!\nip cef\nno ip domain lookup\n!\n!\n!\n!\n!\nip tcp synwait-time 5\n!\n!\ninterface Ethernet0/0\n  description Router Network\n  ip address 172.16.16.154 255.255.255.252\n  half-duplex\n!\ninterface Ethernet0/1\n  description Sales Network\n  ip address 172.16.16.46 255.255.255.192\n  ip access-group 1 out\n  half-duplex\n!\ninterface Ethernet0/2\n  description Marketing Network\n  ip address 172.16.16.113 255.255.255.224\n  ip access-group 4 out\n  half-duplex\n!\ninterface Ethernet0/3\n  description Nothing\n  no ip address\n  shutdown\n  half-duplex\n!\nrouter ospf 1\n  log-adjacency-changes\n  network 172.16.16.0 0.0.0.63 area 0\n  network 172.16.16.96 0.0.0.31 area 0\n  network 172.16.16.152 0.0.0.3 area 0\n!\nno ip http server\n!\nip forward-protocol nd\n!\n!\naccess-list 1 deny   172.16.16.128 0.0.0.15\naccess-list 1 deny   172.16.16.96 0.0.0.31\naccess-list 1 permit any\naccess-list 4 deny   172.16.16.0 0.0.0.63\naccess-list 4 permit any\nno cdp log mismatch duplex\n!\ncontrol-plane\n!\nbanner motd\n\n\nWelcome to Kelowna\n\n\n!\nline con 0\n  exec-timeout 0 0\n  privilege level 15\n  logging synchronous\nline aux 0\n  exec-timeout 0 0\n  privilege level 15\n  logging synchronous\nline vty 0 4\n  password 1234\n  login\n!\n!\nend"
+  },
+  {
+    "objectID": "posts/networking-cisco/networking-cisco.html#network-diagram",
+    "href": "posts/networking-cisco/networking-cisco.html#network-diagram",
+    "title": "Networking with Cisco Technologies",
+    "section": "",
+    "text": "Figure 1. Network Diagram"
+  },
+  {
+    "objectID": "posts/networking-cisco/networking-cisco.html#ip-address-scheme",
+    "href": "posts/networking-cisco/networking-cisco.html#ip-address-scheme",
+    "title": "Networking with Cisco Technologies",
+    "section": "",
+    "text": "Figure 2. IP Address Scheme"
+  },
+  {
+    "objectID": "posts/networking-cisco/networking-cisco.html#access-control-lists",
+    "href": "posts/networking-cisco/networking-cisco.html#access-control-lists",
+    "title": "Networking with Cisco Technologies",
+    "section": "",
+    "text": "Figure 3. Access Control Lists"
+  },
+  {
+    "objectID": "posts/networking-cisco/networking-cisco.html#router-access-credentials",
+    "href": "posts/networking-cisco/networking-cisco.html#router-access-credentials",
+    "title": "Networking with Cisco Technologies",
+    "section": "",
+    "text": "Figure 4. Router Access Credentials"
+  },
+  {
+    "objectID": "posts/networking-cisco/networking-cisco.html#router-configurations",
+    "href": "posts/networking-cisco/networking-cisco.html#router-configurations",
+    "title": "Networking with Cisco Technologies",
+    "section": "",
+    "text": "Listing 1. Vancouver Router Configuration\n!\n!\nversion 12.4\nservice timestamps debug datetime msec\nservice timestamps log datetime msec\nno service password-encryption\n!\nhostname Vancouver\n!\nboot-start-marker\nboot-end-marker\n!\nenable secret 5 $1$rCPC$Q34x6NTdMojTQHgQQwDe7/\n!\nno aaa new-model\nmemory-size iomem 5\nno ip icmp rate-limit unreachable\n!\n!\nip cef\nno ip domain lookup\n!\n!\n!\n!\n!\nip tcp synwait-time 5\n!\n!\ninterface Ethernet0/0\n  description Router Network\n  ip address 172.16.16.153 255.255.255.252\n  half-duplex\n!\ninterface Ethernet0/1\n  description HR Network\n  ip address 172.16.16.148 255.255.255.248\n  ip access-group 3 out\n  half-duplex\n!\ninterface Ethernet0/2\n  description Admin & SMTP/WebServer Network\n  ip address 172.16.16.84 255.255.255.224\n  ip access-group 110 out\n  half-duplex\n!\ninterface Ethernet0/3\n  description Accounting Network\n  ip address 172.16.16.139 255.255.255.240\n  ip access-group 2 out\n  half-duplex\n!\nrouter ospf 1\n  log-adjacency-changes\n  network 172.16.16.64 0.0.0.31 area 0\n  network 172.16.16.128 0.0.0.15 area 0\n  network 172.16.16.144 0.0.0.7 area 0\n  network 172.16.16.152 0.0.0.3 area 0\n!\nno ip http server\n!\nip forward-protocol nd\n!\n!\naccess-list 2 deny   172.16.16.96 0.0.0.31\naccess-list 2 deny   172.16.16.0 0.0.0.63\naccess-list 2 permit any\naccess-list 3 deny   172.16.16.0 0.0.0.63\naccess-list 3 permit any\naccess-list 110 deny   tcp 172.16.16.128 0.0.0.15 host 172.16.16.66 eq\nwww\naccess-list 110 deny   tcp 172.16.16.144 0.0.0.7 host 172.16.16.66 eq\nwww\naccess-list 110 deny   tcp 172.16.16.0 0.0.0.63 host 172.16.16.66 eq\nsmtp\naccess-list 110 deny   tcp 172.16.16.96 0.0.0.31 host 172.16.16.66 eq\nsmtp\naccess-list 110 permit ip any any\nno cdp log mismatch duplex\n!\ncontrol-plane\n!\nbanner motd\n\nWelcome to Vancouver\n\n!\nline con 0\n  exec-timeout 0 0\n  privilege level 15\n  logging synchronous\nline aux 0\n  exec-timeout 0 0\n  privilege level 15\n  logging synchronous\nline vty 0 4\n  password 1234\n  login\n!\n!\nend\n\n\nListing 2. Kelowna Router Configuration\n!\n!\nversion 12.4\nservice timestamps debug datetime msec\nservice timestamps log datetime msec\nno service password-encryption\n!\nhostname Kelowna\n!\nboot-start-marker\nboot-end-marker\n!\nenable secret 5 $1$dGub$MNu5a6gEp0IcO1T14Qlg4/\n!\nno aaa new-model\nmemory-size iomem 5\nno ip icmp rate-limit unreachable\n!\n!\nip cef\nno ip domain lookup\n!\n!\n!\n!\n!\nip tcp synwait-time 5\n!\n!\ninterface Ethernet0/0\n  description Router Network\n  ip address 172.16.16.154 255.255.255.252\n  half-duplex\n!\ninterface Ethernet0/1\n  description Sales Network\n  ip address 172.16.16.46 255.255.255.192\n  ip access-group 1 out\n  half-duplex\n!\ninterface Ethernet0/2\n  description Marketing Network\n  ip address 172.16.16.113 255.255.255.224\n  ip access-group 4 out\n  half-duplex\n!\ninterface Ethernet0/3\n  description Nothing\n  no ip address\n  shutdown\n  half-duplex\n!\nrouter ospf 1\n  log-adjacency-changes\n  network 172.16.16.0 0.0.0.63 area 0\n  network 172.16.16.96 0.0.0.31 area 0\n  network 172.16.16.152 0.0.0.3 area 0\n!\nno ip http server\n!\nip forward-protocol nd\n!\n!\naccess-list 1 deny   172.16.16.128 0.0.0.15\naccess-list 1 deny   172.16.16.96 0.0.0.31\naccess-list 1 permit any\naccess-list 4 deny   172.16.16.0 0.0.0.63\naccess-list 4 permit any\nno cdp log mismatch duplex\n!\ncontrol-plane\n!\nbanner motd\n\n\nWelcome to Kelowna\n\n\n!\nline con 0\n  exec-timeout 0 0\n  privilege level 15\n  logging synchronous\nline aux 0\n  exec-timeout 0 0\n  privilege level 15\n  logging synchronous\nline vty 0 4\n  password 1234\n  login\n!\n!\nend"
+  },
+  {
+    "objectID": "posts/emcs/emcs.html",
+    "href": "posts/emcs/emcs.html",
+    "title": "Microsoft Exchange Server Network",
+    "section": "",
+    "text": "Deployed an Exchange server environment using Microsoft Exchange Server 2016. Created three (3) domain controllers, two (2) mailbox servers, and one (1) edge transport server on VMware. One (1) of the domain controllers was running Server Core. Formatted disks with different file systems and created simple, spanned, stripped, mirrored, and RAID-5 volumes. Installed and configured Active Directory including creating and managing OU structure, users, and groups. Created an Active Directory backup and restored from backup. Installed and upgraded Exchange Server 2016. Created mailbox databases in a DAG. Configured namespaces, SSL certificates, and mail flow. Spent extensive time using PowerShell and Exchange Management Shell for installs and configuration. See project screenshots below.\n\n\n\n\n\nFigure 1. Domain Controller 1 - IP Configurations\n\n\n\n\n\nFigure 2. Domain Controller 3 (Server Core) - IP Configurations\n\n\n\n\n\nFigure 3. Domain Controller 3 (Server Core) - Firewall Configurations\n\n\n\n\n\n\n\n\nFigure 4. Domain Controller 2 - Raid Volumes\n\n\n\n\n\n\n\n\nFigure 5. Active Directory Installation\n\n\n\n\n\nFigure 6. Active Directory - OUs & Users\n\n\n\n\n\n\n\n\nFigure 7. Exchange Server Install\n\n\n\n\n\nFigure 8. Mailbox Databases\n\n\n\n\n\nFigure 9. Recipients\n\n\n\n\n\nFigure 10. Resource Mailboxes & Distribution Groups"
+  },
+  {
+    "objectID": "posts/emcs/emcs.html#domain-controller-configurations",
+    "href": "posts/emcs/emcs.html#domain-controller-configurations",
+    "title": "Microsoft Exchange Server Network",
+    "section": "",
+    "text": "Figure 1. Domain Controller 1 - IP Configurations\n\n\n\n\n\nFigure 2. Domain Controller 3 (Server Core) - IP Configurations\n\n\n\n\n\nFigure 3. Domain Controller 3 (Server Core) - Firewall Configurations"
+  },
+  {
+    "objectID": "posts/emcs/emcs.html#file-systems",
+    "href": "posts/emcs/emcs.html#file-systems",
+    "title": "Microsoft Exchange Server Network",
+    "section": "",
+    "text": "Figure 4. Domain Controller 2 - Raid Volumes"
+  },
+  {
+    "objectID": "posts/emcs/emcs.html#active-directory",
+    "href": "posts/emcs/emcs.html#active-directory",
+    "title": "Microsoft Exchange Server Network",
+    "section": "",
+    "text": "Figure 5. Active Directory Installation\n\n\n\n\n\nFigure 6. Active Directory - OUs & Users"
+  },
+  {
+    "objectID": "posts/emcs/emcs.html#exhange-server",
+    "href": "posts/emcs/emcs.html#exhange-server",
+    "title": "Microsoft Exchange Server Network",
+    "section": "",
+    "text": "Figure 7. Exchange Server Install\n\n\n\n\n\nFigure 8. Mailbox Databases\n\n\n\n\n\nFigure 9. Recipients\n\n\n\n\n\nFigure 10. Resource Mailboxes & Distribution Groups"
+  },
+  {
+    "objectID": "posts/laserman/laserman.html",
+    "href": "posts/laserman/laserman.html",
+    "title": "Retro C++ Game LaserMan",
+    "section": "",
+    "text": "Play Game\n\n\n\n\n\n\nPlayer Keyboard Controls\n\n\n\n\n\n\n\n\nMove\nArrow Keys\nSelect\nEnter\n\n\nEscape Program\nEsc\n\n\n\n\n\n\n🚀 Play Game\nDownload, unzip and open LaserMan.exe (Only runs on Windows)\n\n\n\n\n\nRetro Game\nProject to create a retro game using a beginner’s game-development framework called Playbuffer all written in C++ strictly for Windows. Programming algorithms and techniques such as state machines and object oriented programming were developed in the game loop.\n\n\n\n\n\n\nSource Code\n\n\n\nView source code on Github repository.\n\n\n\n\nVideo Walkthrough\nVideo"
+  },
+  {
+    "objectID": "posts/dev-design-assignment1/design-dev-assignment1.html#purpose-of-document",
+    "href": "posts/dev-design-assignment1/design-dev-assignment1.html#purpose-of-document",
+    "title": "Hotel Booking System Mock Design",
+    "section": "1.1 Purpose of Document",
+    "text": "1.1 Purpose of Document\nThe purpose of this document is to provide system designs to use in the development of the hotel booking system for City and Resort hotels."
+  },
+  {
+    "objectID": "posts/dev-design-assignment1/design-dev-assignment1.html#scope",
+    "href": "posts/dev-design-assignment1/design-dev-assignment1.html#scope",
+    "title": "Hotel Booking System Mock Design",
+    "section": "1.2 Scope",
+    "text": "1.2 Scope\nThe scope of the project involves an examination of the business scenario to ascertain how best to design, develop, and improve upon the proposed hotel booking system. In addition, creation of system designs and implementation documentation must be produced to drive the development of the project. The proposed solutions must include detailed logical & physical Entity-Relationship Diagrams, a Context Diagram, and up to Level 2 Data Flow Diagrams."
+  },
+  {
+    "objectID": "posts/dev-design-assignment1/design-dev-assignment1.html#waterfall",
+    "href": "posts/dev-design-assignment1/design-dev-assignment1.html#waterfall",
+    "title": "Hotel Booking System Mock Design",
+    "section": "2.1 Waterfall",
+    "text": "2.1 Waterfall\nThe Waterfall methodology contains five phases that are as follows: Requirements, Design, Implementation, Verification and Maintenance. Each of these phases are present in most methodologies however with the Waterfall approach each phase is followed by the next in strict fashion. The team can only progress to the next phase when the current phase has been completed and you cannot revert back to a previous phase. This approach is useful when a high level of reliability is needed for a project."
+  },
+  {
+    "objectID": "posts/dev-design-assignment1/design-dev-assignment1.html#agile",
+    "href": "posts/dev-design-assignment1/design-dev-assignment1.html#agile",
+    "title": "Hotel Booking System Mock Design",
+    "section": "2.2 Agile",
+    "text": "2.2 Agile\nThe Agile method is an iterative approach that allows for similar phases as Waterfall to be engaged simultaneously and in no specific order. The team is able to work in small increments allowing for customer input regularly. This methodology is far more flexible in terms of adapting to changes in customer wants and needs as they see the project develop."
+  },
+  {
+    "objectID": "posts/dev-design-assignment1/design-dev-assignment1.html#preferred-software-development-methodology",
+    "href": "posts/dev-design-assignment1/design-dev-assignment1.html#preferred-software-development-methodology",
+    "title": "Hotel Booking System Mock Design",
+    "section": "2.3 Preferred Software Development Methodology",
+    "text": "2.3 Preferred Software Development Methodology\nThe fact that there are two hotels that will be using this system in essence means that there two clients to consider in the development of this project. Each client has unique requirements that differ from one another and are subject to change. As the hospitality industry is fast paced and endeavours to adapt to ever changing customer opinions, the Agile methodology is best suited for this project. As stated above, Waterfall is great for certain projects but is highly inflexible while Agile allows for development teams to incorporate client input in small, digestible increments. This approach will translate to a product that provides more utility to the customer which in turn will result in higher customer satisfaction. ( See Appendix – Waterfall Methodology & Agile Methodology )"
+  },
+  {
+    "objectID": "posts/dev-design-assignment1/design-dev-assignment1.html#logical-entity-relationship-diagram",
+    "href": "posts/dev-design-assignment1/design-dev-assignment1.html#logical-entity-relationship-diagram",
+    "title": "Hotel Booking System Mock Design",
+    "section": "3.1 Logical Entity-Relationship Diagram",
+    "text": "3.1 Logical Entity-Relationship Diagram\nThe four entities in this diagram are as follows: Customer, City Reservation, Resort Reservation and Invoice. Each entity has a primary key that consists of a uniquely generated number. The system is purposefully designed with no weak entities and foreign keys as this is not advisable to create a robust system. The Customer can either book a reservation at the City or Resort hotel. There is a need to delineate the City and Resort hotel reservations because of their individual discount policies. Each hotel will only reward their customers with a discount when they have previously stayed at their specific location before. In addition, the Resort hotel will only provide a discount to customers who haven’t had any cancellations at their location in the past year. Therefore the Resort Reservation entity has an addition attribute labelled “Cancelled” that records whether any of the reservations have been cancelled. With the information supplied from the reservation entities the Invoice is populated. ( See Figure 1 )\n\n\n\nFigure 1. Logical Entity-Relationship Diagram"
+  },
+  {
+    "objectID": "posts/dev-design-assignment1/design-dev-assignment1.html#physical-entity-relationship-diagram",
+    "href": "posts/dev-design-assignment1/design-dev-assignment1.html#physical-entity-relationship-diagram",
+    "title": "Hotel Booking System Mock Design",
+    "section": "3.2 Physical Entity-Relationship Diagram",
+    "text": "3.2 Physical Entity-Relationship Diagram\nThe invoice entity contains a composite and multivalued attribute labelled “Payment” that allows for storage of the date and amount for payments made towards the total. When payments are made the “Amount Owing” attribute on the entry is updated accordingly. ( See Figure 2 )\n\n\n\nFigure 2. Physical Entity-Relationship Diagram"
+  },
+  {
+    "objectID": "posts/dev-design-assignment1/design-dev-assignment1.html#data-fields-with-sample-data",
+    "href": "posts/dev-design-assignment1/design-dev-assignment1.html#data-fields-with-sample-data",
+    "title": "Hotel Booking System Mock Design",
+    "section": "3.3 Data Fields with Sample Data",
+    "text": "3.3 Data Fields with Sample Data\n\n\n\nFigure 3. Data Fields with Sample Data"
+  },
+  {
+    "objectID": "posts/dev-design-assignment1/design-dev-assignment1.html#context-diagram",
+    "href": "posts/dev-design-assignment1/design-dev-assignment1.html#context-diagram",
+    "title": "Hotel Booking System Mock Design",
+    "section": "4.1 Context Diagram",
+    "text": "4.1 Context Diagram\nSix (6) entities: Customer, City Hotel, Resort Hotel, Car Parking Agency, Restaurant and ABC Bank interact with the system from a data flow perspective. A hotel only interacts with the system if the customer has chosen the specified hotel. Each entity’s interactions with the system will be described in further depth in the items to follow. ( See Figure 4 )\n\n\n\nFigure 4. Context Diagram"
+  },
+  {
+    "objectID": "posts/dev-design-assignment1/design-dev-assignment1.html#level-1-dfd",
+    "href": "posts/dev-design-assignment1/design-dev-assignment1.html#level-1-dfd",
+    "title": "Hotel Booking System Mock Design",
+    "section": "4.2 Level 1 DFD",
+    "text": "4.2 Level 1 DFD\nThere are three (3) processes depicted at level 1 that handle the flow of data for the system. Process 1, “Booking”, involves making a reservation, obtaining missing information for the reservation and cancelling the reservation. Process 2, “Check-In”, is where the customer checks into their room and makes an initial payment. Process 3, “Check-Out”, ends the customer’s interaction with the system by settling the remaining balance on the invoice and paying the parking invoice if the customer has opted for parking. ( See Figure 5 )\n\n\n\nFigure 5. Level 1 Data Flow Diagram"
+  },
+  {
+    "objectID": "posts/dev-design-assignment1/design-dev-assignment1.html#level-2-dfd-booking-process-1",
+    "href": "posts/dev-design-assignment1/design-dev-assignment1.html#level-2-dfd-booking-process-1",
+    "title": "Hotel Booking System Mock Design",
+    "section": "4.3 Level 2 DFD – Booking Process 1",
+    "text": "4.3 Level 2 DFD – Booking Process 1\nThere are five (5) sub-processes depicted at level 2 of “Booking” Process 1. In Process 1.1 the customer submits their customer details which are then stored. Process 1.2 generates room and date availability information by examining current reservations which is then used by the customer to submit their reservation preferences. In Process 1.3 the reservation details are stored and the hotel sends the customer a reservation code and request, in the form of an email, to submit missing information. The only none mandatory fields that may be missing are “Food Requirements” and “Parking”. ( See Figure 1, Figure 2 and Figure 3 ) Process 1.4 gives the customer an opportunity to submit the missing information by clicking a link provided in the information request email and filling in the missing fields. This new information is then sent to the hotel, restaurant and parking agency along with being saved in the customer’s reservation entry. Process 1.5 allows the customer to cancel the reservation if desired. When a cancellation is made the “Cancellation” field is updated if it is a Resort reservation entry or it deletes the entry in the case of a City reservation. All relevant parties are then informed of the cancellation. ( See Figure 6 )\n\n\n\nFigure 6. Level 2 Data Flow Diagram Booking Process 1"
+  },
+  {
+    "objectID": "posts/dev-design-assignment1/design-dev-assignment1.html#level-2-dfd-check-in-process-2",
+    "href": "posts/dev-design-assignment1/design-dev-assignment1.html#level-2-dfd-check-in-process-2",
+    "title": "Hotel Booking System Mock Design",
+    "section": "4.4 Level 2 DFD – Check-In Process 2",
+    "text": "4.4 Level 2 DFD – Check-In Process 2\nThere are four (4) sub-processes depicted at level 2 of “Check-In” Process 2. In Process 2.1 the customer submits their reservation code which is then used to extract the customer’s details and reservation. This information is used by the hotel to generate an invoice which is then stored and a copy is sent to the customer in Process 2.2. In Process 2.3 the customer submits payment information which is then received by ABC bank along with the invoice. In Process 2.4 the bank handles the payment, sends payment confirmation to all relevant parties and the invoice entry is updated with payment details. ( See Figure 7 )\n\n\n\nFigure 7. Level 2 Data Flow Diagram Check-In Process 2"
+  },
+  {
+    "objectID": "posts/dev-design-assignment1/design-dev-assignment1.html#level-2-dfd-check-out-process-3",
+    "href": "posts/dev-design-assignment1/design-dev-assignment1.html#level-2-dfd-check-out-process-3",
+    "title": "Hotel Booking System Mock Design",
+    "section": "4.5 Level 2 DFD – Check-Out Process 3",
+    "text": "4.5 Level 2 DFD – Check-Out Process 3\nThere are three (3) sub-processes depicted at level 2 of “Check-Out” Process 3. In Process 3.1 the customer submits their reservation code which is then used by the hotel to bring up the customer’s details, reservation and invoice. The customer details and reservation are also sent to the Car Parking Agency which uses Process 3.2 to send the customer a parking invoice along with their hotel invoice. In Process 3.3 the customer submits payment information for both invoices, which is then received by ABC bank along with both invoices. In Process 3.4 the bank processes the payment and sends payment confirmation to all relevant parties and the hotel invoice entry is updated with payment details. ( See Figure 8 )\n\n\n\nFigure 8. Level 2 Data Flow Diagram Check-Out Process 3"
+  },
+  {
+    "objectID": "posts/dev-design-assignment1/design-dev-assignment1.html#additional-review-process",
+    "href": "posts/dev-design-assignment1/design-dev-assignment1.html#additional-review-process",
+    "title": "Hotel Booking System Mock Design",
+    "section": "5.1 Additional Review Process",
+    "text": "5.1 Additional Review Process\nAn improvement upon the system could be achieved by adding a fourth process at level 1 to prompt the customer to provide a review. The review information could then be stored in an additional field in the reservation data stores. This review information could then be analyzed by AI technology to produce actionable suggestions on how to improve the customer’s experience."
+  },
+  {
+    "objectID": "posts/dev-design-assignment1/design-dev-assignment1.html#sentiment-intent-analysis",
+    "href": "posts/dev-design-assignment1/design-dev-assignment1.html#sentiment-intent-analysis",
+    "title": "Hotel Booking System Mock Design",
+    "section": "5.2 Sentiment & Intent Analysis",
+    "text": "5.2 Sentiment & Intent Analysis\nNatural language processing could be employed to analyze thousands of reviews to identify recurring themes and topics reported on by customers. These can then be rated so that hotel staff can see how customers feel and why they feel that way. This would allow for staff to see where best to make improvements to their services thereby increasing customer satisfaction. ( See Appendix – Sentiment & Intent Analysis )"
+  },
+  {
+    "objectID": "posts/dev-design-assignment1/design-dev-assignment1.html#references",
+    "href": "posts/dev-design-assignment1/design-dev-assignment1.html#references",
+    "title": "Hotel Booking System Mock Design",
+    "section": "References",
+    "text": "References\n\nWaterfall Methodology\nhttps://www.projectmanager.com/guides/waterfall-methodology/\n\n\nAgile Methodology\nhttps://www.atlassian.com/agile\n\n\n\n\nSentiment & Intent Analysis\nhttps://www.lexalytics.com/technology/sentiment-analysis/\nhttps://www.lexalytics.com/technology/intentions/"
+  },
+  {
+    "objectID": "posts/unreal-design-patterns/unreal-design-patterns.html#command-design-pattern-c",
+    "href": "posts/unreal-design-patterns/unreal-design-patterns.html#command-design-pattern-c",
+    "title": "Programming Design Patterns",
+    "section": "2.1 Command Design Pattern (C++)",
+    "text": "2.1 Command Design Pattern (C++)\nCreated C++ classes that inherit from UObject class. Three command child classes(Jump, Run and Fire) inherit from a base command class. Command objects are created by the level blueprint based on keyboard and mouse inputs. These command objects then go on to execute the specific command they were designed for."
+  },
+  {
+    "objectID": "posts/unreal-design-patterns/unreal-design-patterns.html#state-machine-design-pattern-c",
+    "href": "posts/unreal-design-patterns/unreal-design-patterns.html#state-machine-design-pattern-c",
+    "title": "Programming Design Patterns",
+    "section": "2.2 State Machine Design Pattern (C++)",
+    "text": "2.2 State Machine Design Pattern (C++)\nCreated C++ state classes are that inherit from UObject class and are managed by a StateManager class that inherits from Actor component class. The StateManager actor component object is created and attached to the enemy character class. The StateManager component then creates the three different state objects, switches the current state based on certain conditions and runs the current state."
+  },
+  {
+    "objectID": "posts/unreal-design-patterns/unreal-design-patterns.html#object-pool-design-pattern-blueprints",
+    "href": "posts/unreal-design-patterns/unreal-design-patterns.html#object-pool-design-pattern-blueprints",
+    "title": "Programming Design Patterns",
+    "section": "2.3 Object Pool Design Pattern (Blueprints)",
+    "text": "2.3 Object Pool Design Pattern (Blueprints)\nCreated Blueprint BulletPool class actor component that attaches to actors and created a set number of bullets from the blueprint bullet class. The bulletpool than attaches the created bullets to the character and when the chsaracter’s fire method is invoked it uses the bullets from the bullet pool. If the bullet pool becomes empty then the player must wait for it to refill before firing more bullets."
+  },
+  {
+    "objectID": "posts/unreal-design-patterns/unreal-design-patterns.html#prototype-design-pattern-blueprints",
+    "href": "posts/unreal-design-patterns/unreal-design-patterns.html#prototype-design-pattern-blueprints",
+    "title": "Programming Design Patterns",
+    "section": "2.4 Prototype Design Pattern (Blueprints)",
+    "text": "2.4 Prototype Design Pattern (Blueprints)\nCreated Blueprint spawn classes that spawn different enemy characters from blueprint child enemy character classes.\nOne type of spawn class has a public variable that can be set in the unreal inspector for each instance that stores a specific enemy character class. It then spawns a character based on the saved enemy character class and saves it and continues to invoke that intial spawned character’s Clone method to spawn more characters of that class. This spawner creates and stores only one prototype of one type of enemy to spawn further enemies from.\nThe other type of spawn class stores all of the different enemy classes. It randomly selects an enemy class from the list of enemy classes, spawns an instance of this class, runs the Clone method of that instance to spawn an enemy, and finally destroys the initial instance of the enemy. So this spawner type can spawn any type of enemy by creating and using a prototype of that enemy."
+  },
+  {
+    "objectID": "posts/data-analytics/data-analytics.html#initial-data-overview",
+    "href": "posts/data-analytics/data-analytics.html#initial-data-overview",
+    "title": "Exploring Distributions, Transformations, and Predictive Modeling",
+    "section": "1.1 Initial Data Overview",
+    "text": "1.1 Initial Data Overview\nUpon loading the dataset using the pandas library in Python, we observed that it contained 20,000 entries with 7 columns. An initial assessment revealed the presence of missing values in the avg_lat_down_ms and avg_lat_up_ms columns. (Fig. 1)\n\n\n\nCode\n# Create a deep copy of the dataframe for cleaning\ncleaning_df = df.copy()\n\n# Not many rows with missing values as shown in plot\ncleaning_df.isna().sum().plot(kind='bar', ylim=(0, cleaning_df.shape[0]))\n\n# Drop rows with missing values\ncleaning_df.dropna(inplace = True)\n\n\n\n\n\nFigure 1. Bar plot of missing values in each column\n\n\n\n\nSource: Description.ipynb"
+  },
+  {
+    "objectID": "posts/data-analytics/data-analytics.html#data-cleaning-steps",
+    "href": "posts/data-analytics/data-analytics.html#data-cleaning-steps",
+    "title": "Exploring Distributions, Transformations, and Predictive Modeling",
+    "section": "1.2 Data Cleaning Steps",
+    "text": "1.2 Data Cleaning Steps\n\nDropping Rows with Missing Values: Rows containing missing values were dropped to ensure the reliability of our subsequent analyses. (Fig. 1)\nColumn Removal: We removed the unnecessary Unnamed: 0 column, as it served as an unnamed index and did not contribute to the analysis.\nSpelling Corrections and Categorization: We addressed spelling errors in the net_type column, changing ‘moblie’ to ‘Mobile’ and capitalizing ‘fixed’. The net_type column was then converted to a categorical data type.\nDuplicate Entry Removal: Duplicate entries were identified and subsequently dropped to ensure the uniqueness of our data.\nConversion of Float Columns to Int: We verified the avg_lat_down_ms and avg_lat_up_ms columns for floating-point values and converted them to integers if necessary."
+  },
+  {
+    "objectID": "posts/data-analytics/data-analytics.html#column-renaming-and-unit-conversion",
+    "href": "posts/data-analytics/data-analytics.html#column-renaming-and-unit-conversion",
+    "title": "Exploring Distributions, Transformations, and Predictive Modeling",
+    "section": "1.3 Column Renaming and Unit Conversion",
+    "text": "1.3 Column Renaming and Unit Conversion\nTo enhance clarity, we renamed columns related to average download and upload speeds and converted the corresponding values from kilobits per second to megabits per second."
+  },
+  {
+    "objectID": "posts/data-analytics/data-analytics.html#resulting-dataset",
+    "href": "posts/data-analytics/data-analytics.html#resulting-dataset",
+    "title": "Exploring Distributions, Transformations, and Predictive Modeling",
+    "section": "1.4 Resulting Dataset",
+    "text": "1.4 Resulting Dataset\nThe resulting cleaned dataset, now saved as ‘cleaned_dataset.parquet’, comprises 19,030 entries and 6 columns, each with non-null values. The net_type column is categorized into ‘Mobile’ and ‘Fixed’. The dataset is now ready for further analysis and modeling."
+  },
+  {
+    "objectID": "posts/data-analytics/data-analytics.html#understanding-initial-distributions",
+    "href": "posts/data-analytics/data-analytics.html#understanding-initial-distributions",
+    "title": "Exploring Distributions, Transformations, and Predictive Modeling",
+    "section": "2.1 Understanding Initial Distributions",
+    "text": "2.1 Understanding Initial Distributions\nThe initial step involved an examination of the distributions of both fixed and mobile network data. Histograms, box plots (Fig. 2), and summary statistics (Figs. 3 & 4) were employed to gain insights into the central tendencies, dispersions, and skewness of the datasets. Notably, the distributions were observed to be heavily positively skewed, prompting the need for transformation to meet the assumptions of parametric statistical tests.\n\n\n\n\n\n\n\n(a) Box/Hist plots of avg_d_mbps\n\n\n\n\n\n\n\n(b) Box/Hist plots of avg_u_mbps\n\n\n\n\n\n\n\n\n\n(c) Box/Hist plots of avg_lat_ms\n\n\n\n\n\n\n\n(d) Box/Hist plots of avg_lat_down_ms\n\n\n\n\n\n\n\n\n\n(e) Box/Hist plots of avg_lat_up_ms\n\n\n\n\nFigure 2. Box and histogram plots\n\n\n\n\n\nFigure 3. Summary statistics of each network type\n\n\n\n\n\n\n\n\n\n(a) avg_d_mbps column\n\n\n\n\n\n\n\n(b) avg_u_mbps column\n\n\n\n\n\n\n\n\n\n(c) avg_lat_ms column\n\n\n\n\n\n\n\n(d) avg_lat_up_ms column\n\n\n\n\n\n\n\n\n\n(e) avg_lat_down_ms column\n\n\n\n\nFigure 4. Skew and kurtosis values for everything and each network type"
+  },
+  {
+    "objectID": "posts/data-analytics/data-analytics.html#comparative-analysis",
+    "href": "posts/data-analytics/data-analytics.html#comparative-analysis",
+    "title": "Exploring Distributions, Transformations, and Predictive Modeling",
+    "section": "2.2 Comparative Analysis",
+    "text": "2.2 Comparative Analysis\nTo assess the disparities between fixed and mobile networks, we conducted thorough comparative analyses. Kernel density plots (Fig. 5) and statistical tests (Fig. 3) were leveraged to highlight variations in central tendencies. These comparisons served as a foundation for subsequent transformations and allowed us to pinpoint differences between the two networks.\n\n\n\n\n\n\n\n(a) avg_d_mbps for fixed network\n\n\n\n\n\n\n\navg_d_mbps for mobile network\n\n\n\n\n\n\n\n\n\navg_u_mbps for fixed network\n\n\n\n\n\n\n\navg_u_mbps for mobile network\n\n\n\n\n\n\n\n\n\n(b) avg_lat_ms for fixed network\n\n\n\n\n\n\n\n(c) avg_lat_ms for mobile network\n\n\n\n\n\n\n\n\n\n(d) avg_lat_down_ms for fixed network\n\n\n\n\n\n\n\n(e) avg_lat_down_ms for mobile network\n\n\n\n\n\n\n\n\n\n(f) avg_lat_up_ms for fixed network\n\n\n\n\n\n\n\n(g) avg_lat_up_ms for mobile network\n\n\n\n\nFigure 5. KDE plots"
+  },
+  {
+    "objectID": "posts/data-analytics/data-analytics.html#data-transformations",
+    "href": "posts/data-analytics/data-analytics.html#data-transformations",
+    "title": "Exploring Distributions, Transformations, and Predictive Modeling",
+    "section": "2.3 Data Transformations",
+    "text": "2.3 Data Transformations\nSeveral data transformations were applied, including but not limited to logarithmic, Box-Cox, and Yeo-Johnson transformations. Each transformation was carefully chosen based on its appropriateness for the given context and the nature of the initial distributions. Log transformations, for instance, are effective in addressing exponential growth patterns, while Box-Cox transformations are versatile in handling skewed data. (Lee, S. X. and McLachlan, G. J., 2022) (West, R. M., 2022)"
+  },
+  {
+    "objectID": "posts/data-analytics/data-analytics.html#comparative-assessment-of-transformations",
+    "href": "posts/data-analytics/data-analytics.html#comparative-assessment-of-transformations",
+    "title": "Exploring Distributions, Transformations, and Predictive Modeling",
+    "section": "2.4 Comparative Assessment of Transformations",
+    "text": "2.4 Comparative Assessment of Transformations\nA meticulous examination of the transformed datasets ensued, involving comparative analyses with the original data. Visualizations (Figs. 6) and statistical measures, including skewness and kurtosis tests (Fig. 8), were employed to quantify the improvements brought about by each transformation. The Yeo-Johnson transformation consistently demonstrated superior results in terms of bringing the data closer to a normal distribution. (Fig. 7)\n\n\n\n\nCode\n# Define a list of colors for the transformations\ntrans_colors = ['y', 'g', 'c', 'm']\n\n# Define a dictionary that maps transformation names to transformation functions\ntrans_funcs = {\n    'Sqrt Skew': np.sqrt,  # Square root transformation\n    'Log Skew': np.log1p,  # Logarithmic transformation\n    'Box-Cox Skew': stats.boxcox,  # Box-Cox transformation\n    'Yeo-J Skew': stats.yeojohnson  # Yeo-Johnson transformation\n}\n\n# Loop over each transformation in the 'trans_funcs' dictionary\nfor transform in trans_funcs:\n    # Loop over each key in the 'dfs' dictionary\n    for key in dfs:\n        # Get the number of columns in the dataframe corresponding to the current key\n        num_cols = len(dfs[key][0].columns)\n        # Create a subplot with 'num_cols' rows and 2 columns, and set the figure size\n        fig, ax = plt.subplots(num_cols, 2, figsize=(13, 5*num_cols))\n        \n        # Loop over each column in the dataframe corresponding to the current key\n        for i, col in enumerate(dfs[key][0]):\n            # Apply the transformation to the column\n            if transform in ['Box-Cox Skew', 'Yeo-J Skew']:\n                # For Box-Cox and Yeo-Johnson transformations, the function returns two values\n                target, _ = trans_funcs[transform](dfs[key][0][col])\n            else:\n                # For other transformations, the function returns one value\n                target = trans_funcs[transform](dfs[key][0][col])\n\n            # Calculate the skewness of the transformed data\n            transformed_skew = np.round(stats.skew(target),5)\n\n            # Store the skewness in the 'trans_skews' dictionary\n            trans_skews[col][key][transform] = transformed_skew\n\n            # Plot a histogram of the original data\n            sns.histplot(dfs[key][0][col], label='Orginal Skew: {0}'.format(trans_skews[col][key]['Org Skew']), color=\"r\", ax=ax[i][0], kde=True, edgecolor=None)\n            ax[i][0].legend()\n            ax[i][0].set_xlabel('ORGINAL')\n            ax[i][0].set_title(key+' - '+col)\n\n            # Plot a histogram of the transformed data\n            sns.histplot(target, label='Transformed Skew: {0}'.format(transformed_skew), color=trans_colors[trans_list.index(transform)-1], ax=ax[i][1], kde=True, edgecolor=None)\n            ax[i][1].legend()\n            ax[i][1].set_xlabel(transform + ' TRANSFORMED')\n            ax[i][1].set_title(key+' - '+col)\n        \n        # Adjust the padding between and around the subplots\n        fig.tight_layout()\n        # Display the figure\n        plt.show()\n\n\n\n\n\n(a) Original vs Sqrt transformed on fixed network\n\n\n\n\n\n\n\n(b) Original vs Sqrt transformed on mobile network\n\n\n\n\n\n\n\n(c) Original vs Log transformed on fixed network\n\n\n\n\n\n\n\n(d) Original vs Log transformed on mobile network\n\n\n\n\n\n\n\n(e) Original vs Box-Cox transformed on fixed network\n\n\n\n\n\n\n\n(f) Original vs Box-Cox transformed on mobile network\n\n\n\n\n\n\n\n(g) Original vs Yeo-Johnson transformed on fixed network\n\n\n\n\n\n\n\n(h) Original vs Yeo-Johnson transformed on mobile network\n\n\n\nFigure 6. Comparisons of data transformations on distributions\n\n\nSource: Analysis.ipynb\n\n\n\n\n\n\n\n\n\n(a) avg_d_mbps for fixed network\n\n\n\n\n\n\n\n(b) avg_d_mbps for mobile network\n\n\n\n\n\n\n\n\n\n(c) avg_u_mbps for fixed network\n\n\n\n\n\n\n\n(d) avg_u_mbps for mobile network\n\n\n\n\n\n\n\n\n\n(e) avg_lat_ms for fixed network\n\n\n\n\n\n\n\n(f) avg_lat_ms for mobile network\n\n\n\n\n\n\n\n\n\n(g) avg_lat_down_ms for fixed network\n\n\n\n\n\n\n\n(h) avg_lat_down_ms for mobile network\n\n\n\n\n\n\n\n\n\n(i) avg_lat_up_ms for fixed network\n\n\n\n\n\n\n\n(j) avg_lat_up_ms for mobile network\n\n\n\n\nFigure 7. Yeo-Johnson transformed KDE plots\n\n\n\n\n\n\n\n(a) avg_d_mbps column\n\n\n\n\n\n(b) avg_u_mbps column\n\n\n\n\n\n(c) avg_lat_ms column\n\n\n\n\n\n(d) avg_lat_up_ms column\n\n\n\n\n\n(e) avg_lat_down_ms column\n\n\nFigure 8. Comparison of original skew with data transformation skews on both networks"
+  },
+  {
+    "objectID": "posts/data-analytics/data-analytics.html#correlation-analysis",
+    "href": "posts/data-analytics/data-analytics.html#correlation-analysis",
+    "title": "Exploring Distributions, Transformations, and Predictive Modeling",
+    "section": "2.5 Correlation Analysis",
+    "text": "2.5 Correlation Analysis\nIn addition to distribution improvements, we investigated the impact of transformations on correlation structures within the data. Scatter plots (Figs. 9 & 10) and correlation matrices (Figs. 11 & 12) were employed to evaluate changes in relationships between variables. This step aimed to ensure that the transformations not only enhanced distributions but also preserved or revealed meaningful associations.\n\n\n\nCode\n# Create a pairplot of the dataframe 'df' sorted by 'net_type'\ng = sns.pairplot(df, hue='net_type', corner=True)\n# Set the title of the plot and adjust its position\ng.fig.suptitle('Everything', y=1.02)\n# Display the plot\nplt.show()\n\n# Loop over each key in the dictionary of dataframes 'dfs'\nfor key in dfs:\n    # Create a pairplot each dataframe in the dictionary\n    g = sns.pairplot(dfs[key][0], corner=True)\n    # Set the title of the plot as the key and adjust its position\n    g.fig.suptitle(key, y=1.02)\n    # Display the plot\n    plt.show()\n\n\n\n\n\n\n\n\n(a) Both networks\n\n\n\n\n\n\n\n\n\n(b) Fixed network\n\n\n\n\n\n\n\n(c) Mobile network\n\n\n\n\nFigure 9. Pairplots on untransformed data\n\n\n\nSource: Analysis.ipynb\n\n\n\n\n\nCode\n# Loop over each key in the 'yeoj_dfs' dictionary\nfor key in yeoj_dfs:\n    # Create a pairplot of the dataframe corresponding to the current key\n    # 'corner=True' means that only the lower triangle of the plot will be shown\n    g = sns.pairplot(yeoj_dfs[key], corner=True)\n    \n    # Set the title of the figure, adding a small space above the title\n    g.fig.suptitle(key+': Yeo-J Transformed', y=1.02)\n    \n    # Display the figure\n    plt.show()\n\n\n\n\n\n\n\n\n(a) Fixed network\n\n\n\n\n\n\n\n(b) Mobile network\n\n\n\n\nFigure 10. Pairplots on Yeo-Johnson transformed data\n\n\n\nSource: Analysis.ipynb\n\n\n\n\n\nCode\n# Create a subplot with 1 row and 3 columns, sharing the y-axis, and set the figure size\nfig, axes_mat = plt.subplots(1, 3, sharey=True, figsize=(10, 5))\n\n# Create a correlation matrix of all the numerical columns\ncorr = df.drop(columns='net_type').corr()\n\n# Visualize the correlation matrix with a heatmap\nsns.heatmap(corr, cmap='RdBu', vmin=-1, vmax=1, annot=True, square=True, ax=axes_mat[0], cbar=False)\n\n# Rotate and align labels on the x-axis\naxes_mat[0].set_xticklabels(axes_mat[0].get_xticklabels(), rotation=45, horizontalalignment='right')\naxes_mat[0].set_title('Correlation Matrix for Everything')\n\n# Loop over each key in the dictionary 'dfs' and \n# the axes in 'axes_mat' starting from the second one\nfor key, ax in zip(dfs, axes_mat[1:]):\n    # Create a correlation matrix of all the numerical columns\n    corr = dfs[key][0].corr()\n\n    # Visualize the correlation matrix with a heatmap\n    sns.heatmap(corr, cmap='RdBu', vmin=-1, vmax=1, annot=True, square=True, ax=ax, cbar=False)\n\n    # Rotate and align labels on the x-axis\n    ax.set_xticklabels(ax.get_xticklabels(), rotation=45, horizontalalignment='right')\n    ax.set_title('Correlation Matrix for '+key)\n\n# Create a colorbar for the whole figure\nnorm = Normalize(vmin=-1, vmax=1)\n# Create a ScalarMappable object with the 'RdBu' colormap and the normalization\nsm = plt.cm.ScalarMappable(cmap='RdBu', norm=norm)\n# Set the array for the ScalarMappable to an empty array\nsm.set_array([])\n\n# Add an axes to the figure for the colorbar at position [left, top, width, height]\ncbar_ax = fig.add_axes([0.15, 0.95, 0.7, 0.05])  # [left, top, width, height]\n# Add the colorbar to the figure with the ScalarMappable,\n# with horizontal orientation, and in the colorbar axes\nfig.colorbar(sm, orientation='horizontal', cax=cbar_ax)\n\n# Adjust the padding between and around the subplots\nplt.tight_layout()\n# Display the figure\nplt.show()\n\n\n\n\n\nFigure 11. Correlation heatmap matrices for both networks together and separately\n\n\n\n\nSource: Analysis.ipynb\n\n\n\n\n\nCode\n# Create a subplot with 1 row and 2 columns, \n# sharing the y-axis, and set the figure size\nfig, axes_mat = plt.subplots(1, 2, sharey=True, figsize=(10, 7))\n\n# Loop over each key in the 'yeoj_dfs' dictionary and the axes in 'axes_mat'\nfor key, ax in zip(yeoj_dfs, axes_mat):\n    # Create a correlation matrix of all the numerical columns\n    corr = yeoj_dfs[key].corr()\n\n    # Visualize the correlation matrix with a heatmap\n    sns.heatmap(corr, cmap='RdBu', vmin=-1, vmax=1, annot=True, square=True, ax=ax, cbar=False)\n\n    # Rotate and align labels on the x-axis\n    ax.set_xticklabels(ax.get_xticklabels(), rotation=45, horizontalalignment='right')\n    ax.set_title('Correlation Matrix for '+key)\n\n# Create a colorbar for the whole figure\nnorm = Normalize(vmin=-1, vmax=1)\nsm = plt.cm.ScalarMappable(cmap='RdBu', norm=norm)\nsm.set_array([])\n\n# Add an axes to the figure for the colorbar at position [left, top, width, height]\ncbar_ax = fig.add_axes([0.15, 0.95, 0.7, 0.05])  # [left, top, width, height]\nfig.colorbar(sm, orientation='horizontal', cax=cbar_ax)\n\n# Adjust the padding between and around the subplots\nplt.tight_layout()\n# Display the figure\nplt.show()\n\n\n\n\n\nFigure 12. Correlation heatmap matrices for both networks after Yeo-Johnson transformation\n\n\n\n\nSource: Analysis.ipynb"
+  },
+  {
+    "objectID": "posts/data-analytics/data-analytics.html#conclusion",
+    "href": "posts/data-analytics/data-analytics.html#conclusion",
+    "title": "Exploring Distributions, Transformations, and Predictive Modeling",
+    "section": "2.6 Conclusion",
+    "text": "2.6 Conclusion\nThe described EDA and distribution transformations constitute a critical phase in preparing the data for hypothesis testing. The chosen transformations were justified through a systematic exploration of initial distributions, comparative analyses, and a thorough assessment of the impact on correlations. The Yeo-Johnson transformation demonstrated a remarkable ability to normalize skewed data, effectively mitigating the positive skewness observed in the initial distributions. This methodical approach ensures that subsequent analyses are conducted on data that aligns more closely with parametric assumptions, enhancing the robustness and reliability of the findings."
+  },
+  {
+    "objectID": "posts/data-analytics/data-analytics.html#methodology",
+    "href": "posts/data-analytics/data-analytics.html#methodology",
+    "title": "Exploring Distributions, Transformations, and Predictive Modeling",
+    "section": "3.1 Methodology",
+    "text": "3.1 Methodology\nWe employed a comprehensive set of statistical tests, considering the positively skewed nature of the original avg_d_mbps dataset.\n\n3.1.1 Levene’s Test: Untransformed Data\nLevene’s test was conducted on the untransformed avg_d_mbps data to assess whether the standard deviation of download speeds differs significantly between fixed and mobile networks.\n\nDecision Justification: Levene’s test is robust for assessing equality of variances, and its non-parametric nature aligns well with the skewed distribution of the original data. (Yuhang Zhou, Yiyang Zhu and Weng Kee Wong, 2023) (Hosken, D. J., Buss, D. L. and Hodgson, D. J., 2018)\n\n\n\n3.1.2 F-Test: Yeo-Johnson Transformed Data\nAn F-test was performed on Yeo-Johnson transformed data to compare variances between fixed and mobile networks after addressing the skewness.\n\nDecision Justification: F-test is suitable for comparing variances, and using the transformed data allows us to make robust comparisons while accounting for skewness.\n\n\n\n3.1.3 T-Tests: Untransformed and Yeo-Johnson Transformed Data\nIndependent sample t-tests were conducted on both untransformed and transformed avg_d_mbps data to assess whether one network has significantly higher average download speeds than the other.\n\nDecision Justification: T-tests are appropriate for comparing means, and conducting them on both datasets ensures a comprehensive evaluation of average download speeds.\n\n\n\n3.1.4 Mann-Whitney U Test: Untransformed Data\nA non-parametric Mann-Whitney U test was performed on the untransformed data to corroborate findings from the t-tests and provide additional robustness.\n\nDecision Justification: The non-parametric nature of the Mann-Whitney U test suits skewed data, offering an alternative perspective on average download speed differences. (Mori, M. et al., 2024) (María Teresa Politi, Juliana Carvalho Ferreira and Cecilia María Patino, 2021)"
+  },
+  {
+    "objectID": "posts/data-analytics/data-analytics.html#results-and-interpretation",
+    "href": "posts/data-analytics/data-analytics.html#results-and-interpretation",
+    "title": "Exploring Distributions, Transformations, and Predictive Modeling",
+    "section": "3.2 Results and Interpretation",
+    "text": "3.2 Results and Interpretation\n\n3.2.1 Levene’s Test: Untransformed Data\n\nF statistic: 1046.03, p-value: 0.0\nConclusion: The standard deviation of avg_d_mbps significantly differs between fixed and mobile networks.\n\n\n\n3.2.2 F-Test: Yeo-Johnson Transformed Data\n\nF statistic: 6.07, p-value: 0.0\nConclusion: The F-test on transformed data reinforces the conclusion that the standard deviation of avg_d_mbps varies significantly between networks. Also, it indicates that the fixed network has significantly higher average download speeds and a higher standard deviation than the mobile network.\n\n\n\n3.2.3 T-Tests: Untransformed and Transformed Data\n\n3.2.3.1 Untransformed Data:\n\nt statistic: 40.16, p-value: 0.0\nConclusion: The fixed network has significantly higher average download speeds than the mobile network, and it also exhibits a higher standard deviation.\n\n\n\n3.2.3.2 Yeo-Johnson Transformed Data:\n\nt statistic: 120.57, p-value: 0.0\nConclusion: The transformed data supports the initial conclusion of the fixed network outperforming the mobile network in both average download speeds and standard deviation.\n\n\n\n\n3.2.4 Mann-Whitney U Test: Untransformed Data\n\nU statistic: 63199341.5, p-value: 0.0\nConclusion: The Mann-Whitney U test aligns with t-test results, indicating that the fixed network tends to have significantly higher average download speeds and a higher standard deviation."
+  },
+  {
+    "objectID": "posts/data-analytics/data-analytics.html#summary",
+    "href": "posts/data-analytics/data-analytics.html#summary",
+    "title": "Exploring Distributions, Transformations, and Predictive Modeling",
+    "section": "3.3 Summary",
+    "text": "3.3 Summary\nOur multifaceted analysis, incorporating Levene’s test, F-test, t-tests on both original and transformed data, and the Mann-Whitney U test, consistently suggests that the fixed network exhibits significantly higher average download speeds compared to the mobile network. However, it’s important to note that this superior performance is accompanied by a higher standard deviation, indicating a greater degree of variability in download speeds. While the fixed network showcases higher speeds on average, the increased standard deviation suggests a higher level of variability, implying that the consistency of download speeds in the fixed network may be more variable than that of the mobile network. This thorough approach provides a nuanced understanding of the network performance, acknowledging the strengths and potential areas of variability."
+  },
+  {
+    "objectID": "posts/data-analytics/data-analytics.html#regression-models-for-average-download-speed",
+    "href": "posts/data-analytics/data-analytics.html#regression-models-for-average-download-speed",
+    "title": "Exploring Distributions, Transformations, and Predictive Modeling",
+    "section": "4.1 Regression Models for Average Download Speed",
+    "text": "4.1 Regression Models for Average Download Speed\n\n4.1.1 Linear Regression\nUni-variate and Multivariate linear regression models were employed to predict average download speed (avg_d_mbps). The initial models were trained on the original data, and the others were trained on Yeo-Johnson transformed data. The Yeo-Johnson transformed data exhibited a marginal improvement in performance, suggesting that addressing skewness contributed to better predictions (Pan, P., Li, R. and Zhang, Y., 2023). The mean absolute error (MAE), mean squared error (MSE), root mean squared error (RMSE), and R-squared (R2) were used to evaluate model performance. (Figs. 13 & 14) (Subasi, A. et al., 2020)\n\n\n\nFigure 13. Comparison of uni-variate linear regression models trained on original and transformed data\n\n\n\n\n\nFigure 14. Comparison of multivariate linear regression models trained on original and transformed data\n\n\n\n\n4.1.2 Gradient Boosting Regression\nA multivariate Gradient Boosting Regressor was employed as a more sophisticated regression model (Subasi, A. et al., 2020). The model was trained on the original data, and its performance was evaluated using the same metrics (Fig. 15). The Gradient Boosting model outperformed the linear regression models, achieving an R2 of 0.54. Gradient Boosting Regression demonstrated superior predictive power compared to linear regression.\n\n\n\nFigure 15. Gradient boosting results"
+  },
+  {
+    "objectID": "posts/data-analytics/data-analytics.html#classification-models-for-network-type",
+    "href": "posts/data-analytics/data-analytics.html#classification-models-for-network-type",
+    "title": "Exploring Distributions, Transformations, and Predictive Modeling",
+    "section": "4.2 Classification Models for Network Type",
+    "text": "4.2 Classification Models for Network Type\n\n4.2.1 Support Vector Machine (SVM)\nAn SVM classification model was trained on original, and Yeo-Johnson transformed data to predict the network type (Fixed or Mobile). Again, the transformed data trained model performed better than the other, achieving an accuracy of approximately 87%. The confusion matrix (Figs. 16 & 17) and classification report provided insights into precision, recall, and F1-score for each class.\n\n\n\nCode\n#Support Vector Machine model\nmodel = svm.SVC()\n\n# Train the model\nmodel.fit(X_train, y_train)\n\n# Make predictions\ny_pred = model.predict(X_test)\n\n# Plot confusion matrix\ncm = confusion_matrix(y_test, y_pred, labels=model.classes_)\ndisp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=model.classes_)\ndisp.plot()\nplt.show()\n\n# Evaluate the model\nprint(classification_report(y_test, y_pred))\n\n\n\n\n\nFigure 16. SVM original data confusion matrix\n\n\n\n\n              precision    recall  f1-score   support\n\n       Fixed       0.84      0.80      0.82      1968\n      Mobile       0.79      0.83      0.81      1838\n\n    accuracy                           0.82      3806\n   macro avg       0.82      0.82      0.82      3806\nweighted avg       0.82      0.82      0.82      3806\n\n\n\nSource: ML_Models.ipynb\n\n\n\n\n\nCode\n# Support Vector Machine model with yeo-j transform\n\n# Create a pipeline for the transformed data\npipe_trans = Pipeline([\n    # Apply Yeo-Johnson transformation\n    ('power_transform', PowerTransformer(method='yeo-johnson')), \n    # Create a SVM model\n    ('model', svm.SVC())  \n])\n\n# Train the model\npipe_trans.fit(X_train, y_train)\n\n# Make predictions\ny_pred = pipe_trans.predict(X_test)\n\n# Plot confusion matrix\ncm = confusion_matrix(y_test, y_pred, labels=pipe_trans.classes_)\ndisp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=pipe_trans.classes_)\ndisp.plot()\nplt.show()\n\n# Evaluate the model\nprint(classification_report(y_test, y_pred))\n\n\n\n\n\nFigure 17. SVM transformed data confusion matrix\n\n\n\n\n              precision    recall  f1-score   support\n\n       Fixed       0.92      0.83      0.87      1968\n      Mobile       0.84      0.92      0.88      1838\n\n    accuracy                           0.87      3806\n   macro avg       0.88      0.88      0.87      3806\nweighted avg       0.88      0.87      0.87      3806\n\n\n\nSource: ML_Models.ipynb\n\n\n4.2.2 Random Forest Classifier\nA Random Forest Classifier was also employed for classification, achieving an accuracy of approximately 87%. (Figs. 18 & 19) A grid search was conducted to fine-tune hyperparameters, resulting in optimal values for max_depth, max_leaf_nodes, min_samples_leaf, and min_samples_split. (Behera, G. and Nain, N., 2022)\n\n\n\nCode\n# Random Forest Classifier Model\n\n# Create a pipeline for the transformed data\npipe_trans = Pipeline([\n    # Apply Random Forest\n    ('model', RandomForestClassifier(n_estimators=300))\n])\n\n# Train the model\npipe_trans.fit(X_train, y_train)\n\n# Make predictions\ny_pred = pipe_trans.predict(X_test)\n\n# Plot confusion matrix\ncm = confusion_matrix(y_test, y_pred, labels=pipe_trans.classes_)\ndisp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=pipe_trans.classes_)\ndisp.plot()\nplt.show()\n\n# Evaluate the model\nprint(classification_report(y_test, y_pred))\n\n\n\n\n\nFigure 18. Random forest confusion matrix\n\n\n\n\n              precision    recall  f1-score   support\n\n       Fixed       0.90      0.85      0.87      1968\n      Mobile       0.84      0.90      0.87      1838\n\n    accuracy                           0.87      3806\n   macro avg       0.87      0.87      0.87      3806\nweighted avg       0.87      0.87      0.87      3806\n\n\n\nSource: ML_Models.ipynb\n\n\n\n\n# Perform grid search to find more optimal hyperparameters for \n# The Random Forest Classifier Model\n\n# Define the parameter grid\nparam_grid = {\n    'model__max_depth': [None, 5, 10, 15],\n    'model__max_leaf_nodes': [None, 5, 10, 15],\n    'model__min_samples_leaf': [1, 2, 4],\n    'model__min_samples_split': [2, 5, 10]\n}\n\n# Create a GridSearchCV object\ngrid_search = GridSearchCV(pipe_trans, param_grid, cv=2, scoring='accuracy', verbose=1, n_jobs=-1)\n\n# Fit the GridSearchCV object to the data\ngrid_search.fit(X_train, y_train)\n\n# Print the best parameters\nprint(grid_search.best_params_)\nprint(grid_search.best_score_)\n\nFitting 2 folds for each of 144 candidates, totalling 288 fits\n{'model__max_depth': None, 'model__max_leaf_nodes': None, 'model__min_samples_leaf': 1, 'model__min_samples_split': 5}\n0.8707304256437205\n\n\nSource: ML_Models.ipynb\n\n\n\n\n\nCode\n# Try Random Forest classifier with better parameters\n# Create a pipeline for the transformed data\npipe_trans = Pipeline([\n    # Apply Random Forest\n    ('model', RandomForestClassifier(n_estimators=300, max_depth=None, max_leaf_nodes=None, min_samples_leaf=1, min_samples_split=5,  ))  \n])\n\n# Train the model\npipe_trans.fit(X_train, y_train)\n\n# Make predictions\ny_pred = pipe_trans.predict(X_test)\n\n# Plot confusion matrix\ncm = confusion_matrix(y_test, y_pred, labels=pipe_trans.classes_)\ndisp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=pipe_trans.classes_)\ndisp.plot()\nplt.show()\n\n# Evaluate the model\nprint(classification_report(y_test, y_pred))\n\n\n\n\n\nFigure 19. Random forest confusion matrix trained with more optimal parameters\n\n\n\n\n              precision    recall  f1-score   support\n\n       Fixed       0.90      0.84      0.87      1968\n      Mobile       0.84      0.90      0.87      1838\n\n    accuracy                           0.87      3806\n   macro avg       0.87      0.87      0.87      3806\nweighted avg       0.88      0.87      0.87      3806\n\n\n\nSource: ML_Models.ipynb"
+  },
+  {
+    "objectID": "posts/data-analytics/data-analytics.html#model-comparison-and-analysis",
+    "href": "posts/data-analytics/data-analytics.html#model-comparison-and-analysis",
+    "title": "Exploring Distributions, Transformations, and Predictive Modeling",
+    "section": "4.3 Model Comparison and Analysis",
+    "text": "4.3 Model Comparison and Analysis\nThe choice of models depended on the nature of the prediction task. Gradient Boosting Regression demonstrated superior performance in predicting average download speed, while Random Forest Classification excelled in predicting network types. The decision to employ Yeo-Johnson transformation in regression was justified by the slight improvement in predictive accuracy (Pan, P., Li, R. and Zhang, Y., 2023). Both SVM and Random Forest Classifier provided competitive results for network classification, with the latter outperforming SVM."
   },
   {
     "objectID": "posts/star-map-nav/star-map-nav.html",
@@ -900,6 +1012,6 @@
     "href": "index.html",
     "title": "Brandon Toews: Artificial Intelligence BSc StudentMy projects portfolio.",
     "section": "",
-    "text": "Artificial Intelligence and Intellectual Property\n\n\n\n\n\n\n\nAI / ML\n\n\n\n\nThis paper critically examines the ethical implications of AI and intellectual property, focusing on the intersection of legal frameworks and psychological factors.\n\n\n\n\n\n\nDec 21, 2023\n\n\nBrandon Toews\n\n\n\n\n\n\n  \n\n\n\n\nDeep Learning FastAI Model\n\n\n\n\n\n\n\nAI / ML\n\n\n\n\nProject to train a deep learning model to correctly classify an image of a wasp or a bee using transfer learning with the fastai library.\n\n\n\n\n\n\nJun 9, 2023\n\n\nBrandon Toews\n\n\n\n\n\n\n  \n\n\n\n\nTkinter Machine Learning Prototype Software\n\n\n\n\n\n\n\nAI / ML\n\n\n\n\nProject to design and develop a prototype software with UI to import, transform and save data to and from a cloud database. Software built to apply machine learning algorithms to explore interesting findings from dataset and use to propose a business case for the design.\n\n\n\n\n\n\nJun 5, 2023\n\n\nBrandon Toews\n\n\n\n\n\n\n  \n\n\n\n\nProgramming Design Patterns\n\n\n\n\n\n\n\nGames Programming\n\n\n\n\nMechanics sandbox game to demonstrate programming design patterns using Unreal Engine. Implemented command, state machine, object pool & prototype design patterns using C++ and Unreal’s Blueprints Visual Scripting system.\n\n\n\n\n\n\nMay 19, 2023\n\n\nBrandon Toews\n\n\n\n\n\n\n  \n\n\n\n\nStar Map Navigation Simulation\n\n\n\n\n\n\n\nGames Programming\n\n\n\n\nUnity Games Engine project to implement a star map navigation style simulation with custom pathfinding script.\n\n\n\n\n\n\nMay 13, 2023\n\n\nBrandon Toews\n\n\n\n\n\n\n  \n\n\n\n\nRetro C++ Game LaserMan\n\n\n\n\n\n\n\nGames Programming\n\n\n\n\nRetro game written in C++ using a beginner’s game-development framework called Playbuffer\n\n\n\n\n\n\nJan 13, 2023\n\n\nBrandon Toews\n\n\n\n\n\n\n  \n\n\n\n\nLinear Regression, Classification, Clustering\n\n\n\n\n\n\n\nAI / ML\n\n\n\n\nProject to compare different AI algorithms and an exploration of how to improve their accuracy.\n\n\n\n\n\n\nDec 22, 2022\n\n\nBrandon Toews\n\n\n\n\n\n\n  \n\n\n\n\nHotel Booking System Mock Design\n\n\n\n\n\n\n\nSoftware / System Design\n\n\n\n\nProject to design a hotel booking system based on a mock system design case scenario.\n\n\n\n\n\n\nDec 9, 2022\n\n\nBrandon Toews\n\n\n\n\n\n\n  \n\n\n\n\nModes of Motion Programming Mathematics\n\n\n\n\n\n\n\nGames Programming\n\n\n\n\nUnity Games Engine project to demonstrate various methods of movement, making use of custom linear interpolation (lerp) libraries and scripts using Unity physics.\n\n\n\n\n\n\nNov 30, 2022\n\n\nBrandon Toews\n\n\n\n\n\n\n  \n\n\n\n\nAutomation in Systems Administration Project\n\n\n\n\n\n\n\nNetworking\n\n\n\n\nProject to plan and design an expansion to a fictitious Microsoft Windows Server based network, develop a prototype network, and to produce documentation along with it.\n\n\n\n\n\n\nSep 19, 2022\n\n\nBrandon Toews\n\n\n\n\n\n\n  \n\n\n\n\nLinux Administration Project\n\n\n\n\n\n\n\nNetworking\n\n\n\n\nProject to design and setup a mock prototype network using headless CentOS 7.0 servers and to produce documentation along with it.\n\n\n\n\n\n\nJun 17, 2022\n\n\nBrandon Toews\n\n\n\n\n\n\n  \n\n\n\n\nOpenStack Virtualization\n\n\n\n\n\n\n\nNetworking\n\n\n\n\nCreated an OpenStack environment by manually installing and configuring services.\n\n\n\n\n\n\nMar 17, 2022\n\n\nBrandon Toews\n\n\n\n\n\n\n  \n\n\n\n\nMicrosoft Exchange Server Network\n\n\n\n\n\n\n\nNetworking\n\n\n\n\nDeployed an Exchange server environment using Microsoft Exchange Server 2016.\n\n\n\n\n\n\nMar 3, 2022\n\n\nBrandon Toews\n\n\n\n\n\n\n  \n\n\n\n\nWireless Technology Networking\n\n\n\n\n\n\n\nNetworking\n\n\n\n\nDesigned a mock solution for a P2P network with wifi coverage. Produced documentation to propose hardware, along with instructions for installation and configuration.\n\n\n\n\n\n\nDec 19, 2021\n\n\nBrandon Toews\n\n\n\n\n\n\n  \n\n\n\n\nNetworking with Cisco Technologies\n\n\n\n\n\n\n\nNetworking\n\n\n\n\nDesigned and constructed a fictional network using GNS3 simulation software and VMs running on VMware.\n\n\n\n\n\n\nDec 14, 2021\n\n\nBrandon Toews\n\n\n\n\n\n\nNo matching items"
+    "text": "Exploring Distributions, Transformations, and Predictive Modeling\n\n\n\n\n\n\n\nAI / ML\n\n\n\n\nAn exploratory data analysis on an Ookla speedtest dataset with applications of descriptive analytics, data transformations, hypothesis testing, and predictive modelling.\n\n\n\n\n\n\nJan 9, 2024\n\n\nBrandon Toews\n\n\n\n\n\n\n  \n\n\n\n\nArtificial Intelligence and Intellectual Property\n\n\n\n\n\n\n\nAI / ML\n\n\n\n\nThis paper critically examines the ethical implications of AI and intellectual property, focusing on the intersection of legal frameworks and psychological factors.\n\n\n\n\n\n\nDec 21, 2023\n\n\nBrandon Toews\n\n\n\n\n\n\n  \n\n\n\n\nDeep Learning FastAI Model\n\n\n\n\n\n\n\nAI / ML\n\n\n\n\nProject to train a deep learning model to correctly classify an image of a wasp or a bee using transfer learning with the fastai library.\n\n\n\n\n\n\nJun 9, 2023\n\n\nBrandon Toews\n\n\n\n\n\n\n  \n\n\n\n\nTkinter Machine Learning Prototype Software\n\n\n\n\n\n\n\nAI / ML\n\n\n\n\nProject to design and develop a prototype software with UI to import, transform and save data to and from a cloud database. Software built to apply machine learning algorithms to explore interesting findings from dataset and use to propose a business case for the design.\n\n\n\n\n\n\nJun 5, 2023\n\n\nBrandon Toews\n\n\n\n\n\n\n  \n\n\n\n\nProgramming Design Patterns\n\n\n\n\n\n\n\nGames Programming\n\n\n\n\nMechanics sandbox game to demonstrate programming design patterns using Unreal Engine. Implemented command, state machine, object pool & prototype design patterns using C++ and Unreal’s Blueprints Visual Scripting system.\n\n\n\n\n\n\nMay 19, 2023\n\n\nBrandon Toews\n\n\n\n\n\n\n  \n\n\n\n\nStar Map Navigation Simulation\n\n\n\n\n\n\n\nGames Programming\n\n\n\n\nUnity Games Engine project to implement a star map navigation style simulation with custom pathfinding script.\n\n\n\n\n\n\nMay 13, 2023\n\n\nBrandon Toews\n\n\n\n\n\n\n  \n\n\n\n\nRetro C++ Game LaserMan\n\n\n\n\n\n\n\nGames Programming\n\n\n\n\nRetro game written in C++ using a beginner’s game-development framework called Playbuffer\n\n\n\n\n\n\nJan 13, 2023\n\n\nBrandon Toews\n\n\n\n\n\n\n  \n\n\n\n\nLinear Regression, Classification, Clustering\n\n\n\n\n\n\n\nAI / ML\n\n\n\n\nProject to compare different AI algorithms and an exploration of how to improve their accuracy.\n\n\n\n\n\n\nDec 22, 2022\n\n\nBrandon Toews\n\n\n\n\n\n\n  \n\n\n\n\nHotel Booking System Mock Design\n\n\n\n\n\n\n\nSoftware / System Design\n\n\n\n\nProject to design a hotel booking system based on a mock system design case scenario.\n\n\n\n\n\n\nDec 9, 2022\n\n\nBrandon Toews\n\n\n\n\n\n\n  \n\n\n\n\nModes of Motion Programming Mathematics\n\n\n\n\n\n\n\nGames Programming\n\n\n\n\nUnity Games Engine project to demonstrate various methods of movement, making use of custom linear interpolation (lerp) libraries and scripts using Unity physics.\n\n\n\n\n\n\nNov 30, 2022\n\n\nBrandon Toews\n\n\n\n\n\n\n  \n\n\n\n\nAutomation in Systems Administration Project\n\n\n\n\n\n\n\nNetworking\n\n\n\n\nProject to plan and design an expansion to a fictitious Microsoft Windows Server based network, develop a prototype network, and to produce documentation along with it.\n\n\n\n\n\n\nSep 19, 2022\n\n\nBrandon Toews\n\n\n\n\n\n\n  \n\n\n\n\nLinux Administration Project\n\n\n\n\n\n\n\nNetworking\n\n\n\n\nProject to design and setup a mock prototype network using headless CentOS 7.0 servers and to produce documentation along with it.\n\n\n\n\n\n\nJun 17, 2022\n\n\nBrandon Toews\n\n\n\n\n\n\n  \n\n\n\n\nOpenStack Virtualization\n\n\n\n\n\n\n\nNetworking\n\n\n\n\nCreated an OpenStack environment by manually installing and configuring services.\n\n\n\n\n\n\nMar 17, 2022\n\n\nBrandon Toews\n\n\n\n\n\n\n  \n\n\n\n\nMicrosoft Exchange Server Network\n\n\n\n\n\n\n\nNetworking\n\n\n\n\nDeployed an Exchange server environment using Microsoft Exchange Server 2016.\n\n\n\n\n\n\nMar 3, 2022\n\n\nBrandon Toews\n\n\n\n\n\n\n  \n\n\n\n\nWireless Technology Networking\n\n\n\n\n\n\n\nNetworking\n\n\n\n\nDesigned a mock solution for a P2P network with wifi coverage. Produced documentation to propose hardware, along with instructions for installation and configuration.\n\n\n\n\n\n\nDec 19, 2021\n\n\nBrandon Toews\n\n\n\n\n\n\n  \n\n\n\n\nNetworking with Cisco Technologies\n\n\n\n\n\n\n\nNetworking\n\n\n\n\nDesigned and constructed a fictional network using GNS3 simulation software and VMs running on VMware.\n\n\n\n\n\n\nDec 14, 2021\n\n\nBrandon Toews\n\n\n\n\n\n\nNo matching items"
   }
 ]
