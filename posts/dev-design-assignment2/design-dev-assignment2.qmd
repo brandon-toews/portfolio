@@ -8,7 +8,7 @@ format:
 author: "Brandon Toews"
 badges: true
 categories:
-- AI / ML
+- AI / Machine Learning
 date: "2023-06-05"
 description: Project to design and develop a prototype software with UI to import, transform and save data to and from a cloud database. Software built to apply machine learning algorithms to explore interesting findings from dataset and use to propose a business case for the design. 
 toc: true
@@ -143,6 +143,6 @@ The prototype software has already unearthed some intriguing lines of investigat
 
 # Appendix {#appendix .unnumbered}
 
-## Software Video Walkthrough {.unnumbered}
+## Software Video Walkthrough {#software-video-walkthrough .unnumbered}
 
 ![](PrototypeSoftwareWalkthrough.mp4)

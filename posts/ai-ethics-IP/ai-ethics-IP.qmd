@@ -6,7 +6,7 @@ format:
 author: "Brandon Toews"
 badges: true
 categories:
-- AI / ML
+- AI / Machine Learning
 date: "2023-12-21"
 description: This paper critically examines the ethical implications of AI and intellectual property, focusing on the intersection of legal frameworks and psychological factors.
 toc: true

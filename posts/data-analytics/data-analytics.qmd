@@ -8,7 +8,7 @@ format:
 author: "Brandon Toews"
 badges: true
 categories:
-- AI / ML
+- AI / Machine Learning
 date: "2024-1-9"
 description: An exploratory data analysis on an Ookla speedtest dataset with applications of descriptive analytics, data transformations, hypothesis testing, and predictive modelling.
 toc: true

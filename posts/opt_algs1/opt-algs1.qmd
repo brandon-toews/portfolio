@@ -5,7 +5,7 @@ format:
 author: "Brandon Toews"
 badges: true
 categories:
-- AI / ML
+- AI / Machine Learning
 date: "2023-12-25"
 description: An application that uses a genetic algorithm for solving the Traveling Salesman Problem written in Python and Mojo programmming languages for comparison.
 toc: true
