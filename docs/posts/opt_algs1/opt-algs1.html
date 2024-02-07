@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Brandon Toews">
+<meta name="dcterms.date" content="2023-12-25">
+<meta name="description" content="An application that uses a genetic algorithm for solving the Traveling Salesman Problem written in Python and Mojo programmming languages for comparison.">
+
+<title>portfolio - Traveling Salesmen Problem Python 🐍 vs Mojo 🔥</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+<link rel="stylesheet" href="../../styles.css">
+<meta name="twitter:title" content="portfolio - Traveling Salesmen Problem Python 🐍 vs Mojo 🔥">
+<meta name="twitter:description" content="An application that uses a genetic algorithm for solving the Traveling Salesman Problem written in Python and Mojo programmming languages for comparison.">
+<meta name="twitter:image" content="https://brandon-toews.github.io/portfolio/posts/opt_algs1/pythonvsmojo.png">
+<meta name="twitter:image-height" content="684">
+<meta name="twitter:image-width" content="1017">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">portfolio</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html" rel="" target="">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/brandon-toews" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Traveling Salesmen Problem Python 🐍 vs Mojo 🔥</h1>
+                  <div>
+        <div class="description">
+          An application that uses a genetic algorithm for solving the Traveling Salesman Problem written in Python and Mojo programmming languages for comparison.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">AI / ML</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Brandon Toews </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">December 25, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><span class="header-section-number">1</span> Overview</a>
+  <ul class="collapse">
+  <li><a href="#command-line-interface-cli-and-gradio-integration" id="toc-command-line-interface-cli-and-gradio-integration" class="nav-link" data-scroll-target="#command-line-interface-cli-and-gradio-integration"><span class="header-section-number">1.1</span> Command-Line Interface (CLI) and Gradio Integration</a></li>
+  <li><a href="#genetic-algorithm-implementation" id="toc-genetic-algorithm-implementation" class="nav-link" data-scroll-target="#genetic-algorithm-implementation"><span class="header-section-number">1.2</span> Genetic Algorithm Implementation</a></li>
+  </ul></li>
+  <li><a href="#python-implementation" id="toc-python-implementation" class="nav-link" data-scroll-target="#python-implementation"><span class="header-section-number">2</span> Python Implementation</a>
+  <ul class="collapse">
+  <li><a href="#numpy" id="toc-numpy" class="nav-link" data-scroll-target="#numpy"><span class="header-section-number">2.1</span> NumPy</a></li>
+  <li><a href="#parallel-processing" id="toc-parallel-processing" class="nav-link" data-scroll-target="#parallel-processing"><span class="header-section-number">2.2</span> Parallel Processing</a></li>
+  </ul></li>
+  <li><a href="#mojo-implementation" id="toc-mojo-implementation" class="nav-link" data-scroll-target="#mojo-implementation"><span class="header-section-number">3</span> Mojo Implementation</a></li>
+  <li><a href="#appendix" id="toc-appendix" class="nav-link" data-scroll-target="#appendix">Appendix</a>
+  <ul class="collapse">
+  <li><a href="#mojo-language" id="toc-mojo-language" class="nav-link" data-scroll-target="#mojo-language">Mojo Language</a></li>
+  <li><a href="#deployment" id="toc-deployment" class="nav-link" data-scroll-target="#deployment">Deployment</a>
+  <ul class="collapse">
+  <li><a href="#source-code" id="toc-source-code" class="nav-link" data-scroll-target="#source-code">Source Code</a></li>
+  <li><a href="#gradio-app" id="toc-gradio-app" class="nav-link" data-scroll-target="#gradio-app">Gradio App</a></li>
+  <li><a href="#deployment-resources" id="toc-deployment-resources" class="nav-link" data-scroll-target="#deployment-resources">Deployment Resources</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p><img src="pythonvsmojo.png" class="img-fluid"></p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Play Demo
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<section id="instructions" class="level3 unnumbered callout-body-container callout-body">
+<h3 class="unnumbered anchored" data-anchor-id="instructions">Instructions</h3>
+<p><strong>Load Cities:</strong></p>
+<ul>
+<li>Use the slider to select the number of cities.</li>
+<li>Click the “Select Cities” button to choose cities and see the original route on the plot.</li>
+</ul>
+<p><strong>Python Algorithm:</strong></p>
+<ul>
+<li>Select parameters like runtime, number of generations, and optimization choices.</li>
+<li>Click “Run Python Algorithm” to execute the Python genetic algorithm.</li>
+<li>The result, including the optimized route and details, will be displayed.</li>
+</ul>
+<p><strong>Mojo Algorithm:</strong></p>
+<ul>
+<li>Similar to Python, choose parameters for the Mojo genetic algorithm.</li>
+<li>Click “Run Mojo Algorithm” to run the Mojo genetic algorithm.</li>
+<li>View the results in the command line output.</li>
+</ul>
+<p><strong>Load cities FIRST before running either the Python or Mojo algorithms</strong></p>
+<iframe src="https://btoews-travelling-salesmen-python-vs-mojo.hf.space" frameborder="0" width="1050" height="650"></iframe>
+<p>For more information on gradio app deployment see the <a href="#appendix">Appendix</a>.</p>
+</section>
+</div>
+</div>
+<section id="overview" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Overview</h1>
+<p>An application that uses a genetic algorithm for solving the Traveling Salesman Problem written in two programming languages for comparison. The <a href="#python-implementation">Python implementation</a>, utilizes Numpy for efficient array operations, and includes multithreading and multiprocessing for parallel processing. The <a href="#mojo-implementation">Mojo implementation</a>, utilizes custom array classes, unrolling, vectorization, and tiling techniques.</p>
+<section id="command-line-interface-cli-and-gradio-integration" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="command-line-interface-cli-and-gradio-integration"><span class="header-section-number">1.1</span> Command-Line Interface (CLI) and Gradio Integration</h2>
+<p>Takes input parameters from the command line or Gradio interface, offering flexibility in execution. Gradio integration allows running the algorithm with user-selected parameters through a subprocess.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>View <a href="https://huggingface.co/spaces/btoews/travelling-salesmen-python-vs-mojo/blob/main/app.py">Gradio interface</a> source code.</p>
+</div>
+</div>
+</section>
+<section id="genetic-algorithm-implementation" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="genetic-algorithm-implementation"><span class="header-section-number">1.2</span> Genetic Algorithm Implementation</h2>
+<p>Utilizes functions for initializing a population, selecting parents, creating children, and performing crossovers. Implements a tournament selection method for parent selection. Supports both time-based and generation-based execution, depending on user preference. Incorporates a mutation rate, allowing for controlled exploration. Mutation involves swapping two cities randomly in the city list. Implements Order Crossover (OX1) for creating children with randomly generated crossover points.</p>
+</section>
+</section>
+<section id="python-implementation" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Python Implementation</h1>
+<section id="numpy" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="numpy"><span class="header-section-number">2.1</span> NumPy</h2>
+<p>NumPy is used for parent crossover operations in the <code>breed3</code> function(<a href="#lst-numpy">Listing&nbsp;1</a>), such as creating arrays, boolean indexing, filtering, and concatenation. These operations are often more concise and efficient when performed using NumPy functions resulting in faster execution.</p>
+<div class="code-with-filename listing">
+<p>Listing&nbsp;1<strong>.</strong> Python Breed Function with NumPy</p>
+<div class="code-with-filename-file">
+<pre><strong>genalg.py</strong></pre>
+</div>
+<div class="sourceCode" id="lst-numpy" data-lst-cap="Python Breed Function with NumPy"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="lst-numpy-1"><a href="#lst-numpy-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fastest breed function using Numpy</span></span>
+<span id="lst-numpy-2"><a href="#lst-numpy-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> breed3(parent1, parent2, point1, point2):</span>
+<span id="lst-numpy-3"><a href="#lst-numpy-3" aria-hidden="true" tabindex="-1"></a>    </span>
+<a class="code-annotation-anchor" data-target-cell="lst-numpy" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="lst-numpy-4" class="code-annotation-target"><a href="#lst-numpy-4" aria-hidden="true" tabindex="-1"></a>    mid_chunk <span class="op">=</span> np.array(parent1[point1:point2])</span>
+<span id="lst-numpy-5"><a href="#lst-numpy-5" aria-hidden="true" tabindex="-1"></a></span>
+<a class="code-annotation-anchor" data-target-cell="lst-numpy" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="lst-numpy-6" class="code-annotation-target"><a href="#lst-numpy-6" aria-hidden="true" tabindex="-1"></a>    remaining_elements <span class="op">=</span> np.array(parent2)[<span class="op">~</span>np.isin(parent2, mid_chunk).<span class="bu">all</span>(axis<span class="op">=</span><span class="dv">1</span>)]</span>
+<span id="lst-numpy-7"><a href="#lst-numpy-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<a class="code-annotation-anchor" data-target-cell="lst-numpy" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="lst-numpy-8" class="code-annotation-target"><a href="#lst-numpy-8" aria-hidden="true" tabindex="-1"></a>    child <span class="op">=</span> np.concatenate((remaining_elements[:point1], mid_chunk, remaining_elements[point1:]))</span>
+<span id="lst-numpy-9"><a href="#lst-numpy-9" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="lst-numpy-10"><a href="#lst-numpy-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> mutate(child)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="lst-numpy" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-annotation="1" data-code-cell="lst-numpy" data-code-lines="4"><strong>Creating Mid Chunk:</strong> <code>parent1[point1:point2]</code> selects a chunk of elements from <code>parent1</code> between indices <code>point1</code> (inclusive) and <code>point2</code> (exclusive). <code>np.array(...)</code> converts this chunk into a NumPy array and assigns it to mid_chunk.</span>
+</dd>
+<dt data-target-cell="lst-numpy" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-annotation="2" data-code-cell="lst-numpy" data-code-lines="6"><strong>Boolean Indexing and Filtering:</strong> <code>np.isin(parent2, mid_chunk)</code> creates a boolean array of the same shape as <code>parent2</code>, where <code>True</code> indicates the elements of <code>parent2</code> that are also present in <code>mid_chunk</code>. <code>all(axis=1)</code> checks along each row if all elements are <code>True</code>. <code>~</code> negates the boolean array, so <code>True</code> becomes <code>False</code> and vice versa. This boolean array is used to filter out rows from <code>parent2</code> where all elements match those in <code>mid_chunk</code>. The selected rows (remaining elements) are converted into a NumPy array and assigned to <code>remaining_elements</code>.</span>
+</dd>
+<dt data-target-cell="lst-numpy" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-annotation="3" data-code-cell="lst-numpy" data-code-lines="8"><strong>Concatenation:</strong> <code>np.concatenate(...)</code> concatenates the remaining elements before <code>point1</code>, the <code>mid_chunk</code>, and the remaining elements after <code>point1</code>. The result is a NumPy array representing the child.</span>
+</dd>
+</dl>
+</section>
+<section id="parallel-processing" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="parallel-processing"><span class="header-section-number">2.2</span> Parallel Processing</h2>
+<p>Allows the user to choose between multithreading(<a href="#lst-thread">Listing&nbsp;2</a>) or multiprocessing(<a href="#lst-proc">Listing&nbsp;3</a>) for creating children concurrently. Uses ThreadPoolExecutor and ProcessPoolExecutor for efficient parallel execution.</p>
+<div class="code-with-filename listing">
+<p>Listing&nbsp;2<strong>.</strong> Python Multithread Function</p>
+<div class="code-with-filename-file">
+<pre><strong>genalg.py</strong></pre>
+</div>
+<div class="sourceCode" id="lst-thread" data-lst-cap="Python Multithread Function"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="lst-thread-1"><a href="#lst-thread-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Fastest version of create children using multithreading</span></span>
+<span id="lst-thread-2"><a href="#lst-thread-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> multithread_create_children(parents):</span>
+<span id="lst-thread-3"><a href="#lst-thread-3" aria-hidden="true" tabindex="-1"></a>    children <span class="op">=</span> []</span>
+<span id="lst-thread-4"><a href="#lst-thread-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># sets num of threads based on cpu count</span></span>
+<span id="lst-thread-5"><a href="#lst-thread-5" aria-hidden="true" tabindex="-1"></a>    num_threads <span class="op">=</span> os.cpu_count()</span>
+<span id="lst-thread-6"><a href="#lst-thread-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">#split parent population amound the threads</span></span>
+<span id="lst-thread-7"><a href="#lst-thread-7" aria-hidden="true" tabindex="-1"></a>    parent_chunks <span class="op">=</span> np.array_split(parents, num_threads)</span>
+<span id="lst-thread-8"><a href="#lst-thread-8" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="lst-thread-9"><a href="#lst-thread-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">#start all threads</span></span>
+<span id="lst-thread-10"><a href="#lst-thread-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> ThreadPoolExecutor(max_workers<span class="op">=</span>num_threads) <span class="im">as</span> executor:</span>
+<span id="lst-thread-11"><a href="#lst-thread-11" aria-hidden="true" tabindex="-1"></a>        futures <span class="op">=</span> {executor.submit(normal_create_children, chunk): chunk <span class="cf">for</span> chunk <span class="kw">in</span> parent_chunks}</span>
+<span id="lst-thread-12"><a href="#lst-thread-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> future <span class="kw">in</span> as_completed(futures):</span>
+<span id="lst-thread-13"><a href="#lst-thread-13" aria-hidden="true" tabindex="-1"></a>            data <span class="op">=</span> future.result()</span>
+<span id="lst-thread-14"><a href="#lst-thread-14" aria-hidden="true" tabindex="-1"></a>            children.append(data)</span>
+<span id="lst-thread-15"><a href="#lst-thread-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst-thread-16"><a href="#lst-thread-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.concatenate(children)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="code-with-filename listing">
+<p>Listing&nbsp;3<strong>.</strong> Python Multiprocess function</p>
+<div class="code-with-filename-file">
+<pre><strong>genalg.py</strong></pre>
+</div>
+<div class="sourceCode" id="lst-proc" data-lst-cap="Python Multiprocess function"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="lst-proc-1"><a href="#lst-proc-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Mulitprocessing version of create children</span></span>
+<span id="lst-proc-2"><a href="#lst-proc-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> multiprocess_create_children(parents):</span>
+<span id="lst-proc-3"><a href="#lst-proc-3" aria-hidden="true" tabindex="-1"></a>    children <span class="op">=</span> []</span>
+<span id="lst-proc-4"><a href="#lst-proc-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># sets number of processes based on cpu count </span></span>
+<span id="lst-proc-5"><a href="#lst-proc-5" aria-hidden="true" tabindex="-1"></a>    num_processes <span class="op">=</span> os.cpu_count()</span>
+<span id="lst-proc-6"><a href="#lst-proc-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst-proc-7"><a href="#lst-proc-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># splits up the parent population into chunks according to the num of processes</span></span>
+<span id="lst-proc-8"><a href="#lst-proc-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> ProcessPoolExecutor(max_workers<span class="op">=</span>num_processes) <span class="im">as</span> executor:</span>
+<span id="lst-proc-9"><a href="#lst-proc-9" aria-hidden="true" tabindex="-1"></a>        parent_chunks <span class="op">=</span> np.array_split(parents, num_processes)</span>
+<span id="lst-proc-10"><a href="#lst-proc-10" aria-hidden="true" tabindex="-1"></a>        futures <span class="op">=</span> {executor.submit(normal_create_children, chunk): chunk <span class="cf">for</span> chunk <span class="kw">in</span> parent_chunks}</span>
+<span id="lst-proc-11"><a href="#lst-proc-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> future <span class="kw">in</span> as_completed(futures):</span>
+<span id="lst-proc-12"><a href="#lst-proc-12" aria-hidden="true" tabindex="-1"></a>            data <span class="op">=</span> future.result()</span>
+<span id="lst-proc-13"><a href="#lst-proc-13" aria-hidden="true" tabindex="-1"></a>            children.append(data)</span>
+<span id="lst-proc-14"><a href="#lst-proc-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst-proc-15"><a href="#lst-proc-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.concatenate(children)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="mojo-implementation" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Mojo Implementation</h1>
+<p>The <code>breed3</code> function(<a href="#lst-mojobreed">Listing&nbsp;4</a>) is designed for efficient crossover operations. It initializes a child matrix as a copy of the first parent matrix and then iterates over tile sizes of 8 rows in the second parent matrix. Utilizing the <code>isin_matrix_forbools_more</code> function(<a href="#lst-matrix">Listing&nbsp;5</a>), it identifies elements in the second parent matrix that are not in the designated segment of the child matrix, inserting these elements at the appropriate locations.</p>
+<p>The <code>isin_matrix_forbools_more</code> function(<a href="#lst-matrix">Listing&nbsp;5</a>) performs boolean checks using SIMD operations allowing for a vectorization of the comparisons. The function initializes a SIMD vector of boolean values and iterates over tile sizes of 4 rows in the input matrix. It loads the <code>X</code> values of these rows into a SIMD vector and compares each element with each <code>X</code> value in the second parent matrix tile selected. If any match is found, then it performs a check of full rows(<code>X</code> and <code>Y</code> values) between the input matrix tile and the parent matrix tile. When matches are found the boolean value in the SIMD vector is set to <code>True</code> indicating which elements have matched and where they are located. The function then returns the resulting SIMD vector, which is used to perform the crossover.</p>
+<p>Together, these functions leverage vectorization, SIMD operations, and tiling strategies to enhance the performance of genetic algorithm operations, specifically crossover and boolean checks, making them more efficient and suitable for large-scale optimization problems.</p>
+<div class="code-with-filename listing">
+<p>Listing&nbsp;4<strong>.</strong> Mojo Breed Function</p>
+<div class="code-with-filename-file">
+<pre><strong>genalg.mojo</strong></pre>
+</div>
+<div class="sourceCode" id="lst-mojobreed" data-lst-cap="Mojo Breed Function"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="lst-mojobreed-1"><a href="#lst-mojobreed-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to perform a two-parent crossover</span></span>
+<span id="lst-mojobreed-2"><a href="#lst-mojobreed-2" aria-hidden="true" tabindex="-1"></a>fn breed3(inout child: Matrix[type_f64], borrowed parent1: Matrix[type_f64], borrowed parent2: Matrix[type_f64], borrowed point1: Int, borrowed point2: Int) raises <span class="op">-&gt;</span> <span class="va">None</span>:</span>
+<span id="lst-mojobreed-3"><a href="#lst-mojobreed-3" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="lst-mojobreed-4"><a href="#lst-mojobreed-4" aria-hidden="true" tabindex="-1"></a>    child <span class="op">=</span> parent1.copy()</span>
+<span id="lst-mojobreed-5"><a href="#lst-mojobreed-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst-mojobreed-6"><a href="#lst-mojobreed-6" aria-hidden="true" tabindex="-1"></a>    var counter <span class="op">=</span> <span class="dv">0</span></span>
+<span id="lst-mojobreed-7"><a href="#lst-mojobreed-7" aria-hidden="true" tabindex="-1"></a></span>
+<a class="code-annotation-anchor" data-target-cell="lst-mojobreed" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="lst-mojobreed-8" class="code-annotation-target"><a href="#lst-mojobreed-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> parent_row <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>,parent2.rows,<span class="dv">8</span>):</span>
+<span id="lst-mojobreed-9"><a href="#lst-mojobreed-9" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="lst-mojobreed-10"><a href="#lst-mojobreed-10" aria-hidden="true" tabindex="-1"></a>        let bools <span class="op">=</span> child.isin_matrix_forbools_more(point1,point2,parent2,parent_row)</span>
+<span id="lst-mojobreed-11"><a href="#lst-mojobreed-11" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="lst-mojobreed-12"><a href="#lst-mojobreed-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">@unroll</span></span>
+<a class="code-annotation-anchor" data-target-cell="lst-mojobreed" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="lst-mojobreed-13" class="code-annotation-target"><a href="#lst-mojobreed-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(bools.<span class="fu">__len__</span>()):</span>
+<span id="lst-mojobreed-14"><a href="#lst-mojobreed-14" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="kw">not</span> bools[i]:</span>
+<span id="lst-mojobreed-15"><a href="#lst-mojobreed-15" aria-hidden="true" tabindex="-1"></a>                child[counter] <span class="op">=</span> parent2[parent_row<span class="op">+</span>i]</span>
+<span id="lst-mojobreed-16"><a href="#lst-mojobreed-16" aria-hidden="true" tabindex="-1"></a>                counter <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="lst-mojobreed-17"><a href="#lst-mojobreed-17" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> counter <span class="op">==</span> point1:</span>
+<span id="lst-mojobreed-18"><a href="#lst-mojobreed-18" aria-hidden="true" tabindex="-1"></a>                    counter <span class="op">=</span> point2</span>
+<span id="lst-mojobreed-19"><a href="#lst-mojobreed-19" aria-hidden="true" tabindex="-1"></a>                <span class="cf">elif</span> counter <span class="op">&gt;</span> child.rows:</span>
+<span id="lst-mojobreed-20"><a href="#lst-mojobreed-20" aria-hidden="true" tabindex="-1"></a>                    <span class="bu">print</span>(<span class="st">'Counter gone over: '</span>,counter)</span>
+<span id="lst-mojobreed-21"><a href="#lst-mojobreed-21" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="lst-mojobreed-22"><a href="#lst-mojobreed-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> counter <span class="op">&lt;</span> child.rows<span class="op">-</span><span class="dv">1</span>:</span>
+<span id="lst-mojobreed-23"><a href="#lst-mojobreed-23" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"Didn't find a match that actually exists"</span>)</span>
+<span id="lst-mojobreed-24"><a href="#lst-mojobreed-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst-mojobreed-25"><a href="#lst-mojobreed-25" aria-hidden="true" tabindex="-1"></a>    counter <span class="op">=</span> <span class="dv">0</span></span>
+<span id="lst-mojobreed-26"><a href="#lst-mojobreed-26" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="lst-mojobreed-27"><a href="#lst-mojobreed-27" aria-hidden="true" tabindex="-1"></a>    mutate(child)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="lst-mojobreed" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-annotation="1" data-code-cell="lst-mojobreed" data-code-lines="8,10"><strong>Crossover Loop:</strong> Iterates over rows of <code>parent2</code> in tiles of 8 to perform SIMD vectorization comparisons in <code>isin_matrix_forbools_more</code> function. For each tile, it determines if the elements are present in the corresponding chunk between <code>point1</code> and <code>point2</code> of the child matrix.</span>
+</dd>
+<dt data-target-cell="lst-mojobreed" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-annotation="2" data-code-cell="lst-mojobreed" data-code-lines="13,14,15,16,17,18,19,20"><strong>Incorporating Elements:</strong> If an element in the tile of <code>parent2</code> is not present in the chunk between <code>point1</code> and <code>point2</code> of the child matrix, it is added to <code>child</code>. The SIMD boolean vector, <code>bool</code>, generated by <code>isin_matrix_forbools_more</code> function indicates whether matches are found and where they are located in the tile on <code>parent2</code>. The counter is adjusted based on <code>point1</code> and <code>point2</code> to control the crossover points. There’s a check to print a warning if the counter exceeds the size of the child matrix.</span>
+</dd>
+</dl>
+<div class="code-with-filename listing">
+<p>Listing&nbsp;5<strong>.</strong> Mojo Element Comparison Function</p>
+<div class="code-with-filename-file">
+<pre><strong>stack.mojo</strong></pre>
+</div>
+<div class="sourceCode" id="lst-matrix" data-lst-cap="Mojo Element Comparison Function"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="lst-matrix-1"><a href="#lst-matrix-1" aria-hidden="true" tabindex="-1"></a>fn isin_matrix_forbools_more(borrowed <span class="va">self</span>, borrowed start: Int, borrowed end: Int, borrowed val: Matrix[T], borrowed pnt1: Int) <span class="op">-&gt;</span> SIMD[DType.<span class="bu">bool</span>,<span class="dv">8</span>]:</span>
+<a class="code-annotation-anchor" data-target-cell="lst-matrix" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="lst-matrix-2" class="code-annotation-target"><a href="#lst-matrix-2" aria-hidden="true" tabindex="-1"></a>        var value_bools <span class="op">=</span> SIMD[DType.<span class="bu">bool</span>,<span class="dv">8</span>](<span class="va">False</span>)</span>
+<span id="lst-matrix-3"><a href="#lst-matrix-3" aria-hidden="true" tabindex="-1"></a>        </span>
+<a class="code-annotation-anchor" data-target-cell="lst-matrix" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="lst-matrix-4" class="code-annotation-target"><a href="#lst-matrix-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> row <span class="kw">in</span> <span class="bu">range</span>(start,end, <span class="dv">4</span>):</span>
+<span id="lst-matrix-5"><a href="#lst-matrix-5" aria-hidden="true" tabindex="-1"></a>            let loaded_rows <span class="op">=</span> <span class="va">self</span>.x_load_four(row)</span>
+<span id="lst-matrix-6"><a href="#lst-matrix-6" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="lst-matrix-7"><a href="#lst-matrix-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">@unroll</span> </span>
+<a class="code-annotation-anchor" data-target-cell="lst-matrix" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="lst-matrix-8" class="code-annotation-target"><a href="#lst-matrix-8" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(value_bools.<span class="fu">__len__</span>()):</span>
+<span id="lst-matrix-9"><a href="#lst-matrix-9" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> any_true[<span class="dv">4</span>](loaded_rows <span class="op">==</span> val[i<span class="op">+</span>pnt1,<span class="dv">0</span>]):</span>
+<span id="lst-matrix-10"><a href="#lst-matrix-10" aria-hidden="true" tabindex="-1"></a>                    </span>
+<a class="code-annotation-anchor" data-target-cell="lst-matrix" data-target-annotation="4" onclick="event.preventDefault();">4</a><span id="lst-matrix-11" class="code-annotation-target"><a href="#lst-matrix-11" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">if</span> <span class="va">self</span>[row] <span class="op">==</span> val[i<span class="op">+</span>pnt1]:</span>
+<span id="lst-matrix-12"><a href="#lst-matrix-12" aria-hidden="true" tabindex="-1"></a>                        value_bools[i] <span class="op">=</span> <span class="va">True</span></span>
+<span id="lst-matrix-13"><a href="#lst-matrix-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst-matrix-14"><a href="#lst-matrix-14" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">if</span> <span class="va">self</span>[row<span class="op">+</span><span class="dv">1</span>] <span class="op">==</span> val[i<span class="op">+</span>pnt1]:</span>
+<span id="lst-matrix-15"><a href="#lst-matrix-15" aria-hidden="true" tabindex="-1"></a>                        value_bools[i] <span class="op">=</span> <span class="va">True</span></span>
+<span id="lst-matrix-16"><a href="#lst-matrix-16" aria-hidden="true" tabindex="-1"></a>                    </span>
+<span id="lst-matrix-17"><a href="#lst-matrix-17" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">if</span> <span class="va">self</span>[row<span class="op">+</span><span class="dv">2</span>] <span class="op">==</span> val[i<span class="op">+</span>pnt1]:</span>
+<span id="lst-matrix-18"><a href="#lst-matrix-18" aria-hidden="true" tabindex="-1"></a>                        value_bools[i] <span class="op">=</span> <span class="va">True</span></span>
+<span id="lst-matrix-19"><a href="#lst-matrix-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst-matrix-20"><a href="#lst-matrix-20" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">if</span> <span class="va">self</span>[row<span class="op">+</span><span class="dv">3</span>] <span class="op">==</span> val[i<span class="op">+</span>pnt1]:</span>
+<span id="lst-matrix-21"><a href="#lst-matrix-21" aria-hidden="true" tabindex="-1"></a>                        value_bools[i] <span class="op">=</span> <span class="va">True</span></span>
+<span id="lst-matrix-22"><a href="#lst-matrix-22" aria-hidden="true" tabindex="-1"></a></span>
+<a class="code-annotation-anchor" data-target-cell="lst-matrix" data-target-annotation="5" onclick="event.preventDefault();">5</a><span id="lst-matrix-23" class="code-annotation-target"><a href="#lst-matrix-23" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> value_bools</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="lst-matrix" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-annotation="1" data-code-cell="lst-matrix" data-code-lines="2"><strong>Initialization:</strong> A SIMD boolean vector of size 8 (<code>value_bools</code>) is initialized with all elements set to <code>False</code>.</span>
+</dd>
+<dt data-target-cell="lst-matrix" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-annotation="2" data-code-cell="lst-matrix" data-code-lines="4,5"><strong>Main Loop:</strong> The function iterates over rows of <code>self</code> in tile size of 4. For SIMD optimization it loads 4 rows of <code>x</code> coordinates at a time using <code>x_load_four</code>.</span>
+</dd>
+<dt data-target-cell="lst-matrix" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-annotation="3" data-code-cell="lst-matrix" data-code-lines="8,9"><strong>Element-wise Comparison for X:</strong> The function checks if any of the <code>X</code> coordinates in the loaded rows are equal to the corresponding element in the <code>val</code> matrix for each of the 8 positions in the tile. If a match is found, then go on to check the full <code>X</code> and <code>Y</code> coordinates.</span>
+</dd>
+<dt data-target-cell="lst-matrix" data-target-annotation="4">4</dt>
+<dd>
+<span data-code-annotation="4" data-code-cell="lst-matrix" data-code-lines="11,12,14,15,17,18,20,21"><strong>Full Element-wise Comparison:</strong> The function further checks which of the 4 rows of the tile for <code>self</code> have a match in the 8 rows of the tile for <code>val</code>. Where matches are found, the corresponding element in <code>value_bools</code> is set to <code>True</code>.</span>
+</dd>
+<dt data-target-cell="lst-matrix" data-target-annotation="5">5</dt>
+<dd>
+<span data-code-annotation="5" data-code-cell="lst-matrix" data-code-lines="23"><strong>Result:</strong> The function returns the SIMD boolean vector <code>value_bools</code>, where each element indicates whether the corresponding element was found in the comparison and where it is located.</span>
+</dd>
+</dl>
+</section>
+<section id="appendix" class="level1 unnumbered">
+<h1 class="unnumbered">Appendix</h1>
+<section id="mojo-language" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="mojo-language">Mojo Language</h2>
+<p>View Mojo <a href="https://www.modular.com/max/mojo">documentation</a>.</p>
+</section>
+<section id="deployment" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="deployment">Deployment</h2>
+<section id="source-code" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="source-code">Source Code</h3>
+<p>View the source code for the app deployment on the HuggingFace <a href="https://huggingface.co/spaces/btoews/travelling-salesmen-python-vs-mojo/tree/main">repository</a>.</p>
+</section>
+<section id="gradio-app" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="gradio-app">Gradio App</h3>
+<p>View <a href="https://btoews-travelling-salesmen-python-vs-mojo.hf.space">Gradio app</a> deployment hosted on HuggingFace.</p>
+</section>
+<section id="deployment-resources" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="deployment-resources">Deployment Resources</h3>
+<p><strong>Hugging Face</strong> - AI community &amp; place to host ML deployments<br>
+<a href="https://huggingface.co/" class="uri">https://huggingface.co/</a></p>
+<p><strong>Gradio</strong> - Open-source Python library used to build machine learning/data science demos &amp; web applications<br>
+<a href="https://www.gradio.app/" class="uri">https://www.gradio.app/</a></p>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

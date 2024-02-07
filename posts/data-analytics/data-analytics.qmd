@@ -36,7 +36,7 @@ In this section, we elaborate on the steps taken to clean the dataset obtained f
 View [Ookla](https://github.com/teamookla/ookla-open-data) dataset on `ookla-open-data` repository.
 :::
 
-::: {.callout-tip collapse="true"}
+::: {.callout-note collapse="true"}
 ## Description Section Source Code
 
 View [Description.ipynb](https://github.com/brandon-toews/data-analytics-assignment/blob/main/Description.ipynb) notebook for this section.
@@ -68,7 +68,7 @@ The resulting cleaned dataset, now saved as 'cleaned_dataset.parquet', comprises
 
 In this section, we delve into the exploratory data analysis (EDA) process, aiming to comprehend the underlying distributions, compare fixed and mobile network data, and identify any notable correlations. Recognizing that the initial data exhibited heavily positively skewed distributions, we undertook a series of data transformations to bring the distributions closer to normality. The primary objective was to enhance the suitability of the data for subsequent hypothesis testing.
 
-::: {.callout-tip collapse="true"}
+::: {.callout-note collapse="true"}
 ## Comprehensive Data Analysis Section Source Code
 
 View [Analysis.ipynb](https://github.com/brandon-toews/data-analytics-assignment/blob/main/Analysis.ipynb) notebook for this section.
@@ -210,7 +210,7 @@ The described EDA and distribution transformations constitute a critical phase i
 
 This section explores the variability and average download speed differences between fixed and mobile networks. Our goal is to determine if the standard deviation of `avg_d_mbps` varies significantly between the networks, providing insights into their consistency, and to establish whether one network has significantly higher average download speeds.
 
-::: {.callout-tip collapse="true"}
+::: {.callout-note collapse="true"}
 ## Hypothesis Definition and Testing Section Source Code
 
 View [Hypothesis_Testing.ipynb](https://github.com/brandon-toews/data-analytics-assignment/blob/main/Hypothesis_Testing.ipynb) notebook for this section.
@@ -275,7 +275,7 @@ Our multifaceted analysis, incorporating Levene's test, F-test, t-tests on both 
 
 # Implementation
 
-::: {.callout-tip collapse="true"}
+::: {.callout-note collapse="true"}
 ## Implementation Section Source Code
 
 View [ML_Models.ipynb](https://github.com/brandon-toews/data-analytics-assignment/blob/main/ML_Models.ipynb) notebook for this section.
