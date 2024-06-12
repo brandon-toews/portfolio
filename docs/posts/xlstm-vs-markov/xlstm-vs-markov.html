@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Brandon Toews">
+<meta name="dcterms.date" content="2024-05-13">
+<meta name="description" content="Compare univariate and multivariate xLSTM models against Markov Chain model to predict future values based on historical temporal sequence weather data.">
+
+<title>portfolio - Time Series Forecasting xLSTM vs Markov Chain</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+<link rel="stylesheet" href="../../styles.css">
+<meta name="twitter:title" content="portfolio - Time Series Forecasting xLSTM vs Markov Chain">
+<meta name="twitter:description" content="Compare univariate and multivariate xLSTM models against Markov Chain model to predict future values based on historical temporal sequence weather data.">
+<meta name="twitter:image" content="https://brandon-toews.github.io/portfolio/posts/xlstm-vs-markov/model_comp_plt.png">
+<meta name="twitter:image-height" content="480">
+<meta name="twitter:image-width" content="640">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">portfolio</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html" rel="" target="">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/brandon-toews" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <div class="quarto-title-block"><div><h1 class="title">Time Series Forecasting xLSTM vs Markov Chain</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source" data-quarto-source-url="https://github.com/brandon-toews/xlstm-vs-markov"><i class="bi"></i> Code</button></div></div>
+                  <div>
+        <div class="description">
+          Compare univariate and multivariate xLSTM models against Markov Chain model to predict future values based on historical temporal sequence weather data.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">AI / Machine Learning</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Brandon Toews </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">May 13, 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#lstm-model" id="toc-lstm-model" class="nav-link active" data-scroll-target="#lstm-model"><span class="header-section-number">1</span> LSTM Model</a>
+  <ul class="collapse">
+  <li><a href="#data-preprocessing" id="toc-data-preprocessing" class="nav-link" data-scroll-target="#data-preprocessing"><span class="header-section-number">1.1</span> Data Preprocessing</a>
+  <ul class="collapse">
+  <li><a href="#step-by-step-description" id="toc-step-by-step-description" class="nav-link" data-scroll-target="#step-by-step-description"><span class="header-section-number">1.1.1</span> Step-by-Step Description</a></li>
+  <li><a href="#justifications" id="toc-justifications" class="nav-link" data-scroll-target="#justifications"><span class="header-section-number">1.1.2</span> Justifications</a></li>
+  </ul></li>
+  <li><a href="#lstm-model-architecture" id="toc-lstm-model-architecture" class="nav-link" data-scroll-target="#lstm-model-architecture"><span class="header-section-number">1.2</span> LSTM Model Architecture</a>
+  <ul class="collapse">
+  <li><a href="#step-by-step-description-1" id="toc-step-by-step-description-1" class="nav-link" data-scroll-target="#step-by-step-description-1"><span class="header-section-number">1.2.1</span> Step-by-Step Description</a></li>
+  <li><a href="#justifications-1" id="toc-justifications-1" class="nav-link" data-scroll-target="#justifications-1"><span class="header-section-number">1.2.2</span> Justifications</a></li>
+  </ul></li>
+  <li><a href="#temporal-sequence-input-mechanism" id="toc-temporal-sequence-input-mechanism" class="nav-link" data-scroll-target="#temporal-sequence-input-mechanism"><span class="header-section-number">1.3</span> Temporal Sequence Input Mechanism</a></li>
+  <li><a href="#training-process" id="toc-training-process" class="nav-link" data-scroll-target="#training-process"><span class="header-section-number">1.4</span> Training Process</a>
+  <ul class="collapse">
+  <li><a href="#step-by-step-description-2" id="toc-step-by-step-description-2" class="nav-link" data-scroll-target="#step-by-step-description-2"><span class="header-section-number">1.4.1</span> Step-by-Step Description</a></li>
+  <li><a href="#justifications-2" id="toc-justifications-2" class="nav-link" data-scroll-target="#justifications-2"><span class="header-section-number">1.4.2</span> Justifications</a></li>
+  </ul></li>
+  <li><a href="#evaluation" id="toc-evaluation" class="nav-link" data-scroll-target="#evaluation"><span class="header-section-number">1.5</span> Evaluation</a>
+  <ul class="collapse">
+  <li><a href="#step-by-step-description-3" id="toc-step-by-step-description-3" class="nav-link" data-scroll-target="#step-by-step-description-3"><span class="header-section-number">1.5.1</span> Step-by-Step Description</a></li>
+  <li><a href="#justifications-3" id="toc-justifications-3" class="nav-link" data-scroll-target="#justifications-3"><span class="header-section-number">1.5.2</span> Justifications</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#markov-chain-model" id="toc-markov-chain-model" class="nav-link" data-scroll-target="#markov-chain-model"><span class="header-section-number">2</span> Markov Chain Model</a>
+  <ul class="collapse">
+  <li><a href="#order-selection" id="toc-order-selection" class="nav-link" data-scroll-target="#order-selection"><span class="header-section-number">2.1</span> Order Selection</a>
+  <ul class="collapse">
+  <li><a href="#step-by-step-description-4" id="toc-step-by-step-description-4" class="nav-link" data-scroll-target="#step-by-step-description-4"><span class="header-section-number">2.1.1</span> Step-by-Step Description</a></li>
+  <li><a href="#justifications-4" id="toc-justifications-4" class="nav-link" data-scroll-target="#justifications-4"><span class="header-section-number">2.1.2</span> Justifications</a></li>
+  </ul></li>
+  <li><a href="#transition-probabilities" id="toc-transition-probabilities" class="nav-link" data-scroll-target="#transition-probabilities"><span class="header-section-number">2.2</span> Transition Probabilities</a>
+  <ul class="collapse">
+  <li><a href="#step-by-step-description-5" id="toc-step-by-step-description-5" class="nav-link" data-scroll-target="#step-by-step-description-5"><span class="header-section-number">2.2.1</span> Step-by-Step Description</a></li>
+  <li><a href="#justifications-5" id="toc-justifications-5" class="nav-link" data-scroll-target="#justifications-5"><span class="header-section-number">2.2.2</span> Justifications</a></li>
+  </ul></li>
+  <li><a href="#temporal-sequence-input" id="toc-temporal-sequence-input" class="nav-link" data-scroll-target="#temporal-sequence-input"><span class="header-section-number">2.3</span> Temporal Sequence Input</a></li>
+  <li><a href="#prediction-mechanism" id="toc-prediction-mechanism" class="nav-link" data-scroll-target="#prediction-mechanism"><span class="header-section-number">2.4</span> Prediction Mechanism</a></li>
+  <li><a href="#evaluation-1" id="toc-evaluation-1" class="nav-link" data-scroll-target="#evaluation-1"><span class="header-section-number">2.5</span> Evaluation</a>
+  <ul class="collapse">
+  <li><a href="#step-by-step-description-6" id="toc-step-by-step-description-6" class="nav-link" data-scroll-target="#step-by-step-description-6"><span class="header-section-number">2.5.1</span> Step-by-Step Description</a></li>
+  <li><a href="#justifications-6" id="toc-justifications-6" class="nav-link" data-scroll-target="#justifications-6"><span class="header-section-number">2.5.2</span> Justifications</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p><br>
+</p>
+<p><img src="model_comp_plt.png" class="img-fluid"></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Project Description
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Use <a href="https://github.com/meteostat/meteostat-python">Meteostat</a> python library and take one form of weather data. Predict future values based on the historical temporal sequence. The objective is to leverage the temporal dependencies within the data to create an effective predictive model.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Dataset
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The dataset is structured around daily weather measurements, specifically fetched for Vancouver, BC, Canada. Data retrieval is facilitated by the <a href="https://github.com/meteostat/meteostat-python">Meteostat</a> library’s Daily class, which allows for the acquisition of historical daily weather data. A geographic point is defined for Vancouver (latitude 49.2497, longitude -123.1193, altitude 70 meters) using the Point class, pinpointing the exact location for which the data is collected. The data covers a complete calendar year from January 1, 2018, to December 31, 2018.</p>
+</div>
+</div>
+</div>
+<section id="lstm-model" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> LSTM Model</h1>
+<p>This implementation adopts the xLSTM model as presented by <a href="https://doi.org/10.48550/arXiv.2405.04517">Beck, M. et al.&nbsp;(2024)</a>, which introduces significant enhancements over traditional LSTM models. The xLSTM is designed to address specific limitations of conventional LSTMs by incorporating novel architectural features that improve both performance and scalability. The implementation by <a href="https://github.com/andrewgcodes/xlstm">andrewgcodes. (2024)</a> was augmented and expanded upon to fuel the creation of custom classes to address this specific project.</p>
+<section id="data-preprocessing" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="data-preprocessing"><span class="header-section-number">1.1</span> Data Preprocessing</h2>
+<section id="step-by-step-description" class="level3" data-number="1.1.1">
+<h3 data-number="1.1.1" class="anchored" data-anchor-id="step-by-step-description"><span class="header-section-number">1.1.1</span> Step-by-Step Description</h3>
+<ul>
+<li><strong>Normalization:</strong> Each feature in the dataset is scaled to a range between 0 and 1 based on its minimum and maximum values. This normalization ensures uniformity in feature scale, which is essential for neural network models like LSTM, which are sensitive to input scale variations (<a href="#lst-normalize">Listing&nbsp;1</a>).</li>
+</ul>
+<div class="code-with-filename listing">
+<p>Listing&nbsp;1<strong>.</strong> Normalize data while extracting features for model training, validation, and testing.</p>
+<div class="code-with-filename-file">
+<pre><strong>main.py</strong></pre>
+</div>
+<div class="sourceCode" id="lst-normalize" data-lst-cap="Normalize data while extracting features for model training, validation, and testing."><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="lst-normalize-1"><a href="#lst-normalize-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a function to extract features from the data</span></span>
+<span id="lst-normalize-2"><a href="#lst-normalize-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> extract_features(data, features):</span>
+<span id="lst-normalize-3"><a href="#lst-normalize-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get the specified features</span></span>
+<span id="lst-normalize-4"><a href="#lst-normalize-4" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> data[features]</span>
+<span id="lst-normalize-5"><a href="#lst-normalize-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst-normalize-6"><a href="#lst-normalize-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Find the minimum and maximum values of the data</span></span>
+<span id="lst-normalize-7"><a href="#lst-normalize-7" aria-hidden="true" tabindex="-1"></a>    data_min <span class="op">=</span> data.<span class="bu">min</span>()</span>
+<span id="lst-normalize-8"><a href="#lst-normalize-8" aria-hidden="true" tabindex="-1"></a>    data_max <span class="op">=</span> data.<span class="bu">max</span>()</span>
+<span id="lst-normalize-9"><a href="#lst-normalize-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst-normalize-10"><a href="#lst-normalize-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Normalize the data</span></span>
+<span id="lst-normalize-11"><a href="#lst-normalize-11" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> (data <span class="op">-</span> data_min) <span class="op">/</span> (data_max <span class="op">-</span> data_min)</span>
+<span id="lst-normalize-12"><a href="#lst-normalize-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst-normalize-13"><a href="#lst-normalize-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Split data into train (60%), val (20%), and test (20%) sets</span></span>
+<span id="lst-normalize-14"><a href="#lst-normalize-14" aria-hidden="true" tabindex="-1"></a>    train, val, test <span class="op">=</span> (data[:<span class="bu">int</span>(<span class="fl">0.6</span> <span class="op">*</span> <span class="bu">len</span>(data))].values,</span>
+<span id="lst-normalize-15"><a href="#lst-normalize-15" aria-hidden="true" tabindex="-1"></a>                        data[<span class="bu">int</span>(<span class="fl">0.6</span> <span class="op">*</span> <span class="bu">len</span>(data)):<span class="bu">int</span>(<span class="fl">0.8</span> <span class="op">*</span> <span class="bu">len</span>(data))].values, data[<span class="bu">int</span>(<span class="fl">0.8</span> <span class="op">*</span> <span class="bu">len</span>(data)):].values)</span>
+<span id="lst-normalize-16"><a href="#lst-normalize-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst-normalize-17"><a href="#lst-normalize-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Convert to PyTorch tensors and reshape</span></span>
+<span id="lst-normalize-18"><a href="#lst-normalize-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># The shape of the data should be (batch_size, sequence_length, num_features)</span></span>
+<span id="lst-normalize-19"><a href="#lst-normalize-19" aria-hidden="true" tabindex="-1"></a>    train_tensor <span class="op">=</span> torch.tensor(train).<span class="bu">float</span>().view(<span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>, <span class="bu">len</span>(features))</span>
+<span id="lst-normalize-20"><a href="#lst-normalize-20" aria-hidden="true" tabindex="-1"></a>    val_tensor <span class="op">=</span> torch.tensor(val).<span class="bu">float</span>().view(<span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>, <span class="bu">len</span>(features))</span>
+<span id="lst-normalize-21"><a href="#lst-normalize-21" aria-hidden="true" tabindex="-1"></a>    test_tensor <span class="op">=</span> torch.tensor(test).<span class="bu">float</span>().view(<span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>, <span class="bu">len</span>(features))</span>
+<span id="lst-normalize-22"><a href="#lst-normalize-22" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Return the tensors and the min/max values</span></span>
+<span id="lst-normalize-23"><a href="#lst-normalize-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> train_tensor, val_tensor, test_tensor, data_min, data_max</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><strong>Handling Missing Data:</strong> Missing data points are interpolated linearly, maintaining the continuity and integrity of the time series, which is essential for accurate forecasting (<a href="#lst-interpolate">Listing&nbsp;2</a>).</li>
+</ul>
+<div class="code-with-filename listing">
+<p>Listing&nbsp;2<strong>.</strong> Interpolate missing data.</p>
+<div class="code-with-filename-file">
+<pre><strong>main.py</strong></pre>
+</div>
+<div class="sourceCode" id="lst-interpolate" data-lst-cap="Interpolate missing data."><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="lst-interpolate-1"><a href="#lst-interpolate-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set time period</span></span>
+<span id="lst-interpolate-2"><a href="#lst-interpolate-2" aria-hidden="true" tabindex="-1"></a>start <span class="op">=</span> datetime(<span class="dv">2018</span>, <span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="lst-interpolate-3"><a href="#lst-interpolate-3" aria-hidden="true" tabindex="-1"></a>end <span class="op">=</span> datetime(<span class="dv">2018</span>, <span class="dv">12</span>, <span class="dv">31</span>)</span>
+<span id="lst-interpolate-4"><a href="#lst-interpolate-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst-interpolate-5"><a href="#lst-interpolate-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create Point for Vancouver, BC</span></span>
+<span id="lst-interpolate-6"><a href="#lst-interpolate-6" aria-hidden="true" tabindex="-1"></a>vancouver <span class="op">=</span> Point(<span class="fl">49.2497</span>, <span class="op">-</span><span class="fl">123.1193</span>, <span class="dv">70</span>)</span>
+<span id="lst-interpolate-7"><a href="#lst-interpolate-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst-interpolate-8"><a href="#lst-interpolate-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Get daily data for 2018</span></span>
+<span id="lst-interpolate-9"><a href="#lst-interpolate-9" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> Daily(vancouver, start, end)</span>
+<span id="lst-interpolate-10"><a href="#lst-interpolate-10" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> data.fetch()</span>
+<span id="lst-interpolate-11"><a href="#lst-interpolate-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst-interpolate-12"><a href="#lst-interpolate-12" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> data.interpolate(method<span class="op">=</span><span class="st">'linear'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><strong>Creating Sequences:</strong> The data is then segmented into sequences suitable for training the LSTM model. Through trial-and-error experimentation, it was discovered that a sequence length of 80 is ideal for this data set. Each sequence has consecutive data points that the LSTM will use to learn the weather data’s underlying patterns.</li>
+</ul>
+</section>
+<section id="justifications" class="level3" data-number="1.1.2">
+<h3 data-number="1.1.2" class="anchored" data-anchor-id="justifications"><span class="header-section-number">1.1.2</span> Justifications</h3>
+<p>Normalization and interpolation are crucial for preparing real-world data for machine learning applications, ensuring the model trains on clean and representative data. Creating structured sequences from this data enables the LSTM to effectively capture temporal dependencies, a core aspect of its predictive capability.</p>
+</section>
+</section>
+<section id="lstm-model-architecture" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="lstm-model-architecture"><span class="header-section-number">1.2</span> LSTM Model Architecture</h2>
+<section id="step-by-step-description-1" class="level3" data-number="1.2.1">
+<h3 data-number="1.2.1" class="anchored" data-anchor-id="step-by-step-description-1"><span class="header-section-number">1.2.1</span> Step-by-Step Description</h3>
+<ul>
+<li><p><strong>xLSTM Architecture:</strong> The xLSTM consists of two modified LSTM layers that are contained inside xLSTM blocks:</p>
+<ul>
+<li><p><strong>mLSTM (Matrix LSTM) Layer:</strong> Incorporates a matrix memory state and covariance update rule, which allows for full parallelization and efficient memory utilization. This layer is designed to enhance the LSTM’s ability to store and retrieve information dynamically, making it highly effective for tasks requiring complex memory management (Beck, M. et al., 2024 pp.&nbsp;4-5).</p></li>
+<li><p><strong>sLSTM (Scalar LSTM) Layer:</strong> Features a scalar memory update and new memory mixing techniques that improve the model’s ability to handle long-range dependencies. Exponential gating is used in this layer to stabilize the training process and prevent gradient explosions (Beck, M. et al., 2024 pp.&nbsp;3-4).</p></li>
+<li><p><strong>xLSTM Blocks:</strong> Each xLSTM block (<a href="#lst-blocks">Listing&nbsp;3</a>), which may contain either or both types of layers, passes information through residual connections, allowing the model to learn deep representations without loss of performance due to vanishing or exploding gradients (Beck, M. et al., 2024 pp.&nbsp;5-6).</p></li>
+</ul></li>
+</ul>
+<div class="code-with-filename listing">
+<p>Listing&nbsp;3<strong>.</strong> xLSTM block class.</p>
+<div class="code-with-filename-file">
+<pre><strong>xLSTM.py</strong></pre>
+</div>
+<div class="sourceCode" id="lst-blocks" data-lst-cap="xLSTM block class."><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="lst-blocks-1"><a href="#lst-blocks-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the xLSTM block</span></span>
+<span id="lst-blocks-2"><a href="#lst-blocks-2" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> xLSTM_Block(nn.Module):</span>
+<span id="lst-blocks-3"><a href="#lst-blocks-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, block_type, input_size, hidden_size, layers<span class="op">=</span><span class="dv">2</span>, mem_size<span class="op">=</span><span class="va">None</span>):</span>
+<span id="lst-blocks-4"><a href="#lst-blocks-4" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>(xLSTM_Block, <span class="va">self</span>).<span class="fu">__init__</span>()</span>
+<span id="lst-blocks-5"><a href="#lst-blocks-5" aria-hidden="true" tabindex="-1"></a>        <span class="co"># initialize the dropout layer</span></span>
+<span id="lst-blocks-6"><a href="#lst-blocks-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.dropout <span class="op">=</span> DynamicDropout()</span>
+<span id="lst-blocks-7"><a href="#lst-blocks-7" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Create multiple mLSTM and sLSTM layers depending on the block type</span></span>
+<span id="lst-blocks-8"><a href="#lst-blocks-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> block_type <span class="op">==</span> <span class="st">'mLSTM'</span>:</span>
+<span id="lst-blocks-9"><a href="#lst-blocks-9" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Create multiple mLSTM layers</span></span>
+<span id="lst-blocks-10"><a href="#lst-blocks-10" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.layers <span class="op">=</span> nn.ModuleList([mLSTM(input_size <span class="cf">if</span> i <span class="op">==</span> <span class="dv">0</span> <span class="cf">else</span> hidden_size, hidden_size, mem_size)</span>
+<span id="lst-blocks-11"><a href="#lst-blocks-11" aria-hidden="true" tabindex="-1"></a>                                         <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(layers)])</span>
+<span id="lst-blocks-12"><a href="#lst-blocks-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> block_type <span class="op">==</span> <span class="st">'sLSTM'</span>:</span>
+<span id="lst-blocks-13"><a href="#lst-blocks-13" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Create multiple sLSTM layers</span></span>
+<span id="lst-blocks-14"><a href="#lst-blocks-14" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.layers <span class="op">=</span> nn.ModuleList([sLSTM(hidden_size, hidden_size) <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(layers)])</span>
+<span id="lst-blocks-15"><a href="#lst-blocks-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst-blocks-16"><a href="#lst-blocks-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># forward pass</span></span>
+<span id="lst-blocks-17"><a href="#lst-blocks-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>, x, initial_states):</span>
+<span id="lst-blocks-18"><a href="#lst-blocks-18" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Initial hidden states</span></span>
+<span id="lst-blocks-19"><a href="#lst-blocks-19" aria-hidden="true" tabindex="-1"></a>        hidden_states <span class="op">=</span> <span class="va">self</span>.layers[<span class="dv">0</span>].init_hidden()</span>
+<span id="lst-blocks-20"><a href="#lst-blocks-20" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Loop through the layers</span></span>
+<span id="lst-blocks-21"><a href="#lst-blocks-21" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(<span class="va">self</span>.layers)):</span>
+<span id="lst-blocks-22"><a href="#lst-blocks-22" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Forward pass through each layer</span></span>
+<span id="lst-blocks-23"><a href="#lst-blocks-23" aria-hidden="true" tabindex="-1"></a>            x, hidden_states <span class="op">=</span> <span class="va">self</span>.layers[i](x, hidden_states)</span>
+<span id="lst-blocks-24"><a href="#lst-blocks-24" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Apply dropout</span></span>
+<span id="lst-blocks-25"><a href="#lst-blocks-25" aria-hidden="true" tabindex="-1"></a>            x <span class="op">=</span> <span class="va">self</span>.dropout(x)</span>
+<span id="lst-blocks-26"><a href="#lst-blocks-26" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Return the hidden state and the new states</span></span>
+<span id="lst-blocks-27"><a href="#lst-blocks-27" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> x, hidden_states</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Source Code
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>View <a href="https://github.com/brandon-toews/xlstm-vs-markov/blob/master/xLSTM.py">xLSTM.py</a></p>
+</div>
+</div>
+<ul>
+<li><strong>Configuration:</strong> The complexity of the dataset and the depth of features required a configuration of 30 hidden units, 30 matrix memory dimension size for mLSTM layers, and one layer of either mLSTM or sLSTM depending on the corresponding xLSTM block. Through trial and error, this configuration was found to provide the most consistency in terms of accuracy (<a href="#lst-config">Listing&nbsp;4</a>).</li>
+</ul>
+<div class="code-with-filename listing">
+<p>Listing&nbsp;4<strong>.</strong> xLSTM configuration.</p>
+<div class="code-with-filename-file">
+<pre><strong>main.py</strong></pre>
+</div>
+<div class="sourceCode" id="lst-config" data-lst-cap="xLSTM configuration."><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="lst-config-1"><a href="#lst-config-1" aria-hidden="true" tabindex="-1"></a><span class="co"># xLSTM model parameters</span></span>
+<span id="lst-config-2"><a href="#lst-config-2" aria-hidden="true" tabindex="-1"></a>hidden_size <span class="op">=</span> <span class="dv">30</span></span>
+<span id="lst-config-3"><a href="#lst-config-3" aria-hidden="true" tabindex="-1"></a>mem_dim <span class="op">=</span> <span class="dv">30</span></span>
+<span id="lst-config-4"><a href="#lst-config-4" aria-hidden="true" tabindex="-1"></a>layers <span class="op">=</span> <span class="dv">1</span></span>
+<span id="lst-config-5"><a href="#lst-config-5" aria-hidden="true" tabindex="-1"></a>seq_len <span class="op">=</span> <span class="dv">80</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><strong>Dynamic Dropout Layers:</strong> Custom Dynamic dropout layers are integrated within the xLSTM blocks to prevent overfitting by randomly omitting subsets of features and hidden states during the training process. This custom layer class adjusts the rate in either direction by a factor of 0.02 for a minimum of 0 and a maximum of 0.1. These adjustments during training are meant to help the model to avoid local minima and ensure stable convergence to the optimal solution. These features are critical for maintaining the model’s performance stability across different datasets and training conditions.</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Source Code
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>View <a href="https://github.com/brandon-toews/xlstm-vs-markov/blob/master/dynamic_dropout.py">dynamic_dropout.py</a></p>
+</div>
+</div>
+</section>
+<section id="justifications-1" class="level3" data-number="1.2.2">
+<h3 data-number="1.2.2" class="anchored" data-anchor-id="justifications-1"><span class="header-section-number">1.2.2</span> Justifications</h3>
+<p>The architecture is carefully designed to enhance the LSTM’s ability to process and remember information over long sequences, crucial for time-series forecasting. Dropout layers add an essential regularization element, increasing the model’s generalization capabilities.</p>
+</section>
+</section>
+<section id="temporal-sequence-input-mechanism" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="temporal-sequence-input-mechanism"><span class="header-section-number">1.3</span> Temporal Sequence Input Mechanism</h2>
+<p>The <code>train_model()</code> method in <a href="https://github.com/brandon-toews/xlstm-vs-markov/blob/master/xLSTM.py">xLSTM_model class</a> feeds the training data to the model of the specified sequence length (<a href="#lst-train">Listing&nbsp;5</a>). As previously mentioned, a sequence length of 80 tends to produce the most consistently accurate results. Experimenting with various sequence lengths helps identify the most effective input configuration for maximizing the predictive performance of the model, ensuring that it is tuned to the specific temporal dynamics of the dataset.</p>
+<div class="code-with-filename listing">
+<p>Listing&nbsp;5<strong>.</strong> Train Model method.</p>
+<div class="code-with-filename-file">
+<pre><strong>xLSTM.py</strong></pre>
+</div>
+<div class="sourceCode" id="lst-train" data-lst-cap="Train Model method."><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="lst-train-1"><a href="#lst-train-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Train the model</span></span>
+<span id="lst-train-2"><a href="#lst-train-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> train_model(<span class="va">self</span>, data, val_data, epochs, seq_len):</span>
+<span id="lst-train-3"><a href="#lst-train-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># initialize the early_stopping object</span></span>
+<span id="lst-train-4"><a href="#lst-train-4" aria-hidden="true" tabindex="-1"></a>    early_stopping <span class="op">=</span> EarlyStopping(patience<span class="op">=</span><span class="dv">50</span>, verbose<span class="op">=</span><span class="va">True</span>)</span>
+<span id="lst-train-5"><a href="#lst-train-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># loop through the epochs</span></span>
+<span id="lst-train-6"><a href="#lst-train-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> epoch <span class="kw">in</span> <span class="bu">range</span>(epochs):</span>
+<span id="lst-train-7"><a href="#lst-train-7" aria-hidden="true" tabindex="-1"></a>        <span class="co"># zero the gradients</span></span>
+<span id="lst-train-8"><a href="#lst-train-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.optimizer.zero_grad()</span>
+<span id="lst-train-9"><a href="#lst-train-9" aria-hidden="true" tabindex="-1"></a>        <span class="co"># initialize the loss</span></span>
+<span id="lst-train-10"><a href="#lst-train-10" aria-hidden="true" tabindex="-1"></a>        loss <span class="op">=</span> <span class="dv">0</span></span>
+<span id="lst-train-11"><a href="#lst-train-11" aria-hidden="true" tabindex="-1"></a>        <span class="co"># loop through the sequence length</span></span>
+<span id="lst-train-12"><a href="#lst-train-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> t <span class="kw">in</span> <span class="bu">range</span>(seq_len <span class="op">-</span> <span class="dv">1</span>):</span>
+<span id="lst-train-13"><a href="#lst-train-13" aria-hidden="true" tabindex="-1"></a>            <span class="co"># get the input at time t</span></span>
+<span id="lst-train-14"><a href="#lst-train-14" aria-hidden="true" tabindex="-1"></a>            x <span class="op">=</span> data[:, t]</span>
+<span id="lst-train-15"><a href="#lst-train-15" aria-hidden="true" tabindex="-1"></a>            <span class="co"># get the target at time t+1</span></span>
+<span id="lst-train-16"><a href="#lst-train-16" aria-hidden="true" tabindex="-1"></a>            y_true <span class="op">=</span> data[:, t <span class="op">+</span> <span class="dv">1</span>, <span class="dv">0</span>]</span>
+<span id="lst-train-17"><a href="#lst-train-17" aria-hidden="true" tabindex="-1"></a>            <span class="co"># get the prediction</span></span>
+<span id="lst-train-18"><a href="#lst-train-18" aria-hidden="true" tabindex="-1"></a>            y_pred <span class="op">=</span> <span class="va">self</span>(x)</span>
+<span id="lst-train-19"><a href="#lst-train-19" aria-hidden="true" tabindex="-1"></a>            <span class="co"># calculate the loss from the training data</span></span>
+<span id="lst-train-20"><a href="#lst-train-20" aria-hidden="true" tabindex="-1"></a>            loss <span class="op">+=</span> <span class="va">self</span>.criterion(y_pred, y_true)</span>
+<span id="lst-train-21"><a href="#lst-train-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst-train-22"><a href="#lst-train-22" aria-hidden="true" tabindex="-1"></a>        <span class="co"># validate the model on the validation data</span></span>
+<span id="lst-train-23"><a href="#lst-train-23" aria-hidden="true" tabindex="-1"></a>        val_loss <span class="op">=</span> <span class="va">self</span>.validate(val_data)</span>
+<span id="lst-train-24"><a href="#lst-train-24" aria-hidden="true" tabindex="-1"></a>        <span class="co"># print the validation loss</span></span>
+<span id="lst-train-25"><a href="#lst-train-25" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f'Epoch </span><span class="sc">{</span>epoch<span class="sc">}</span><span class="ss"> Validation Loss </span><span class="sc">{</span>val_loss<span class="sc">.</span>item()<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="lst-train-26"><a href="#lst-train-26" aria-hidden="true" tabindex="-1"></a>        <span class="co"># call the early stopping object</span></span>
+<span id="lst-train-27"><a href="#lst-train-27" aria-hidden="true" tabindex="-1"></a>        early_stopping(val_loss, <span class="va">self</span>)</span>
+<span id="lst-train-28"><a href="#lst-train-28" aria-hidden="true" tabindex="-1"></a>        <span class="co"># if early stopping is triggered</span></span>
+<span id="lst-train-29"><a href="#lst-train-29" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> early_stopping.early_stop:</span>
+<span id="lst-train-30"><a href="#lst-train-30" aria-hidden="true" tabindex="-1"></a>            <span class="co"># print message</span></span>
+<span id="lst-train-31"><a href="#lst-train-31" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">"Early stopping"</span>)</span>
+<span id="lst-train-32"><a href="#lst-train-32" aria-hidden="true" tabindex="-1"></a>            <span class="co"># stop the training</span></span>
+<span id="lst-train-33"><a href="#lst-train-33" aria-hidden="true" tabindex="-1"></a>            <span class="cf">break</span></span>
+<span id="lst-train-34"><a href="#lst-train-34" aria-hidden="true" tabindex="-1"></a>        <span class="co"># calculate the average loss</span></span>
+<span id="lst-train-35"><a href="#lst-train-35" aria-hidden="true" tabindex="-1"></a>        loss.backward()</span>
+<span id="lst-train-36"><a href="#lst-train-36" aria-hidden="true" tabindex="-1"></a>        <span class="co"># clip the gradients to prevent exploding gradients</span></span>
+<span id="lst-train-37"><a href="#lst-train-37" aria-hidden="true" tabindex="-1"></a>        torch.nn.utils.clip_grad_norm_(<span class="va">self</span>.optimizing_parameters, max_norm<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="lst-train-38"><a href="#lst-train-38" aria-hidden="true" tabindex="-1"></a>        <span class="co"># update the weights</span></span>
+<span id="lst-train-39"><a href="#lst-train-39" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.optimizer.step()</span>
+<span id="lst-train-40"><a href="#lst-train-40" aria-hidden="true" tabindex="-1"></a>        <span class="co"># print the training loss every 10 epochs</span></span>
+<span id="lst-train-41"><a href="#lst-train-41" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> epoch <span class="op">%</span> <span class="dv">10</span> <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="lst-train-42"><a href="#lst-train-42" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f'Epoch </span><span class="sc">{</span>epoch<span class="sc">}</span><span class="ss"> Loss </span><span class="sc">{</span>loss<span class="sc">.</span>item()<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="lst-train-43"><a href="#lst-train-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst-train-44"><a href="#lst-train-44" aria-hidden="true" tabindex="-1"></a>    <span class="co"># load the best model before early stopping</span></span>
+<span id="lst-train-45"><a href="#lst-train-45" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.load_state_dict(torch.load(<span class="st">'checkpoint.pt'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="training-process" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="training-process"><span class="header-section-number">1.4</span> Training Process</h2>
+<section id="step-by-step-description-2" class="level3" data-number="1.4.1">
+<h3 data-number="1.4.1" class="anchored" data-anchor-id="step-by-step-description-2"><span class="header-section-number">1.4.1</span> Step-by-Step Description</h3>
+<ul>
+<li><p><strong>Training Execution:</strong> The model is trained on the preprocessed dataset, using a combination of the Adam optimizer and custom training enhancements like dynamic dropout and early stopping.</p></li>
+<li><p><strong>Optimizer:</strong> The xLSTM uses an Adam optimizer with weight decay and gradient clipping to optimize training. This setup helps in mitigating the common issues of underfitting and overfitting by regulating the update magnitudes (See <code>init()</code> method in <a href="https://github.com/brandon-toews/xlstm-vs-markov/blob/master/xLSTM.py">xLSTM_model class</a>).</p></li>
+<li><p><strong>Early Stopping:</strong> Utilizes a custom class to halt training when improvements cease as observed by the loss produced by the validation data set. Each time there is an improvement in loss, evaluating on a validation data set during training, the model’s current state in training is saved. Whenever ever losses don’t improve from the recorded minimum the early stopping object’s patience counter is incremented and it triggers the dynamic dropout layer’s rate to increase. Every time the loss improves the patience counter is reset back to 0 and the dynamic dropout layer is triggered to decrease its rate.</p></li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Source Code
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>View <a href="https://github.com/brandon-toews/xlstm-vs-markov/blob/master/early_stopping.py">early_stopping.py</a></p>
+</div>
+</div>
+<ul>
+<li><strong>Monitoring Metrics:</strong> During training, Smooth L1 Loss is monitored to assess the model’s performance and make necessary adjustments. Smooth L1 Loss, also known as the Huber loss, is a combination of L1 and L2 loss functions. It behaves like L1 loss when the absolute error is large and like L2 loss when the error is small (See <code>init()</code> method in <a href="https://github.com/brandon-toews/xlstm-vs-markov/blob/master/xLSTM.py">xLSTM_model class</a>).</li>
+</ul>
+</section>
+<section id="justifications-2" class="level3" data-number="1.4.2">
+<h3 data-number="1.4.2" class="anchored" data-anchor-id="justifications-2"><span class="header-section-number">1.4.2</span> Justifications</h3>
+<ul>
+<li><p><strong>Adam Optimizer with Weight Decay and Gradient Clipping:</strong> The Adam optimizer is chosen for its adaptability, as it customizes learning rates for each parameter, enhancing convergence efficiency across diverse data scales. Incorporating weight decay directly combats overfitting by penalizing larger weights, promoting a simpler, more generalizable model. Gradient clipping is essential to maintain numerical stability, preventing the exploding gradients phenomenon that can disrupt the training of deep networks, especially in architectures like LSTMs that are susceptible to large gradient values.</p></li>
+<li><p><strong>Early Stopping:</strong> Early stopping acts as a practical regularization technique, halting training when validation performance ceases to improve, thereby avoiding overfitting. This method not only ensures the model does not overlearn from the training data but also conserves computational resources. By saving the model with the best overall validation losses we can preserve the model at the exact point in the training that it was performing the best. We then load the model’s best saved state after training has finished.</p></li>
+<li><p><strong>Smooth L1 Loss:</strong> This loss function transitions between L1 loss, which is robust against outliers, and L2 loss, which is sensitive to small error variations, depending on the magnitude of the error. This dual nature makes Smooth L1 Loss ideal for regression tasks in LSTM models, where maintaining the precision of predictions and handling outliers effectively are both crucial for achieving accurate and reliable forecasts.</p></li>
+</ul>
+</section>
+</section>
+<section id="evaluation" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="evaluation"><span class="header-section-number">1.5</span> Evaluation</h2>
+<section id="step-by-step-description-3" class="level3" data-number="1.5.1">
+<h3 data-number="1.5.1" class="anchored" data-anchor-id="step-by-step-description-3"><span class="header-section-number">1.5.1</span> Step-by-Step Description</h3>
+<ul>
+<li><p><strong>Testing:</strong> The model’s performance is evaluated on a separate test set to ensure it generalizes well beyond the training data.</p></li>
+<li><p><strong>Metrics:</strong> Performance metrics such as MAE, RMSE, correlation, and R2 are calculated, providing a comprehensive view of the model’s accuracy and reliability. Predictions are also plotted against the actual test values to allow the user to compare results visually</p></li>
+</ul>
+</section>
+<section id="justifications-3" class="level3" data-number="1.5.2">
+<h3 data-number="1.5.2" class="anchored" data-anchor-id="justifications-3"><span class="header-section-number">1.5.2</span> Justifications</h3>
+<p>Univariate and multivariate versions of the model are created for performance comparison. The model’s effectiveness is evaluated using a comprehensive set of metrics such as Mean Average Error (MAE), Root Mean Squared Error (RMSE), correlation, and coefficient of determination (R2), offering a nuanced view of its predictive capabilities. Each metric of evaluation was carefully selected to capture a certain aspect of the model’s performance. MAE reveals how well adapted the model is to outliers, RMSE provides a more general view of the model’s performance, correlation tells how well the model responds to trends in the data, and R2 shows how well the model has the learned the variance between the independent variables and the dependent variables indicating how well the model will predict previously unseen samples. These are examined in comparison to the <a href="#markov-chain-model">Markov Chain model</a> to reveal that both univariate and multivariate models can be trained to a staggering precision of accuracy (<a href="#fig-eval">Figure&nbsp;1</a>).</p>
+<div id="fig-eval" class="quarto-layout-panel">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 100.0%;justify-content: center;">
+<div id="fig-plot" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="model_comp_plt.png" class="img-fluid figure-img" data-ref-parent="fig-eval"></p>
+<figcaption class="figure-caption">(a) Plot</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 100.0%;justify-content: center;">
+<div id="fig-metrics" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="model_comp_test.png" class="img-fluid figure-img" data-ref-parent="fig-eval"></p>
+<figcaption class="figure-caption">(b) Metrics</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption"><strong>Figure</strong>&nbsp;1<strong>.</strong> Evaluation Results</figcaption><p></p>
+</figure>
+</div>
+</section>
+</section>
+</section>
+<section id="markov-chain-model" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Markov Chain Model</h1>
+<section id="order-selection" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="order-selection"><span class="header-section-number">2.1</span> Order Selection</h2>
+<section id="step-by-step-description-4" class="level3" data-number="2.1.1">
+<h3 data-number="2.1.1" class="anchored" data-anchor-id="step-by-step-description-4"><span class="header-section-number">2.1.1</span> Step-by-Step Description</h3>
+<ul>
+<li><p><strong>Model Training and Prediction:</strong> For each order from a range of 2 to 30, instantiate and train a Markov Chain model. Extend the test data by appending the last ‘order’ elements of the training data to provide necessary context, then use this model to predict outcomes over the adjusted test set.</p></li>
+<li><p><strong>Performance Evaluation:</strong> Calculate key performance metrics for each order, including Root Mean Squared Error (RMSE), Mean Absolute Error (MAE), Pearson Correlation, and R-squared (R2).</p></li>
+<li><p><strong>Optimal Order Determination:</strong> Compile the performance metrics into a DataFrame, rank each order based on these metrics, and compute an average ranking for each. The order with the lowest average rank, indicating the best overall performance, is selected as the optimal order for the Markov Chain model.</p></li>
+</ul>
+</section>
+<section id="justifications-4" class="level3" data-number="2.1.2">
+<h3 data-number="2.1.2" class="anchored" data-anchor-id="justifications-4"><span class="header-section-number">2.1.2</span> Justifications</h3>
+<p>This methodical approach ensures a comprehensive evaluation of how well the Markov Chain model performs across a spectrum of complexity (different orders). By considering multiple metrics and their average ranks, the selection process is robust against the peculiarities of any single metric. This thorough testing and selection strategy ensures that the chosen order is well-suited for the dataset and prediction task, balancing model simplicity and predictive accuracy effectively (<a href="#lst-bestorder">Listing&nbsp;6</a>).</p>
+<div class="code-with-filename listing">
+<p>Listing&nbsp;6<strong>.</strong> Find Best Order method.</p>
+<div class="code-with-filename-file">
+<pre><strong>markov.py</strong></pre>
+</div>
+<div class="sourceCode" id="lst-bestorder" data-lst-cap="Find Best Order method."><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="lst-bestorder-1"><a href="#lst-bestorder-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a function to find the best order for the Markov Chain model</span></span>
+<span id="lst-bestorder-2"><a href="#lst-bestorder-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> find_best_order(train_data, test_data, min_order, max_order):</span>
+<span id="lst-bestorder-3"><a href="#lst-bestorder-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Initialize a list to store the results</span></span>
+<span id="lst-bestorder-4"><a href="#lst-bestorder-4" aria-hidden="true" tabindex="-1"></a>    results <span class="op">=</span> []</span>
+<span id="lst-bestorder-5"><a href="#lst-bestorder-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst-bestorder-6"><a href="#lst-bestorder-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Loop through the range of orders</span></span>
+<span id="lst-bestorder-7"><a href="#lst-bestorder-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> order <span class="kw">in</span> <span class="bu">range</span>(min_order, max_order <span class="op">+</span> <span class="dv">1</span>):</span>
+<span id="lst-bestorder-8"><a href="#lst-bestorder-8" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Create and train the Markov Chain model</span></span>
+<span id="lst-bestorder-9"><a href="#lst-bestorder-9" aria-hidden="true" tabindex="-1"></a>        model <span class="op">=</span> MarkovChain(order)</span>
+<span id="lst-bestorder-10"><a href="#lst-bestorder-10" aria-hidden="true" tabindex="-1"></a>        model.fit(train_data)</span>
+<span id="lst-bestorder-11"><a href="#lst-bestorder-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst-bestorder-12"><a href="#lst-bestorder-12" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Add the last 'order' elements of the training data to the test data</span></span>
+<span id="lst-bestorder-13"><a href="#lst-bestorder-13" aria-hidden="true" tabindex="-1"></a>        <span class="co"># to ensure that the test data is long enough for the predictions</span></span>
+<span id="lst-bestorder-14"><a href="#lst-bestorder-14" aria-hidden="true" tabindex="-1"></a>        <span class="co"># for the test data in the LSTM models</span></span>
+<span id="lst-bestorder-15"><a href="#lst-bestorder-15" aria-hidden="true" tabindex="-1"></a>        test_data <span class="op">=</span> np.concatenate((train_data[<span class="op">-</span>order:], test_data))</span>
+<span id="lst-bestorder-16"><a href="#lst-bestorder-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst-bestorder-17"><a href="#lst-bestorder-17" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Make predictions on the test set, feeding the model order elements at a time</span></span>
+<span id="lst-bestorder-18"><a href="#lst-bestorder-18" aria-hidden="true" tabindex="-1"></a>        markov_pred <span class="op">=</span> [model.predict(test_data[i <span class="op">-</span> order:i]) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(order, <span class="bu">len</span>(test_data))]</span>
+<span id="lst-bestorder-19"><a href="#lst-bestorder-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst-bestorder-20"><a href="#lst-bestorder-20" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Calculate the metrics</span></span>
+<span id="lst-bestorder-21"><a href="#lst-bestorder-21" aria-hidden="true" tabindex="-1"></a>        mse <span class="op">=</span> mean_squared_error(test_data[order:], markov_pred)</span>
+<span id="lst-bestorder-22"><a href="#lst-bestorder-22" aria-hidden="true" tabindex="-1"></a>        mae <span class="op">=</span> mean_absolute_error(test_data[order:], markov_pred)</span>
+<span id="lst-bestorder-23"><a href="#lst-bestorder-23" aria-hidden="true" tabindex="-1"></a>        corr, _ <span class="op">=</span> pearsonr(test_data[order:], markov_pred)</span>
+<span id="lst-bestorder-24"><a href="#lst-bestorder-24" aria-hidden="true" tabindex="-1"></a>        r2 <span class="op">=</span> r2_score(test_data[order:], markov_pred)</span>
+<span id="lst-bestorder-25"><a href="#lst-bestorder-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst-bestorder-26"><a href="#lst-bestorder-26" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Store the results</span></span>
+<span id="lst-bestorder-27"><a href="#lst-bestorder-27" aria-hidden="true" tabindex="-1"></a>        results.append((order, sqrt(mse), mae, corr, r2))</span>
+<span id="lst-bestorder-28"><a href="#lst-bestorder-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst-bestorder-29"><a href="#lst-bestorder-29" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Convert the results to a DataFrame</span></span>
+<span id="lst-bestorder-30"><a href="#lst-bestorder-30" aria-hidden="true" tabindex="-1"></a>    results_df <span class="op">=</span> pd.DataFrame(results, columns<span class="op">=</span>[<span class="st">'order'</span>, <span class="st">'rmse'</span>, <span class="st">'mae'</span>, <span class="st">'corr'</span>, <span class="st">'r2'</span>])</span>
+<span id="lst-bestorder-31"><a href="#lst-bestorder-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst-bestorder-32"><a href="#lst-bestorder-32" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Rank the results</span></span>
+<span id="lst-bestorder-33"><a href="#lst-bestorder-33" aria-hidden="true" tabindex="-1"></a>    results_df[<span class="st">'rmse_rank'</span>] <span class="op">=</span> results_df[<span class="st">'rmse'</span>].rank()</span>
+<span id="lst-bestorder-34"><a href="#lst-bestorder-34" aria-hidden="true" tabindex="-1"></a>    results_df[<span class="st">'mae_rank'</span>] <span class="op">=</span> results_df[<span class="st">'mae'</span>].rank()</span>
+<span id="lst-bestorder-35"><a href="#lst-bestorder-35" aria-hidden="true" tabindex="-1"></a>    results_df[<span class="st">'corr_rank'</span>] <span class="op">=</span> results_df[<span class="st">'corr'</span>].rank(ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="lst-bestorder-36"><a href="#lst-bestorder-36" aria-hidden="true" tabindex="-1"></a>    results_df[<span class="st">'r2_rank'</span>] <span class="op">=</span> results_df[<span class="st">'r2'</span>].rank(ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="lst-bestorder-37"><a href="#lst-bestorder-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst-bestorder-38"><a href="#lst-bestorder-38" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calculate the average rank</span></span>
+<span id="lst-bestorder-39"><a href="#lst-bestorder-39" aria-hidden="true" tabindex="-1"></a>    results_df[<span class="st">'avg_rank'</span>] <span class="op">=</span> results_df[[<span class="st">'rmse_rank'</span>, <span class="st">'mae_rank'</span>, <span class="st">'corr_rank'</span>, <span class="st">'r2_rank'</span>]].mean(axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="lst-bestorder-40"><a href="#lst-bestorder-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst-bestorder-41"><a href="#lst-bestorder-41" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Return the order with the lowest average rank</span></span>
+<span id="lst-bestorder-42"><a href="#lst-bestorder-42" aria-hidden="true" tabindex="-1"></a>    best_order <span class="op">=</span> results_df.loc[results_df[<span class="st">'avg_rank'</span>].idxmin(), <span class="st">'order'</span>]</span>
+<span id="lst-bestorder-43"><a href="#lst-bestorder-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst-bestorder-44"><a href="#lst-bestorder-44" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Return the best order for the Markov Chain model</span></span>
+<span id="lst-bestorder-45"><a href="#lst-bestorder-45" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> best_order</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Source Code
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>View <a href="https://github.com/brandon-toews/xlstm-vs-markov/blob/master/markov.py">markov.py</a></p>
+</div>
+</div>
+</section>
+</section>
+<section id="transition-probabilities" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="transition-probabilities"><span class="header-section-number">2.2</span> Transition Probabilities</h2>
+<section id="step-by-step-description-5" class="level3" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="step-by-step-description-5"><span class="header-section-number">2.2.1</span> Step-by-Step Description</h3>
+<ul>
+<li><strong>Calculation of Transition Probabilities:</strong> The probabilities of transitioning from one state to another were calculated based on historical data, forming a transition matrix essential for the Markov Chain operations (<a href="#lst-transmat">Listing&nbsp;7</a>).</li>
+</ul>
+<div class="code-with-filename listing">
+<p>Listing&nbsp;7<strong>.</strong> Calculate transition matrix.</p>
+<div class="code-with-filename-file">
+<pre><strong>markov.py</strong></pre>
+</div>
+<div class="sourceCode" id="lst-transmat" data-lst-cap="Calculate transition matrix."><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="lst-transmat-1"><a href="#lst-transmat-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit the Markov chain to the data</span></span>
+<span id="lst-transmat-2"><a href="#lst-transmat-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fit(<span class="va">self</span>, data):</span>
+<span id="lst-transmat-3"><a href="#lst-transmat-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get the unique states in the data, and convert them to strings</span></span>
+<span id="lst-transmat-4"><a href="#lst-transmat-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.states <span class="op">=</span> np.unique(data).astype(<span class="bu">str</span>)</span>
+<span id="lst-transmat-5"><a href="#lst-transmat-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Initialize the transition matrix, and set all values to zero</span></span>
+<span id="lst-transmat-6"><a href="#lst-transmat-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># with the states as the row and column indices</span></span>
+<span id="lst-transmat-7"><a href="#lst-transmat-7" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.transition_matrix <span class="op">=</span> pd.DataFrame(np.zeros((<span class="bu">len</span>(<span class="va">self</span>.states), <span class="bu">len</span>(<span class="va">self</span>.states))), index<span class="op">=</span><span class="va">self</span>.states, columns<span class="op">=</span><span class="va">self</span>.states)</span>
+<span id="lst-transmat-8"><a href="#lst-transmat-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst-transmat-9"><a href="#lst-transmat-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Iterate through the data, and update the transition matrix</span></span>
+<span id="lst-transmat-10"><a href="#lst-transmat-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(data) <span class="op">-</span> <span class="va">self</span>.order):</span>
+<span id="lst-transmat-11"><a href="#lst-transmat-11" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Get the current and next states</span></span>
+<span id="lst-transmat-12"><a href="#lst-transmat-12" aria-hidden="true" tabindex="-1"></a>        current_state <span class="op">=</span> data[i].astype(<span class="bu">str</span>)</span>
+<span id="lst-transmat-13"><a href="#lst-transmat-13" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Next state is order steps ahead</span></span>
+<span id="lst-transmat-14"><a href="#lst-transmat-14" aria-hidden="true" tabindex="-1"></a>        next_state <span class="op">=</span> data[i <span class="op">+</span> <span class="va">self</span>.order].astype(<span class="bu">str</span>)</span>
+<span id="lst-transmat-15"><a href="#lst-transmat-15" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Update the transition matrix at the current and next states</span></span>
+<span id="lst-transmat-16"><a href="#lst-transmat-16" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.transition_matrix.loc[current_state, next_state] <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="lst-transmat-17"><a href="#lst-transmat-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst-transmat-18"><a href="#lst-transmat-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Normalize the transition matrix to values between 0 and 1</span></span>
+<span id="lst-transmat-19"><a href="#lst-transmat-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Sum up the rows of the transition matrix</span></span>
+<span id="lst-transmat-20"><a href="#lst-transmat-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Add a small value to the denominator to avoid division by zero</span></span>
+<span id="lst-transmat-21"><a href="#lst-transmat-21" aria-hidden="true" tabindex="-1"></a>    row_sums <span class="op">=</span> <span class="va">self</span>.transition_matrix.<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>) <span class="op">+</span> <span class="fl">1e-10</span></span>
+<span id="lst-transmat-22"><a href="#lst-transmat-22" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Divide each row by the row sum to get the transition probabilities</span></span>
+<span id="lst-transmat-23"><a href="#lst-transmat-23" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.transition_matrix <span class="op">=</span> <span class="va">self</span>.transition_matrix.div(row_sums, axis<span class="op">=</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><strong>State Space Simplification:</strong> Given the continuous nature of temperature values, the state space was large. Rounding these values to integers significantly reduced the state space, allowing for more manageable and accurate transition probability calculations.</li>
+</ul>
+</section>
+<section id="justifications-5" class="level3" data-number="2.2.2">
+<h3 data-number="2.2.2" class="anchored" data-anchor-id="justifications-5"><span class="header-section-number">2.2.2</span> Justifications</h3>
+<p>The simplification of the state space by rounding continuous values to integers does blunt of model precision in predicting exact float values. However, this is an acceptable loss when taking into context that the overall model accuracy is greatly improved. By narrowing the state space, the model can calculate transition probabilities that lead to much closer predictions to the real-world data (<a href="#fig-intvsfloat">Figure&nbsp;2</a>).</p>
+<div id="fig-intvsfloat" class="quarto-layout-panel">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="markov_int_plt.png" class="img-fluid figure-img"></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="markov_float_plt.png" class="img-fluid figure-img"></p>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="markov_int_test.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Integer Values</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="markov_float_test.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Float Values</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption"><strong>Figure</strong>&nbsp;2<strong>.</strong> Integer vs Float Values</figcaption><p></p>
+</figure>
+</div>
+</section>
+</section>
+<section id="temporal-sequence-input" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="temporal-sequence-input"><span class="header-section-number">2.3</span> Temporal Sequence Input</h2>
+<p>The sequence length for input into the Markov Chain model was adjusted during the experimental phase to identify the optimal configuration for capturing relevant temporal dependencies, aligning with the chosen order of 2. Optimizing sequence length ensures that the model has sufficient historical context to make accurate predictions while avoiding the overhead of unnecessary data processing.</p>
+</section>
+<section id="prediction-mechanism" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="prediction-mechanism"><span class="header-section-number">2.4</span> Prediction Mechanism</h2>
+<p>The Markov Chain model uses the transition matrix to predict future values based on a given sequence of historical data. This method utilizes the established probabilities to forecast the next most likely state (<a href="#lst-predict">Listing&nbsp;8</a>). This approach leverages the probabilistic nature of Markov models to provide a straightforward and effective means of time-series forecasting, particularly suitable for datasets with clear transitional patterns.</p>
+<div class="code-with-filename listing">
+<p>Listing&nbsp;8<strong>.</strong> Predict method.</p>
+<div class="code-with-filename-file">
+<pre><strong>markov.py</strong></pre>
+</div>
+<div class="sourceCode" id="lst-predict" data-lst-cap="Predict method."><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="lst-predict-1"><a href="#lst-predict-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Predict the next state in the sequence</span></span>
+<span id="lst-predict-2"><a href="#lst-predict-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> predict(<span class="va">self</span>, sequence):</span>
+<span id="lst-predict-3"><a href="#lst-predict-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get the current state</span></span>
+<span id="lst-predict-4"><a href="#lst-predict-4" aria-hidden="true" tabindex="-1"></a>    state <span class="op">=</span> sequence[<span class="dv">0</span>].astype(<span class="bu">str</span>)</span>
+<span id="lst-predict-5"><a href="#lst-predict-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># If the state is not in the transition matrix</span></span>
+<span id="lst-predict-6"><a href="#lst-predict-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> state <span class="kw">not</span> <span class="kw">in</span> <span class="va">self</span>.transition_matrix.index:</span>
+<span id="lst-predict-7"><a href="#lst-predict-7" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Return the first state in the sequence as the prediction (fallback)</span></span>
+<span id="lst-predict-8"><a href="#lst-predict-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> sequence[<span class="dv">0</span>]</span>
+<span id="lst-predict-9"><a href="#lst-predict-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Return the state with the highest probability in the transition matrix</span></span>
+<span id="lst-predict-10"><a href="#lst-predict-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">self</span>.states[np.argmax(<span class="va">self</span>.transition_matrix.loc[state])].astype(sequence.dtype)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="evaluation-1" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="evaluation-1"><span class="header-section-number">2.5</span> Evaluation</h2>
+<section id="step-by-step-description-6" class="level3" data-number="2.5.1">
+<h3 data-number="2.5.1" class="anchored" data-anchor-id="step-by-step-description-6"><span class="header-section-number">2.5.1</span> Step-by-Step Description</h3>
+<ul>
+<li><p><strong>Performance Comparison:</strong> The performance of the Markov Chain model was evaluated against the LSTM models using the same test set. Metrics like Mean Absolute Error (MAE), Root Mean Squared Error (RMSE), and R2 were used for a comprehensive assessment.</p></li>
+<li><p><strong>Results Analysis:</strong> While the xLSTM models generally performed better due to their ability to model complex dependencies, the Markov Chain model offered competitive accuracy with much lower computational requirements (<a href="#fig-eval">Figure&nbsp;1</a>).</p></li>
+</ul>
+</section>
+<section id="justifications-6" class="level3" data-number="2.5.2">
+<h3 data-number="2.5.2" class="anchored" data-anchor-id="justifications-6"><span class="header-section-number">2.5.2</span> Justifications</h3>
+<p>The best performing Markov model (trained on int float values) is compared with some of the best trained xLSTM models (univariate and multivariate) to reveal that on average the xLSTM models proved more accurate than the Markov chain model for this particular dataset. This isn’t entirely surprising given that the xLSTM model’s complexity allow it to capture the intricate relationships in the time series data better. However, the Markov chain model is much more light weight in time and space complexity. Also, the implementation of Markov chain is much simpler and straightforward requiring little experimentation to achieve reasonably accurate performance. While the xLSTM models required a large amount of trial-and-error experimentation with hyper parameters to find optimal and stable results. Overall if the accuracy of Markov chain is within acceptable ranges of error than the clear choice in model implementation would be Markov. Markov is a more cost-effective solution in terms of time, resources, and deployment. But if the solution is less tolerant of error, then xLSTM is a preferable implementation for accuracy in time series data. (<a href="#fig-eval">Figure&nbsp;1</a>).</p>
+</section>
+</section>
+</section>
+<section id="references" class="level1 unnumbered">
+<h1 class="unnumbered">References</h1>
+<p>andrewgcodes. (2024) ‘xLSTM: my attempts at implementing various bits of Sepp Hochreiter’s new xLSTM architecture’, GitHub repository. Available at: https://github.com/andrewgcodes/xlstm (Accessed: 9 May 2024).</p>
+<p>Beck, M., Pöppel, K., Spanring, M., Auer, A., Prudnikova, O., Kopp, M., Klambauer, G., Brandstetter, J. and Hochreiter, S. (2024) ‘xLSTM: Extended Long Short-Term Memory’, arXiv preprint arXiv:2405.04517. Available at: https://doi.org/10.48550/arXiv.2405.04517 (Accessed: 9 May 2024).</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
