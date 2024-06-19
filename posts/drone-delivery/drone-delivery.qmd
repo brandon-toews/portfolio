@@ -3,7 +3,7 @@ title: "Autonomous Drone Delivery Optimization"
 format:
   html:
     code-tools:
-      source: https://github.com/brandon-toews/xlstm-vs-markov
+      source: https://github.com/brandon-toews/drone-delivery
 author: "Brandon Toews"
 badges: true
 categories:
@@ -12,7 +12,6 @@ date: "2024-5-13"
 description: Advanced algorithmic solutions aimed at optimizing autonomous drone delivery systems. Utilizing a combination of A-star and a genetic algorithm, this study not only addresses complex logistical challenges but also exemplifies the practical application and effectiveness of artificial intelligence in solving real-world problems.
 toc: true
 number-sections: true
-repo-url: "https://github.com/brandon-toews/drone-delivery"
 image: title.png
 twitter-card: true
 card-style: summary
