@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Brandon Toews">
+<meta name="dcterms.date" content="2024-05-13">
+<meta name="description" content="Advanced algorithmic solutions aimed at optimizing autonomous drone delivery systems. Utilizing a combination of A-star and a genetic algorithm, this study not only addresses complex logistical challenges but also exemplifies the practical application and effectiveness of artificial intelligence in solving real-world problems.">
+
+<title>portfolio - Autonomous Drone Delivery Optimization</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+<link rel="stylesheet" href="../../styles.css">
+<meta name="twitter:title" content="portfolio - Autonomous Drone Delivery Optimization">
+<meta name="twitter:description" content="Advanced algorithmic solutions aimed at optimizing autonomous drone delivery systems. Utilizing a combination of A-star and a genetic algorithm, this study not only addresses complex logistical challenges but also exemplifies the practical application and effectiveness of artificial intelligence in solving real-world problems.">
+<meta name="twitter:image" content="https://brandon-toews.github.io/portfolio/posts/drone-delivery/title.png">
+<meta name="twitter:image-height" content="595">
+<meta name="twitter:image-width" content="737">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">portfolio</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html" rel="" target="">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/brandon-toews" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <div class="quarto-title-block"><div><h1 class="title">Autonomous Drone Delivery Optimization</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source" data-quarto-source-url="https://github.com/brandon-toews/xlstm-vs-markov"><i class="bi"></i> Code</button></div></div>
+                  <div>
+        <div class="description">
+          Advanced algorithmic solutions aimed at optimizing autonomous drone delivery systems. Utilizing a combination of A-star and a genetic algorithm, this study not only addresses complex logistical challenges but also exemplifies the practical application and effectiveness of artificial intelligence in solving real-world problems.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">AI / Machine Learning</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Brandon Toews </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">May 13, 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#graph-generation" id="toc-graph-generation" class="nav-link active" data-scroll-target="#graph-generation"><span class="header-section-number">1</span> Graph Generation</a>
+  <ul class="collapse">
+  <li><a href="#step-by-step-description" id="toc-step-by-step-description" class="nav-link" data-scroll-target="#step-by-step-description"><span class="header-section-number">1.1</span> Step-by-Step Description</a></li>
+  <li><a href="#justifications" id="toc-justifications" class="nav-link" data-scroll-target="#justifications"><span class="header-section-number">1.2</span> Justifications</a></li>
+  </ul></li>
+  <li><a href="#a-algorithm-implementation" id="toc-a-algorithm-implementation" class="nav-link" data-scroll-target="#a-algorithm-implementation"><span class="header-section-number">2</span> A* Algorithm Implementation</a>
+  <ul class="collapse">
+  <li><a href="#step-by-step-description-1" id="toc-step-by-step-description-1" class="nav-link" data-scroll-target="#step-by-step-description-1"><span class="header-section-number">2.1</span> Step-by-Step Description</a>
+  <ul class="collapse">
+  <li><a href="#justifications-1" id="toc-justifications-1" class="nav-link" data-scroll-target="#justifications-1"><span class="header-section-number">2.1.1</span> Justifications</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#genetic-algorithm-for-path-optimization" id="toc-genetic-algorithm-for-path-optimization" class="nav-link" data-scroll-target="#genetic-algorithm-for-path-optimization"><span class="header-section-number">3</span> Genetic Algorithm for Path Optimization</a>
+  <ul class="collapse">
+  <li><a href="#user-interaction-and-setup" id="toc-user-interaction-and-setup" class="nav-link" data-scroll-target="#user-interaction-and-setup"><span class="header-section-number">3.1</span> User Interaction and Setup</a></li>
+  <li><a href="#representation-of-solutions-chromosomes" id="toc-representation-of-solutions-chromosomes" class="nav-link" data-scroll-target="#representation-of-solutions-chromosomes"><span class="header-section-number">3.2</span> Representation of Solutions (Chromosomes)</a>
+  <ul class="collapse">
+  <li><a href="#step-by-step-description-2" id="toc-step-by-step-description-2" class="nav-link" data-scroll-target="#step-by-step-description-2"><span class="header-section-number">3.2.1</span> Step-by-Step Description</a></li>
+  <li><a href="#justifications-2" id="toc-justifications-2" class="nav-link" data-scroll-target="#justifications-2"><span class="header-section-number">3.2.2</span> Justifications</a></li>
+  </ul></li>
+  <li><a href="#crossover-and-mutation-operations" id="toc-crossover-and-mutation-operations" class="nav-link" data-scroll-target="#crossover-and-mutation-operations"><span class="header-section-number">3.3</span> Crossover and Mutation Operations</a>
+  <ul class="collapse">
+  <li><a href="#step-by-step-description-3" id="toc-step-by-step-description-3" class="nav-link" data-scroll-target="#step-by-step-description-3"><span class="header-section-number">3.3.1</span> Step-by-Step Description</a></li>
+  <li><a href="#justifications-3" id="toc-justifications-3" class="nav-link" data-scroll-target="#justifications-3"><span class="header-section-number">3.3.2</span> Justifications</a></li>
+  </ul></li>
+  <li><a href="#fitness-function" id="toc-fitness-function" class="nav-link" data-scroll-target="#fitness-function"><span class="header-section-number">3.4</span> Fitness Function</a>
+  <ul class="collapse">
+  <li><a href="#step-by-step-description-4" id="toc-step-by-step-description-4" class="nav-link" data-scroll-target="#step-by-step-description-4"><span class="header-section-number">3.4.1</span> Step-by-Step Description</a></li>
+  <li><a href="#justifications-4" id="toc-justifications-4" class="nav-link" data-scroll-target="#justifications-4"><span class="header-section-number">3.4.2</span> Justifications</a></li>
+  </ul></li>
+  <li><a href="#algorithm-execution-and-results" id="toc-algorithm-execution-and-results" class="nav-link" data-scroll-target="#algorithm-execution-and-results"><span class="header-section-number">3.5</span> Algorithm Execution and Results</a></li>
+  </ul></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p><img src="title.png" class="img-fluid"></p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Play Demo
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Graph Tab:</strong></p>
+<ul>
+<li>Use the sliders to configure graph dimensions.</li>
+<li>Click the <code>Reset Graph</code> button to generate a new graph.</li>
+</ul>
+<p><strong>A* Tab:</strong></p>
+<ul>
+<li>Select a destination node and heuristic type.</li>
+<li>Click <code>Perform A* Search</code> to run A* algorithm.</li>
+<li>Path is displayed in light blue with all explored paths colored in pink.</li>
+</ul>
+<p><strong>Genetic Algorithm Tab:</strong></p>
+<ul>
+<li>Select number of drones available for deliveries, crossover type, and mutation rate.</li>
+<li>Click <code>Randomly Select Destination Nodes</code> to generate random delivery goals with varying delivery urgencies.</li>
+<li>Click <code>Perform Genetic Algorithm</code> to find the optimal paths and order of deliveries for each drone.</li>
+</ul>
+<p>🚧 <strong>Allow a few seconds for UI to update after making selections or clicking buttons. DOES NOT RUN ON FIREFOX BROWSERS</strong></p>
+<section id="play-demo-1" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="play-demo-1">🚀 Play <a href="https://brandon-toews.github.io/drone-delivery/">Demo</a></h3>
+<p><br>
+View <a href="https://github.com/brandon-toews/drone-delivery/">source code</a> for details.</p>
+</section>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Project Description
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In a futuristic city, autonomous delivery drones are tasked with efficiently delivering packages from a central hub to various destinations. The city is represented as a graph, with nodes representing locations and edges representing possible paths between locations. Each node has associated costs, such as distance, traffic conditions, or delivery urgency.</p>
+</div>
+</div>
+<section id="graph-generation" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Graph Generation</h1>
+<section id="step-by-step-description" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="step-by-step-description"><span class="header-section-number">1.1</span> Step-by-Step Description</h2>
+<ul>
+<li><strong>Graph Initialization:</strong> A Streamlit GUI is implemented to allow users to interactively specify the size and number of nodes for the graph. This setup enables users to customize the complexity and scale of the synthetic graph according to their specific testing needs.</li>
+<li><strong>Node Creation:</strong> Nodes are dynamically generated based on the user-specified number. Each node represents a potential delivery location in a hypothetical urban environment. Each node is initialized with an initial delivery urgency of 0. However, when random goals are selected in the genetic algortithm (GA) tab of the GUI the nodes that are selected are randomly assigned delivery urgency values from 1 to 5.</li>
+<li><strong>Node Interconnection:</strong> Nodes are interconnected based on their proximity to simulate realistic urban layouts. This proximity-based linking ensures that the graph realistically mimics city road networks where closer locations are more likely to be directly connected.</li>
+<li><strong>Edge Assignment:</strong> Each edge between nodes is assigned a randomly generated traffic volume, on a scale from 1 to 5, where 1 represents minimal traffic and 5 represents heavy traffic. This randomness introduces variability in the dataset, simulating real-world unpredictability in urban traffic conditions.</li>
+<li><strong>Cost Metric Calculation:</strong> The cost to traverse each path (edge) is calculated based on a base drone speed, which is adjusted according to the traffic level on that path. Higher traffic conditions result in slower speeds, increasing the traversal time and thus the cost.</li>
+<li><strong>Data Visualization:</strong> The GUI visually represents the graph with color-coded edges according to traffic density. This visual representation aids in quick analysis and understanding of traffic conditions across different paths.</li>
+</ul>
+</section>
+<section id="justifications" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="justifications"><span class="header-section-number">1.2</span> Justifications</h2>
+<ul>
+<li><strong>Cost Metric Based on Real-World Conditions:</strong> Using adjusted drone speeds to calculate path costs introduces a practical element to the model, where the quickest path might not always be the shortest distance due to varying traffic conditions. This approach teaches the model to optimize time efficiency, which is more aligned with real-world objectives in drone delivery systems.</li>
+<li><strong>Visualization for Clarity and Insight:</strong> Implementing color-coded visualizations of traffic conditions not only makes the data more accessible and understandable for users but also aids in quicker decision-making and algorithm adjustments based on visible traffic patterns.</li>
+</ul>
+</section>
+</section>
+<section id="a-algorithm-implementation" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> A* Algorithm Implementation</h1>
+<section id="step-by-step-description-1" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="step-by-step-description-1"><span class="header-section-number">2.1</span> Step-by-Step Description</h2>
+<ul>
+<li><p><strong>Definition of State Space, Initial State, and Goal State:</strong></p>
+<ul>
+<li><strong>State Space:</strong> The state space encompasses all possible positions of the drone within the city, represented by the nodes in the synthetic graph. Each node corresponds to a potential drone location, thus defining the complete set of states that the drone can occupy.</li>
+<li><strong>Initial State:</strong> The initial state is defined as the drone’s starting position on the graph, set at a predefined node representing the central hub.</li>
+<li><strong>Goal State:</strong> The goal state is the delivery destination, which is another node on the graph where the package needs to be delivered. This is selected in the GUI by the user on the A* tab of the toolbar.</li>
+</ul></li>
+<li><p><strong>Heuristic Function:</strong> The heuristic function designed for the A* algorithm incorporates the following factors to estimate the remaining cost from the current state (node) to the goal state:</p>
+<ul>
+<li><strong>Euclidean Distance:</strong> Computes the straight-line distance to the goal, providing a basic estimate of proximity.</li>
+<li><strong>Traffic Conditions:</strong> Adjusts the distance estimate based on the traffic level associated with each path, acknowledging that higher traffic may increase travel time.</li>
+</ul></li>
+<li><p><strong>Algorithm Implementation:</strong> The A* algorithm is implemented to dynamically choose the path that minimizes the combined cost calculated by the heuristic function. It starts at the initial state and explores paths through the graph, continually updating the path costs based on the heuristic function until it reaches the goal state. Different heuristic options (<a href="#lst-aheur">Listing&nbsp;1</a>) are provided to the user via a GUI:</p>
+<ul>
+<li><strong>No Heuristic:</strong> Treats the search as a breadth-first search, exploring all possible paths equally without prioritization.</li>
+<li><strong>Euclidean Distance:</strong> Prioritizes paths that reduce the physical distance to the goal.</li>
+<li><strong>Euclidean Distance with Traffic Information:</strong> Default setting, prioritizes paths by combining distance and traffic data, effectively reducing unnecessary path explorations and enhancing computational efficiency (Figures 2-4).</li>
+</ul></li>
+</ul>
+<div class="code-with-filename listing">
+<p>Listing&nbsp;1<strong>.</strong> Heuristic options.</p>
+<div class="code-with-filename-file">
+<pre><strong>a_star.py</strong></pre>
+</div>
+<div class="sourceCode" id="lst-aheur" data-lst-cap="Heuristic options."><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="lst-aheur-1"><a href="#lst-aheur-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Method to calculate the heuristic value of a node</span></span>
+<span id="lst-aheur-2"><a href="#lst-aheur-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> heuristic(<span class="va">self</span>, node, goal_node, traffic_level):</span>
+<span id="lst-aheur-3"><a href="#lst-aheur-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst-aheur-4"><a href="#lst-aheur-4" aria-hidden="true" tabindex="-1"></a>        <span class="co"># No heuristic</span></span>
+<span id="lst-aheur-5"><a href="#lst-aheur-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">def</span> zero(node, goal_node, traffic_level):</span>
+<span id="lst-aheur-6"><a href="#lst-aheur-6" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="dv">0</span></span>
+<span id="lst-aheur-7"><a href="#lst-aheur-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst-aheur-8"><a href="#lst-aheur-8" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Euclidean distance heuristic</span></span>
+<span id="lst-aheur-9"><a href="#lst-aheur-9" aria-hidden="true" tabindex="-1"></a>        <span class="kw">def</span> euclidean(node, goal_node, traffic_level):</span>
+<span id="lst-aheur-10"><a href="#lst-aheur-10" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Calculate euclidean distance from node to goal node</span></span>
+<span id="lst-aheur-11"><a href="#lst-aheur-11" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> gp.euc_dist(node.pos, goal_node.pos)</span>
+<span id="lst-aheur-12"><a href="#lst-aheur-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst-aheur-13"><a href="#lst-aheur-13" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Euclidean distance with traffic awareness heuristic</span></span>
+<span id="lst-aheur-14"><a href="#lst-aheur-14" aria-hidden="true" tabindex="-1"></a>        <span class="kw">def</span> traffic_aware(node, goal_node, traffic_level):</span>
+<span id="lst-aheur-15"><a href="#lst-aheur-15" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Calculate euclidean distance from node to goal node</span></span>
+<span id="lst-aheur-16"><a href="#lst-aheur-16" aria-hidden="true" tabindex="-1"></a>            distance <span class="op">=</span> gp.euc_dist(node.pos, goal_node.pos)</span>
+<span id="lst-aheur-17"><a href="#lst-aheur-17" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Calculate traffic factor based on traffic level,</span></span>
+<span id="lst-aheur-18"><a href="#lst-aheur-18" aria-hidden="true" tabindex="-1"></a>            <span class="co"># will be 50% higher for each unit increase in the traffic level</span></span>
+<span id="lst-aheur-19"><a href="#lst-aheur-19" aria-hidden="true" tabindex="-1"></a>            traffic_factor <span class="op">=</span> <span class="dv">1</span> <span class="op">+</span> traffic_level <span class="op">*</span> <span class="fl">0.5</span></span>
+<span id="lst-aheur-20"><a href="#lst-aheur-20" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Return euclidean distance multiplied by traffic factor</span></span>
+<span id="lst-aheur-21"><a href="#lst-aheur-21" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> distance <span class="op">*</span> traffic_factor</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="justifications-1" class="level3" data-number="2.1.1">
+<h3 data-number="2.1.1" class="anchored" data-anchor-id="justifications-1"><span class="header-section-number">2.1.1</span> Justifications</h3>
+<ul>
+<li><strong>Heuristic Options:</strong> Offering different heuristic settings allows users to customize the algorithm’s behavior according to specific requirements or conditions, thereby enhancing the utility and adaptability of the algorithm across various operational contexts.</li>
+<li><strong>Composite Heuristic Function:</strong> The design of the heuristic function is crucial for balancing different real-world considerations such as distance and traffic. By integrating these factors, the heuristic function provides a realistic and practical approach to estimating travel costs, leading to more efficient and applicable route optimizations in urban drone delivery scenarios (<a href="#fig-euctraffheur">Figure&nbsp;1 (c)</a>).</li>
+<li><strong>Visualization and Computational Efficiency:</strong> Visualizing the paths explored, highlighted in pink, and the optimal path, highlighted in cyan, not only provides transparency into the algorithm’s functioning but also demonstrates its efficiency in real-time, reinforcing the effectiveness of the chosen heuristic in reducing computational load (<a href="#fig-aheuristics">Figure&nbsp;1</a>).</li>
+</ul>
+<div id="fig-aheuristics" class="quarto-layout-panel">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-noheur" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="no_heur_a.png" class="img-fluid figure-img" data-ref-parent="fig-aheuristics"></p>
+<figcaption class="figure-caption">(a) No Heuristic</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-eucheur" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="euc_heur_a.png" class="img-fluid figure-img" data-ref-parent="fig-aheuristics"></p>
+<figcaption class="figure-caption">(b) Euclidean Distance Heuristic</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-euctraffheur" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="euctraffic_heur_a.png" class="img-fluid figure-img" data-ref-parent="fig-aheuristics"></p>
+<figcaption class="figure-caption">(c) Euclidean Distance and Traffic Heuristic</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption"><strong>Figure</strong>&nbsp;1<strong>.</strong> A* Heuristics</figcaption><p></p>
+</figure>
+</div>
+</section>
+</section>
+</section>
+<section id="genetic-algorithm-for-path-optimization" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Genetic Algorithm for Path Optimization</h1>
+<section id="user-interaction-and-setup" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="user-interaction-and-setup"><span class="header-section-number">3.1</span> User Interaction and Setup</h2>
+<p>The genetic algorithm (GA) implemented in this project offers a highly interactive and user-friendly environment for experimenting with drone delivery strategies. Users initiate the simulation by clicking a button that randomly selects ten delivery goals, each assigned a random urgency value to simulate time-sensitive delivery requirements. These urgencies are visualized on the graph and detailed in the accompanying legend, clearly presenting the delivery priorities to the user (<a href="#fig-urgencies">Figure&nbsp;2</a>). Users can configure the number of drones, ranging from 1 to 10, to distribute the delivery tasks, thereby optimizing the delivery schedule based on available resources and the urgency of deliveries.</p>
+<div id="fig-urgencies" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="ga_heuristic2.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption"><strong>Figure</strong>&nbsp;2<strong>.</strong> Delivery urgencies</figcaption>
+</figure>
+</div>
+</section>
+<section id="representation-of-solutions-chromosomes" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="representation-of-solutions-chromosomes"><span class="header-section-number">3.2</span> Representation of Solutions (Chromosomes)</h2>
+<section id="step-by-step-description-2" class="level3" data-number="3.2.1">
+<h3 data-number="3.2.1" class="anchored" data-anchor-id="step-by-step-description-2"><span class="header-section-number">3.2.1</span> Step-by-Step Description</h3>
+<ul>
+<li><strong>Chromosome Structure:</strong> Each chromosome in the GA represents a potential solution, where a solution is the sequence of nodes (goals) that each in the individual drone visits. This sequence directly influences the route that each drone will take through the city, with each gene in the chromosome corresponding to a delivery point.</li>
+<li><strong>Encoding Details:</strong> The paths that each drone will follow are encoded within these chromosomes, with the specific order of nodes dictating the sequence of deliveries. The chromosome structure allows for easy manipulation during the genetic operations, which is crucial for effectively exploring the solution space.</li>
+</ul>
+</section>
+<section id="justifications-2" class="level3" data-number="3.2.2">
+<h3 data-number="3.2.2" class="anchored" data-anchor-id="justifications-2"><span class="header-section-number">3.2.2</span> Justifications</h3>
+<p><strong>Chromosome representation:</strong> This representation is chosen for its straightforward relation to the problem’s nature, which is essentially a routing problem. By representing routes as sequences of nodes, the genetic algorithm can efficiently apply crossover and mutation operations to explore new route configurations and optimize delivery sequences. This setup mirrors real-world routing optimizations and is integral to achieving practical, implementable solutions.</p>
+</section>
+</section>
+<section id="crossover-and-mutation-operations" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="crossover-and-mutation-operations"><span class="header-section-number">3.3</span> Crossover and Mutation Operations</h2>
+<section id="step-by-step-description-3" class="level3" data-number="3.3.1">
+<h3 data-number="3.3.1" class="anchored" data-anchor-id="step-by-step-description-3"><span class="header-section-number">3.3.1</span> Step-by-Step Description</h3>
+<ul>
+<li><strong>Crossover Operations:</strong> The genetic algorithm offers three crossover methods* allowing users to select the strategy that best suits their operational goals:
+<ul>
+<li><strong>Uniform Crossover:</strong> Each gene (node) from parent chromosomes has a 50% chance of being transferred to the offspring. This method ensures diversity in the gene pool by randomly mixing genes from two parent solutions.</li>
+<li><strong>One-Point Crossover:</strong> A random point is selected in the parents’ sequence. For a single drone configuration, the crossover point is at the goal level, splitting the sequence of goals. For multiple drones, the split occurs at the drone level, where one part of the drone fleet and their respective goals come from one parent, and the remainder from the other parent.</li>
+<li><strong>Heuristic Crossover:</strong> Zhang, P. et al.&nbsp;(2022) suggests a novel approach to performing the crossover to assist a GA in finding the global optimal solution in the travelling salesmen problem. Following similar principles (Zhang, P. et al., 2022, pp.&nbsp;4-5), we utilize a custom heuristic to assess the suitability of placing a selected goal next to another in the offspring. The heuristic evaluates compatibility based on the cost dictionary, favoring high-quality matches that are more likely to result in efficient routes (<a href="#lst-quality">Listing&nbsp;2</a>).</li>
+</ul></li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Source Code
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>See <code>uniform_crossover()</code>, <code>one_point_crossover()</code>, and <code>heuristic_crossover()</code> methods in <a href="https://github.com/brandon-toews/drone-delivery/blob/main/gen_alg.py">gen_alg.py</a> for details.</p>
+</div>
+</div>
+<div class="code-with-filename listing">
+<p>Listing&nbsp;2<strong>.</strong> Method for calculating goal quality.</p>
+<div class="code-with-filename-file">
+<pre><strong>gen_alg.py</strong></pre>
+</div>
+<div class="sourceCode" id="lst-quality" data-lst-cap="Method for calculating goal quality."><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="lst-quality-1"><a href="#lst-quality-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Method to calculate the quality of a goal based on the heuristic</span></span>
+<span id="lst-quality-2"><a href="#lst-quality-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> is_high_quality(<span class="va">self</span>, goal1, goal2):</span>
+<span id="lst-quality-3"><a href="#lst-quality-3" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Get the cost of traveling from goal1 to goal2</span></span>
+<span id="lst-quality-4"><a href="#lst-quality-4" aria-hidden="true" tabindex="-1"></a>        cost <span class="op">=</span> <span class="va">self</span>.costs[goal1][goal2][<span class="dv">1</span>]</span>
+<span id="lst-quality-5"><a href="#lst-quality-5" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Get the minimum and maximum cost of traveling to goal1 from any other goal</span></span>
+<span id="lst-quality-6"><a href="#lst-quality-6" aria-hidden="true" tabindex="-1"></a>        min_cost, max_cost <span class="op">=</span> <span class="va">self</span>.goal_cost_range[goal1]</span>
+<span id="lst-quality-7"><a href="#lst-quality-7" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Calculate the quality of the goal based on the heuristic</span></span>
+<span id="lst-quality-8"><a href="#lst-quality-8" aria-hidden="true" tabindex="-1"></a>        <span class="co"># The closer the cost is to the minimum cost the higher the quality of the goal</span></span>
+<span id="lst-quality-9"><a href="#lst-quality-9" aria-hidden="true" tabindex="-1"></a>        where <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> ((cost <span class="op">-</span> min_cost) <span class="op">/</span> (max_cost <span class="op">-</span> min_cost))</span>
+<span id="lst-quality-10"><a href="#lst-quality-10" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Return the quality of the goal</span></span>
+<span id="lst-quality-11"><a href="#lst-quality-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> where</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><strong>Mutation Process:</strong> The mutation process begins by checking if a mutation should occur, which is determined by a predetermined mutation rate set by the user. A drone is randomly selected from the fleet. The algorithm ensures that the selected drone has at least one goal. A specific goal is then chosen from the selected drone’s list of delivery locations, either by picking the only goal or randomly selecting one if multiple goals exist. This goal is removed from the chosen drone’s list of destinations. If there are drones with no assigned goals (empty drones), the removed goal is assigned to one of these drones, promoting distribution of delivery tasks. If all drones have assigned goals, the removed goal is added to a randomly selected drone’s list, increasing the diversity of route configurations explored by the algorithm (<a href="#lst-mutate">Listing&nbsp;3</a>).</li>
+</ul>
+<div class="code-with-filename listing">
+<p>Listing&nbsp;3<strong>.</strong> Method for mutating individuals.</p>
+<div class="code-with-filename-file">
+<pre><strong>gen_alg.py</strong></pre>
+</div>
+<div class="sourceCode" id="lst-mutate" data-lst-cap="Method for mutating individuals."><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="lst-mutate-1"><a href="#lst-mutate-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Method to mutate individuals by moving goals from one drone to another</span></span>
+<span id="lst-mutate-2"><a href="#lst-mutate-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> mutate(<span class="va">self</span>, individual):</span>
+<span id="lst-mutate-3"><a href="#lst-mutate-3" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Percentage based on mutation rate given</span></span>
+<span id="lst-mutate-4"><a href="#lst-mutate-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> random.random() <span class="op">&lt;</span> <span class="va">self</span>.mutation_rate:</span>
+<span id="lst-mutate-5"><a href="#lst-mutate-5" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Move a goal from one drone to another</span></span>
+<span id="lst-mutate-6"><a href="#lst-mutate-6" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">2</span>):</span>
+<span id="lst-mutate-7"><a href="#lst-mutate-7" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Select a random drone</span></span>
+<span id="lst-mutate-8"><a href="#lst-mutate-8" aria-hidden="true" tabindex="-1"></a>                drone <span class="op">=</span> random.randint(<span class="dv">0</span>, <span class="bu">len</span>(individual)<span class="op">-</span><span class="dv">1</span>)</span>
+<span id="lst-mutate-9"><a href="#lst-mutate-9" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Ensure that the selected drone has goals</span></span>
+<span id="lst-mutate-10"><a href="#lst-mutate-10" aria-hidden="true" tabindex="-1"></a>                <span class="cf">while</span> <span class="bu">len</span>(individual[drone].locations) <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="lst-mutate-11"><a href="#lst-mutate-11" aria-hidden="true" tabindex="-1"></a>                    <span class="co"># Select a random drone</span></span>
+<span id="lst-mutate-12"><a href="#lst-mutate-12" aria-hidden="true" tabindex="-1"></a>                    drone <span class="op">=</span> random.randint(<span class="dv">0</span>, <span class="bu">len</span>(individual)<span class="op">-</span><span class="dv">1</span>)</span>
+<span id="lst-mutate-13"><a href="#lst-mutate-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst-mutate-14"><a href="#lst-mutate-14" aria-hidden="true" tabindex="-1"></a>                <span class="co"># If the drone has only one goal</span></span>
+<span id="lst-mutate-15"><a href="#lst-mutate-15" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> <span class="bu">len</span>(individual[drone].locations) <span class="op">==</span> <span class="dv">1</span>:</span>
+<span id="lst-mutate-16"><a href="#lst-mutate-16" aria-hidden="true" tabindex="-1"></a>                    <span class="co"># Select the only goal</span></span>
+<span id="lst-mutate-17"><a href="#lst-mutate-17" aria-hidden="true" tabindex="-1"></a>                    goal <span class="op">=</span> <span class="dv">0</span></span>
+<span id="lst-mutate-18"><a href="#lst-mutate-18" aria-hidden="true" tabindex="-1"></a>                <span class="co"># If the drone has more than one goal</span></span>
+<span id="lst-mutate-19"><a href="#lst-mutate-19" aria-hidden="true" tabindex="-1"></a>                <span class="cf">else</span>:</span>
+<span id="lst-mutate-20"><a href="#lst-mutate-20" aria-hidden="true" tabindex="-1"></a>                    <span class="co"># Select a random goal</span></span>
+<span id="lst-mutate-21"><a href="#lst-mutate-21" aria-hidden="true" tabindex="-1"></a>                    goal <span class="op">=</span> random.randint(<span class="dv">0</span>, <span class="bu">len</span>(individual[drone].locations)<span class="op">-</span><span class="dv">1</span>)</span>
+<span id="lst-mutate-22"><a href="#lst-mutate-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst-mutate-23"><a href="#lst-mutate-23" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Remove the goal from the drone</span></span>
+<span id="lst-mutate-24"><a href="#lst-mutate-24" aria-hidden="true" tabindex="-1"></a>                location <span class="op">=</span> individual[drone].locations.pop(goal)</span>
+<span id="lst-mutate-25"><a href="#lst-mutate-25" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Select drones with no goals</span></span>
+<span id="lst-mutate-26"><a href="#lst-mutate-26" aria-hidden="true" tabindex="-1"></a>                empty_drones <span class="op">=</span> [d <span class="cf">for</span> d <span class="kw">in</span> individual <span class="cf">if</span> <span class="bu">len</span>(d.locations) <span class="op">==</span> <span class="dv">0</span>]</span>
+<span id="lst-mutate-27"><a href="#lst-mutate-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst-mutate-28"><a href="#lst-mutate-28" aria-hidden="true" tabindex="-1"></a>                <span class="co"># If there are drones with no goals</span></span>
+<span id="lst-mutate-29"><a href="#lst-mutate-29" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> empty_drones:</span>
+<span id="lst-mutate-30"><a href="#lst-mutate-30" aria-hidden="true" tabindex="-1"></a>                    <span class="co"># Select a random drone with no goals</span></span>
+<span id="lst-mutate-31"><a href="#lst-mutate-31" aria-hidden="true" tabindex="-1"></a>                    drone <span class="op">=</span> random.choice(empty_drones)</span>
+<span id="lst-mutate-32"><a href="#lst-mutate-32" aria-hidden="true" tabindex="-1"></a>                    <span class="co"># Add the goal to the drone</span></span>
+<span id="lst-mutate-33"><a href="#lst-mutate-33" aria-hidden="true" tabindex="-1"></a>                    drone.locations.append(location)</span>
+<span id="lst-mutate-34"><a href="#lst-mutate-34" aria-hidden="true" tabindex="-1"></a>                <span class="co"># If there are no drones with no goals</span></span>
+<span id="lst-mutate-35"><a href="#lst-mutate-35" aria-hidden="true" tabindex="-1"></a>                <span class="cf">else</span>:</span>
+<span id="lst-mutate-36"><a href="#lst-mutate-36" aria-hidden="true" tabindex="-1"></a>                    <span class="co"># Select a random drone to add the goal to</span></span>
+<span id="lst-mutate-37"><a href="#lst-mutate-37" aria-hidden="true" tabindex="-1"></a>                    individual[random.randint(<span class="dv">0</span>, <span class="bu">len</span>(individual)<span class="op">-</span><span class="dv">1</span>)].locations.append(location)</span>
+<span id="lst-mutate-38"><a href="#lst-mutate-38" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Return the mutated individual</span></span>
+<span id="lst-mutate-39"><a href="#lst-mutate-39" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> individual</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="justifications-3" class="level3" data-number="3.3.2">
+<h3 data-number="3.3.2" class="anchored" data-anchor-id="justifications-3"><span class="header-section-number">3.3.2</span> Justifications</h3>
+<ul>
+<li><strong>Crossover Methods:</strong> Each crossover method offers different advantages: uniform crossover introduces high variability, one-point preserves existing good sequences, and heuristic crossover refines solutions by incorporating domain-specific knowledge, increasing the likelihood of finding optimal routes. These methods are selected to balance exploration and exploitation in the genetic search process, optimizing the algorithm’s performance across diverse scenarios.</li>
+</ul>
+</section>
+</section>
+<section id="fitness-function" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="fitness-function"><span class="header-section-number">3.4</span> Fitness Function</h2>
+<section id="step-by-step-description-4" class="level3" data-number="3.4.1">
+<h3 data-number="3.4.1" class="anchored" data-anchor-id="step-by-step-description-4"><span class="header-section-number">3.4.1</span> Step-by-Step Description</h3>
+<ul>
+<li><strong>Integration with A* Algorithm:</strong> Before the genetic algorithm commences, the A* algorithm is employed to calculate the most efficient paths and distances between each goal and the central hub node. These calculations and optimal routes between the goal nodes are then saved in a cost dictionary to be used during the fitness evaluation (<a href="#lst-traveltimes">Listing&nbsp;4</a>).</li>
+</ul>
+<div class="code-with-filename listing">
+<p>Listing&nbsp;4<strong>.</strong> Method for creating cost dictionary.</p>
+<div class="code-with-filename-file">
+<pre><strong>gen_alg.py</strong></pre>
+</div>
+<div class="sourceCode" id="lst-traveltimes" data-lst-cap="Method for creating cost dictionary."><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="lst-traveltimes-1"><a href="#lst-traveltimes-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Method to calculate the travel times and paths between all goal states</span></span>
+<span id="lst-traveltimes-2"><a href="#lst-traveltimes-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># and store them in a dictionary for future reference</span></span>
+<span id="lst-traveltimes-3"><a href="#lst-traveltimes-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> calculate_travel_times(<span class="va">self</span>):</span>
+<span id="lst-traveltimes-4"><a href="#lst-traveltimes-4" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Initialize dictionary to store all travel times and paths from the hub to each goal state</span></span>
+<span id="lst-traveltimes-5"><a href="#lst-traveltimes-5" aria-hidden="true" tabindex="-1"></a>        hub_to_goals <span class="op">=</span> {}</span>
+<span id="lst-traveltimes-6"><a href="#lst-traveltimes-6" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Iterate through all goal states</span></span>
+<span id="lst-traveltimes-7"><a href="#lst-traveltimes-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> goal <span class="kw">in</span> <span class="va">self</span>.goal_states:</span>
+<span id="lst-traveltimes-8"><a href="#lst-traveltimes-8" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Create A* agent for the initial state(Hub) and goal</span></span>
+<span id="lst-traveltimes-9"><a href="#lst-traveltimes-9" aria-hidden="true" tabindex="-1"></a>            astar_agent <span class="op">=</span> ar.Agent(<span class="st">'A*'</span>,</span>
+<span id="lst-traveltimes-10"><a href="#lst-traveltimes-10" aria-hidden="true" tabindex="-1"></a>                                   <span class="va">self</span>.state_space,</span>
+<span id="lst-traveltimes-11"><a href="#lst-traveltimes-11" aria-hidden="true" tabindex="-1"></a>                                   <span class="va">self</span>.initial_state,</span>
+<span id="lst-traveltimes-12"><a href="#lst-traveltimes-12" aria-hidden="true" tabindex="-1"></a>                                   goal,</span>
+<span id="lst-traveltimes-13"><a href="#lst-traveltimes-13" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">'Euclidean + Traffic Aware'</span>)</span>
+<span id="lst-traveltimes-14"><a href="#lst-traveltimes-14" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Perform A* search of the initial state(hub) and goal</span></span>
+<span id="lst-traveltimes-15"><a href="#lst-traveltimes-15" aria-hidden="true" tabindex="-1"></a>            path, travel_time <span class="op">=</span> astar_agent.astar_search()</span>
+<span id="lst-traveltimes-16"><a href="#lst-traveltimes-16" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Add the travel time to the hub_to_goal costs dictionary</span></span>
+<span id="lst-traveltimes-17"><a href="#lst-traveltimes-17" aria-hidden="true" tabindex="-1"></a>            hub_to_goals[goal] <span class="op">=</span> (path, travel_time)</span>
+<span id="lst-traveltimes-18"><a href="#lst-traveltimes-18" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Iterate through all other goal states</span></span>
+<span id="lst-traveltimes-19"><a href="#lst-traveltimes-19" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> other_goal <span class="kw">in</span> <span class="va">self</span>.goal_states:</span>
+<span id="lst-traveltimes-20"><a href="#lst-traveltimes-20" aria-hidden="true" tabindex="-1"></a>                <span class="co"># If the goal is not the same as the other goal</span></span>
+<span id="lst-traveltimes-21"><a href="#lst-traveltimes-21" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> <span class="kw">not</span> goal <span class="op">==</span> other_goal:</span>
+<span id="lst-traveltimes-22"><a href="#lst-traveltimes-22" aria-hidden="true" tabindex="-1"></a>                    <span class="co"># Create A* agent for the goal and other goal</span></span>
+<span id="lst-traveltimes-23"><a href="#lst-traveltimes-23" aria-hidden="true" tabindex="-1"></a>                    astar_agent <span class="op">=</span> ar.Agent(<span class="st">'A*'</span>,</span>
+<span id="lst-traveltimes-24"><a href="#lst-traveltimes-24" aria-hidden="true" tabindex="-1"></a>                                           <span class="va">self</span>.state_space,</span>
+<span id="lst-traveltimes-25"><a href="#lst-traveltimes-25" aria-hidden="true" tabindex="-1"></a>                                           goal,</span>
+<span id="lst-traveltimes-26"><a href="#lst-traveltimes-26" aria-hidden="true" tabindex="-1"></a>                                           other_goal,</span>
+<span id="lst-traveltimes-27"><a href="#lst-traveltimes-27" aria-hidden="true" tabindex="-1"></a>                                           <span class="st">'Euclidean + Traffic Aware'</span>)</span>
+<span id="lst-traveltimes-28"><a href="#lst-traveltimes-28" aria-hidden="true" tabindex="-1"></a>                    <span class="co"># Perform A* search of the goal and other goal</span></span>
+<span id="lst-traveltimes-29"><a href="#lst-traveltimes-29" aria-hidden="true" tabindex="-1"></a>                    path, travel_time <span class="op">=</span> astar_agent.astar_search()</span>
+<span id="lst-traveltimes-30"><a href="#lst-traveltimes-30" aria-hidden="true" tabindex="-1"></a>                    <span class="co"># Add the travel time to the costs dictionary</span></span>
+<span id="lst-traveltimes-31"><a href="#lst-traveltimes-31" aria-hidden="true" tabindex="-1"></a>                    <span class="va">self</span>.costs[goal][other_goal] <span class="op">=</span> (path, travel_time)</span>
+<span id="lst-traveltimes-32"><a href="#lst-traveltimes-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst-traveltimes-33"><a href="#lst-traveltimes-33" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Add the travel times from the hub to the goals to the costs dictionary</span></span>
+<span id="lst-traveltimes-34"><a href="#lst-traveltimes-34" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.costs[<span class="va">self</span>.initial_state] <span class="op">=</span> hub_to_goals</span>
+<span id="lst-traveltimes-35"><a href="#lst-traveltimes-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst-traveltimes-36"><a href="#lst-traveltimes-36" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Calculate the range of costs for each goal state</span></span>
+<span id="lst-traveltimes-37"><a href="#lst-traveltimes-37" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> key <span class="kw">in</span> <span class="va">self</span>.costs:</span>
+<span id="lst-traveltimes-38"><a href="#lst-traveltimes-38" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Get the maximum and minimum travel times for each goal state</span></span>
+<span id="lst-traveltimes-39"><a href="#lst-traveltimes-39" aria-hidden="true" tabindex="-1"></a>            max_time <span class="op">=</span> <span class="bu">max</span>(<span class="va">self</span>.costs[key][key2][<span class="dv">1</span>] <span class="cf">for</span> key2 <span class="kw">in</span> <span class="va">self</span>.costs[key])</span>
+<span id="lst-traveltimes-40"><a href="#lst-traveltimes-40" aria-hidden="true" tabindex="-1"></a>            min_time <span class="op">=</span> <span class="bu">min</span>(<span class="va">self</span>.costs[key][key2][<span class="dv">1</span>] <span class="cf">for</span> key2 <span class="kw">in</span> <span class="va">self</span>.costs[key])</span>
+<span id="lst-traveltimes-41"><a href="#lst-traveltimes-41" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Add the range of costs to the goal_cost_range dictionary</span></span>
+<span id="lst-traveltimes-42"><a href="#lst-traveltimes-42" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.goal_cost_range[key] <span class="op">=</span> (min_time, max_time)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><strong>Fitness Calculation:</strong> The fitness of each chromosome is calculated using the cost dictionary, which includes the optimal paths and distances pre-computed by the A* algorithm. Penalties increase for delays in addressing more urgent goals, accumulating until each goal is reached (<a href="#lst-fitness">Listing&nbsp;5</a>). These factors are computed using the pre-defined costs and urgency values associated with each node in the chromosome.</li>
+</ul>
+<div class="code-with-filename listing">
+<p>Listing&nbsp;5<strong>.</strong> Method for calculating individual fitness</p>
+<div class="code-with-filename-file">
+<pre><strong>gen_alg.py</strong></pre>
+</div>
+<div class="sourceCode" id="lst-fitness" data-lst-cap="Method for calculating individual fitness"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="lst-fitness-1"><a href="#lst-fitness-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Method to calculate the fitness of an individual</span></span>
+<span id="lst-fitness-2"><a href="#lst-fitness-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> fitness_function(<span class="va">self</span>, individual):</span>
+<span id="lst-fitness-3"><a href="#lst-fitness-3" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Initialize total time and total utility cost</span></span>
+<span id="lst-fitness-4"><a href="#lst-fitness-4" aria-hidden="true" tabindex="-1"></a>        total_time <span class="op">=</span> <span class="dv">0</span></span>
+<span id="lst-fitness-5"><a href="#lst-fitness-5" aria-hidden="true" tabindex="-1"></a>        total_utility_cost <span class="op">=</span> <span class="dv">0</span></span>
+<span id="lst-fitness-6"><a href="#lst-fitness-6" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Loop through each drone in the individual</span></span>
+<span id="lst-fitness-7"><a href="#lst-fitness-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> drone <span class="kw">in</span> individual:</span>
+<span id="lst-fitness-8"><a href="#lst-fitness-8" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Initialize drone path, cumulative time, and cumulative utility cost</span></span>
+<span id="lst-fitness-9"><a href="#lst-fitness-9" aria-hidden="true" tabindex="-1"></a>            drone.path <span class="op">=</span> []</span>
+<span id="lst-fitness-10"><a href="#lst-fitness-10" aria-hidden="true" tabindex="-1"></a>            cumulative_time <span class="op">=</span> <span class="dv">0</span></span>
+<span id="lst-fitness-11"><a href="#lst-fitness-11" aria-hidden="true" tabindex="-1"></a>            cumulative_utility_cost <span class="op">=</span> <span class="dv">0</span></span>
+<span id="lst-fitness-12"><a href="#lst-fitness-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst-fitness-13"><a href="#lst-fitness-13" aria-hidden="true" tabindex="-1"></a>            <span class="co"># If the drone has more than one goal</span></span>
+<span id="lst-fitness-14"><a href="#lst-fitness-14" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="bu">len</span>(drone.locations) <span class="op">&gt;</span> <span class="dv">1</span>:</span>
+<span id="lst-fitness-15"><a href="#lst-fitness-15" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Loop through each goal in the drone</span></span>
+<span id="lst-fitness-16"><a href="#lst-fitness-16" aria-hidden="true" tabindex="-1"></a>                <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(drone.locations)):</span>
+<span id="lst-fitness-17"><a href="#lst-fitness-17" aria-hidden="true" tabindex="-1"></a>                    <span class="co"># Grab precalculated travel time and paths from costs dictionary from current state to goal</span></span>
+<span id="lst-fitness-18"><a href="#lst-fitness-18" aria-hidden="true" tabindex="-1"></a>                    travel_time <span class="op">=</span> <span class="va">self</span>.costs[<span class="va">self</span>.current_state][drone.locations[i]][<span class="dv">1</span>]</span>
+<span id="lst-fitness-19"><a href="#lst-fitness-19" aria-hidden="true" tabindex="-1"></a>                    paths <span class="op">=</span> <span class="va">self</span>.costs[<span class="va">self</span>.current_state][drone.locations[i]][<span class="dv">0</span>]</span>
+<span id="lst-fitness-20"><a href="#lst-fitness-20" aria-hidden="true" tabindex="-1"></a>                    <span class="co"># For each path in the paths</span></span>
+<span id="lst-fitness-21"><a href="#lst-fitness-21" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">for</span> n <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(paths)):</span>
+<span id="lst-fitness-22"><a href="#lst-fitness-22" aria-hidden="true" tabindex="-1"></a>                        <span class="co"># If the i which is the index of the goal is the last goal in the drone</span></span>
+<span id="lst-fitness-23"><a href="#lst-fitness-23" aria-hidden="true" tabindex="-1"></a>                        <span class="cf">if</span> i <span class="op">==</span> <span class="bu">len</span>(drone.locations)<span class="op">-</span><span class="dv">1</span>:</span>
+<span id="lst-fitness-24"><a href="#lst-fitness-24" aria-hidden="true" tabindex="-1"></a>                            <span class="co"># Add the path to the drone</span></span>
+<span id="lst-fitness-25"><a href="#lst-fitness-25" aria-hidden="true" tabindex="-1"></a>                            drone.path.append(paths[n])</span>
+<span id="lst-fitness-26"><a href="#lst-fitness-26" aria-hidden="true" tabindex="-1"></a>                        <span class="co"># Else if the i which is the index of the goal is not the last goal in the drone</span></span>
+<span id="lst-fitness-27"><a href="#lst-fitness-27" aria-hidden="true" tabindex="-1"></a>                        <span class="co"># and the n which is the index of the path is not the last path in the paths</span></span>
+<span id="lst-fitness-28"><a href="#lst-fitness-28" aria-hidden="true" tabindex="-1"></a>                        <span class="cf">elif</span> n <span class="op">&lt;</span> <span class="bu">len</span>(paths)<span class="op">-</span><span class="dv">1</span>:</span>
+<span id="lst-fitness-29"><a href="#lst-fitness-29" aria-hidden="true" tabindex="-1"></a>                            <span class="co"># Add the path to the drone</span></span>
+<span id="lst-fitness-30"><a href="#lst-fitness-30" aria-hidden="true" tabindex="-1"></a>                            drone.path.append(paths[n])</span>
+<span id="lst-fitness-31"><a href="#lst-fitness-31" aria-hidden="true" tabindex="-1"></a>                    <span class="co"># Add travel time to cumulative time</span></span>
+<span id="lst-fitness-32"><a href="#lst-fitness-32" aria-hidden="true" tabindex="-1"></a>                    cumulative_time <span class="op">+=</span> travel_time</span>
+<span id="lst-fitness-33"><a href="#lst-fitness-33" aria-hidden="true" tabindex="-1"></a>                    <span class="co"># Calculate utility cost for first goal based on travel time and delivery urgency</span></span>
+<span id="lst-fitness-34"><a href="#lst-fitness-34" aria-hidden="true" tabindex="-1"></a>                    utility_cost <span class="op">=</span> cumulative_time <span class="op">*</span> drone.locations[i].delivery_urgency<span class="op">/</span><span class="dv">10</span></span>
+<span id="lst-fitness-35"><a href="#lst-fitness-35" aria-hidden="true" tabindex="-1"></a>                    <span class="co"># Add utility cost to cumulative utility cost</span></span>
+<span id="lst-fitness-36"><a href="#lst-fitness-36" aria-hidden="true" tabindex="-1"></a>                    cumulative_utility_cost <span class="op">+=</span> utility_cost</span>
+<span id="lst-fitness-37"><a href="#lst-fitness-37" aria-hidden="true" tabindex="-1"></a>                    <span class="co"># Update current state to goal</span></span>
+<span id="lst-fitness-38"><a href="#lst-fitness-38" aria-hidden="true" tabindex="-1"></a>                    <span class="va">self</span>.current_state <span class="op">=</span> drone.locations[i]</span>
+<span id="lst-fitness-39"><a href="#lst-fitness-39" aria-hidden="true" tabindex="-1"></a>            <span class="co"># If the drone has only one goal</span></span>
+<span id="lst-fitness-40"><a href="#lst-fitness-40" aria-hidden="true" tabindex="-1"></a>            <span class="cf">elif</span> <span class="bu">len</span>(drone.locations) <span class="op">==</span> <span class="dv">1</span>:</span>
+<span id="lst-fitness-41"><a href="#lst-fitness-41" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Perform A* search from current state to goal</span></span>
+<span id="lst-fitness-42"><a href="#lst-fitness-42" aria-hidden="true" tabindex="-1"></a>                travel_time <span class="op">=</span> <span class="va">self</span>.costs[<span class="va">self</span>.current_state][drone.locations[<span class="dv">0</span>]][<span class="dv">1</span>]</span>
+<span id="lst-fitness-43"><a href="#lst-fitness-43" aria-hidden="true" tabindex="-1"></a>                <span class="co"># For each node in the path from current state to goal</span></span>
+<span id="lst-fitness-44"><a href="#lst-fitness-44" aria-hidden="true" tabindex="-1"></a>                <span class="cf">for</span> node <span class="kw">in</span> <span class="va">self</span>.costs[<span class="va">self</span>.current_state][drone.locations[<span class="dv">0</span>]][<span class="dv">0</span>]:</span>
+<span id="lst-fitness-45"><a href="#lst-fitness-45" aria-hidden="true" tabindex="-1"></a>                    <span class="co"># Add the node to the drone path</span></span>
+<span id="lst-fitness-46"><a href="#lst-fitness-46" aria-hidden="true" tabindex="-1"></a>                    drone.path.append(node)</span>
+<span id="lst-fitness-47"><a href="#lst-fitness-47" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Add travel time to cumulative time</span></span>
+<span id="lst-fitness-48"><a href="#lst-fitness-48" aria-hidden="true" tabindex="-1"></a>                cumulative_time <span class="op">+=</span> travel_time</span>
+<span id="lst-fitness-49"><a href="#lst-fitness-49" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Calculate utility cost for first goal based on travel time and delivery urgency</span></span>
+<span id="lst-fitness-50"><a href="#lst-fitness-50" aria-hidden="true" tabindex="-1"></a>                utility_cost <span class="op">=</span> cumulative_time <span class="op">*</span> drone.locations[<span class="dv">0</span>].delivery_urgency<span class="op">/</span><span class="dv">10</span></span>
+<span id="lst-fitness-51"><a href="#lst-fitness-51" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Add utility cost to cumulative utility cost</span></span>
+<span id="lst-fitness-52"><a href="#lst-fitness-52" aria-hidden="true" tabindex="-1"></a>                cumulative_utility_cost <span class="op">+=</span> utility_cost</span>
+<span id="lst-fitness-53"><a href="#lst-fitness-53" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Update current state to goal</span></span>
+<span id="lst-fitness-54"><a href="#lst-fitness-54" aria-hidden="true" tabindex="-1"></a>                <span class="va">self</span>.current_state <span class="op">=</span> drone.locations[<span class="dv">0</span>]</span>
+<span id="lst-fitness-55"><a href="#lst-fitness-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst-fitness-56"><a href="#lst-fitness-56" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Store the total cost of the drone</span></span>
+<span id="lst-fitness-57"><a href="#lst-fitness-57" aria-hidden="true" tabindex="-1"></a>            drone.cost <span class="op">=</span> cumulative_time <span class="op">+</span> cumulative_utility_cost</span>
+<span id="lst-fitness-58"><a href="#lst-fitness-58" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Add cumulative time and cumulative utility cost to total time and total utility cost</span></span>
+<span id="lst-fitness-59"><a href="#lst-fitness-59" aria-hidden="true" tabindex="-1"></a>            total_time <span class="op">+=</span> cumulative_time</span>
+<span id="lst-fitness-60"><a href="#lst-fitness-60" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Update total utility cost</span></span>
+<span id="lst-fitness-61"><a href="#lst-fitness-61" aria-hidden="true" tabindex="-1"></a>            total_utility_cost <span class="op">+=</span> cumulative_utility_cost</span>
+<span id="lst-fitness-62"><a href="#lst-fitness-62" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Update current state to initial state</span></span>
+<span id="lst-fitness-63"><a href="#lst-fitness-63" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.current_state <span class="op">=</span> <span class="va">self</span>.initial_state</span>
+<span id="lst-fitness-64"><a href="#lst-fitness-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst-fitness-65"><a href="#lst-fitness-65" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Return the fitness of the individual</span></span>
+<span id="lst-fitness-66"><a href="#lst-fitness-66" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> total_time <span class="op">+</span> total_utility_cost</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><strong>Implementation:</strong> Fitness is inversely proportional to the total cost; thus, a lower cost results in higher fitness. This cost includes penalties for delayed deliveries, particularly for urgent goals, which accumulate until each delivery is completed.</li>
+</ul>
+</section>
+<section id="justifications-4" class="level3" data-number="3.4.2">
+<h3 data-number="3.4.2" class="anchored" data-anchor-id="justifications-4"><span class="header-section-number">3.4.2</span> Justifications</h3>
+<ul>
+<li><strong>Cost Dictionary:</strong> This pre-computation step is crucial because while the GA is adept at optimizing the order of goal visitations, it is not designed to determine the most efficient paths between these goals. The A* algorithm, known for its efficiency in finding the shortest paths in terms of time and space complexity, ensures that the paths used in the GA’s fitness evaluations are optimal. This separation of concerns allows the GA to focus solely on sequencing the deliveries, leveraging its strengths in evolving solutions over generations without the computational overhead of pathfinding (<a href="#lst-traveltimes">Listing&nbsp;4</a>).</li>
+<li><strong>Utility Cost:</strong> The fitness function is designed to align closely with the operational goals of reducing delivery times and costs. By incorporating urgency into the fitness calculation, the genetic algorithm prioritizes more time-sensitive deliveries, reflecting real-world priorities in logistics operations. This method ensures that the algorithm not only finds feasible routes but also optimizes them according to practical business objectives (<a href="#lst-fitness">Listing&nbsp;5</a>).</li>
+</ul>
+</section>
+</section>
+<section id="algorithm-execution-and-results" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="algorithm-execution-and-results"><span class="header-section-number">3.5</span> Algorithm Execution and Results</h2>
+<p>Upon initiating the genetic algorithm, users can observe the evolution of solutions across generations in the console. The fittest solutions are displayed graphically, illustrating the cost efficiency and route effectiveness achieved by the algorithm. This visual feedback is crucial for verifying the algorithm’s efficacy and for potential adjustments based on operational feedback (<a href="#fig-visual">Figure&nbsp;3</a>).</p>
+<div id="fig-visual" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="ga_heuristic.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption"><strong>Figure</strong>&nbsp;3<strong>.</strong> Best solution visually represented</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="references" class="level1 unnumbered">
+<h1 class="unnumbered">References</h1>
+<p>Zhang, P. et al.&nbsp;(2022) “A genetic algorithm with jumping gene and heuristic operators for traveling salesman problem,” Applied Soft Computing, 127. Available at: https://doi.org/10.1016/j.asoc.2022.109339.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
