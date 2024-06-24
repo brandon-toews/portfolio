@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/neural_net_optimizers/neural_net_optimizers.html",
       "/posts/xlstm-vs-markov/xlstm-vs-markov.html",
       "/posts/drone-delivery/drone-delivery.html",
       "/posts/data-analytics/data-analytics.html",
