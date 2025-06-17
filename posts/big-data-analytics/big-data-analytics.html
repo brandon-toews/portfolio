@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="quarto-1.3.450" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+<meta name="author" content="Brandon Toews" />
+<meta name="dcterms.date" content="2025-01-17" />
+<meta name="description" content="A comprehensive analysis of real-time DDoS attack classification using clustering, classification, and streaming analytics with Apache Spark." />
+
+<title>portfolio – Big Data Analytics: DDoS Real-Time Classification</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+<!-- htmldependencies:E3FAD763 -->
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+<link rel="stylesheet" href="../../styles.css" />
+</head>
+
+<body>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="/index.html">
+    <span class="navbar-title">portfolio</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+  aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation"
+  onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="/about.html" rel="" target="">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/brandon-toews" rel="" target=""><i 
+  class="bi bi-github" 
+  role="img" 
+>
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <div id="quarto-toc-target"></div>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+  <div class="quarto-title-banner">
+    <div class="quarto-title column-body">
+      <h1 class="title">Big Data Analytics: DDoS Real-Time Classification</h1>
+                  <div>
+        <div class="description">
+          A comprehensive analysis of real-time DDoS attack classification using clustering, classification, and streaming analytics with Apache Spark.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">Big Data Analytics</div>
+                <div class="quarto-category">Cybersecurity</div>
+                <div class="quarto-category">AI / Machine Learning</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Brandon Toews </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">January 17, 2025</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header>
+<nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#dataset-description-and-analysis" id="toc-dataset-description-and-analysis"><span class="header-section-number">1</span> Dataset Description and Analysis</a></li>
+  <li><a href="#implementation-and-analysis" id="toc-implementation-and-analysis"><span class="header-section-number">2</span> Implementation and Analysis</a>
+  <ul>
+  <li><a href="#clustering" id="toc-clustering"><span class="header-section-number">2.1</span> Clustering</a>
+  <ul>
+  <li><a href="#dbscan-clustering-analysis-results-and-discussion" id="toc-dbscan-clustering-analysis-results-and-discussion"><span class="header-section-number">2.1.1</span> DBSCAN Clustering Analysis Results and Discussion</a></li>
+  <li><a href="#kmeans-clustering-analysis-results-and-discussion" id="toc-kmeans-clustering-analysis-results-and-discussion"><span class="header-section-number">2.1.2</span> KMeans Clustering Analysis Results and Discussion</a></li>
+  </ul></li>
+  <li><a href="#classification" id="toc-classification"><span class="header-section-number">2.2</span> Classification</a></li>
+  <li><a href="#streaming-analysis" id="toc-streaming-analysis"><span class="header-section-number">2.3</span> Streaming Analysis</a></li>
+  </ul></li>
+  <li><a href="#machine-learning-with-dimensionality-reduction-critical-analysis" id="toc-machine-learning-with-dimensionality-reduction-critical-analysis"><span class="header-section-number">3</span> Machine Learning with Dimensionality Reduction &amp; Critical Analysis</a>
+  <ul>
+  <li><a href="#dimensionality-reduction" id="toc-dimensionality-reduction"><span class="header-section-number">3.1</span> Dimensionality Reduction</a></li>
+  <li><a href="#critical-analysis" id="toc-critical-analysis"><span class="header-section-number">3.2</span> Critical Analysis</a>
+  <ul>
+  <li><a href="#clustering-1" id="toc-clustering-1"><span class="header-section-number">3.2.1</span> Clustering</a></li>
+  <li><a href="#classification-1" id="toc-classification-1"><span class="header-section-number">3.2.2</span> Classification</a></li>
+  <li><a href="#streaming-analysis-1" id="toc-streaming-analysis-1"><span class="header-section-number">3.2.3</span> Streaming Analysis</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#references" id="toc-references">References</a></li>
+  </ul>
+</nav>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class='callout-icon'></i>
+</div>
+<div class="callout-title-container flex-fill">
+Source Code
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>View source code on Github <a href="https://github.com/brandon-toews/big_data">repository</a>.</p>
+</div>
+</div>
+<section id="dataset-description-and-analysis" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Dataset Description and Analysis</h1>
+<p>The dataset in this analysis is a collection of network data from various kinds of DDoS attacks along with normal network traffic data. The dataset comes as multiple CSV files with eighty (80) traffic features to combine to perform an analysis and subsequent implementations. There are eight (8) classes of network traffic labeling each entry in the dataset and of those <code>BENIGN</code> and <code>UDPLag</code> have lowest number of entries. <code>UDPLag</code> only has 1873 entries while the next lowest has 56,965 entries so the decision was made to drop the <code>UDPLag</code> class entirely. To prevent any of the classes from biasing the clustering and classification models, equal entries from each class have been chosen to create a combined dataset. In addition, columns <code>Unamed: 0</code> and <code>Fwd Header Length.1</code> were removed as the latter seems to be a duplication of the <code>Fwd Header Length</code> and <code>Unamed: 0</code> isn’t relevant to this analysis.</p>
+<p>The dataset poses challenges due to its size and complexity therefore features that are most relevant and that help to clarify the nuances within the data will be discussed in this analysis. <code>NaN</code> and <code>inf</code> values were changed to zero (0) because they were generated due to calculations of divisions by zero (0). For example, when trying to derive the flow bytes per second by taking the sum of forward flow bytes and backward flow bytes and dividing by a flow duration of zero (0). There are some obvious correlations between columns that contain mean and standard deviation values derived from other columns pertaining information like packet length and inter-arrival times (IAT) (<a href="#fig-correlation">Figure 1</a>).</p>
+<div id="fig-correlation" class="quarto-figure quarto-figure-center">
+<figure>
+<p><img src="correlation-matrix.png" class="img-fluid" /></p>
+<figcaption><strong>Figure</strong> 1<strong>.</strong> Correlation Matrix</figcaption>
+</figure>
+</div>
+<p>These characteristics are typical of long-tailed distributions, where most values cluster around a central point (showing strong central tendency) but with a small number of very large values creating a long “tail” in the distribution. This pattern is common in network traffic data, where most packets might be of typical size, but occasional large transfers create outliers. Many of the features in this data set have long-tailed distributions with strong central tendencies (<a href="#fig-packets-analytics-1">Figures 2</a> &amp; <a href="#fig-packets-analytics-2">3</a>), for example:</p>
+<p><strong>Total_Backward_Packets:</strong> - The median (50%) is 0, while the max is 31,700 - There’s a large gap between the 75th percentile (0) and the max value - The mean (1.89) is significantly higher than the median, suggesting right skew - A high standard deviation (57.59) relative to the mean indicates spread out values</p>
+<p><strong>Total_Length_of_Fwd_Packets:</strong> - The median is 458 but the max is 208,524 - There’s a large jump from the 75th percentile (1,398) to the max - The mean (1,044) is higher than the median, indicating right skew - High standard deviation (1,854) shows significant dispersion</p>
+<p><strong>Forward packet length metrics (Min, Mean, Std):</strong> - show similar patterns - Large gaps between 75th percentiles and max values - Means higher than medians - Standard deviations indicating spread</p>
+<div id="fig-packets-analytics-1" class="quarto-figure quarto-figure-center">
+<figure>
+<p><img src="packets-analytics-1.png" class="img-fluid" /></p>
+<figcaption><strong>Figure</strong> 2<strong>.</strong> Packets Analytics</figcaption>
+</figure>
+</div>
+<div id="fig-packets-analytics-2" class="quarto-figure quarto-figure-center">
+<figure>
+<p><img src="packets-analytics-2.png" class="img-fluid" /></p>
+<figcaption><strong>Figure</strong> 3<strong>.</strong> Packets Analytics</figcaption>
+</figure>
+</div>
+<p>On closer examination, many of the different attacks share similar characteristics but very different patterns from normal network traffic. In some cases, network traffic obscures the attack traffic if combined in the same plot. As can be seen in <a href="#fig-normal-traffic">Figures 4</a>-<a href="#fig-mssql-traffic">8</a>, normal traffic completely eclipses attack traffic, even with logarithmic transformation of the y axis to compensate for the extremely polarized frequencies between them. While these characteristics will no doubt be very helpful in differentiating normal traffic from attack traffic it may increase difficulty in isolating the type of attack.</p>
+<div id="fig-normal-traffic" class="quarto-figure quarto-figure-center">
+<figure>
+<p><img src="normal-traffic.png" class="img-fluid" /></p>
+<figcaption><strong>Figure</strong> 4<strong>.</strong> Normal Traffic</figcaption>
+</figure>
+</div>
+<div id="fig-portmap-traffic" class="quarto-figure quarto-figure-center">
+<figure>
+<p><img src="portmap-traffic.png" class="img-fluid" /></p>
+<figcaption><strong>Figure</strong> 5<strong>.</strong> Portmap Traffic</figcaption>
+</figure>
+</div>
+<div id="fig-udp-traffic" class="quarto-figure quarto-figure-center">
+<figure>
+<p><img src="udp-traffic.png" class="img-fluid" /></p>
+<figcaption><strong>Figure</strong> 6<strong>.</strong> UDP Traffic</figcaption>
+</figure>
+</div>
+<div id="fig-syn-traffic" class="quarto-figure quarto-figure-center">
+<figure>
+<p><img src="syn-traffic.png" class="img-fluid" /></p>
+<figcaption><strong>Figure</strong> 7<strong>.</strong> SYN Traffic</figcaption>
+</figure>
+</div>
+<div id="fig-ldap-traffic" class="quarto-figure quarto-figure-center">
+<figure>
+<p><img src="ldap-traffic.png" class="img-fluid" /></p>
+<figcaption><strong>Figure</strong> 8<strong>.</strong> LDAP Traffic</figcaption>
+</figure>
+</div>
+<div id="fig-mssql-traffic" class="quarto-figure quarto-figure-center">
+<figure>
+<p><img src="mssql-traffic.png" class="img-fluid" /></p>
+<figcaption><strong>Figure</strong> 9<strong>.</strong> MSSQL Traffic</figcaption>
+</figure>
+</div>
+<p>Scatter plots comparing various features against each other again demonstrating how the density of data points among different classes occludes one another (<a href="#fig-traffic-volume">Figures 9</a>-<a href="#fig-packet-characteristics">11</a>). However, in 3D scatter plots, we have plotted features against each other in the x and y axis but plot the classes in the z axis. This provides a layered view of the data points, where we can begin to perceive how each attack does exhibit unique traffic patterns that could be used in real-time identification (<a href="#fig-3d-packet-length">Figures 12</a>-<a href="#fig-3d-flow-bytes">14</a>).</p>
+<div id="fig-traffic-volume" class="quarto-figure quarto-figure-center">
+<figure>
+<p><img src="traffic-volume-scatter.png" class="img-fluid" /></p>
+<figcaption><strong>Figure</strong> 10<strong>.</strong> Traffic Volume Scatter Plots</figcaption>
+</figure>
+</div>
+<div id="fig-traffic-timing" class="quarto-figure quarto-figure-center">
+<figure>
+<p><img src="traffic-timing-scatter.png" class="img-fluid" /></p>
+<figcaption><strong>Figure</strong> 11<strong>.</strong> Traffic Timing Scatter Plots</figcaption>
+</figure>
+</div>
+<div id="fig-packet-characteristics" class="quarto-figure quarto-figure-center">
+<figure>
+<p><img src="packet-characteristics-scatter.png" class="img-fluid" /></p>
+<figcaption><strong>Figure</strong> 12<strong>.</strong> Packet Characteristics Scatter Plots</figcaption>
+</figure>
+</div>
+<div id="fig-3d-packet-length" class="quarto-figure quarto-figure-center">
+<figure>
+<p><img src="3d-packet-length.png" class="img-fluid" /></p>
+<figcaption><strong>Figure</strong> 13<strong>.</strong> Packet Length Std vs Average Packet Size - 3D Scatter Plot</figcaption>
+</figure>
+</div>
+<div id="fig-3d-iat" class="quarto-figure quarto-figure-center">
+<figure>
+<p><img src="3d-iat-scatter.png" class="img-fluid" /></p>
+<figcaption><strong>Figure</strong> 14<strong>.</strong> Forward IAT Total vs Backward IAT Total - 3D Scatter Plot</figcaption>
+</figure>
+</div>
+<div id="fig-3d-flow-bytes" class="quarto-figure quarto-figure-center">
+<figure>
+<p><img src="3d-flow-bytes.png" class="img-fluid" /></p>
+<figcaption><strong>Figure</strong> 15<strong>.</strong> Flow Bytes/s vs Flow Packets/s - 3D Scatter Plot</figcaption>
+</figure>
+</div>
+</section>
+<section id="implementation-and-analysis" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Implementation and Analysis</h1>
+<section id="clustering" class="level2" data-number="2.1">
+<h2 data-number="2.1"><span class="header-section-number">2.1</span> Clustering</h2>
+<p>For the clustering implementation two models were trained using a standard scaler and principal component analysis reducing the dimensions using 3 components.</p>
+<section id="dbscan-clustering-analysis-results-and-discussion" class="level3" data-number="2.1.1">
+<h3 data-number="2.1.1"><span class="header-section-number">2.1.1</span> DBSCAN Clustering Analysis Results and Discussion</h3>
+<p>The application of Density-Based Spatial Clustering of Applications with Noise (DBSCAN) to the network traffic dataset yielded results that suggest complex, overlapping patterns in the underlying data structure. The algorithm’s performance can be evaluated through several established clustering quality metrics, each providing insight into different aspects of the clustering solution. The clustering solution achieved a Silhouette score of 0.0252, indicating poor cluster definition and separation. This notably low score suggests that the boundaries between clusters are significantly blurred, with many instances potentially lying in regions of overlapping density. The Mutual Information score of 0.2373 further supports this interpretation, indicating weak correspondence between the clustering solution and the true class labels.</p>
+<p>The identical Homogeneity and Completeness scores (both 0.4436) present an interesting symmetry in the clustering solution (<a href="#fig-dbscan-metrics">Figure 15</a>). This equivalence suggests that the algorithm’s performance in maintaining class purity within clusters matches its ability to avoid splitting classes across multiple clusters. While these scores indicate moderate performance, they reveal that the DBSCAN clustering solution captures only partially the underlying class structure of the data.</p>
+<div id="fig-dbscan-metrics" class="quarto-figure quarto-figure-center">
+<figure>
+<p><img src="dbscan-metrics.png" class="img-fluid" /></p>
+<figcaption><strong>Figure</strong> 16<strong>.</strong> DBSCAN Evaluation Metrics</figcaption>
+</figure>
+</div>
+<p>The metrics collectively suggest that the density-based approach may not optimally capture the natural groupings in this particular network traffic dataset. This could be attributed to several factors: 1) The low Silhouette score may indicate that the traffic patterns form continuous density gradients rather than distinct, separated clusters. 2) The results may reflect suboptimal choices for DBSCAN’s core parameters (ε and minPts). 3) The network traffic data may exhibit patterns that are not well-suited to density-based clustering approaches. These findings suggest several avenues for further investigation such as an exploration of alternative distance metrics that might better capture the similarity relationships in network traffic patterns. A systematic evaluation of DBSCAN parameter combinations to optimize clustering performance may provide significant benefit. Overall, the results contribute to our understanding of the challenges in applying density-based clustering to network traffic analysis while highlighting the importance of careful algorithm selection and parameter tuning in such applications. This analysis reveals that while DBSCAN provides interesting insights into the data structure, its relatively poor performance metrics suggest that alternative clustering approaches might be more appropriate for this dataset (Alam, A., Malhotra, A. and Schizas, I.D., 2025, p. 8, para. 1).</p>
+</section>
+<section id="kmeans-clustering-analysis-results-and-discussion" class="level3" data-number="2.1.2">
+<h3 data-number="2.1.2"><span class="header-section-number">2.1.2</span> KMeans Clustering Analysis Results and Discussion</h3>
+<p>The implementation of K-means clustering on the network traffic dataset yielded seven distinct clusters with varying distributions and quality metrics. The algorithm’s performance can be evaluated through multiple complementary measures of cluster quality and distribution characteristics. The clustering solution achieved a Silhouette score of 0.752, indicating strong cluster cohesion and separation (<a href="#fig-kmeans-metrics">Figure 16</a>). This relatively high score suggests that objects within each cluster are well-matched to their assigned clusters and poorly matched to neighboring clusters. The Mutual Information score of 0.574 demonstrates moderate agreement between the clustering solution and the underlying class structure. However, the disparity between Homogeneity (0.295) and Completeness (0.680) scores warrants further investigation. The lower homogeneity score indicates that clusters contain a mixture of classes, while the higher completeness score suggests that instances of the same class tend to be assigned to the same cluster (Tabejamaat, M. et al., 2025, p. 4, para. 1).</p>
+<div id="fig-kmeans-metrics" class="quarto-figure quarto-figure-center">
+<figure>
+<p><img src="kmeans-metrics.png" class="img-fluid" /></p>
+<figcaption><strong>Figure</strong> 17<strong>.</strong> KMeans Evaluation Metrics</figcaption>
+</figure>
+</div>
+<p>The clustering solution produced a notably heterogeneous distribution of instances across the seven clusters. The dataset sample used for training has an equal 1000 instance distribution for all classes in an attempt to prevent bias in the model. However, the majority cluster (Cluster 1) contains 5,129 instances, representing the dominant pattern in the dataset (<a href="#fig-kmeans-distribution">Figure 17</a>). Two secondary clusters of substantial size emerged: Cluster 6 with 1,089 instances and Cluster 5 with 605 instances. The remaining clusters exhibited markedly smaller populations: Cluster 0 (120 instances), Cluster 2 (23 instances), Cluster 3 (33 instances), and notably, Cluster 4 with a single instance. This distribution pattern suggests the presence of both major behavioral patterns and potential anomalous cases in network traffic.</p>
+<div id="fig-kmeans-distribution" class="quarto-figure quarto-figure-center">
+<figure>
+<p><img src="kmeans-distribution.png" class="img-fluid" /></p>
+<figcaption><strong>Figure</strong> 18<strong>.</strong> KMeans Class distributions</figcaption>
+</figure>
+</div>
+<p>The stark variation in cluster sizes, combined with the high Silhouette score, suggests that while the clustering solution effectively identifies distinct patterns in the data, it may be capturing hierarchical structure that warrants further investigation. The presence of a singleton cluster (Cluster 4) merits particular attention as it may represent a significant anomaly. Further research directions might include hierarchical analysis of the dominant cluster to identify potential sub-patterns. An ensemble method may be able to produce more stable results given the big data nature of this dataset (“RSPCA: Random Sample Partition and Clustering Approximation for ensemble learning of big data”, 2025, p. 5, para. 4). A detailed examination of the singleton cluster to validate its significance in the context of network traffic patterns would no doubt yield better results. These findings contribute to our understanding of the underlying structure in network traffic patterns while highlighting areas for continued investigation and refinement of the clustering approach.</p>
+<div id="fig-ground-truth-iat" class="quarto-figure quarto-figure-center">
+<figure>
+<p><img src="ground-truth-iat.png" class="img-fluid" /></p>
+<figcaption><strong>Figure</strong> 19<strong>.</strong> Forward IAT Total vs Backward IAT Total - Ground Truth</figcaption>
+</figure>
+</div>
+<div id="fig-clustering-prediction-iat" class="quarto-figure quarto-figure-center">
+<figure>
+<p><img src="clustering-prediction-iat.png" class="img-fluid" /></p>
+<figcaption><strong>Figure</strong> 20<strong>.</strong> Forward IAT Total vs Backward IAT Total - Clustering Prediction</figcaption>
+</figure>
+</div>
+<div id="fig-ground-truth-flow" class="quarto-figure quarto-figure-center">
+<figure>
+<p><img src="ground-truth-flow.png" class="img-fluid" /></p>
+<figcaption><strong>Figure</strong> 21<strong>.</strong> Flow Bytes/s vs Flow Packets/s - Ground Truth</figcaption>
+</figure>
+</div>
+<div id="fig-clustering-prediction-flow" class="quarto-figure quarto-figure-center">
+<figure>
+<p><img src="clustering-prediction-flow.png" class="img-fluid" /></p>
+<figcaption><strong>Figure</strong> 22<strong>.</strong> Flow Bytes/s vs Flow Packets/s - Clustering Prediction</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="classification" class="level2" data-number="2.2">
+<h2 data-number="2.2"><span class="header-section-number">2.2</span> Classification</h2>
+<p>The implemented Random Forest classifier demonstrates robust performance in distinguishing between various DDoS attack vectors and normal network traffic. Operating on a comprehensive dataset of 398,755 records with seven balanced classes (56,965 entries per class), the model achieves an accuracy of 88% following standardization of features (<a href="#fig-rf-metrics">Figure 19</a>). The model’s classification efficacy can be evaluated through multiple metrics. The baseline accuracy for a seven-class balanced classification problem would be approximately 14.3%, making the achieved 88% accuracy a substantial improvement over random classification. This performance is particularly noteworthy given the complexity of network traffic classification and the subtle differences that do exist between different attack signatures as demonstrated in Section 2.1. The diagonal elements of the matrix indicate strong classification performance for most attack types, with several classes showing particularly high true positive rates (<a href="#fig-rf-metrics">Figure 19</a>). However, there are notable interactions between certain attack classes, suggesting some attack signatures share similar characteristics that may complicate classification. Of particular interest are the off-diagonal elements, which represent misclassifications between different attack types. Some classes demonstrate near-perfect separation, as evidenced by rows containing predominantly zero values for non-diagonal elements. This suggests that certain attack types have highly distinctive signatures that the model can readily identify.</p>
+<div id="fig-rf-metrics" class="quarto-figure quarto-figure-center">
+<figure>
+<p><img src="rf-metrics.png" class="img-fluid" /></p>
+<figcaption><strong>Figure</strong> 23<strong>.</strong> Random Forest Classifier Evaluation Metrics</figcaption>
+</figure>
+</div>
+<div id="fig-rf-spark-jobs" class="quarto-figure quarto-figure-center">
+<figure>
+<p><img src="rf-spark-jobs.png" class="img-fluid" /></p>
+<figcaption><strong>Figure</strong> 24<strong>.</strong> Random Forest Classifier Spark Jobs</figcaption>
+</figure>
+</div>
+</section>
+<section id="streaming-analysis" class="level2" data-number="2.3">
+<h2 data-number="2.3"><span class="header-section-number">2.3</span> Streaming Analysis</h2>
+<p>This study presents a distributed stream processing system for real-time Distributed Denial of Service (DDoS) attack detection utilizing Apache Spark’s streaming capabilities and a pre-trained Random Forest classifier. The system demonstrates effective real-time classification of network traffic into multiple categories, including benign traffic and various attack vectors. The implemented architecture comprises several key components operating in a distributed environment simulated with Docker Hadoop and Spark containers (Hoozemans, J. et al., 2021, p. 38, para. 10). The core system utilizes HDFS for model persistence and data storage, while the processing pipeline incorporates comprehensive feature engineering and standardization. The system processes 65 distinct network traffic features, providing a comprehensive view of network behavior patterns. The processing pipeline operates on a 5-second interval, enabling near-real-time detection capabilities (<a href="#fig-streaming-classifier">Figure 21</a>).</p>
+<div id="fig-streaming-classifier" class="quarto-figure quarto-figure-center">
+<figure>
+<p><img src="streaming-classifier.png" class="img-fluid" /></p>
+<figcaption><strong>Figure</strong> 25<strong>.</strong> Streaming Random Forest Classifier</figcaption>
+</figure>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class='callout-icon'></i>
+</div>
+<div class="callout-title-container flex-fill">
+Streaming Analysis Video
+</div>
+<div class='callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end'><i class='callout-toggle'></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div id="video-streaming-analysis" class="quarto-figure quarto-figure-center">
+<figure>
+<p><video src="StreamingAnalysis.mp4" class="img-fluid" controls=""><a href="StreamingAnalysis.mp4">Video</a></video></p>
+<figcaption>Streaming Analysis Video</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<p>Real-time classification results demonstrate the system’s ability to identify multiple attack vectors simultaneously. The system successfully maintains continuous processing capabilities while handling diverse traffic patterns, showing particular effectiveness in distinguishing between normal traffic and attack vectors. The sequential nature of similar traffic types in the results suggests the system’s ability to detect sustained attack patterns. The implementation demonstrates several notable performance characteristics such as low-latency classification with 5-second processing intervals. It successfully handles multiple attack vectors simultaneously with a robust preprocessing pipeline maintaining data quality in real-time.</p>
+</section>
+</section>
+<section id="machine-learning-with-dimensionality-reduction-critical-analysis" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Machine Learning with Dimensionality Reduction &amp; Critical Analysis</h1>
+<section id="dimensionality-reduction" class="level2" data-number="3.1">
+<h2 data-number="3.1"><span class="header-section-number">3.1</span> Dimensionality Reduction</h2>
+<p>This analysis examines the effect of dimensionality reduction through Principal Component Analysis (PCA) on a Random Forest classifier’s performance in detecting DDoS attacks. The study compares the baseline model against a PCA-transformed variant, revealing significant insights into the trade-offs between dimensionality reduction and classification accuracy. The experiment utilized two configurations, (1) a baseline model with standardized features and (2) PCA-transformed model with k=2 components (experimentation realized that 2 components achieved the best performance possible with PCA) (<a href="#fig-pca-comparison">Figure 22</a>). Both configurations maintained consistent preprocessing steps and Random Forest parameters, isolating PCA’s impact on model performance.</p>
+<div id="fig-pca-comparison" class="quarto-figure quarto-figure-center">
+<figure>
+<p><img src="pca-comparison.png" class="img-fluid" /></p>
+<figcaption><strong>Figure</strong> 26<strong>.</strong> Random Forest Classifier with PCA vs without</figcaption>
+</figure>
+</div>
+<p><strong>Baseline Model Performance:</strong> - Classification accuracy: 88% - Computational efficiency: 0.142 seconds CPU time - Clear class separation evident in confusion matrix</p>
+<p><strong>PCA-Transformed Model Performance:</strong> - Classification accuracy: 79% - Computational efficiency: 0.140 seconds CPU time - Explained variance ratios: - Component 1: 23.50% - Component 2: 13.41% - Cumulative explained variance: 36.91% - Increased misclassification rates observed in confusion matrix - Algorithm-determined optimal components: 1</p>
+<p>The implementation of PCA resulted in a substantial degradation of classification performance, with accuracy declining by 9 percentage points. The minimal improvement in computational efficiency (approximately 0.002 seconds) does not justify the significant loss in classification accuracy. The low cumulative explained variance (36.91%) suggests that the two principal components fail to capture the complex patterns necessary for effective DDoS attack classification.</p>
+</section>
+<section id="critical-analysis" class="level2" data-number="3.2">
+<h2 data-number="3.2"><span class="header-section-number">3.2</span> Critical Analysis</h2>
+<section id="clustering-1" class="level3" data-number="3.2.1">
+<h3 data-number="3.2.1"><span class="header-section-number">3.2.1</span> Clustering</h3>
+<p>While KMeans performed better than DBSCAN for clustering the results are in no way useful for real-world application. This is despite utilizing a standard scaler and PCA, which did improve performance significantly, but still not enough for any real use case. However, the local development environment afforded the opportunity to incorporate the RAPIDS library collection. “The RAPIDS data science framework is a collection of libraries for running end-to-end data science pipelines completely on the GPU” (RAPIDS.ai, 2025) (Hoozemans, J. et al., 2021, p. 45, para. 2). The RAPIDS framework provided instrumental support for the cleaning, exploration, and combining of the dataset required for this implementation. This allowed for expedited Cluster model training and exploratory development of Classification models which were ported to Spark later.</p>
+</section>
+<section id="classification-1" class="level3" data-number="3.2.2">
+<h3 data-number="3.2.2"><span class="header-section-number">3.2.2</span> Classification</h3>
+<p>In the context of network security applications, this level of classification accuracy presents a promising foundation for practical deployment. However, further analysis of precision and recall metrics for each attack type would be beneficial, particularly given the critical nature of false positives and false negatives in security contexts. While the current performance is promising, several avenues for potential improvement exist, including a deeper investigation of feature importance to identify key traffic characteristics. Analysis of misclassification patterns to understand potential signature overlaps would prove beneficial. A more robust evaluation of model performance under various network conditions and attack intensities is a necessity before a deployment in a security detection environment.</p>
+<p>Experimentations with PCA-based dimensionality reduction indicate it may not be suitable for this particular DDoS detection task. The complex nature of network traffic patterns appears to require the fuller feature set for accurate classification. Future work might explore alternative dimensionality reduction techniques (Reddy, G.T. et al., 2020, p. 54780, para. 2) (Amouzgar, M. et al., 2022). Feature selection based on Random Forest importance scores may yield more promising results. A more comprehensive investigation of optimal component numbers could produce a better balance between accuracy and efficiency. This study contributes to the understanding of dimensionality reduction impacts on DDoS detection systems and highlights the importance of maintaining feature richness in network security applications.</p>
+</section>
+<section id="streaming-analysis-1" class="level3" data-number="3.2.3">
+<h3 data-number="3.2.3"><span class="header-section-number">3.2.3</span> Streaming Analysis</h3>
+<p>The usefulness of real-time network traffic classification would be further aided by an integration of temporal analysis through timestamp-based pattern detection. A neural network architecture such as LSTM (Mohammadi, M. et al., 2018, p. 2930, para. 6) or xLSTM could elucidate more complex relationships borne out of timing (Ren-Hung Hwang et al, 2019, p. 6, para. 2) (Alharthi, M. and Mahmood, A., 2024, p. 1488, para. 3). This would provide an entirely fresh but equally powerful perspective in terms of real-time threat detection. Further, an implementation of sliding window analytics for trend analysis providing real-time performance metric monitoring could prove useful in anticipating full blown attacks by capturing initial probing type behavior. Development of an automated alert system for critical attack patterns along with an automated response, carefully measured, would doubly add value. This implementation demonstrates a proof of concept showcasing the feasibility of a real-time DDoS attack detection in a distributed environment.</p>
+</section>
+</section>
+</section>
+<section id="references" class="level1 unnumbered">
+<h1 class="unnumbered">References</h1>
+<p>Alam, A., Malhotra, A. and Schizas, I.D. (2025) “Online kernel-based clustering,” Pattern Recognition, 158. Available at: https://doi.org/10.1016/j.patcog.2024.111009.</p>
+<p>Alharthi, M. and Mahmood, A. (2024) “xLSTMTime: Long-Term Time Series Forecasting with xLSTM,” AI, 5(3), pp. 1482–1495. Available at: https://doi.org/10.3390/ai5030071.</p>
+<p>Amouzgar, M. et al. (2022) “Supervised dimensionality reduction for exploration of single-cell data by HSS-LDA,” Patterns, 3(8). Available at: https://doi.org/10.1016/j.patter.2022.100536.</p>
+<p>Hoozemans, J. et al. (2021) “FPGA Acceleration for Big Data Analytics: Challenges and Opportunities,” IEEE Circuits and Systems Magazine, 21(2). Available at: https://doi.org/10.1109/MCAS.2021.3071608.</p>
+<p>Mohammadi, M. et al. (2018) “Deep Learning for IoT Big Data and Streaming Analytics: A Survey,” IEEE Communications Surveys &amp; Tutorials, 20(4). Available at: https://doi.org/10.1109/COMST.2018.2844341.</p>
+<p>RAPIDS.ai (2025) Featured User Guides. Available at: https://docs.rapids.ai/user-guide/ (Accessed 17 January 2025)</p>
+<p>Reddy, G.T. et al. (2020) “Analysis of Dimensionality Reduction Techniques on Big Data,” IEEE Access, 8. Available at: https://doi.org/10.1109/ACCESS.2020.2980942.</p>
+<p>Ren-Hung Hwang et al. (2019) “An LSTM-Based Deep Learning Approach for Classifying Malicious Traffic at the Packet Level,” Applied Sciences, 16, p. 3414. Available at: https://doi.org/10.3390/app9163414.</p>
+<p>“RSPCA: Random Sample Partition and Clustering Approximation for ensemble learning of big data” (2025) Pattern Recognition, 161. Available at: https://doi.org/10.1016/j.patcog.2024.111321.</p>
+<p>Tabejamaat, M. et al. (2025) “EEG classification with limited data: A deep clustering approach,” Pattern Recognition, 157. Available at: https://doi.org/10.1016/j.patcog.2024.110934.</p>
+<div id="quarto-navigation-envelope" class="hidden">
+<p><span class="hidden" data-render-id="quarto-int-sidebar-title">portfolio</span> <span class="hidden" data-render-id="quarto-int-navbar-title">portfolio</span> <span class="hidden" data-render-id="quarto-int-navbar:About">About</span> <span class="hidden" data-render-id="quarto-int-navbar:/about.html">/about.html</span> <span class="hidden" data-render-id="quarto-int-navbar:https://github.com/brandon-toews">https://github.com/brandon-toews</span></p>
+</div>
+<div id="quarto-meta-markdown" class="hidden">
+<p><span class="hidden" data-render-id="quarto-metatitle">portfolio - Big Data Analytics: DDoS Real-Time Classification</span> <span class="hidden" data-render-id="quarto-twittercardtitle">portfolio - Big Data Analytics: DDoS Real-Time Classification</span> <span class="hidden" data-render-id="quarto-ogcardtitle">portfolio - Big Data Analytics: DDoS Real-Time Classification</span> <span class="hidden" data-render-id="quarto-metasitename">portfolio</span> <span class="hidden" data-render-id="quarto-twittercarddesc">A comprehensive analysis of real-time DDoS attack classification using clustering, classification, and streaming analytics with Apache Spark.</span> <span class="hidden" data-render-id="quarto-ogcardddesc">A comprehensive analysis of real-time DDoS attack classification using clustering, classification, and streaming analytics with Apache Spark.</span></p>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id = "quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+</body>
+
+</html>

@@ -33,6 +33,12 @@ crossref:
 ![Video Walkthrough](SensorFusion_Video_Walkthrough.mp4){#video-walkthrough}
 :::
 
+::: callout-note
+## Source Code
+
+View source code on Github [repository](https://github.com/brandon-toews/robotics).
+:::
+
 # Simulation Setup and Kinematics Implementation
 
 ## Robot Kinematics
@@ -43,10 +49,10 @@ crossref:
 
 **Justification:**
 
-- Simplicity and ease of implementation
-- Suitable for indoor environments and small-scale robotic platforms
-- Precise control over direction and speed with minimal mechanical complexity
-- Widely applicable for wheeled robots performing navigation tasks in structured environments
+-   Simplicity and ease of implementation
+-   Suitable for indoor environments and small-scale robotic platforms
+-   Precise control over direction and speed with minimal mechanical complexity
+-   Widely applicable for wheeled robots performing navigation tasks in structured environments
 
 The kinematic model for differential drive robots, like the Nova Carter robot in this implementation, is expressed in Equation 1 and is responsible for explaining the movement of the robot. It describes how the robot's position (x, y) and orientation θ evolve with respect to linear and angular velocities.
 
@@ -60,9 +66,9 @@ $$ {#eq-kinematic-model}
 
 Where:
 
-- v is the linear velocity (from the Twist message)
-- ω is the angular velocity
-- θ is the robot's orientation
+-   v is the linear velocity (from the Twist message)
+-   ω is the angular velocity
+-   θ is the robot's orientation
 
 The wheel velocities $v_r$ and $v_l$ are derived using:
 
@@ -75,8 +81,8 @@ $$ {#eq-wheel-velocity}
 
 Where:
 
-- L = 0.413m (wheel distance)
-- R = 0.14m (wheel radius)
+-   L = 0.413m (wheel distance)
+-   R = 0.14m (wheel radius)
 
 The simulated environment, discussed in greater detail in the next section (@sec-environment-setup), is run in Isaac Sim. Isaac Sim's differential drive model uses OmniGraph nodes, specifically the Differential Controller Node, to compute wheel velocities from linear and angular velocity inputs using the wheel velocity equations (@eq-wheel-velocity) and kinematic parameters specified in the node (@fig-differential-controller). The differential drive path controller MATLAB script calculates linear and angular velocities from target positions in the planned path and sends these to the controller in Isaac Sim through a ROS2 bridge.
 
@@ -84,12 +90,12 @@ The simulated environment, discussed in greater detail in the next section (@sec
 
 **Kinematic Parameters:**
 
-- **wheelDistance:** 0.413 meters (distance between the wheels)
-- **wheelRadius:** 0.14 meters (radius of the wheels)
-- **maxLinearSpeed:** 2.0 m/s
-- **maxAngularSpeed:** 3.0 rad/s
-- **maxAcceleration / maxDeceleration:** 2.0 m/s² (limits for smooth motion)
-- **dt:** 0.01667 (time step, approximately 60 Hz simulation rate)
+-   **wheelDistance:** 0.413 meters (distance between the wheels)
+-   **wheelRadius:** 0.14 meters (radius of the wheels)
+-   **maxLinearSpeed:** 2.0 m/s
+-   **maxAngularSpeed:** 3.0 rad/s
+-   **maxAcceleration / maxDeceleration:** 2.0 m/s² (limits for smooth motion)
+-   **dt:** 0.01667 (time step, approximately 60 Hz simulation rate)
 
 ![Robot Dimensions](robot-dimensions.png){#fig-robot-dimensions}
 
@@ -174,7 +180,7 @@ $$
 \end{bmatrix}
 $$ {#eq-imu-jacobian}
 
-Finally, we perform the prediction step of the state transition where we apply the process noise to the state transition Jacobian to model the uncertainty of the prediction and update the predicted state covariance (@eq-prediction). Then we incorporate the measurement. Then we update the observed measurements using the observation Jacobians, measurement noise, and predicted state covariance to create the Kalman gain filter. This filter is then used to weigh the contribution of the predicted state transition against the measurement observations in the final outcome of the state prediction. The filter bases these contributions of the predicted state transition and measurement observations on the respective covariances, or the uncertainty, of each (@eq-measurement-update).*
+Finally, we perform the prediction step of the state transition where we apply the process noise to the state transition Jacobian to model the uncertainty of the prediction and update the predicted state covariance (@eq-prediction). Then we incorporate the measurement. Then we update the observed measurements using the observation Jacobians, measurement noise, and predicted state covariance to create the Kalman gain filter. This filter is then used to weigh the contribution of the predicted state transition against the measurement observations in the final outcome of the state prediction. The filter bases these contributions of the predicted state transition and measurement observations on the respective covariances, or the uncertainty, of each (@eq-measurement-update).\*
 
 $$
 \begin{aligned}
@@ -193,7 +199,7 @@ $$
 \end{aligned}
 $$ {#eq-measurement-update}
 
-*This measurement update step is done twice in the code implementation, once for the odometry measurements and again for IMU measurements.
+\*This measurement update step is done twice in the code implementation, once for the odometry measurements and again for IMU measurements.
 
 ## Application in Navigation
 
@@ -201,7 +207,7 @@ Ultimately, EKF is an appropriate method for sensor fusion in this case because 
 
 As seen depicted in @fig-fusion-accuracy, EKF sensor fusion provides the robot with accurate enough pose estimations, in relation to ground truth, to allow for the robot to make properly informed decisions about velocities and headings. Whereas, when the robot does not have a consistent and accurate idea of where it is and how it is oriented in space the velocity adjusts become more erratic and susceptible to bias over time. The redundancy provided by data collected from multiple sensors measuring similar types of orientation information provides a navigation framework that is resilient against sensor noise and/or failure. Individual sensor noise fluctuations are not correlated with one another, permitting a more well-rounded estimation of state at any given time. We will delve into how well this EKF implementation performs by examining in comparison with alternate methods of pose estimation.
 
-![Sensor Fusion Accuracy Compared to A* Planned Path & Ground Truth](fusion-accuracy.png){#fig-fusion-accuracy}
+![Sensor Fusion Accuracy Compared to A\* Planned Path & Ground Truth](fusion-accuracy.png){#fig-fusion-accuracy}
 
 # Simulation Results and Comparison
 
@@ -209,57 +215,57 @@ As seen depicted in @fig-fusion-accuracy, EKF sensor fusion provides the robot w
 
 We provide three (3) different modes of state estimation to compare the effects of measurement noise on navigation and to illustrate just how effective EKF is at addressing this. First, a dead reckoning implementation that uses only control inputs and the state transition function to track orientation and navigate. Second, odometry-only state estimation that doesn't compensate for the simulated sensor noise of the odometer. Lastly, the EKF solution that fuses odometry and IMU readings, models sensor and process uncertainty, and that elegantly combines state transition predictions with the observed measurements. We will look at:
 
-1. How accurate the modes are at estimating their state in comparison with the ground truth state.
+1.  How accurate the modes are at estimating their state in comparison with the ground truth state.
 
-2. How accurate the modes are at following the planned path, calculated from an A* algorithm taken from the MATLAB robotics toolbox. This will be a comparison of the ground truth and the planned path as the ground truth is a representation of what the robot actually did.
+2.  How accurate the modes are at following the planned path, calculated from an A\* algorithm taken from the MATLAB robotics toolbox. This will be a comparison of the ground truth and the planned path as the ground truth is a representation of what the robot actually did.
 
-3. Navigation and path error probability distributions, bar charts depicting mean and maximum path deviation, path length, completion time.
+3.  Navigation and path error probability distributions, bar charts depicting mean and maximum path deviation, path length, completion time.
 
 ## Analysis of Results
 
 As can be seen in @fig-dead-reckoning-trajectory and @fig-dead-reckoning-error, dead reckoning is highly inaccurate in pose estimation and is subsequently unable to follow the planned path in any practical capacity. It seems that without sensor data to interoceptively inform the robot of its orientation it is overcome by sensor noise, bias, and process noise.
 
-![Dead Reckoning - Accuracy Compared to A* Planned Path, Ground Truth, & State Estimation](dead-reckoning-trajectory.png){#fig-dead-reckoning-trajectory}
+![Dead Reckoning - Accuracy Compared to A\* Planned Path, Ground Truth, & State Estimation](dead-reckoning-trajectory.png){#fig-dead-reckoning-trajectory}
 
 ![Dead Reckoning - Pose Estimate Error Probability Distributions Compared to Ground Truth](dead-reckoning-error.png){#fig-dead-reckoning-error}
 
 Odometry-only is a marked improvement over dead reckoning on all accounts and performs reasonably well considering we are only using one (1) sensor (@fig-odom-only-trajectory & @fig-odom-only-error). The robot's state estimation is erratic but not so much so that it cannot follow the planned path to reach the goal pose. This mode of estimation may be sufficient in certain environments and with sensors that do not produce high levels of noise. However, as sensor noise increases the performance of this mode of estimation decreases, causing many overcompensations to velocities and heading (@fig-ekf-trajectory). These frequent and powerful corrections would likely cause more wear and tear on the vehicle.
 
-![Odometry Only - Accuracy Compared to A* Planned Path, Ground Truth, & State Estimation](odom-only-trajectory.png){#fig-odom-only-trajectory}
+![Odometry Only - Accuracy Compared to A\* Planned Path, Ground Truth, & State Estimation](odom-only-trajectory.png){#fig-odom-only-trajectory}
 
 ![Odometry Only - Pose Estimate Error Probability Distributions Compared to Ground Truth](odom-only-error.png){#fig-odom-only-error}
 
 The EKF solution performs the best of all three (3), showcasing a robust ability to handle measurement noise in real-time. This mode of state estimation boasts the least amount of error in all metrics across the board with the exception of completion time. EKF produces tighter error probability distributions with equal or lower magnitudes than the other modes of state estimation. The EKF ground truth has a maximum deviation from the planned path almost half that of, and even a few points away from being equal to the mean deviation of the odometry-only solution (@tbl-path-statistics). As we manually increase measurement noise, we can see how the EKF still maintains stability and accuracy while odometry-only suffers from even greater fluctuations in state estimation (@fig-odom-high-noise & @fig-ekf-high-noise). Even though EKFs tend to be computationally expensive they do produce remarkable results in contexts like these (Vitali, R.V., McGinnis, R.S. and Perkins, N.C., 2021, pp. 1-2).
 
-![EKF - Accuracy Compared to A* Planned Path, Ground Truth, & State Estimation](ekf-trajectory.png){#fig-ekf-trajectory}
+![EKF - Accuracy Compared to A\* Planned Path, Ground Truth, & State Estimation](ekf-trajectory.png){#fig-ekf-trajectory}
 
 ![EKF - Pose Estimate Error Probability Distributions Compared to Ground Truth](ekf-error.png){#fig-ekf-error}
 
-![All Ground Truths Compared to A* Planned Path](all-ground-truths.png){#fig-all-ground-truths}
+![All Ground Truths Compared to A\* Planned Path](all-ground-truths.png){#fig-all-ground-truths}
 
-![All Estimation Methods' Estimations, Ground Truths, A* Planned Path](all-estimations.png){#fig-all-estimations}
+![All Estimation Methods' Estimations, Ground Truths, A\* Planned Path](all-estimations.png){#fig-all-estimations}
 
-![All Estimation Methods' Ground Truths Against A* Planned Path](path-comparison.png){#fig-path-comparison}
+![All Estimation Methods' Ground Truths Against A\* Planned Path](path-comparison.png){#fig-path-comparison}
 
-| Method | Mean Position Error (m) | RMS Position Error (m) | Mean Heading Error (rad) | RMS Heading Error (rad) |
-|--------|-------------------------|------------------------|--------------------------|-------------------------|
-| **Fusion** | 0.043518 | 0.049445 | 0.014593 | 0.017925 |
-| **Odometry Only** | 0.066875 | 0.076514 | 0.015236 | 0.019748 |
-| **Dead Reckoning** | 0.72064 | 0.79609 | 0.29554 | 0.35184 |
+| Method             | Mean Position Error (m) | RMS Position Error (m) | Mean Heading Error (rad) | RMS Heading Error (rad) |
+|---------------|---------------|---------------|---------------|---------------|
+| **Fusion**         | 0.043518                | 0.049445               | 0.014593                 | 0.017925                |
+| **Odometry Only**  | 0.066875                | 0.076514               | 0.015236                 | 0.019748                |
+| **Dead Reckoning** | 0.72064                 | 0.79609                | 0.29554                  | 0.35184                 |
 
-: All Estimation Methods' Ground Truths Against A* Planned Path Error {#tbl-path-error}
+: All Estimation Methods' Ground Truths Against A\* Planned Path Error {#tbl-path-error}
 
-| Method | Mean Deviation (m) | Max Deviation (m) | Path Length (m) | Completion Time (s) | Path Smoothness (avg heading change) | Time within 0.1m | Time within 0.2m | Time within 0.5m |
-|--------|-------------------|-------------------|-----------------|---------------------|-----------------------------------|------------------|------------------|------------------|
-| **Fusion** | 0.12613 | 0.18047 | 2.1128 | 0.96 | 0.030647 rad | 23.5294% | 100% | 100% |
-| **Odometry Only** | 0.1577 | 0.35182 | 2.172 | 0.84 | 0.021918 rad | 42.8571% | 66.6667% | 100% |
-| **Dead Reckoning** | 0.25327 | 0.39551 | 1.0653 | 0.68 | 0.042377 rad | 6.0606% | 45.4545% | 100% |
+| Method             | Mean Deviation (m) | Max Deviation (m) | Path Length (m) | Completion Time (s) | Path Smoothness (avg heading change) | Time within 0.1m | Time within 0.2m | Time within 0.5m |
+|--------|--------|--------|--------|--------|--------|--------|--------|--------|
+| **Fusion**         | 0.12613            | 0.18047           | 2.1128          | 0.96                | 0.030647 rad                         | 23.5294%         | 100%             | 100%             |
+| **Odometry Only**  | 0.1577             | 0.35182           | 2.172           | 0.84                | 0.021918 rad                         | 42.8571%         | 66.6667%         | 100%             |
+| **Dead Reckoning** | 0.25327            | 0.39551           | 1.0653          | 0.68                | 0.042377 rad                         | 6.0606%          | 45.4545%         | 100%             |
 
-: All Estimation Methods' Ground Truths Against A* Planned Path Statistics {#tbl-path-statistics}
+: All Estimation Methods' Ground Truths Against A\* Planned Path Statistics {#tbl-path-statistics}
 
-![Odometry Only - Higher Noise Accuracy Compared to A* Planned Path & Ground Truth](odom-high-noise.png){#fig-odom-high-noise}
+![Odometry Only - Higher Noise Accuracy Compared to A\* Planned Path & Ground Truth](odom-high-noise.png){#fig-odom-high-noise}
 
-![EKF - Higher Noise Accuracy Compared to A* Planned Path & Ground Truth](ekf-high-noise.png){#fig-ekf-high-noise}
+![EKF - Higher Noise Accuracy Compared to A\* Planned Path & Ground Truth](ekf-high-noise.png){#fig-ekf-high-noise}
 
 # Evaluation and Improvement Suggestions
 
@@ -267,7 +273,7 @@ The EKF solution performs the best of all three (3), showcasing a robust ability
 
 While EKF clearly outperforms the other methods of state estimation explored in this paper, it is not without its challenges. Tuning the process noise manually is a time-consuming trial-and-error endeavor even with data analytics to inform the adjustments. Meanwhile, deploying and developing Artificial Neural Networks (ANN) are becoming easier with support from libraries like PyTorch and are more than capable of handling the non-linear nature of state estimations and transitions (Ghorbani, S. and Janabi-Sharifi, F., 2022, p.1, para. 5). The current EKF implementation could take more full advantage of the IMU and odometry orientation data by processing quaternion information directly using quaternion specific equations rather than converting the quaternion to θ at the time of collection (Vitali, R.V., McGinnis, R.S. and Perkins, N.C., 2021, pp. 2-6).
 
-As stated previously, the robot uses a 2D LiDAR sensor to update its internal occupancy map which is crucial for navigating a dynamic environment like a warehouse. The horizontal orientation of the obstacle detection provided by this sensor presents issues in this context. Even though the sensor is effectively mapping most of the obstacles in the environment it is missing a key feature that results in collisions. If forklift forks are raised off the ground, then the LiDAR doesn't detect these long protrusions which routinely causes collisions with the robot. Compounding the situation further, the robot's occupancy map cannot be inflated as each time the LiDAR updates the map it would have to call the inflate method causing already inflated objects to continue to grow until enveloping the entire map. The current A* algorithm being used doesn't have a minimum turning radius property, therefore, the planner charts paths that bring the robot too close to objects causing collisions, even with obstacles it registers in its occupancy map. Using a high-fidelity simulation engine like Isaac Sim pushes these kinds of real-world challenges to the fore providing the opportunity to address these in a simulated environment before deployment. In conjunction with this, usage of the ROS2 bridge for the environment setup facilitates easy portability to real-world applications (Carreira, R. et al., 2024, pp. 5-8).
+As stated previously, the robot uses a 2D LiDAR sensor to update its internal occupancy map which is crucial for navigating a dynamic environment like a warehouse. The horizontal orientation of the obstacle detection provided by this sensor presents issues in this context. Even though the sensor is effectively mapping most of the obstacles in the environment it is missing a key feature that results in collisions. If forklift forks are raised off the ground, then the LiDAR doesn't detect these long protrusions which routinely causes collisions with the robot. Compounding the situation further, the robot's occupancy map cannot be inflated as each time the LiDAR updates the map it would have to call the inflate method causing already inflated objects to continue to grow until enveloping the entire map. The current A\* algorithm being used doesn't have a minimum turning radius property, therefore, the planner charts paths that bring the robot too close to objects causing collisions, even with obstacles it registers in its occupancy map. Using a high-fidelity simulation engine like Isaac Sim pushes these kinds of real-world challenges to the fore providing the opportunity to address these in a simulated environment before deployment. In conjunction with this, usage of the ROS2 bridge for the environment setup facilitates easy portability to real-world applications (Carreira, R. et al., 2024, pp. 5-8).
 
 ![2D LiDAR Doesn't Update Forklift Forks onto Robot's Occupancy Map](lidar-limitation.png){#fig-lidar-limitation}
 

@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/domain-bench/domain-bench.html",
       "/posts/big-data-analytics/big-data-analytics.html",
       "/posts/sensor-fusion/sensor-fusion.html",
       "/posts/neural_net_optimizers/neural_net_optimizers.html",

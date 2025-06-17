@@ -10,7 +10,7 @@ badges: true
 categories:
 - Big Data Analytics
 - Cybersecurity
-- Machine Learning
+- AI / Machine Learning
 date: "2025-1-17"
 description: A comprehensive analysis of real-time DDoS attack classification using clustering, classification, and streaming analytics with Apache Spark.
 toc: true
@@ -24,7 +24,11 @@ crossref:
   title-delim: "**.**"
 ---
 
-\
+::: callout-note
+## Source Code
+
+View source code on Github [repository](https://github.com/brandon-toews/big_data).
+:::
 
 # Dataset Description and Analysis
 

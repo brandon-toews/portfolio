@@ -10,6 +10,7 @@ website:
       - about.qmd
       - icon: github
         href: https://github.com/brandon-toews
+
 format:
   html:
     theme:
