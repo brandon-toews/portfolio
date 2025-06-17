@@ -26,6 +26,7 @@ crossref:
 ---
 
 ![](3rd-person-view.png)
+
 ::: {.callout-tip collapse="true"}
 ## Video Walkthrough
 

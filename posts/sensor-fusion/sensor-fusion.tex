@@ -80,6 +80,22 @@
 
 \KOMAoption{captions}{tableheading}
 \makeatletter
+\@ifpackageloaded{tcolorbox}{}{\usepackage[skins,breakable]{tcolorbox}}
+\@ifpackageloaded{fontawesome5}{}{\usepackage{fontawesome5}}
+\definecolor{quarto-callout-color}{HTML}{909090}
+\definecolor{quarto-callout-note-color}{HTML}{0758E5}
+\definecolor{quarto-callout-important-color}{HTML}{CC1914}
+\definecolor{quarto-callout-warning-color}{HTML}{EB9113}
+\definecolor{quarto-callout-tip-color}{HTML}{00A047}
+\definecolor{quarto-callout-caution-color}{HTML}{FC5300}
+\definecolor{quarto-callout-color-frame}{HTML}{acacac}
+\definecolor{quarto-callout-note-color-frame}{HTML}{4582ec}
+\definecolor{quarto-callout-important-color-frame}{HTML}{d9534f}
+\definecolor{quarto-callout-warning-color-frame}{HTML}{f0ad4e}
+\definecolor{quarto-callout-tip-color-frame}{HTML}{02b875}
+\definecolor{quarto-callout-caution-color-frame}{HTML}{fd7e14}
+\makeatother
+\makeatletter
 \makeatother
 \makeatletter
 \makeatother
@@ -154,7 +170,7 @@
 
 \begin{document}
 \maketitle
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, borderline west={3pt}{0pt}{shadecolor}, frame hidden, breakable, boxrule=0pt, interior hidden, enhanced]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[enhanced, frame hidden, borderline west={3pt}{0pt}{shadecolor}, breakable, interior hidden, boxrule=0pt, sharp corners]}{\end{tcolorbox}}\fi
 
 \renewcommand*\contentsname{Table of contents}
 {
@@ -162,10 +178,21 @@
 \setcounter{tocdepth}{3}
 \tableofcontents
 }
-\includegraphics{3rd-person-view.png} ::: \{.callout-tip
-collapse=``true''\} \#\# Video Walkthrough
+\includegraphics{3rd-person-view.png}
 
-\includegraphics{SensorFusion_Video_Walkthrough.mp4} :::
+\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-tip-color-frame, breakable, coltitle=black, opacityback=0, colback=white, left=2mm, opacitybacktitle=0.6, arc=.35mm, rightrule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, toprule=.15mm, leftrule=.75mm, titlerule=0mm, bottomrule=.15mm, toptitle=1mm, bottomtitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Video Walkthrough}]
+
+\begin{figure}[H]
+
+{\centering \includegraphics{SensorFusion_Video_Walkthrough.mp4}
+
+}
+
+\caption{Video Walkthrough}
+
+\end{figure}
+
+\end{tcolorbox}
 
 \hypertarget{simulation-setup-and-kinematics-implementation}{%
 \section{Simulation Setup and Kinematics
